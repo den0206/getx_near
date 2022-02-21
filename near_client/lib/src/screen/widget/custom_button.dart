@@ -41,3 +41,46 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
+
+class CircleImageButton extends StatelessWidget {
+  const CircleImageButton(
+      {Key? key,
+      required this.imageProvider,
+      required this.size,
+      this.addShadow = true,
+      this.fit = BoxFit.cover,
+      this.onTap})
+      : super(key: key);
+
+  final ImageProvider imageProvider;
+  final double size;
+  final bool addShadow;
+  final BoxFit fit;
+  final Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.grey,
+          image: DecorationImage(image: imageProvider, fit: fit),
+          border: Border.all(color: Colors.grey, width: 1),
+          boxShadow: addShadow
+              ? [
+                  BoxShadow(
+                    offset: Offset(0, 5),
+                    blurRadius: 15.0,
+                    color: Colors.grey,
+                  ),
+                ]
+              : null,
+        ),
+      ),
+    );
+  }
+}

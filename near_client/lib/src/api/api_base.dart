@@ -100,13 +100,15 @@ class Enviroment {
   }
 }
 
-enum EndPoint { testpost }
+enum EndPoint { user, testpost }
 
 extension EndPointEXT on EndPoint {
   String get name {
     final String APIVer = "/api/v1";
 
     switch (this) {
+      case EndPoint.user:
+        return "$APIVer/user";
       case EndPoint.testpost:
         return "$APIVer/testpost";
     }
