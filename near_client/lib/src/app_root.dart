@@ -1,15 +1,33 @@
 import 'package:get/get.dart';
+import 'package:getx_near/src/screen/auth/login/login_screen.dart';
+import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/get_address/get_address_screen.dart';
 import 'package:getx_near/src/screen/main_tab/add_post/add_post_controller.dart';
 import 'package:getx_near/src/screen/main_tab/add_post/add_post_screen.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
+import 'package:getx_near/src/screen/root_screen.dart';
 
 class AppRoot {
-  static final List<GetPage> pages = [..._mainPages];
+  static final List<GetPage> pages = [..._authPages, ..._mainPages];
 }
 
+final List<GetPage> _authPages = [
+  GetPage(
+    name: LoginScreen.routeName,
+    page: () => LoginScreen(),
+  ),
+  GetPage(
+    name: SignUpScreen.routeName,
+    page: () => SignUpScreen(),
+  ),
+];
+
 final List<GetPage> _mainPages = [
+  GetPage(
+    name: RootScreen.routeName,
+    page: () => RootScreen(),
+  ),
   GetPage(
     name: MainTabScreen.routeName,
     page: () => MainTabScreen(),

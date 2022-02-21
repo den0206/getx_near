@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/app_root.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
+
+import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
@@ -19,11 +20,12 @@ class MyApp extends StatelessWidget {
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
         title: 'Flutter Demo',
+        // defaultTransition: Transition.fade,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         getPages: AppRoot.pages,
-        initialRoute: MainTabScreen.routeName,
+        initialRoute: RootScreen.routeName,
       );
     });
   }

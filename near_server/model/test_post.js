@@ -3,7 +3,7 @@ const GeoJSON = require(`mongoose-geojson-schema`);
 
 const testSampleSchema = mongoose.Schema({
   title: {type: String},
-  content: {type: String, required: true},
+  content: {type: String, required: true, maxlength: 160},
   emergency: {type: Number, required: true},
   location: {
     type: {
