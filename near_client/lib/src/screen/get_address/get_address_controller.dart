@@ -8,7 +8,6 @@ class GetAddressController extends GetxController {
   String? currentAddress;
 
   final TestPostAPI _testPostAPI = TestPostAPI();
-
   final LocationService locationService = LocationService();
 
   @override

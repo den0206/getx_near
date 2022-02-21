@@ -1,3 +1,5 @@
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
+
 class ResponseAPI {
   final bool status;
   final int statusCode;
@@ -28,7 +30,7 @@ class ResponseAPI {
 
 ResponseAPI catchAPIError([String message = "Invalid Error"]) {
   /// show Allert
-  // showError(message);
+  showError(message);
 
   print(message);
   return ResponseAPI(

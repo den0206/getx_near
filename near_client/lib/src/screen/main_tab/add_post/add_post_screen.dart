@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:getx_near/src/screen/main_tab/add_post/add_post_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
+import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -100,6 +101,10 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                   )
                 ],
               ),
+              Obx(() => Text("${controller.emergency.value}")),
+              CustomSlider(
+                rxValue: controller.emergencyValue,
+              )
             ],
           ),
         ),

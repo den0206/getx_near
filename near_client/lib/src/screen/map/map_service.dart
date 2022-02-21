@@ -14,7 +14,7 @@ final double mapButtonHeight = 13.h;
 final double logoHeifht = panelMinHeight + mapButtonHeight;
 
 class MapService {
-  late GoogleMapController mapController;
+  late GoogleMapController googleController;
 
   GlobalKey mapKey = GlobalKey();
   late Size _mapSize;
@@ -36,7 +36,7 @@ class MapService {
 
   void init(GoogleMapController controller) async {
     controller.setMapStyle(mapStyle);
-    this.mapController = controller;
+    this.googleController = controller;
     final RenderBox? mapRenderBox =
         mapKey.currentContext!.findRenderObject()! as RenderBox?;
     if (mapRenderBox == null) throw Exception("Not initialize Map");
@@ -68,13 +68,13 @@ class MapService {
 
   Future<void> setVisibleRegion() async {
     final List<LatLng> coordinates = await Future.wait([
-      mapController
+      googleController
           .getLatLng(ScreenCoordinate(x: _mapSize.width.toInt(), y: 0)),
-      mapController.getLatLng(ScreenCoordinate(
+      googleController.getLatLng(ScreenCoordinate(
           x: _mapSize.width.toInt(), y: _mapSize.height.toInt())),
-      mapController
+      googleController
           .getLatLng(ScreenCoordinate(x: 0, y: _mapSize.height.toInt())),
-      mapController.getLatLng(ScreenCoordinate(x: 0, y: 0)),
+      googleController.getLatLng(ScreenCoordinate(x: 0, y: 0)),
     ]);
 
     visibleRegion = VisibleRegion(
@@ -86,16 +86,16 @@ class MapService {
   }
 
   Future<void> updateCamera(LatLng latLng, {double? setZoom}) async {
-    final zoom = await mapController.getZoomLevel();
+    var zoom =
+        setZoom == null ? await googleController.getZoomLevel() : setZoom;
 
     final cameraUpdate = CameraUpdate.newLatLngZoom(
-        LatLng(latLng.latitude, latLng.longitude), setZoom ?? zoom);
-
-    mapController.animateCamera(cameraUpdate);
+        LatLng(latLng.latitude, latLng.longitude), zoom);
+    googleController.animateCamera(cameraUpdate);
   }
 
   Future<void> setZoom(bool zoomIn) async {
-    double zoom = await mapController.getZoomLevel();
+    double zoom = await googleController.getZoomLevel();
 
     if (!zoomIn) {
       if (zoom - 1 <= 0) {
@@ -104,7 +104,7 @@ class MapService {
     }
 
     zoom = zoomIn ? zoom + 1 : zoom - 1;
-    final bounds = await mapController.getVisibleRegion();
+    final bounds = await googleController.getVisibleRegion();
     final northeast = bounds.northeast;
     final southwest = bounds.southwest;
     final center = LatLng(
@@ -112,11 +112,11 @@ class MapService {
       (northeast.longitude + southwest.longitude) / 2,
     );
     final cameraUpdate = CameraUpdate.newLatLngZoom(center, zoom);
-    await mapController.animateCamera(cameraUpdate);
+    await googleController.animateCamera(cameraUpdate);
   }
 
   Future<LatLng> getCenter() async {
-    LatLngBounds visibleRegion = await mapController.getVisibleRegion();
+    LatLngBounds visibleRegion = await googleController.getVisibleRegion();
 
     LatLng centerLatLng = LatLng(
       (visibleRegion.northeast.latitude + visibleRegion.southwest.latitude) / 2,
@@ -177,5 +177,9 @@ class MapService {
     );
 
     _polygons[polygonId] = polygon;
+  }
+
+  void showInfoService(String id) {
+    googleController.showMarkerInfoWindow(MarkerId(id));
   }
 }
