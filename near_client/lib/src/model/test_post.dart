@@ -11,11 +11,13 @@ abstract class MarkerIdentifer {
 class TestPost extends MarkerIdentifer {
   final String id;
   final String content;
+  final int emergency;
   final LatLng coordinate;
   final DateTime createdAt;
   TestPost({
     required this.id,
     required this.content,
+    required this.emergency,
     required this.coordinate,
     required this.createdAt,
   });
@@ -26,6 +28,7 @@ class TestPost extends MarkerIdentifer {
       'content': content,
       "latitude": coordinate.latitude,
       'longitude': coordinate.longitude,
+      "emergency": emergency,
       'createdAt': createdAt.toIso8601String(),
     };
   }
@@ -39,6 +42,7 @@ class TestPost extends MarkerIdentifer {
     return TestPost(
       id: map['id'] ?? '',
       content: map['content'] ?? '',
+      emergency: map["emergency"],
       coordinate: latLng,
       createdAt: DateTime.parse(map["createdAt"]).toUtc(),
     );
@@ -51,6 +55,6 @@ class TestPost extends MarkerIdentifer {
 
   @override
   String toString() {
-    return 'TestPost(id: $id, content: $content, coordinate: $coordinate, createdAt: $createdAt)';
+    return 'TestPost(id: $id, content: $content, emergency: $emergency, coordinate: $coordinate, createdAt: $createdAt)';
   }
 }

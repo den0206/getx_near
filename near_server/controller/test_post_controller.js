@@ -7,6 +7,7 @@ async function createPost(req, res) {
     const newPost = TestPost({
       title: body.title,
       content: body.content,
+      emergency: body.emergency,
       location: {type: 'Point', coordinates: [body.longitude, body.latitude]},
     });
 
@@ -23,12 +24,17 @@ async function getNearPost(req, res) {
   const cood = [q.lng, q.lat];
   const radius = q.radius;
 
-  const area = {center: cood, radius: radius, unique: true, spherical: false};
-
   try {
-    const posts = await TestPost.find().where('location').near({
-      center: cood,
-      maxDistance: 100,
+    const posts = await TestPost.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: cood,
+          },
+          $maxDistance: parseInt(radius),
+        },
+      },
     });
 
     res.status(200).json({status: true, data: posts});
@@ -43,14 +49,5 @@ module.exports = {
   getNearPost,
 };
 
-// const posts = await TestPost.find({
-//   location: {
-//     $near: {
-//       $geometry: {
-//         type: 'Point',
-//         coordinates: [cood],
-//       },
-//       $maxDistance: maxDistance,
-//     },
-//   },
-// });
+// const area = {center: cood, radius: radius, unique: true, spherical: true};
+// const posts = await TestPost.find().where('location').within().circle(area);

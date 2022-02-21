@@ -4,6 +4,7 @@ const GeoJSON = require(`mongoose-geojson-schema`);
 const testSampleSchema = mongoose.Schema({
   title: {type: String},
   content: {type: String, required: true},
+  emergency: {type: Number, required: true},
   location: {
     type: {
       type: String,
@@ -13,7 +14,6 @@ const testSampleSchema = mongoose.Schema({
     coordinates: {
       type: [Number],
       required: true,
-      // index: `2dsphere`,
     },
   },
   createdAt: {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/instance_manager.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
+import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 
 class MainTabScreen extends StatelessWidget {
@@ -37,11 +39,12 @@ class MainTabScreen extends StatelessWidget {
       init: MainTabController(),
       builder: (controller) {
         return Scaffold(
-          body: pages[controller.currentIndex],
-          // IndexedStack(
-          //   index: controller.currentIndex,
-          //   children: pages,
-          // ),
+          body: !Get.isRegistered<MapController>()
+              ? pages[controller.currentIndex]
+              : IndexedStack(
+                  index: controller.currentIndex,
+                  children: pages,
+                ),
           bottomNavigationBar: controller.currentIndex != 1
               ? BottomNavigationBar(
                   backgroundColor: Colors.grey,

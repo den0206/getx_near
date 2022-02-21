@@ -13,6 +13,11 @@ class AddPostController extends LoadingGetController {
 
   final TestPostAPI _testPostAPI = TestPostAPI();
   final LocationService _locationService = LocationService();
+  final RxDouble emergencyValue = 50.0.obs;
+
+  RxInt get emergency {
+    return emergencyValue.round().obs;
+  }
 
   @override
   void onInit() {
@@ -33,6 +38,7 @@ class AddPostController extends LoadingGetController {
         "content": tX.text,
         "longitude": current.longitude,
         "latitude": current.latitude,
+        "emergency": emergency.value,
       };
 
       final res = await _testPostAPI.createPost(body);

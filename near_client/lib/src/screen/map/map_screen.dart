@@ -1,8 +1,6 @@
-import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_screen.dart';
@@ -45,6 +43,7 @@ class MapScreen extends LoadingGetView<MapController> {
                   onCameraIdle: controller.onCameraIdle,
                   onTap: (argument) {
                     dismisskeyBord(context);
+                    controller.panelController.close();
                   },
                   onMapCreated: (mapCtr) async {
                     await controller.onMapCreate(mapCtr);
@@ -54,7 +53,7 @@ class MapScreen extends LoadingGetView<MapController> {
               _searchButton(),
               _leftSide(),
               _rightSide(),
-              MainSlideUpPanel(),
+              MainSlideUpPanel(controller),
             ],
           ),
         );
@@ -96,15 +95,12 @@ class MapScreen extends LoadingGetView<MapController> {
                               color: Colors.black,
                             ),
                             children: [
-                              TextSpan(
-                                text: "長押しで",
-                              ),
                               WidgetSpan(
                                 child: Icon(Icons.pin_drop_outlined,
                                     size: 16.sp, color: Colors.green),
                               ),
                               TextSpan(
-                                text: "を変更",
+                                text: "このエリアを検索",
                               ),
                             ],
                           ),
@@ -207,7 +203,7 @@ class MapScreen extends LoadingGetView<MapController> {
                       color: Colors.red,
                     ),
                     onPressed: () {
-                      controller.setCenterPosition();
+                      controller.setCenterPosition(zoom: 10);
                     },
                   )
                 ],
