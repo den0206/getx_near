@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // abstract class MarkerIdentifer {
@@ -25,6 +26,10 @@ class Post {
     required this.coordinate,
     required this.createdAt,
   });
+
+  AlertLevel get level {
+    return getAlert(emergency.toDouble());
+  }
 
   Map<String, dynamic> toMap() {
     return {

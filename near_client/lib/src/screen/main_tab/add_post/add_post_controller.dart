@@ -37,7 +37,6 @@ class AddPostController extends LoadingGetController {
       final Map<String, dynamic> body = {
         // "title": "title",
         "content": tX.text,
-        "userId": AuthService.to.currentUser.value!.id,
         "longitude": current.longitude,
         "latitude": current.latitude,
         "emergency": emergency.value,

@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
+import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
+import 'package:sizer/sizer.dart';
 
 enum AlertLevel { safe, easy, medium, strong, emergency }
 
@@ -12,7 +15,7 @@ extension AlertLevelEXT on AlertLevel {
       case AlertLevel.easy:
         return Colors.green;
       case AlertLevel.medium:
-        return Colors.yellow;
+        return Colors.orange;
       case AlertLevel.strong:
         return Colors.red;
       case AlertLevel.emergency:
@@ -32,6 +35,82 @@ AlertLevel getAlert(double current) {
     return AlertLevel.strong;
   } else {
     return AlertLevel.emergency;
+  }
+}
+
+class AlertIndicator extends StatelessWidget {
+  const AlertIndicator({Key? key, required this.intValue, required this.level})
+      : super(key: key);
+
+  final int intValue;
+  final AlertLevel level;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          height: 25,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: LinearProgressIndicator(
+              value: intValue / 100,
+              valueColor: AlwaysStoppedAnimation<Color>(level.mainColor),
+              backgroundColor: Color(0xffD6D6D6),
+            ),
+          ),
+        ),
+        Text(
+          "${intValue} %",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            // color: Colors.black54,
+            fontSize: 15.sp,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class HelpButton extends StatelessWidget {
+  const HelpButton({
+    Key? key,
+    required this.post,
+    required this.size,
+    this.uselabel = false,
+  }) : super(key: key);
+
+  final Post post;
+  final double size;
+  final bool uselabel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          Icons.warning_amber,
+          color: ConstsColor.cautionColor,
+          size: size,
+        ),
+        if (uselabel)
+          Text(
+            "Want Help!",
+            style: TextStyle(color: ConstsColor.cautionColor),
+          ),
+        Text(
+          "${10}",
+          style: TextStyle(
+            color: ConstsColor.cautionColor,
+          ),
+        )
+      ],
+    );
   }
 }
 

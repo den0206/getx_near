@@ -3,12 +3,13 @@ const GeoJSON = require(`mongoose-geojson-schema`);
 
 async function createPost(req, res) {
   const body = req.body;
+  const userId = req.userData.userId;
 
   try {
     const newPost = Post({
       title: body.title,
       content: body.content,
-      userId: body.userId,
+      userId: userId,
       emergency: body.emergency,
       location: {type: 'Point', coordinates: [body.longitude, body.latitude]},
     });

@@ -229,7 +229,9 @@ const _mapStyle = [
 final mapStyle = jsonEncode(_mapStyle);
 
 // 新宿駅
-final initialCameraPosition = const CameraPosition(
-  target: LatLng(35.6875, 139.703056),
+final initialCameraPosition = CameraPosition(
+  target: shinjukuSta,
   zoom: 10,
 );
+
+final shinjukuSta = LatLng(35.6875, 139.703056);
