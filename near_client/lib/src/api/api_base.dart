@@ -12,10 +12,31 @@ import 'dart:io' as io;
 abstract class APIBase {
   final String host = Enviroment.getHost();
   final JsonCodec json = JsonCodec();
-  final Map<String, String> headers = {"Content-type": "application/json"};
+  final Map<String, String> headers = {
+    "Content-type": "application/json",
+    "x-api-key": dotenv.env["API_KEY"] ?? "NO API"
+  };
 
   final EndPoint endPoint;
   APIBase(this.endPoint);
+
+  String? get token {
+    final user = AuthService.to.currentUser.value;
+    if (user == null || user.sessionToken == null) {
+      return null;
+    }
+    return "JWT ${user.sessionToken}";
+  }
+
+  void _setToken(bool useToken) {
+    if (useToken) {
+      if (token == null) {
+        throw UnauthorisedException("No Token");
+      } else {
+        headers["Authorization"] = token!;
+      }
+    }
+  }
 
   Uri setUri(String path, [Map<String, dynamic>? query]) {
     final String withPath = "${endPoint.name}${path}";
@@ -63,6 +84,7 @@ abstract class APIBase {
 extension APIBaseExtention on APIBase {
   Future<ResponseAPI> getRequest({required Uri uri, useToken = false}) async {
     try {
+      _setToken(useToken);
       final res = await http.get(uri, headers: headers);
       return _filterResponse(res);
     } on UnauthorisedException catch (unauth) {
@@ -78,6 +100,7 @@ extension APIBaseExtention on APIBase {
       required Map<String, dynamic> body,
       useToken = false}) async {
     try {
+      _setToken(useToken);
       final String bodyparams = json.encode(body);
       final res = await http.post(uri, headers: headers, body: bodyparams);
       return _filterResponse(res);
@@ -101,7 +124,11 @@ class Enviroment {
   }
 }
 
-enum EndPoint { user, post }
+enum EndPoint {
+  user,
+  post,
+  comment,
+}
 
 extension EndPointEXT on EndPoint {
   String get name {
@@ -112,6 +139,8 @@ extension EndPointEXT on EndPoint {
         return "$APIVer/user";
       case EndPoint.post:
         return "$APIVer/post";
+      case EndPoint.comment:
+        return "$APIVer/comment";
     }
   }
 }

@@ -8,7 +8,7 @@ class PostAPI extends APIBase {
   Future<ResponseAPI> createPost(Map<String, dynamic> body) async {
     try {
       final Uri uri = setUri("/create");
-      return await postRequest(uri: uri, body: body);
+      return await postRequest(uri: uri, body: body, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());
     }
@@ -17,7 +17,6 @@ class PostAPI extends APIBase {
   Future<ResponseAPI> getNearPosts(Map<String, dynamic> query) async {
     try {
       final Uri uri = setUri("/near", query);
-      print(uri);
       return await getRequest(uri: uri);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -33,7 +32,6 @@ class PostAPI extends APIBase {
 
     try {
       final Uri uri = setUri("/dummy", query);
-      print(uri);
       return await getRequest(uri: uri);
     } catch (e) {
       return catchAPIError(e.toString());
