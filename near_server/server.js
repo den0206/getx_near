@@ -3,6 +3,7 @@ var http = require('http');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
+const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const morgan = require('morgan');
 const {connection} = require('./db/database');
@@ -13,6 +14,7 @@ const server = http.createServer(app);
 
 // protect
 app.use(mongoSanitize());
+app.use(helmet());
 
 app.use(cors());
 app.use(express.json());

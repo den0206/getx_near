@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:getx_near/src/utils/dummy_generator.dart';
 
 class User {
@@ -45,5 +46,24 @@ class User {
   @override
   String toString() {
     return 'User(id: $id, name: $name, email: $email, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
+  }
+}
+
+ImageProvider getUserImage(User user) {
+  if (user.avatarUrl == null) {
+    return Image.asset("assets/images/default_user.png").image;
+  } else {
+    return Image.network(
+      user.avatarUrl!,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress != null) {
+          return CircularProgressIndicator();
+        }
+        return child;
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return Text("Error");
+      },
+    ).image;
   }
 }

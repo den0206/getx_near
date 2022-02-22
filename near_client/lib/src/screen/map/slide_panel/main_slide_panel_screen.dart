@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
+import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/origin_carousel.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:sizer/sizer.dart';
 
 class MainSlideUpPanel extends GetView<MainSlidePanelController> {
   const MainSlideUpPanel(this.mapController, {Key? key}) : super(key: key);
@@ -21,7 +25,10 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
           controller: controller.mapController.panelController,
           minHeight: panelMinHeight,
           maxHeight: panelMaxHeight,
-          color: Colors.grey[400]!,
+          // backdropEnabled: true,
+          panelSnapping: false,
+          isDraggable: !controller.selecting,
+          color: ConstsColor.panelColor,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           margin: EdgeInsets.symmetric(horizontal: 5),
           borderRadius: BorderRadius.only(
@@ -41,7 +48,7 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                       borderRadius: BorderRadius.all(Radius.circular(12.0))),
                 ),
                 OriginCarousel(
-                  controller: controller.pageController,
+                  pageController: controller.pageController,
                   itemCount: controller.mPosts.length,
                   onChange: controller.postsOnChange,
                   itemBuilder: (context, index) {
@@ -50,11 +57,55 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                       currentIndex: controller.currentPostIndex,
                       index: index,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Text(post.content)],
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Spacer(),
+                              Text(
+                                post.user.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.sp,
+                                ),
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: HelpButton(
+                                  post: post,
+                                  size: 23.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Hero(
+                            tag: post.id,
+                            child: Container(
+                              width: 80.sp,
+                              height: 80.sp,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border:
+                                      Border.all(color: Colors.white, width: 2),
+                                  image: DecorationImage(
+                                    image: getUserImage(post.user),
+                                    fit: BoxFit.contain,
+                                  )),
+                            ),
+                          ),
+                          AlertIndicator(
+                            intValue: post.emergency,
+                            level: post.level,
+                          ),
+                        ],
                       ),
                       onTap: () {
-                        print(post.toString());
                         controller.selectPost(post);
                       },
                     );

@@ -136,9 +136,7 @@ class MapService {
     _circles.clear();
   }
 
-  Future<void> addPostMarker(
-    Post obj,
-  ) async {
+  Future<void> addPostMarker(Post obj, [Function()? ontap]) async {
     final markerId = MarkerId(obj.id);
 
     /// user url
@@ -159,6 +157,7 @@ class MapService {
         title: "Sample",
         snippet: obj.content,
       ),
+      onTap: ontap,
     );
     _markers[markerId] = marker;
   }

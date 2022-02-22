@@ -6,17 +6,16 @@ import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
-import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sizer/sizer.dart';
+
+final bool useMap = false;
 
 class MapScreen extends LoadingGetView<MapController> {
   static const routeName = '/MapScreen';
   @override
   MapController get ctr => MapController();
-
-  final bool useMap = false;
 
   @override
   Widget get child {
@@ -46,8 +45,7 @@ class MapScreen extends LoadingGetView<MapController> {
                     onCameraMove: controller.onCmareMove,
                     onCameraIdle: controller.onCameraIdle,
                     onTap: (argument) {
-                      dismisskeyBord(context);
-                      // controller.panelController.close();
+                      // dismisskeyBord(context);
                     },
                     onMapCreated: (mapCtr) async {
                       await controller.onMapCreate(mapCtr);

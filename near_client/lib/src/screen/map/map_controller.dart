@@ -2,9 +2,11 @@ import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/main_tab/add_post/add_post_screen.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
+import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -62,11 +64,12 @@ class MapController extends LoadingGetController {
     posts.addAll(temp);
 
     await Future.forEach(posts, (Post post) async {
-      await mapService.addPostMarker(post);
+      await mapService.addPostMarker(post, () {
+        mainSlidePanelController.selectPost(post);
+      });
     });
 
     mapService.addCircle(center, radius);
-    showSearch.call(false);
     update();
   }
 
@@ -88,19 +91,19 @@ class MapController extends LoadingGetController {
 
   void onCmareMove(CameraPosition cameraPosition) {
     if (mapService.visibleRegion == null) return;
-    panelController.close();
+    if (!mainSlidePanelController.selecting) panelController.close();
     showSearch.call(!mapService.visibleRegion!.contains(cameraPosition.target));
   }
 
   void onCameraIdle() {
-    panelController.open();
+    // panelController.open();
   }
 
   Future<void> showAddPost() async {
     final result = await Get.toNamed(AddPostScreen.routeName);
 
     if (result is Post) {
-      posts.add(result);
+      posts.insert(0, result);
       await mapService.addPostMarker(result);
       update();
     }
@@ -120,8 +123,8 @@ class MapController extends LoadingGetController {
     await Future.delayed(Duration(seconds: 1));
 
     try {
-      final LatLng center = await mapService.getCenter();
-      final double radius = mapService.GetRadiusOnVisible();
+      final LatLng center = useMap ? await mapService.getCenter() : shinjukuSta;
+      final double radius = useMap ? mapService.GetRadiusOnVisible() : 1000;
       final res = await _postAPI.generateDummy(center, radius);
       if (!res.status) return;
 
@@ -132,10 +135,17 @@ class MapController extends LoadingGetController {
       print(temp.length);
       posts.addAll(temp);
 
-      await Future.forEach(posts, (Post post) async {
-        await mapService.addPostMarker(post);
-      });
-      mapService.addCircle(center, radius);
+      if (useMap) {
+        await Future.forEach(posts, (Post post) async {
+          await mapService.addPostMarker(post, () {
+            mainSlidePanelController.selectPost(post);
+          });
+        });
+        mapService.addCircle(center, radius);
+      }
+
+      await panelController.open();
+
       update();
     } catch (e) {
       print(e.toString());

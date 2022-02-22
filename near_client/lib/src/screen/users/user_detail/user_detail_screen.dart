@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:getx_near/src/model/user.dart';
-import 'package:getx_near/src/screen/user_detail/user_detail_controller.dart';
+import 'package:getx_near/src/screen/users/user_detail/user_detail_controller.dart';
 
 class UserDetailScreen extends StatelessWidget {
   const UserDetailScreen({Key? key, required this.user}) : super(key: key);

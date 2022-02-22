@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
 class OriginCarousel extends StatefulWidget {
   OriginCarousel({
     Key? key,
-    required this.controller,
+    required this.pageController,
     required this.itemCount,
     required this.onChange,
     required this.itemBuilder,
   }) : super(key: key);
 
-  final PageController controller;
+  final PageController pageController;
   final int itemCount;
   final Function(int index) onChange;
   final Widget Function(BuildContext context, int index) itemBuilder;
@@ -22,14 +23,13 @@ class OriginCarousel extends StatefulWidget {
 }
 
 class _OriginCarouselState extends State<OriginCarousel> {
-  final pageController = PageController(initialPage: 0, viewportFraction: 0.6);
   late int currentPage;
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      currentPage = pageController.initialPage;
+      currentPage = widget.pageController.initialPage;
     });
   }
 
@@ -38,7 +38,7 @@ class _OriginCarouselState extends State<OriginCarousel> {
     return Flexible(
         child: PageView.builder(
       itemCount: widget.itemCount,
-      controller: pageController,
+      controller: widget.pageController,
       itemBuilder: widget.itemBuilder,
       onPageChanged: (index) {
         setState(() {
@@ -85,9 +85,16 @@ class OriginCarouselCell extends StatelessWidget {
             scale: scale,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey[400],
+                color: ConstsColor.panelColor,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(width: 1),
+                // border: Border.all(width: 1, color: Colors.white),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 8,
+                    offset: Offset(4, 5),
+                    color: Colors.white,
+                  ),
+                ],
                 image: backGroundImage,
               ),
               child: child,
