@@ -1,5 +1,5 @@
-import 'package:getx_near/src/api/test_post_api.dart';
-import 'package:getx_near/src/model/test_post.dart';
+import 'package:getx_near/src/api/post_api.dart';
+import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/main_tab/add_post/add_post_screen.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
@@ -11,14 +11,14 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MapController extends LoadingGetController {
   final mapService = MapService();
-  final List<TestPost> posts = [];
+  final List<Post> posts = [];
 
   late MainSlidePanelController mainSlidePanelController;
   final PanelController panelController = PanelController();
 
   late LatLng centerPosition;
   final RxBool showSearch = true.obs;
-  final TestPostAPI _testPostAPI = TestPostAPI();
+  final PostAPI _postAPI = PostAPI();
 
   Future<void> onMapCreate(GoogleMapController controller) async {
     isLoading.call(true);
@@ -53,16 +53,16 @@ class MapController extends LoadingGetController {
       "radius": radius.toString(),
     };
 
-    final res = await _testPostAPI.getNearPosts(query);
+    final res = await _postAPI.getNearPosts(query);
     if (!res.status) return;
     final items = List<Map<String, dynamic>>.from(res.data);
-    final temp = List<TestPost>.from(items.map((m) => TestPost.fromMap(m)));
+    final temp = List<Post>.from(items.map((m) => Post.fromMap(m)));
     await panelController.open();
 
     posts.addAll(temp);
 
-    posts.forEach((element) {
-      mapService.addMarker(element);
+    await Future.forEach(posts, (Post post) async {
+      await mapService.addPostMarker(post);
     });
 
     mapService.addCircle(center, radius);
@@ -88,27 +88,60 @@ class MapController extends LoadingGetController {
 
   void onCmareMove(CameraPosition cameraPosition) {
     if (mapService.visibleRegion == null) return;
-
+    panelController.close();
     showSearch.call(!mapService.visibleRegion!.contains(cameraPosition.target));
   }
 
   void onCameraIdle() {
-    print("Stop Move");
+    panelController.open();
   }
 
   Future<void> showAddPost() async {
     final result = await Get.toNamed(AddPostScreen.routeName);
 
-    if (result is TestPost) {
-      print("ADD");
+    if (result is Post) {
       posts.add(result);
-      mapService.addMarker(result);
+      await mapService.addPostMarker(result);
       update();
     }
   }
 
   Future<void> backScreen() async {
     MainTabController.to.backOldIndex();
+  }
+
+  /// generate dummy for test
+
+  Future<void> getDummy() async {
+    mapService.resetMap();
+    posts.clear();
+    isLoading.call(true);
+
+    await Future.delayed(Duration(seconds: 1));
+
+    try {
+      final LatLng center = await mapService.getCenter();
+      final double radius = mapService.GetRadiusOnVisible();
+      final res = await _postAPI.generateDummy(center, radius);
+      if (!res.status) return;
+
+      final items = List<Map<String, dynamic>>.from(res.data);
+
+      final temp = List<Post>.from(items.map((m) => Post.fromMap(m)));
+
+      print(temp.length);
+      posts.addAll(temp);
+
+      await Future.forEach(posts, (Post post) async {
+        await mapService.addPostMarker(post);
+      });
+      mapService.addCircle(center, radius);
+      update();
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoading.call(false);
+    }
   }
 }
 

@@ -1,5 +1,9 @@
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 
+abstract class JsonObject {
+  void fromMap(Map<String, dynamic> map);
+}
+
 class ResponseAPI {
   final bool status;
   final int statusCode;
@@ -22,6 +26,11 @@ class ResponseAPI {
     );
   }
 
+  // List<T> parseArrayData<T>() {
+  //   final items = List<Map<String, dynamic>>.from(data);
+  //   final temp = List<T>.from(items.map((m) => T))
+  // }
+
   @override
   String toString() {
     return 'ResponseAPI(status: $status, statusCode: $statusCode, message: $message, data: $data)';
@@ -32,7 +41,6 @@ ResponseAPI catchAPIError([String message = "Invalid Error"]) {
   /// show Allert
   showError(message);
 
-  print(message);
   return ResponseAPI(
     status: false,
     statusCode: 500,

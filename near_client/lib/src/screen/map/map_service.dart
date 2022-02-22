@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:getx_near/src/model/test_post.dart';
+import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/visibleRegion.dart';
 import 'package:getx_near/src/service/location_service.dart';
+import 'package:getx_near/src/utils/dummy_generator.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:marker_icon/marker_icon.dart';
 import 'package:sizer/sizer.dart';
 
 final double panelMinHeight = 10.h;
@@ -134,14 +136,25 @@ class MapService {
     _circles.clear();
   }
 
-  void addMarker(MarkerIdentifer obj) {
+  Future<void> addPostMarker(
+    Post obj,
+  ) async {
     final markerId = MarkerId(obj.id);
+
+    /// user url
+    final icon = await MarkerIcon.downloadResizePictureCircle(
+      obj.user.avatarUrl ?? dummyUserImageUrl(),
+      size: 120,
+      addBorder: true,
+      borderColor: Colors.white,
+      borderSize: 15,
+    );
 
     final marker = Marker(
       markerId: markerId,
       position: obj.coordinate,
       draggable: true,
-      icon: BitmapDescriptor.defaultMarker,
+      icon: icon,
       infoWindow: InfoWindow(
         title: "Sample",
         snippet: obj.content,

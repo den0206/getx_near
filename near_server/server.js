@@ -23,7 +23,7 @@ app.use(morgan('tiny'));
 connection();
 
 const userRoute = require('./routes/user_route');
-const testPostRoute = require('./routes/test_post_route');
+const postRoutes = require('./routes/post_routes');
 
 app.get('/', (req, res) => {
   res.status(200).send('Connect Success');
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 
 const ver = process.env.API_VER;
 app.use(`${ver}/user`, userRoute);
-app.use(`${ver}/testpost`, testPostRoute);
+app.use(`${ver}/post`, postRoutes);
 
 server.listen(port, () => {
   console.log('server Start', port);
