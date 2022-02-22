@@ -1,13 +1,13 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:getx_near/src/api/test_post_api.dart';
+import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/service/location_service.dart';
 
 class GetAddressController extends GetxController {
   Position? currentPosition;
   String? currentAddress;
 
-  final TestPostAPI _testPostAPI = TestPostAPI();
+  final PostAPI _postAPI = PostAPI();
   final LocationService locationService = LocationService();
 
   @override
@@ -38,7 +38,7 @@ class GetAddressController extends GetxController {
         "latitude": currentPosition!.latitude,
       };
 
-      final res = await _testPostAPI.createPost(body);
+      final res = await _postAPI.createPost(body);
       if (!res.status) return;
 
       update();

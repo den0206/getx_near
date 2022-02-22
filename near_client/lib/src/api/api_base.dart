@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:getx_near/src/model/custom_exception.dart';
 import 'package:getx_near/src/model/response_api.dart';
+import 'package:getx_near/src/service/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io' as io;
 
@@ -65,7 +66,7 @@ extension APIBaseExtention on APIBase {
       final res = await http.get(uri, headers: headers);
       return _filterResponse(res);
     } on UnauthorisedException catch (unauth) {
-      // await AuthService.to.logout();
+      await AuthService.to.logout();
       throw unauth;
     } on SocketException {
       throw Exception("No Internet");
@@ -81,7 +82,7 @@ extension APIBaseExtention on APIBase {
       final res = await http.post(uri, headers: headers, body: bodyparams);
       return _filterResponse(res);
     } on UnauthorisedException catch (unauth) {
-      // await AuthService.to.logout();
+      await AuthService.to.logout();
       throw unauth;
     } on SocketException {
       throw Exception("No Internet");
@@ -100,7 +101,7 @@ class Enviroment {
   }
 }
 
-enum EndPoint { user, testpost }
+enum EndPoint { user, post }
 
 extension EndPointEXT on EndPoint {
   String get name {
@@ -109,8 +110,8 @@ extension EndPointEXT on EndPoint {
     switch (this) {
       case EndPoint.user:
         return "$APIVer/user";
-      case EndPoint.testpost:
-        return "$APIVer/testpost";
+      case EndPoint.post:
+        return "$APIVer/post";
     }
   }
 }

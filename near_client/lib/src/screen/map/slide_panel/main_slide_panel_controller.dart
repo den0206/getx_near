@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:getx_near/src/model/test_post.dart';
+import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 
 class MainSlidePanelController extends GetxController {
@@ -10,7 +10,7 @@ class MainSlidePanelController extends GetxController {
   MainSlidePanelController(this.mapController);
   final RxnInt currentPostIndex = RxnInt();
 
-  List<TestPost> get mPosts {
+  List<Post> get mPosts {
     return mapController.posts;
   }
 
@@ -27,7 +27,7 @@ class MainSlidePanelController extends GetxController {
     await selectPost(post);
   }
 
-  Future<void> selectPost(TestPost post) async {
+  Future<void> selectPost(Post post) async {
     final index = mPosts.indexWhere((p) => p.id == post.id);
     currentPostIndex.call(index);
     await mapController.setCenterPosition(latLng: post.coordinate, zoom: 16);

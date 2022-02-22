@@ -20,7 +20,6 @@ abstract class LoadingGetView<T extends LoadingGetController>
 
     return GestureDetector(
       onTap: () {
-        print("Call");
         dismisskeyBord(context);
       },
       child: Obx(

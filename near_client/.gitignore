@@ -50,3 +50,4 @@ app.*.map.json
 .env*
 
 /lib/src/utils/bitmap_generator.dart
+/lib/src/utils/dummy_generator.dart

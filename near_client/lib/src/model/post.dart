@@ -1,22 +1,26 @@
 import 'dart:convert';
 
+import 'package:getx_near/src/model/user.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-abstract class MarkerIdentifer {
-  String get id;
-  LatLng get coordinate;
-  String get content;
-}
+// abstract class MarkerIdentifer {
+//   String get id;
+//   LatLng get coordinate;
+//   String get content;
+// }
 
-class TestPost extends MarkerIdentifer {
+class Post {
   final String id;
   final String content;
+  final User user;
   final int emergency;
   final LatLng coordinate;
   final DateTime createdAt;
-  TestPost({
+
+  Post({
     required this.id,
     required this.content,
+    required this.user,
     required this.emergency,
     required this.coordinate,
     required this.createdAt,
@@ -27,21 +31,23 @@ class TestPost extends MarkerIdentifer {
       'id': id,
       'content': content,
       "latitude": coordinate.latitude,
+      "user": user.toMap(),
       'longitude': coordinate.longitude,
       "emergency": emergency,
       'createdAt': createdAt.toIso8601String(),
     };
   }
 
-  factory TestPost.fromMap(Map<String, dynamic> map) {
+  factory Post.fromMap(Map<String, dynamic> map) {
     final cood = List<double>.from(map["location"]["coordinates"]);
 
     /// CAUTION mongoose lat: [1], lng[0]
-
     final latLng = LatLng(cood[1], cood[0]);
-    return TestPost(
+
+    return Post(
       id: map['id'] ?? '',
       content: map['content'] ?? '',
+      user: User.fromMap(map["userId"]),
       emergency: map["emergency"],
       coordinate: latLng,
       createdAt: DateTime.parse(map["createdAt"]).toUtc(),
@@ -50,11 +56,10 @@ class TestPost extends MarkerIdentifer {
 
   String toJson() => json.encode(toMap());
 
-  factory TestPost.fromJson(String source) =>
-      TestPost.fromMap(json.decode(source));
+  factory Post.fromJson(String source) => Post.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'TestPost(id: $id, content: $content, emergency: $emergency, coordinate: $coordinate, createdAt: $createdAt)';
+    return 'Post(id: $id, content: $content, user: $user, emergency: $emergency, coordinate: $coordinate, createdAt: $createdAt)';
   }
 }

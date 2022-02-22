@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:getx_near/src/utils/dummy_generator.dart';
+
 class User {
   final String id;
   final String name;
@@ -13,6 +15,7 @@ class User {
     required this.name,
     required this.email,
     this.avatarUrl,
+    this.sessionToken,
   });
 
   Map<String, dynamic> toMap() {
@@ -21,6 +24,7 @@ class User {
       'name': name,
       'email': email,
       'avatarUrl': avatarUrl,
+      "sessionToken": sessionToken,
     };
   }
 
@@ -29,11 +33,17 @@ class User {
       id: map['id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      avatarUrl: map['avatarUrl'],
+      avatarUrl: map['avatarUrl'] ?? dummyUserImageUrl(),
+      sessionToken: map["sessionToken"],
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'User(id: $id, name: $name, email: $email, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
+  }
 }

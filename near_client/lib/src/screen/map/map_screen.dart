@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
@@ -15,6 +16,8 @@ class MapScreen extends LoadingGetView<MapController> {
   @override
   MapController get ctr => MapController();
 
+  final bool useMap = false;
+
   @override
   Widget get child {
     return GetBuilder<MapController>(
@@ -22,34 +25,35 @@ class MapScreen extends LoadingGetView<MapController> {
         return Scaffold(
           body: Stack(
             children: [
-              Builder(builder: (context) {
-                return GoogleMap(
-                  key: controller.mapService.mapKey,
-                  initialCameraPosition: initialCameraPosition,
-                  padding: EdgeInsets.only(
-                    top: kToolbarHeight,
-                    bottom: logoHeifht,
-                  ),
-                  mapType: MapType.normal,
-                  myLocationButtonEnabled: false,
-                  myLocationEnabled: true,
-                  scrollGesturesEnabled: true,
-                  zoomGesturesEnabled: false,
-                  markers: controller.mapService.markers,
-                  circles: controller.mapService.circles,
-                  polylines: controller.mapService.polylines,
-                  polygons: controller.mapService.polygons,
-                  onCameraMove: controller.onCmareMove,
-                  onCameraIdle: controller.onCameraIdle,
-                  onTap: (argument) {
-                    dismisskeyBord(context);
-                    controller.panelController.close();
-                  },
-                  onMapCreated: (mapCtr) async {
-                    await controller.onMapCreate(mapCtr);
-                  },
-                );
-              }),
+              if (useMap)
+                Builder(builder: (context) {
+                  return GoogleMap(
+                    key: controller.mapService.mapKey,
+                    initialCameraPosition: initialCameraPosition,
+                    padding: EdgeInsets.only(
+                      top: kToolbarHeight,
+                      bottom: logoHeifht,
+                    ),
+                    mapType: MapType.normal,
+                    myLocationButtonEnabled: false,
+                    myLocationEnabled: true,
+                    scrollGesturesEnabled: true,
+                    zoomGesturesEnabled: false,
+                    markers: controller.mapService.markers,
+                    circles: controller.mapService.circles,
+                    polylines: controller.mapService.polylines,
+                    polygons: controller.mapService.polygons,
+                    onCameraMove: controller.onCmareMove,
+                    onCameraIdle: controller.onCameraIdle,
+                    onTap: (argument) {
+                      dismisskeyBord(context);
+                      // controller.panelController.close();
+                    },
+                    onMapCreated: (mapCtr) async {
+                      await controller.onMapCreate(mapCtr);
+                    },
+                  );
+                }),
               _searchButton(),
               _leftSide(),
               _rightSide(),
@@ -171,6 +175,26 @@ class MapScreen extends LoadingGetView<MapController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  if (kDebugMode) ...[
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.purple,
+                      ),
+                      child: Builder(builder: (context) {
+                        return IconButton(
+                          color: Colors.white,
+                          icon: Icon(Icons.group),
+                          onPressed: () {
+                            controller.getDummy();
+                          },
+                        );
+                      }),
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                  ],
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,

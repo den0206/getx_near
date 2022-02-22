@@ -1,9 +1,9 @@
 const mongoose = require(`mongoose`);
-const GeoJSON = require(`mongoose-geojson-schema`);
 
-const testSampleSchema = mongoose.Schema({
+const postSchema = mongoose.Schema({
   title: {type: String},
   content: {type: String, required: true, maxlength: 160},
+  userId: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'},
   emergency: {type: Number, required: true},
   location: {
     type: {
@@ -23,14 +23,14 @@ const testSampleSchema = mongoose.Schema({
   },
 });
 
-testSampleSchema.index({location: '2dsphere'});
-testSampleSchema.virtual('id').get(function () {
+postSchema.index({location: '2dsphere'});
+postSchema.virtual('id').get(function () {
   if (this._id) return this._id.toHexString();
 });
 
-testSampleSchema.set('toJSON', {
+postSchema.set('toJSON', {
   virtuals: true,
 });
 
-const TestPost = mongoose.model('TestPost', testSampleSchema);
-module.exports = TestPost;
+const Post = mongoose.model('Post', postSchema);
+module.exports = Post;
