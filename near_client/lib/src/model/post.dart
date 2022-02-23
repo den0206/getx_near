@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // abstract class MarkerIdentifer {
 //   String get id;
@@ -10,13 +11,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 //   String get content;
 // }
 
-class Post {
+class Post extends JsonModel {
   final String id;
   final String content;
   final User user;
   final int emergency;
   final LatLng coordinate;
   final DateTime createdAt;
+
+  List<String> comments;
 
   Post({
     required this.id,
@@ -25,6 +28,7 @@ class Post {
     required this.emergency,
     required this.coordinate,
     required this.createdAt,
+    required this.comments,
   });
 
   AlertLevel get level {
@@ -40,6 +44,7 @@ class Post {
       'longitude': coordinate.longitude,
       "emergency": emergency,
       'createdAt': createdAt.toIso8601String(),
+      "comments": comments
     };
   }
 
@@ -56,6 +61,7 @@ class Post {
       emergency: map["emergency"],
       coordinate: latLng,
       createdAt: DateTime.parse(map["createdAt"]).toUtc(),
+      comments: List<String>.from(map["comments"] ?? []),
     );
   }
 
@@ -65,6 +71,6 @@ class Post {
 
   @override
   String toString() {
-    return 'Post(id: $id, content: $content, user: $user, emergency: $emergency, coordinate: $coordinate, createdAt: $createdAt)';
+    return 'Post(id: $id, content: $content, user: $user, emergency: $emergency, coordinate: $coordinate, createdAt: $createdAt, comments: $comments)';
   }
 }

@@ -63,3 +63,9 @@ class LocationService {
     return radiusInMeters;
   }
 }
+
+int getDistansePoints(LatLng from, LatLng to) {
+  return Geolocator.distanceBetween(
+          from.latitude, from.longitude, to.latitude, to.longitude)
+      .round();
+}

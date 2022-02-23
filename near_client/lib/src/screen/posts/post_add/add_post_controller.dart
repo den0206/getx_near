@@ -5,7 +5,6 @@ import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
-import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 
 class AddPostController extends LoadingGetController {
@@ -35,7 +34,6 @@ class AddPostController extends LoadingGetController {
     try {
       final Position current = await _locationService.getCurrentPosition();
       final Map<String, dynamic> body = {
-        // "title": "title",
         "content": tX.text,
         "longitude": current.longitude,
         "latitude": current.latitude,

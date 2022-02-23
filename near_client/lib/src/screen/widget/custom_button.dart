@@ -43,18 +43,20 @@ class CustomButton extends StatelessWidget {
 }
 
 class CircleImageButton extends StatelessWidget {
-  const CircleImageButton(
-      {Key? key,
-      required this.imageProvider,
-      required this.size,
-      this.addShadow = true,
-      this.fit = BoxFit.cover,
-      this.onTap})
-      : super(key: key);
+  const CircleImageButton({
+    Key? key,
+    required this.imageProvider,
+    required this.size,
+    this.addShadow = true,
+    this.fit = BoxFit.cover,
+    this.border,
+    this.onTap,
+  }) : super(key: key);
 
   final ImageProvider imageProvider;
   final double size;
   final bool addShadow;
+  final Border? border;
   final BoxFit fit;
   final Function()? onTap;
 
@@ -69,7 +71,9 @@ class CircleImageButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: Colors.grey,
           image: DecorationImage(image: imageProvider, fit: fit),
-          border: Border.all(color: Colors.grey, width: 1),
+          border: border == null
+              ? Border.all(color: Colors.grey, width: 1)
+              : border,
           boxShadow: addShadow
               ? [
                   BoxShadow(
