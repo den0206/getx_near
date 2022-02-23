@@ -7,6 +7,13 @@ const postSchema = mongoose.Schema({
   content: {type: String, required: true, maxlength: 160},
   userId: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'},
   emergency: {type: Number, required: true},
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: [],
+    },
+  ],
   comments: [
     {type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: []},
   ],
@@ -14,10 +21,14 @@ const postSchema = mongoose.Schema({
     type: location,
     required: true,
   },
+  expireAt: {
+    type: Date,
+    default: null,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 3600,
+    // expires: 3600,
   },
 });
 
@@ -29,6 +40,7 @@ postSchema.pre('remove', async function (next) {
 });
 
 postSchema.index({location: '2dsphere'});
+postSchema.index({expireAt: 1}, {expireAfterSeconds: 0});
 postSchema.virtual('id').get(function () {
   if (this._id) return this._id.toHexString();
 });
@@ -39,3 +51,31 @@ postSchema.set('toJSON', {
 
 const Post = mongoose.model('Post', postSchema);
 module.exports = Post;
+
+/// Stream Example
+
+// const pipeline = [
+//   {
+//     $match: {
+//       $or: [{operationType: 'delete'}],
+//     },
+//   },
+// ];
+
+// const changeStream = Post.watch(pipeline);
+
+// changeStream.on('change', (next) => {
+//   switch (next.operationType) {
+//     case 'insert':
+//       console.log('an insert happened...', 'uni_ID: ', next.fullDocument);
+//       break;
+//     case 'update':
+//       console.log('an update happened...');
+//       break;
+//     case 'delete':
+//       console.log('a delete happened...', 'uni_ID: ', next.fullDocument);
+//       break;
+//     default:
+//       break;
+//   }
+// });

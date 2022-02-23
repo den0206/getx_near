@@ -10,7 +10,7 @@ import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-final bool useMap = false;
+final bool useMap = true;
 
 class MapScreen extends LoadingGetView<MapController> {
   static const routeName = '/MapScreen';
@@ -44,9 +44,7 @@ class MapScreen extends LoadingGetView<MapController> {
                     polygons: controller.mapService.polygons,
                     onCameraMove: controller.onCmareMove,
                     onCameraIdle: controller.onCameraIdle,
-                    onTap: (argument) {
-                      // dismisskeyBord(context);
-                    },
+                    onTap: (argument) {},
                     onMapCreated: (mapCtr) async {
                       await controller.onMapCreate(mapCtr);
                     },
@@ -79,8 +77,7 @@ class MapScreen extends LoadingGetView<MapController> {
                     onPressed: () {
                       controller.backScreen();
                     }),
-                backgroundColor:
-                    Colors.transparent, //You can make this transparent
+                backgroundColor: Colors.transparent,
                 elevation: 0.0,
               );
             }),

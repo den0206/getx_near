@@ -54,6 +54,6 @@ class MainSlidePanelController extends GetxController {
   Future<void> showPostDetail(Post post) async {
     final _ = Get.toNamed(PostDettailScreen.routeName, arguments: post);
 
-    await mapController.panelController.open();
+    // await mapController.panelController.open();
   }
 }

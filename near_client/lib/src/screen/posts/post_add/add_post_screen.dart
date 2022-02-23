@@ -1,10 +1,13 @@
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/post_add/add_post_controller.dart';
+import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/service/auth_service.dart';
 import 'package:sizer/sizer.dart';
 
 class AddPostScreen extends LoadingGetView<AddPostController> {
@@ -66,11 +69,11 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.grey),
+                  CircleImageButton(
+                    imageProvider:
+                        getUserImage(AuthService.to.currentUser.value!),
+                    size: 40.sp,
+                    border: Border.all(color: Colors.white, width: 2),
                   ),
                   Container(
                     constraints: BoxConstraints(maxWidth: 80.w),

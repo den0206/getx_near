@@ -14,6 +14,16 @@ class PostAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> addLike(String postId) async {
+    final body = {"postId": postId};
+    try {
+      final Uri uri = setUri("/like");
+      return await putRequest(uri: uri, body: body, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
   Future<ResponseAPI> getNearPosts(Map<String, dynamic> query) async {
     try {
       final Uri uri = setUri("/near", query);

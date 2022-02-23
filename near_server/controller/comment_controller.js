@@ -1,7 +1,6 @@
 const Comment = require('../model/comment');
 const Post = require('../model/post');
 const {checkId} = require('../db/database');
-const res = require('express/lib/response');
 
 async function addComment(req, res) {
   const userId = req.userData.userId;
@@ -18,22 +17,8 @@ async function addComment(req, res) {
       location: {type: 'Point', coordinates: [longitude, latitude]},
     });
 
-    /// relation でかける pre
-    const findPostArray = await Post.findById(postId).select('comments');
-    if (!findPostArray)
-      return res
-        .status(400)
-        .json({status: false, message: 'Cant find the Post'});
-
-    var {comments} = findPostArray;
-
-    comments.unshift(newComment._id);
-
     await newComment.save();
-    await Post.findByIdAndUpdate(postId, {comments: comments}, {new: true});
-
     await newComment.populate('userId', '-password');
-
     res.status(200).json({status: true, data: newComment});
   } catch (e) {
     res.status(500).json({status: false, message: e.message});
@@ -65,3 +50,15 @@ module.exports = {
   addComment,
   getComment,
 };
+
+/// relation でかける pre
+// const findPostArray = await Post.findById(postId).select('comments');
+//     if (!findPostArray)
+//       return res
+//         .status(400)
+//         .json({status: false, message: 'Cant find the Post'});
+
+//     var {comments} = findPostArray;
+
+//     comments.unshift(newComment._id);
+//     await Post.findByIdAndUpdate(postId, {comments: comments}, {new: true});

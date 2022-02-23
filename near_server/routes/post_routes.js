@@ -6,6 +6,7 @@ const checkAuth = require('../middleware/check_auth');
 
 router.post('/create', checkAuth, postController.createPost);
 router.get('/near', postController.getNearPost);
+router.put('/like', checkAuth, postController.addLike);
 
 /// dummy
 router.get('/dummy', makeDummyPosts);

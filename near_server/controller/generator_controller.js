@@ -40,7 +40,6 @@ async function makeDummyPosts(req, res) {
 async function makeDummyComments(req, res) {
   const {postId, lng, lat, radius} = req.query;
   const randomNum = randomGenerator.intR(10);
-  console.log(req.query);
 
   try {
     const result = [...Array(randomNum)].map((_, i) => {

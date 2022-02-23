@@ -111,6 +111,24 @@ extension APIBaseExtention on APIBase {
       throw Exception("No Internet");
     }
   }
+
+  Future<ResponseAPI> putRequest(
+      {required Uri uri,
+      required Map<String, dynamic> body,
+      useToken = false}) async {
+    try {
+      _setToken(useToken);
+
+      final String bodyParams = json.encode(body);
+      final res = await http.put(uri, headers: headers, body: bodyParams);
+      return _filterResponse(res);
+    } on UnauthorisedException catch (unauth) {
+      await AuthService.to.logout();
+      throw unauth;
+    } on SocketException {
+      throw Exception("No Internet");
+    }
+  }
 }
 
 class Enviroment {

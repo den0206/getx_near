@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:getx_near/src/service/auth_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:getx_near/src/model/user.dart';
@@ -19,6 +20,7 @@ class Post extends JsonModel {
   final LatLng coordinate;
   final DateTime createdAt;
 
+  List<String> likes;
   List<String> comments;
 
   Post({
@@ -28,8 +30,15 @@ class Post extends JsonModel {
     required this.emergency,
     required this.coordinate,
     required this.createdAt,
+    required this.likes,
     required this.comments,
   });
+
+  bool get isLiked {
+    final currentUser = AuthService.to.currentUser.value;
+    if (currentUser == null) return false;
+    return likes.contains(currentUser.id);
+  }
 
   AlertLevel get level {
     return getAlert(emergency.toDouble());
@@ -44,6 +53,7 @@ class Post extends JsonModel {
       'longitude': coordinate.longitude,
       "emergency": emergency,
       'createdAt': createdAt.toIso8601String(),
+      "likes": likes,
       "comments": comments
     };
   }
@@ -61,6 +71,7 @@ class Post extends JsonModel {
       emergency: map["emergency"],
       coordinate: latLng,
       createdAt: DateTime.parse(map["createdAt"]).toUtc(),
+      likes: List<String>.from(map["likes"] ?? []),
       comments: List<String>.from(map["comments"] ?? []),
     );
   }
@@ -71,6 +82,6 @@ class Post extends JsonModel {
 
   @override
   String toString() {
-    return 'Post(id: $id, content: $content, user: $user, emergency: $emergency, coordinate: $coordinate, createdAt: $createdAt, comments: $comments)';
+    return 'Post(id: $id, content: $content, user: $user, emergency: $emergency, coordinate: $coordinate, createdAt: $createdAt, likes: $likes, comments: $comments)';
   }
 }
