@@ -13,6 +13,7 @@ import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -41,7 +42,6 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
             maxHeight: controller.maxPanelHeight,
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             color: ConstsColor.panelColor,
-            // backdropEnabled: true,
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -107,18 +107,42 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          BlinkingWidet(
-                            duration: Duration(milliseconds: 500),
-                            child: HelpButton(
-                              post: post,
-                              size: 23.sp,
-                              uselabel: true,
-                            ),
-                          ),
+                          !post.isLiked
+                              ? GestureDetector(
+                                  onTap: () {
+                                    controller.addandRemoveLike();
+                                  },
+                                  child: BlinkingWidet(
+                                    duration: Duration(milliseconds: 500),
+                                    child: HelpButton(
+                                      post: post,
+                                      size: 23.sp,
+                                      uselabel: true,
+                                    ),
+                                  ),
+                                )
+                              : HelpButton(
+                                  post: post,
+                                  size: 23.sp,
+                                  uselabel: true,
+                                ),
                           Container(
                             constraints: BoxConstraints(maxWidth: 70.w),
-                            child: AlertIndicator(
-                                intValue: post.emergency, level: post.level),
+                            height: 30,
+                            child: LiquidLinearProgressIndicator(
+                              value: post.emergency / 100,
+                              valueColor:
+                                  AlwaysStoppedAnimation(post.level.mainColor),
+                              backgroundColor: Color(0xffD6D6D6),
+                              borderColor: Colors.grey,
+                              borderWidth: 2.0,
+                              borderRadius: 12.0,
+                              direction: Axis.horizontal,
+                              center: Text(
+                                "${post.emergency} %",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -143,25 +167,6 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                     controller.panelController.open();
                   },
                 ),
-                // Expanded(
-                //   child: ListView.separated(
-                //     padding: EdgeInsets.zero,
-                //     separatorBuilder: (context, index) => Divider(
-                //       color: Colors.white,
-                //     ),
-                //     shrinkWrap: true,
-                //     itemCount: 20,
-                //     itemBuilder: (context, index) {
-                //       return ListTile(
-                //         enabled: false,
-                //         title: Text(
-                //           "I am afdada",
-                //           style: TextStyle(fontSize: 11.sp),
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // )
               ],
             ),
             panel: CommentBar(),
@@ -282,7 +287,6 @@ class CommentBar extends GetView<PostDetailController> {
         trailing: Builder(builder: (context) {
           return Obx(
             () => IconButton(
-              // padding: EdgeInsets.zero,
               icon: Icon(
                 Icons.send,
                 color: Colors.blue,

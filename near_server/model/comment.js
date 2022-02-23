@@ -1,4 +1,5 @@
 const mongoose = require(`mongoose`);
+
 const location = require('./location');
 
 const commentSchema = mongoose.Schema(
@@ -7,10 +8,28 @@ const commentSchema = mongoose.Schema(
     postId: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Post'},
     userId: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'},
     location: {type: location, required: true},
+    expireAt: {
+      type: Date,
+      default: null,
+    },
   },
   {timestamps: true}
 );
 
+commentSchema.pre('save', async function (next) {
+  const Post = require('../model/post');
+  const findPostArray = await Post.findById(this.postId, 'comments expireAt');
+  console.log('call');
+  if (!findPostArray) return next();
+  var {comments, expireAt} = findPostArray;
+  this.expireAt = expireAt;
+  comments.unshift(this._id);
+  await Post.findByIdAndUpdate(this.postId, {comments: comments}, {new: true});
+
+  next();
+});
+
+commentSchema.index({expireAt: 1}, {expireAfterSeconds: 0});
 commentSchema.virtual('id').get(function () {
   if (this._id) return this._id.toHexString();
 });

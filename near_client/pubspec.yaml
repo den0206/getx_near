@@ -27,6 +27,7 @@ dependencies:
   marker_icon: ^0.7.1
   shared_preferences: ^2.0.13
   auto_size_text: ^3.0.0
+  liquid_progress_indicator: ^0.4.0
 
 dev_dependencies:
   flutter_test:

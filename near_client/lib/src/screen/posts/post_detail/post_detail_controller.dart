@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/comment_api.dart';
+import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
@@ -14,6 +15,7 @@ class PostDetailController extends LoadingGetController {
   final Post post = Get.arguments;
   final PanelController panelController = PanelController();
   final TextEditingController commentContoller = TextEditingController();
+  final PostAPI _postAPI = PostAPI();
   final CommentAPI _commentAPI = CommentAPI();
   final LocationService _locationService = LocationService();
 
@@ -29,6 +31,8 @@ class PostDetailController extends LoadingGetController {
   @override
   void onInit() async {
     super.onInit();
+    print(post.toString());
+    print(post.isLiked);
     await getComments();
   }
 
@@ -60,6 +64,16 @@ class PostDetailController extends LoadingGetController {
       print(e.toString());
     } finally {
       isLoading.call(false);
+    }
+  }
+
+  Future<void> addandRemoveLike() async {
+    try {
+      final res = await _postAPI.addLike(post.id);
+      if (!res.status) return;
+      print(res.data);
+    } catch (e) {
+      print(e.toString());
     }
   }
 
