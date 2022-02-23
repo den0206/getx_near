@@ -3,7 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:getx_near/src/utils/dummy_generator.dart';
 
-class User {
+abstract class JsonModel {
+  JsonModel();
+  JsonModel.fromMap(Map<String, dynamic> map);
+}
+
+class User extends JsonModel {
   final String id;
   final String name;
   final String email;

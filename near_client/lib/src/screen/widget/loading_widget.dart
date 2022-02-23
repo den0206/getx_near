@@ -14,13 +14,17 @@ abstract class LoadingGetView<T extends LoadingGetController>
   final bool isFenix = false;
   Widget get child;
 
+  void backgroundTap(BuildContext context) {
+    dismisskeyBord(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!Get.isRegistered<T>()) Get.lazyPut(() => ctr, fenix: isFenix);
 
     return GestureDetector(
       onTap: () {
-        dismisskeyBord(context);
+        backgroundTap(context);
       },
       child: Obx(
         () => Stack(

@@ -52,7 +52,6 @@ class MapService {
   }
 
   Future<Position> getCurrentPosition() async {
-    await locationService.checkPermission();
     return await locationService.getCurrentPosition();
   }
 

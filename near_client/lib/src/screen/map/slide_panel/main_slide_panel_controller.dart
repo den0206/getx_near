@@ -44,6 +44,8 @@ class MainSlidePanelController extends GetxController {
       await mapController.setCenterPosition(latLng: post.coordinate, zoom: 16);
       mapController.mapService.showInfoService(post.id);
     }
+    if (mapController.panelController.isPanelClosed)
+      await mapController.panelController.open();
 
     await Future.delayed(Duration(milliseconds: 500));
     selecting = false;
