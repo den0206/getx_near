@@ -24,6 +24,7 @@ class MapController extends LoadingGetController {
 
   Future<void> onMapCreate(GoogleMapController controller) async {
     isLoading.call(true);
+    print("init Map");
     try {
       mapService.init(controller);
       await setCenterPosition();
