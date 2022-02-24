@@ -19,6 +19,10 @@ async function makeDummyPosts(req, res) {
         password: '12345',
       });
 
+      var expireAt = new Date();
+      // expireAt.setHours(expireAt.getHours() + 3);
+      expireAt.setSeconds(expireAt.getSeconds() + 20);
+
       const loc = randomGenerator.locationR(lat, lng, radius);
       const {longitude, latitude} = loc;
 
@@ -26,6 +30,7 @@ async function makeDummyPosts(req, res) {
         content: randomGenerator.idR(5),
         userId: dummyUser,
         emergency: randomGenerator.intR(101),
+        expireAt: expireAt,
         location: {type: 'Point', coordinates: [longitude, latitude]},
       });
 

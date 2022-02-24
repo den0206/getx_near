@@ -17,9 +17,10 @@ const commentSchema = mongoose.Schema(
 );
 
 commentSchema.pre('save', async function (next) {
+  console.log('===== Relation Save');
   const Post = require('../model/post');
   const findPostArray = await Post.findById(this.postId, 'comments expireAt');
-  console.log('call');
+
   if (!findPostArray) return next();
   var {comments, expireAt} = findPostArray;
   this.expireAt = expireAt;

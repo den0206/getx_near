@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/screen/widget/blinking_widget.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
@@ -82,34 +83,51 @@ class HelpButton extends StatelessWidget {
     required this.post,
     required this.size,
     this.uselabel = false,
+    this.onTap,
   }) : super(key: key);
 
   final Post post;
   final double size;
   final bool uselabel;
+  final VoidCallback? onTap;
+
+  Color get mainColor {
+    if (!post.isLiked) {
+      return ConstsColor.cautionColor;
+    } else {
+      return Colors.blue[300]!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          Icons.warning_amber,
-          color: ConstsColor.cautionColor,
-          size: size,
+    return GestureDetector(
+      onTap: onTap,
+      child: BlinkingWidet(
+        duration: Duration(milliseconds: 500),
+        use: !post.isLiked,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.warning_amber,
+              color: mainColor,
+              size: size,
+            ),
+            if (uselabel)
+              Text(
+                "Want Help!",
+                style: TextStyle(color: mainColor),
+              ),
+            Text(
+              "${post.likes.length}",
+              style: TextStyle(
+                color: mainColor,
+              ),
+            )
+          ],
         ),
-        if (uselabel)
-          Text(
-            "Want Help!",
-            style: TextStyle(color: ConstsColor.cautionColor),
-          ),
-        Text(
-          "${10}",
-          style: TextStyle(
-            color: ConstsColor.cautionColor,
-          ),
-        )
-      ],
+      ),
     );
   }
 }

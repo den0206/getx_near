@@ -71,7 +71,10 @@ class PostDetailController extends LoadingGetController {
     try {
       final res = await _postAPI.addLike(post.id);
       if (!res.status) return;
-      print(res.data);
+      final current = List<String>.from(res.data);
+      post.likes = current;
+
+      update();
     } catch (e) {
       print(e.toString());
     }

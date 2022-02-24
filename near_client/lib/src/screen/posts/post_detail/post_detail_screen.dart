@@ -6,6 +6,7 @@ import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_controller.dart';
 import 'package:getx_near/src/screen/widget/blinking_widget.dart';
+import 'package:getx_near/src/screen/widget/countdown_timer.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/get_size_widget.dart';
@@ -107,25 +108,13 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          !post.isLiked
-                              ? GestureDetector(
-                                  onTap: () {
-                                    controller.addandRemoveLike();
-                                  },
-                                  child: BlinkingWidet(
-                                    duration: Duration(milliseconds: 500),
-                                    child: HelpButton(
-                                      post: post,
-                                      size: 23.sp,
-                                      uselabel: true,
-                                    ),
-                                  ),
-                                )
-                              : HelpButton(
-                                  post: post,
-                                  size: 23.sp,
-                                  uselabel: true,
-                                ),
+                          HelpButton(
+                            post: post,
+                            size: 23.sp,
+                            onTap: () {
+                              controller.addandRemoveLike();
+                            },
+                          ),
                           Container(
                             constraints: BoxConstraints(maxWidth: 70.w),
                             height: 30,
@@ -167,6 +156,15 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                     controller.panelController.open();
                   },
                 ),
+                if (post.expireAt != null)
+                  Builder(builder: (context) {
+                    return CustomCountdownTimer(
+                      endTime: post.expireAt!,
+                      onEnd: () {
+                        Navigator.of(context).pop();
+                      },
+                    );
+                  })
               ],
             ),
             panel: CommentBar(),
@@ -332,8 +330,12 @@ class CommentCell extends GetView<PostDetailController> {
               minFontSize: 6,
               maxLines: 2,
             )),
-        trailing:
-            comment.distance != null ? Text("${comment.distance} m") : null,
+        trailing: comment.distance != null
+            ? Text(
+                "${comment.distance} m",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )
+            : null,
       ),
     );
   }

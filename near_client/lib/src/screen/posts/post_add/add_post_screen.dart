@@ -1,6 +1,7 @@
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/post_add/add_post_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
@@ -101,17 +102,55 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                       ),
                       onChanged: controller.streamText,
                     ),
-                  )
+                  ),
                 ],
               ),
               Obx(() => Text("${controller.emergency.value}")),
               CustomSlider(
                 rxValue: controller.emergencyValue,
-              )
+              ),
+              SelectExpireTime(onChange: controller.chanheExpire)
             ],
           ),
         ),
       );
     });
+  }
+}
+
+// ignore: must_be_immutable
+class SelectExpireTime extends StatefulWidget {
+  SelectExpireTime({Key? key, required this.onChange}) : super(key: key);
+
+  void Function(ExpireTime?) onChange;
+
+  @override
+  State<SelectExpireTime> createState() => _SelectExpireTimeState();
+}
+
+class _SelectExpireTimeState extends State<SelectExpireTime> {
+  ExpireTime expireTime = ExpireTime.one_hour;
+  void onChange(ExpireTime? expire) {
+    if (expire == null) return;
+    setState(() {
+      expireTime = expire;
+    });
+    widget.onChange(expire);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: ExpireTime.values.map((expire) {
+          return RadioListTile(
+              title: Text("${expire.title} 後に削除"),
+              value: expire,
+              groupValue: expireTime,
+              onChanged: onChange);
+        }).toList(),
+      ),
+    );
   }
 }
