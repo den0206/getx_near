@@ -50,6 +50,7 @@ async function getNearPost(req, res) {
     res.status(500).json({status: false, message: e.message});
   }
 }
+async function getMyPosts(req, res) {}
 
 async function addLike(req, res) {
   const userId = req.userData.userId;
@@ -80,6 +81,7 @@ async function addLike(req, res) {
 module.exports = {
   createPost,
   getNearPost,
+  getMyPosts,
   addLike,
 };
 

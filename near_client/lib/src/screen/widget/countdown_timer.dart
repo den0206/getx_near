@@ -53,14 +53,38 @@ class _CustomCountdownTimerState extends State<CustomCountdownTimer> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        CountDownText(label: 'DAYS', value: days.toString().padLeft(2, '0')),
-        CountDownText(label: 'HRS', value: hours.toString().padLeft(2, '0')),
-        CountDownText(label: 'MIN', value: minutes.toString().padLeft(2, '0')),
-        CountDownText(label: 'SEC', value: seconds.toString().padLeft(2, '0')),
+        if (days != 0)
+          CountDownLabel(label: '日', value: days.toString().padLeft(2, '0')),
+        CountDownLabel(label: '時間', value: hours.toString().padLeft(2, '0')),
+        CountDownLabel(label: '分', value: minutes.toString().padLeft(2, '0')),
+        CountDownLabel(label: '秒', value: seconds.toString().padLeft(2, '0')),
       ],
     );
+  }
+}
+
+class CountDownLabel extends StatelessWidget {
+  const CountDownLabel({Key? key, required this.label, required this.value})
+      : super(key: key);
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text.rich(TextSpan(
+        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+        children: [
+          TextSpan(
+              text: '$value',
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+              )),
+          TextSpan(
+            text: '$label',
+          ),
+        ]));
   }
 }
 

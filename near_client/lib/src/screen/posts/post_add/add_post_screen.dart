@@ -9,6 +9,7 @@ import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
 class AddPostScreen extends LoadingGetView<AddPostController> {
@@ -20,6 +21,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
   Widget get child {
     return Builder(builder: (context) {
       return Scaffold(
+        backgroundColor: ConstsColor.panelColor,
         appBar: AppBar(
           title: Text("投稿"),
           actions: [
@@ -145,7 +147,11 @@ class _SelectExpireTimeState extends State<SelectExpireTime> {
       child: Column(
         children: ExpireTime.values.map((expire) {
           return RadioListTile(
-              title: Text("${expire.title} 後に削除"),
+              activeColor: Colors.green,
+              title: Text(
+                "${expire.title} 後に削除",
+                style: TextStyle(fontSize: 13.sp),
+              ),
               value: expire,
               groupValue: expireTime,
               onChanged: onChange);

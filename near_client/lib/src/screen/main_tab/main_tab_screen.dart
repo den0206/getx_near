@@ -4,6 +4,7 @@ import 'package:get/instance_manager.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
+import 'package:getx_near/src/screen/posts/my_posts/may_posts_screen.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_screen.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 
@@ -15,14 +16,20 @@ class MainTabScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final bottomItems = [
       BottomNavigationBarItem(
-        label: "Profile",
+        label: "List",
         icon: Icon(
-          Icons.person,
+          Icons.list,
         ),
       ),
       BottomNavigationBarItem(
         label: "Map",
         icon: Icon(Icons.map),
+      ),
+      BottomNavigationBarItem(
+        label: "Profile",
+        icon: Icon(
+          Icons.person,
+        ),
       ),
       BottomNavigationBarItem(
         label: "Message",
@@ -33,10 +40,11 @@ class MainTabScreen extends StatelessWidget {
     ];
 
     final List<Widget> pages = [
+      MyPostsScreen(),
+      MapScreen(),
       UserDetailScreen(
         user: AuthService.to.currentUser.value!,
       ),
-      MapScreen(),
       Text("Message"),
     ];
     return GetBuilder<MainTabController>(

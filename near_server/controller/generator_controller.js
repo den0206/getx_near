@@ -20,14 +20,14 @@ async function makeDummyPosts(req, res) {
       });
 
       var expireAt = new Date();
-      // expireAt.setHours(expireAt.getHours() + 3);
-      expireAt.setSeconds(expireAt.getSeconds() + 20);
+      expireAt.setHours(expireAt.getHours() + 3);
+      // expireAt.setSeconds(expireAt.getSeconds() + 20);
 
       const loc = randomGenerator.locationR(lat, lng, radius);
       const {longitude, latitude} = loc;
 
       const newPost = Post({
-        content: randomGenerator.idR(5),
+        content: randomGenerator.idR(200),
         userId: dummyUser,
         emergency: randomGenerator.intR(101),
         expireAt: expireAt,
@@ -56,7 +56,7 @@ async function makeDummyComments(req, res) {
 
       const loc = randomGenerator.locationR(lat, lng, radius);
       const {longitude, latitude} = loc;
-      const text = randomGenerator.idR(50);
+      const text = randomGenerator.idR(100);
       const createdAt = Date.now();
 
       const newComment = new Comment({
