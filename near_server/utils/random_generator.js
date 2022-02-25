@@ -26,8 +26,13 @@ function idR(length) {
   return result;
 }
 
+function randomObjFromArray(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
 module.exports = {
   intR,
   locationR,
   idR,
+  randomObjFromArray,
 };

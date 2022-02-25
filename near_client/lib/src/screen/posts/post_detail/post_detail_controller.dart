@@ -18,6 +18,8 @@ class PostDetailController extends LoadingGetController {
   final PostAPI _postAPI = PostAPI();
   final CommentAPI _commentAPI = CommentAPI();
   final LocationService _locationService = LocationService();
+  final ScrollController sc = ScrollController();
+  final RxDouble textScale = 1.0.obs;
 
   final List<Comment> comments = [];
 
@@ -31,9 +33,32 @@ class PostDetailController extends LoadingGetController {
   @override
   void onInit() async {
     super.onInit();
-    print(post.toString());
-    print(post.isLiked);
+    listenScroll();
     await getComments();
+  }
+
+  @override
+  void onClose() {
+    sc.dispose();
+    super.onClose();
+  }
+
+  void listenScroll() {
+    sc.addListener(() {
+      if (sc.offset <= 0) {
+        textScale.call(1);
+        return;
+      }
+
+      if (sc.offset >= 100 && sc.offset <= 300) {
+        textScale.call(0.8);
+      } else if (sc.offset >= 300 && sc.offset <= 500) {
+        textScale.call(0.7);
+      } else if (sc.offset >= 500) {
+        textScale.call(0.7);
+      }
+      if (textScale.value <= 0.7) return;
+    });
   }
 
   void setMaxBarHeight(double maxHeight) {

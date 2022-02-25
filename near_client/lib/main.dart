@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         defaultTransition: Transition.fade,
         theme: ThemeData(
-          scaffoldBackgroundColor: ConstsColor.commonBackground,
+          scaffoldBackgroundColor: ConstsColor.panelColor,
           primarySwatch: Colors.blue,
         ),
         getPages: AppRoot.pages,
