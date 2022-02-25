@@ -109,11 +109,13 @@ class CustomDialog extends StatelessWidget {
 }
 
 class CommentDialog extends StatelessWidget {
-  const CommentDialog({Key? key, required this.comment}) : super(key: key);
+  const CommentDialog({Key? key, required this.comment, required this.buttons})
+      : super(key: key);
 
   final Comment comment;
   final double pad = 20;
   final double avatarPad = 55;
+  final Widget buttons;
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +154,37 @@ class CommentDialog extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+                if (comment.isCurrent)
+                  Container(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      width: double.infinity,
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(text: "※ "),
+                            TextSpan(
+                                text: "Your Comment",
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                ))
+                          ],
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        textAlign: TextAlign.end,
+                      )),
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                  comment.text,
-                  style: TextStyle(fontSize: 12.sp),
+                Container(
+                  width: double.infinity,
+                  child: Text(
+                    comment.text,
+                    style: TextStyle(fontSize: 12.sp),
+                    textAlign: TextAlign.start,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -176,18 +203,7 @@ class CommentDialog extends StatelessWidget {
                     height: 22,
                   ),
                 ],
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: CustomButton(
-                    width: 100,
-                    height: 40,
-                    background: Colors.green,
-                    title: "Yes",
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                )
+                buttons,
               ],
             ),
           ),

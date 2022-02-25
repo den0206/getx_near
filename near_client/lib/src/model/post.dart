@@ -71,6 +71,12 @@ class Post extends JsonModel {
     required this.comments,
   });
 
+  bool get isCurrent {
+    final currentUser = AuthService.to.currentUser.value;
+    if (currentUser == null) return false;
+    return this.user.id == currentUser.id;
+  }
+
   bool get isLiked {
     final currentUser = AuthService.to.currentUser.value;
     if (currentUser == null) return false;
@@ -120,6 +126,9 @@ class Post extends JsonModel {
   String toJson() => json.encode(toMap());
 
   factory Post.fromJson(String source) => Post.fromMap(json.decode(source));
+
+  /// for pagination
+  static Post fromJsonModel(Map<String, dynamic> json) => Post.fromMap(json);
 
   @override
   String toString() {

@@ -1,6 +1,7 @@
 const Post = require('../model/post');
 const mongoose = require('mongoose');
 const GeoJSON = require(`mongoose-geojson-schema`);
+const base64 = require('../utils/base64');
 
 async function createPost(req, res) {
   const body = req.body;
@@ -50,7 +51,41 @@ async function getNearPost(req, res) {
     res.status(500).json({status: false, message: e.message});
   }
 }
-async function getMyPosts(req, res) {}
+async function getMyPosts(req, res) {
+  const userId = req.query.userId;
+
+  const cursor = req.query.cursor;
+  const limit = +req.query.limit || 10;
+
+  let query = {userId: userId};
+  if (cursor) {
+    query['_id'] = {
+      $lt: base64.decodeToBase64(cursor),
+    };
+  }
+
+  try {
+    let posts = await Post.find(query)
+      .sort({_id: -1})
+      .limit(limit + 1)
+      .populate('userId', '-password');
+
+    const hasNextPage = posts.length > limit;
+    posts = hasNextPage ? posts.slice(0, -1) : posts;
+    const nextPageCursor = hasNextPage
+      ? base64.encodeBase64(posts[posts.length - 1].id)
+      : null;
+
+    const data = {
+      pageFeeds: posts,
+      pageInfo: {nextPageCursor, hasNextPage},
+    };
+
+    res.status(200).json({status: true, data: data});
+  } catch (e) {
+    res.status(500).json({status: false, message: e.message});
+  }
+}
 
 async function addLike(req, res) {
   const userId = req.userData.userId;

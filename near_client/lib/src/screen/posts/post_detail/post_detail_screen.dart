@@ -326,7 +326,47 @@ class CommentCell extends GetView<PostDetailController> {
           showDialog(
             context: context,
             builder: (context) {
-              return CommentDialog(comment: comment);
+              return CommentDialog(
+                comment: comment,
+                buttons: controller.post.isCurrent && !comment.isCurrent
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomButton(
+                            width: 30.w,
+                            height: 40,
+                            background: Colors.grey,
+                            titleColor: Colors.white,
+                            title: "キャンセル",
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          CustomButton(
+                            width: 30.w,
+                            height: 40,
+                            background: Colors.green,
+                            title: "Message",
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              print(comment.user.id);
+                            },
+                          ),
+                        ],
+                      )
+                    : Align(
+                        alignment: Alignment.bottomRight,
+                        child: CustomButton(
+                          width: 100,
+                          height: 40,
+                          background: Colors.green,
+                          title: "Yes",
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+              );
             },
           );
         },

@@ -4,7 +4,7 @@ import 'package:get/instance_manager.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
-import 'package:getx_near/src/screen/posts/my_posts/may_posts_screen.dart';
+import 'package:getx_near/src/screen/posts/my_posts/my_posts_screen.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_screen.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 

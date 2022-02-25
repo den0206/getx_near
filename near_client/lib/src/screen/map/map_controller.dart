@@ -126,7 +126,7 @@ class MapController extends LoadingGetController {
     try {
       final LatLng center = useMap ? await mapService.getCenter() : shinjukuSta;
       final double radius = useMap ? mapService.GetRadiusOnVisible() : 1000;
-      final res = await _postAPI.generateDummy(center, radius);
+      final res = await _postAPI.generateDummyAll(center, radius);
       if (!res.status) return;
 
       final items = List<Map<String, dynamic>>.from(res.data);
