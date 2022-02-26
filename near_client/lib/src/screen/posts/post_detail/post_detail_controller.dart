@@ -5,6 +5,7 @@ import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/comment_api.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/comment.dart';
+import 'package:getx_near/src/model/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
@@ -22,12 +23,13 @@ class PostDetailController extends LoadingGetController {
   final RxDouble textScale = 1.0.obs;
 
   final List<Comment> comments = [];
+  String? nextCursor;
+  bool reachLast = false;
 
   RxBool get buttonEnable {
     return (commentContoller.text != "").obs;
   }
 
-  bool showCommentTx = false;
   double maxPanelHeight = 100;
 
   @override
@@ -45,41 +47,62 @@ class PostDetailController extends LoadingGetController {
 
   void listenScroll() {
     sc.addListener(() {
-      if (sc.offset <= 0) {
-        textScale.call(1);
-        return;
-      }
-
-      if (sc.offset >= 100 && sc.offset <= 300) {
-        textScale.call(0.8);
-      } else if (sc.offset >= 300 && sc.offset <= 500) {
-        textScale.call(0.7);
-      } else if (sc.offset >= 500) {
-        textScale.call(0.7);
-      }
-      if (textScale.value <= 0.7) return;
+      changeScale();
+      changeOffset();
     });
   }
 
-  void setMaxBarHeight(double maxHeight) {
-    maxPanelHeight = maxHeight;
-    update();
+  void changeOffset() {
+    if (sc.position.pixels == sc.position.maxScrollExtent) loadContents();
   }
 
-  void showTx() {
-    showCommentTx = !showCommentTx;
-    update();
+  void changeScale() {
+    if (sc.offset <= 0) {
+      textScale.call(1);
+      return;
+    }
+
+    if (sc.offset >= 100 && sc.offset <= 300) {
+      textScale.call(0.8);
+    } else if (sc.offset >= 300 && sc.offset <= 500) {
+      textScale.call(0.7);
+    } else if (sc.offset >= 500) {
+      textScale.call(0.7);
+    }
+    if (textScale.value <= 0.7) return;
+  }
+
+  Future<void> loadContents() async {
+    if (useMap) {
+      await getComments();
+    } else {
+      await getDummy();
+    }
+  }
+
+  Future<void> addContents() async {
+    if (useMap) {
+      await addComment();
+    } else {
+      await getDummy();
+    }
   }
 
   Future<void> getComments() async {
-    isLoading.call(true);
+    if (reachLast) return;
+
+    cellLoading = true;
+    update();
     await Future.delayed(Duration(seconds: 1));
     try {
-      final res = await _commentAPI.getComment(post.id);
+      final res = await _commentAPI.getComment(post.id, nextCursor);
       if (!res.status) return;
-      final items = List<Map<String, dynamic>>.from(res.data);
-      final temp = List<Comment>.from(
-          items.map((m) => Comment.fromMapWithPost(m, post)));
+
+      final Pages<Comment> pages =
+          Pages.fromMap(res.data, Comment.fromJsonModelWithPost, post);
+      reachLast = !pages.pageInfo.hasNextpage;
+      nextCursor = pages.pageInfo.nextPageCursor;
+      final temp = pages.pageFeeds;
       comments.addAll(temp);
 
       comments.map((e) => e.distance).toList().sort();
@@ -88,11 +111,43 @@ class PostDetailController extends LoadingGetController {
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoading.call(false);
+      cellLoading = false;
+      update();
     }
   }
 
-  Future<void> addandRemoveLike() async {
+  Future<void> addComment() async {
+    cellLoading = true;
+    update();
+
+    await Future.delayed(Duration(seconds: 1));
+
+    try {
+      final Position current = await _locationService.getCurrentPosition();
+      final Map<String, dynamic> body = {
+        "text": commentContoller.text,
+        "postId": post.id,
+        "longitude": current.longitude,
+        "latitude": current.latitude,
+      };
+      final res = await _commentAPI.addPost(body);
+
+      if (!res.status) return;
+
+      final newComment = Comment.fromMapWithPost(res.data, post);
+      comments.insert(0, newComment);
+
+      commentContoller.clear();
+      comments.sort((a, b) => a.distance!.compareTo(b.distance!));
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      cellLoading = false;
+      update();
+    }
+  }
+
+  Future<void> addAndRemoveLike() async {
     try {
       final res = await _postAPI.addLike(post.id);
       if (!res.status) return;
@@ -105,48 +160,27 @@ class PostDetailController extends LoadingGetController {
     }
   }
 
-  Future<void> addComment() async {
-    isLoading.call(true);
-
+  Future<void> getDummy() async {
+    cellLoading = true;
+    update();
     await Future.delayed(Duration(seconds: 1));
 
     try {
-      var res;
-      if (useMap) {
-        final Position current = await _locationService.getCurrentPosition();
-        final Map<String, dynamic> body = {
-          "text": commentContoller.text,
-          "postId": post.id,
-          "longitude": current.longitude,
-          "latitude": current.latitude,
-        };
-        res = await _commentAPI.addPost(body);
-      } else {
-        /// Dummy
-        res = await _commentAPI.generateDummy(post, 2000);
-      }
+      final res = await _commentAPI.generateDummy(post, 2000);
 
       if (!res.status) return;
+      final items = List<Map<String, dynamic>>.from(res.data);
+      final temp = List<Comment>.from(
+          items.map((m) => Comment.fromMapWithPost(m, post)));
 
-      if (useMap) {
-        final newComment = Comment.fromMapWithPost(res.data, post);
-        comments.insert(0, newComment);
-      } else {
-        final items = List<Map<String, dynamic>>.from(res.data);
-        final temp = List<Comment>.from(
-            items.map((m) => Comment.fromMapWithPost(m, post)));
-
-        comments.addAll(temp);
-      }
-      showTx();
+      comments.addAll(temp);
       commentContoller.clear();
       comments.sort((a, b) => a.distance!.compareTo(b.distance!));
-
-      update();
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoading.call(false);
+      cellLoading = false;
+      update();
     }
   }
 }

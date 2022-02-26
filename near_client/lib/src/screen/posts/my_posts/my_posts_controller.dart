@@ -21,12 +21,7 @@ class MyPostsController extends LoadingGetController {
   @override
   void onInit() async {
     super.onInit();
-
-    if (useMap) {
-      await getPosts();
-    } else {
-      await getDummy();
-    }
+    await loadContents();
   }
 
   @override
@@ -36,7 +31,19 @@ class MyPostsController extends LoadingGetController {
 
   Future<void> refreshPosts() async {
     resetParam();
+    await loadContents();
+  }
 
+  void resetParam() {
+    posts.clear();
+
+    reachLast = false;
+
+    nextCursor = null;
+    update();
+  }
+
+  Future<void> loadContents() async {
     if (useMap) {
       await getPosts();
     } else {
@@ -44,15 +51,9 @@ class MyPostsController extends LoadingGetController {
     }
   }
 
-  void resetParam() {
-    reachLast = false;
-    nextCursor = null;
-    posts.clear();
-  }
-
   Future<void> getPosts() async {
-    if (reachLast) return;
-    isLoading.call(true);
+    if (reachLast || cellLoading) return;
+    cellLoading = true;
     await Future.delayed(Duration(seconds: 1));
 
     try {
@@ -71,12 +72,14 @@ class MyPostsController extends LoadingGetController {
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoading.call(false);
+      cellLoading = true;
     }
   }
 
   Future<void> getDummy() async {
-    isLoading.call(true);
+    if (reachLast || cellLoading) return;
+
+    cellLoading = true;
 
     await Future.delayed(Duration(seconds: 1));
 
@@ -95,7 +98,8 @@ class MyPostsController extends LoadingGetController {
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoading.call(false);
+      cellLoading = false;
+      reachLast = false;
     }
   }
 

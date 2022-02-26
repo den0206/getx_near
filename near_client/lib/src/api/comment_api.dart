@@ -5,14 +5,17 @@ import 'package:getx_near/src/model/response_api.dart';
 class CommentAPI extends APIBase {
   CommentAPI() : super(EndPoint.comment);
 
-  Future<ResponseAPI> getComment(String postId) async {
-    final Map<String, dynamic> query = {"postId": postId};
+  Future<ResponseAPI> getComment(String postId, String? nextCursor) async {
+    final limit = 10;
+    final Map<String, dynamic> query = {
+      "postId": postId,
+      "limit": limit.toString()
+    };
+
+    if (nextCursor != null) query["cursor"] = nextCursor;
 
     try {
-      final Uri uri = setUri(
-        "/get",
-        query,
-      );
+      final Uri uri = setUri("/get", query);
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());

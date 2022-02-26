@@ -75,6 +75,9 @@ class Comment extends JsonModel {
   factory Comment.fromJson(String source) =>
       Comment.fromMap(json.decode(source));
 
+  static Comment fromJsonModelWithPost(Map<String, dynamic> json, Post post) =>
+      Comment.fromMapWithPost(json, post);
+
   @override
   String toString() {
     return 'Comment(id: $id, text: $text, user: $user, postId: $postId, coordinate: $coordinate, createdAt: $createdAt)';

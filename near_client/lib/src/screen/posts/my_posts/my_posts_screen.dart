@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -17,6 +18,7 @@ class MyPostsScreen extends LoadingGetView<MyPostsController> {
     return GetBuilder<MyPostsController>(
       builder: (controller) {
         return CustomScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
           slivers: [
             SliverAppBar(
               pinned: true,
@@ -38,6 +40,10 @@ class MyPostsScreen extends LoadingGetView<MyPostsController> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
+                  if (index == controller.posts.length - 1) {
+                    controller.loadContents();
+                    if (controller.cellLoading) return LoadingCellWidget();
+                  }
                   final post = controller.posts[index];
                   return PostCell(post: post);
                 },
@@ -47,33 +53,6 @@ class MyPostsScreen extends LoadingGetView<MyPostsController> {
           ],
         );
       },
-    );
-  }
-}
-
-class PostCell extends GetView<MyPostsController> {
-  const PostCell({
-    Key? key,
-    required this.post,
-  }) : super(key: key);
-
-  final Post post;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          title: Text(post.content),
-          onTap: () {
-            controller.showPostDetail(post);
-          },
-        ),
-        Divider(
-          height: 1,
-          color: Colors.black,
-        )
-      ],
     );
   }
 }
@@ -115,6 +94,80 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
           );
         },
       ),
+    );
+  }
+}
+
+class PostCell extends GetView<MyPostsController> {
+  const PostCell({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
+
+  final Post post;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            controller.showPostDetail(post);
+          },
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: 70.w,
+                  child: AutoSizeText(
+                    post.content,
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      height: 2,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    minFontSize: 10,
+                    maxLines: 2,
+                  ),
+                ),
+                _postIcon(
+                  Icons.comment,
+                  "${post.comments.length}",
+                  Colors.brown,
+                ),
+                _postIcon(
+                  Icons.warning_amber,
+                  "${post.likes.length}",
+                  ConstsColor.cautionColor,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Divider(
+          height: 1,
+          color: Colors.black,
+        )
+      ],
+    );
+  }
+
+  Column _postIcon(IconData icon, String title, Color mainColor) {
+    return Column(
+      children: [
+        Icon(
+          icon,
+          color: mainColor,
+          size: 13.sp,
+        ),
+        Text(
+          title,
+          style: TextStyle(color: mainColor),
+        )
+      ],
     );
   }
 }

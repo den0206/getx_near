@@ -6,10 +6,20 @@ class Pages<T> {
 
   Pages(this.pageFeeds, this.pageInfo);
 
-  factory Pages.fromMap(Map<String, dynamic> map, Function fromJsonModel) {
+  factory Pages.fromMap(Map<String, dynamic> map, Function fromJsonModel,
+      [dynamic relationData]) {
     final items = map["pageFeeds"].cast<Map<String, dynamic>>();
-    return Pages(List<T>.from(items.map((itemJson) => fromJsonModel(itemJson))),
-        PageInfo.fromMap(map["pageInfo"]));
+
+    if (relationData != null) {
+      return Pages(
+          List<T>.from(
+              items.map((itemJson) => fromJsonModel(itemJson, relationData))),
+          PageInfo.fromMap(map["pageInfo"]));
+    } else {
+      return Pages(
+          List<T>.from(items.map((itemJson) => fromJsonModel(itemJson))),
+          PageInfo.fromMap(map["pageInfo"]));
+    }
   }
 }
 
