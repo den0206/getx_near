@@ -1,5 +1,5 @@
 import 'package:getx_near/src/api/api_base.dart';
-import 'package:getx_near/src/model/response_api.dart';
+import 'package:getx_near/src/model/utils/response_api.dart';
 
 class UserAPI extends APIBase {
   UserAPI() : super(EndPoint.user);

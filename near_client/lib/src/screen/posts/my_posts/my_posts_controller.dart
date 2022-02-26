@@ -1,6 +1,6 @@
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
-import 'package:getx_near/src/model/page_feeds.dart';
+import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';

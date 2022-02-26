@@ -3,7 +3,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/user_api.dart';
-import 'package:getx_near/src/model/response_api.dart';
+import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';

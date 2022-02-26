@@ -1,6 +1,6 @@
 import 'package:getx_near/src/api/api_base.dart';
 import 'package:getx_near/src/model/post.dart';
-import 'package:getx_near/src/model/response_api.dart';
+import 'package:getx_near/src/model/utils/response_api.dart';
 
 class CommentAPI extends APIBase {
   CommentAPI() : super(EndPoint.comment);

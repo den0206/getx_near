@@ -1,5 +1,5 @@
 import 'package:getx_near/src/api/api_base.dart';
-import 'package:getx_near/src/model/response_api.dart';
+import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PostAPI extends APIBase {

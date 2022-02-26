@@ -372,7 +372,7 @@ class CommentCell extends GetView<PostDetailController> {
                             title: "Message",
                             onPressed: () {
                               Navigator.of(context).pop();
-                              print(comment.user.id);
+                              controller.pushMessageScreen(comment);
                             },
                           ),
                         ],

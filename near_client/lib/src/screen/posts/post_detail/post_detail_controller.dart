@@ -5,11 +5,15 @@ import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/comment_api.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/comment.dart';
-import 'package:getx_near/src/model/page_feeds.dart';
+import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
+import 'package:getx_near/src/service/recent_extension.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PostDetailController extends LoadingGetController {
@@ -29,8 +33,6 @@ class PostDetailController extends LoadingGetController {
   RxBool get buttonEnable {
     return (commentContoller.text != "").obs;
   }
-
-  double maxPanelHeight = 100;
 
   @override
   void onInit() async {
@@ -157,6 +159,26 @@ class PostDetailController extends LoadingGetController {
       update();
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future<void> pushMessageScreen(Comment comment) async {
+    final re = RecentExtension();
+    final User currentUser = AuthService.to.currentUser.value!;
+
+    try {
+      final withUser = comment.user;
+      final chatRoomId =
+          await re.createPrivateChatRoom(withUser.id, [currentUser, withUser]);
+
+      if (chatRoomId == null) throw Exception("Not Generate ChatRoom Id");
+
+      Get.until((route) => route.isFirst);
+
+      // message
+      MainTabController.to.setIndex(3);
+    } catch (e) {
+      isLoading.call(false);
     }
   }
 

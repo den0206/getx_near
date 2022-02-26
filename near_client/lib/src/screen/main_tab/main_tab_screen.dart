@@ -5,6 +5,7 @@ import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/posts/my_posts/my_posts_screen.dart';
+import 'package:getx_near/src/screen/recent/recent_screen.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_screen.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 
@@ -45,7 +46,7 @@ class MainTabScreen extends StatelessWidget {
       UserDetailScreen(
         user: AuthService.to.currentUser.value!,
       ),
-      Text("Message"),
+      RecentScreen(),
     ];
     return GetBuilder<MainTabController>(
       init: MainTabController(),

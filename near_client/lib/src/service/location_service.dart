@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:getx_near/src/model/visibleRegion.dart';
+import 'package:getx_near/src/model/utils/visibleRegion.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationService {
