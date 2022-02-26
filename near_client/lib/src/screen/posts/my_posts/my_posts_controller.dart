@@ -61,7 +61,7 @@ class MyPostsController extends LoadingGetController {
       if (!res.status) return;
       final Pages<Post> pages = Pages.fromMap(res.data, Post.fromJsonModel);
 
-      reachLast = !pages.pageInfo.hasNextpage;
+      reachLast = !pages.pageInfo.hasNextPage;
       nextCursor = pages.pageInfo.nextPageCursor;
 
       final temp = pages.pageFeeds;

@@ -25,23 +25,23 @@ class Pages<T> {
 
 class PageInfo {
   final String? nextPageCursor;
-  final bool hasNextpage;
+  final bool hasNextPage;
   PageInfo({
     required this.nextPageCursor,
-    required this.hasNextpage,
+    required this.hasNextPage,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'nextPageCursor': nextPageCursor,
-      'hasNextpage': hasNextpage,
+      'hasNextPage': hasNextPage,
     };
   }
 
   factory PageInfo.fromMap(Map<String, dynamic> map) {
     return PageInfo(
       nextPageCursor: map['nextPageCursor'],
-      hasNextpage: map['hasNextpage'] ?? false,
+      hasNextPage: map['hasNextPage'] ?? false,
     );
   }
 

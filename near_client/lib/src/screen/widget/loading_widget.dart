@@ -9,6 +9,11 @@ abstract class LoadingGetController extends GetxController {
   final RxBool isLoading = false.obs;
 
   bool cellLoading = false;
+
+  void showCellLoading(bool show) {
+    cellLoading = show;
+    update();
+  }
 }
 
 abstract class LoadingGetView<T extends LoadingGetController>

@@ -5,6 +5,7 @@ const checkAuth = require('../middleware/check_auth');
 
 router.get('/userid', checkAuth, recentController.findByUserId);
 router.get('/roomId', checkAuth, recentController.findByRoomId);
+router.get('/userid/roomid', checkAuth, recentController.findByUserAndRoomid);
 router.post('/create', checkAuth, recentController.createChatRecet);
 
 module.exports = router;

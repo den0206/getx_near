@@ -1,6 +1,8 @@
+import 'package:get/instance_manager.dart';
 import 'package:getx_near/src/api/recent_api.dart';
 import 'package:getx_near/src/model/recent.dart';
 import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/screen/recent/recent_controller.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 
 class RecentExtension {
@@ -39,6 +41,7 @@ class RecentExtension {
 
     await Future.forEach(tempMembers, (String id) async {
       await saveRecent(id, users, chatRoomId);
+      updateRecentSocket(userId: id, chatRoomId: chatRoomId);
     });
     print(tempMembers.length);
     return chatRoomId;
@@ -54,5 +57,12 @@ class RecentExtension {
     };
 
     await _recentAPI.creatRecent(body);
+  }
+
+  void updateRecentSocket(
+      {required String userId, required String chatRoomId}) {
+    if (!Get.isRegistered<RecentController>()) return;
+    RecentController.to.recentIO
+        .sendUpdateRecent(userId: userId, chatRoomId: chatRoomId);
   }
 }

@@ -140,6 +140,15 @@ class Enviroment {
 
     return kDebugMode ? dubugHost : domainHost!;
   }
+
+  static String getMainUrl() {
+    final domain = dotenv.env['DOMAIN'];
+
+    final debugDomain = io.Platform.isAndroid
+        ? "http://10.0.2.2:3000"
+        : "http://localhost:3000";
+    return kDebugMode ? debugDomain : domain!;
+  }
 }
 
 enum EndPoint {

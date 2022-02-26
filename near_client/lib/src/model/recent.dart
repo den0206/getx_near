@@ -37,20 +37,19 @@ class Recent {
     return Recent(
       id: map['id'] ?? '',
       chatRoomId: map['chatRoomId'] ?? '',
-      user: map["userId"] != null ? User.fromMap(map['userId']) : _sampleUser,
-      withUser: map["withUserId"] != null
-          ? User.fromMap(map['withUserId'])
-          : _sampleUser,
+      user: User.fromMap(map['userId']),
+      withUser: User.fromMap(map['withUserId']),
       lastMessage: map['lastMessage'] ?? '',
       counter: map['counter']?.toInt() ?? 0,
       date: DateTime.parse(map["updatedAt"]).toUtc(),
     );
   }
 
+  /// for pagination
+  static Recent fromJsonModel(Map<String, dynamic> json) =>
+      Recent.fromMap(json);
+
   String toJson() => json.encode(toMap());
 
   factory Recent.fromJson(String source) => Recent.fromMap(json.decode(source));
 }
-
-final User _sampleUser = User(
-    id: "621327bfbbdfe1ed98bea4e7", name: "sample", email: "sss@email.com");

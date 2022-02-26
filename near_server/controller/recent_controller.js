@@ -67,8 +67,30 @@ async function findByRoomId(req, res) {
   }
 }
 
+async function findByUserAndRoomid(req, res) {
+  const userId = req.userData.userId;
+  const chatRoomId = req.query.chatRoomId;
+
+  try {
+    const findRecent = await Recent.findOne({
+      userId: userId,
+      chatRoomId: chatRoomId,
+    }).populate(['userId', 'withUserId']);
+
+    if (!findRecent)
+      return res
+        .status(400)
+        .json({status: false, message: 'Can not find The Recent'});
+
+    res.status(200).json({status: true, data: findRecent});
+  } catch (e) {
+    res.status(500).json({status: false, message: 'Can not find Recents'});
+  }
+}
+
 module.exports = {
   createChatRecet,
   findByUserId,
   findByRoomId,
+  findByUserAndRoomid,
 };

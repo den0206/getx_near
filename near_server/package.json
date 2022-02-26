@@ -23,6 +23,7 @@
     "mongoose-unique-validator": "^3.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
-    "random-location": "^1.1.3"
+    "random-location": "^1.1.3",
+    "socket.io": "^2.4.1"
   }
 }

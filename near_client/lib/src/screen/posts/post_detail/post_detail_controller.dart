@@ -10,9 +10,11 @@ import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
+import 'package:getx_near/src/screen/message/message_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
+import 'package:getx_near/src/service/message_extention.dart';
 import 'package:getx_near/src/service/recent_extension.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -102,7 +104,7 @@ class PostDetailController extends LoadingGetController {
 
       final Pages<Comment> pages =
           Pages.fromMap(res.data, Comment.fromJsonModelWithPost, post);
-      reachLast = !pages.pageInfo.hasNextpage;
+      reachLast = !pages.pageInfo.hasNextPage;
       nextCursor = pages.pageInfo.nextPageCursor;
       final temp = pages.pageFeeds;
       comments.addAll(temp);
@@ -165,9 +167,21 @@ class PostDetailController extends LoadingGetController {
   Future<void> pushMessageScreen(Comment comment) async {
     final re = RecentExtension();
     final User currentUser = AuthService.to.currentUser.value!;
+    isLoading.call(true);
 
     try {
-      final withUser = comment.user;
+      var withUser;
+
+      if (useMap) {
+        withUser = comment.user;
+      } else {
+        final User sampleUser = User(
+            id: "621327bfbbdfe1ed98bea4e7",
+            name: "sample",
+            email: "sss@email.com");
+        withUser = sampleUser;
+      }
+
       final chatRoomId =
           await re.createPrivateChatRoom(withUser.id, [currentUser, withUser]);
 
@@ -177,7 +191,13 @@ class PostDetailController extends LoadingGetController {
 
       // message
       MainTabController.to.setIndex(3);
+
+      final ext = MessageExtention(chatRoomId, withUser);
+
+      Get.toNamed(MessageScreen.routeName, arguments: ext);
     } catch (e) {
+      print(e.toString());
+    } finally {
       isLoading.call(false);
     }
   }
