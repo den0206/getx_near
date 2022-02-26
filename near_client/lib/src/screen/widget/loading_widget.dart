@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
@@ -6,6 +7,13 @@ import 'package:getx_near/src/utils/global_functions.dart';
 
 abstract class LoadingGetController extends GetxController {
   final RxBool isLoading = false.obs;
+
+  bool cellLoading = false;
+
+  void showCellLoading(bool show) {
+    cellLoading = show;
+    update();
+  }
 }
 
 abstract class LoadingGetView<T extends LoadingGetController>
@@ -83,6 +91,23 @@ class WaveLoading extends StatelessWidget {
     return SpinKitWave(
       color: Color(0xffffffff),
       size: 30,
+    );
+  }
+}
+
+class LoadingCellWidget extends StatelessWidget {
+  const LoadingCellWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Center(
+          child: CupertinoActivityIndicator(
+        radius: 12.0,
+      )),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:getx_near/src/screen/get_address/get_address_screen.dart';
 
 import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
+import 'package:getx_near/src/screen/message/message_screen.dart';
 import 'package:getx_near/src/screen/posts/post_add/add_post_controller.dart';
 import 'package:getx_near/src/screen/posts/post_add/add_post_screen.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_controller.dart';
@@ -16,6 +17,7 @@ class AppRoot {
     ..._authPages,
     ..._mainPages,
     ..._postPages,
+    ..._messagePages,
   ];
 }
 
@@ -69,4 +71,11 @@ final List<GetPage> _postPages = [
       ),
     ),
   ),
+];
+
+final List<GetPage> _messagePages = [
+  GetPage(
+    name: MessageScreen.routeName,
+    page: () => MessageScreen(),
+  )
 ];

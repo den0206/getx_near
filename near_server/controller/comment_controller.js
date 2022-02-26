@@ -1,6 +1,7 @@
 const Comment = require('../model/comment');
 const Post = require('../model/post');
 const {checkId} = require('../db/database');
+const base64 = require('../utils/base64');
 
 async function addComment(req, res) {
   const userId = req.userData.userId;
@@ -25,22 +26,37 @@ async function addComment(req, res) {
   }
 }
 
-/// will pagination
 async function getComment(req, res) {
   const {postId} = req.query;
 
+  const cursor = req.query.cursor;
+  const limit = +req.query.limit || 10;
+
+  let query = {};
+  if (cursor) {
+    query['_id'] = {
+      $lt: base64.decodeToBase64(cursor),
+    };
+  }
+
   try {
-    const comments = await Comment.find({postId: postId}).populate(
-      'userId',
-      '-password'
-    );
+    let comments = await Comment.find({postId: postId})
+      .sort({_id: -1})
+      .limit(limit + 1)
+      .populate('userId', '-password');
 
-    if (!comments)
-      return res
-        .status(400)
-        .json({status: false, message: 'not find Comments'});
+    const hasNextPage = comments.length > limit;
+    comments = hasNextPage ? comments.slice(0, -1) : comments;
+    const nextPageCursor = hasNextPage
+      ? base64.encodeBase64(comments[comments.length - 1].id)
+      : null;
 
-    res.status(200).json({status: true, data: comments});
+    const data = {
+      pageFeeds: comments,
+      pageInfo: {nextPageCursor, hasNextPage},
+    };
+
+    res.status(200).json({status: true, data: data});
   } catch (e) {
     res.status(500).json({status: false, message: e.message});
   }

@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:getx_near/src/model/custom_exception.dart';
-import 'package:getx_near/src/model/response_api.dart';
+import 'package:getx_near/src/model/utils/custom_exception.dart';
+import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io' as io;
@@ -140,12 +140,23 @@ class Enviroment {
 
     return kDebugMode ? dubugHost : domainHost!;
   }
+
+  static String getMainUrl() {
+    final domain = dotenv.env['DOMAIN'];
+
+    final debugDomain = io.Platform.isAndroid
+        ? "http://10.0.2.2:3000"
+        : "http://localhost:3000";
+    return kDebugMode ? debugDomain : domain!;
+  }
 }
 
 enum EndPoint {
   user,
   post,
   comment,
+  recent,
+  message,
 }
 
 extension EndPointEXT on EndPoint {
@@ -159,6 +170,10 @@ extension EndPointEXT on EndPoint {
         return "$APIVer/post";
       case EndPoint.comment:
         return "$APIVer/comment";
+      case EndPoint.recent:
+        return "$APIVer/recent";
+      case EndPoint.message:
+        return "$APIVer/message";
     }
   }
 }

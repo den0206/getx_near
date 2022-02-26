@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:getx_near/src/model/post.dart';
-import 'package:getx_near/src/model/visibleRegion.dart';
+import 'package:getx_near/src/model/utils/visibleRegion.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/utils/dummy_generator.dart';
 import 'package:getx_near/src/utils/map_style.dart';

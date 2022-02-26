@@ -82,7 +82,7 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                         post: post,
                         size: 23.sp,
                         onTap: () {
-                          controller.addandRemoveLike();
+                          controller.addAndRemoveLike();
                         },
                       ),
                       Container(
@@ -123,10 +123,32 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                 itemExtent: 80,
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    final comment = controller.comments[index];
+                    if (index == 0) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Comment",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20.sp),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text("${controller.comments.length}"),
+                          ],
+                        ),
+                      );
+                    }
+
+                    if (index == controller.comments.length &&
+                        controller.cellLoading) return LoadingCellWidget();
+
+                    final comment = controller.comments[index - 1];
                     return CommentCell(comment: comment);
                   },
-                  childCount: controller.comments.length,
+                  childCount: controller.comments.length + 1,
                 ),
               ),
             ],
@@ -276,7 +298,7 @@ class AboveCommentField extends GetView<PostDetailController> {
           onPressed: () {
             Navigator.pop(context);
             dismisskeyBord(context);
-            controller.addComment();
+            controller.addContents();
           },
         ),
       ),
@@ -304,18 +326,19 @@ class CommentCell extends GetView<PostDetailController> {
           border: Border.all(color: Colors.white, width: 2),
         ),
         title: Container(
-            width: 60.w,
-            child: AutoSizeText(
-              comment.text,
-              style: TextStyle(
-                fontSize: 13.sp,
-                height: 2,
-              ),
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-              minFontSize: 10,
-              maxLines: 2,
-            )),
+          width: 60.w,
+          child: AutoSizeText(
+            comment.text,
+            style: TextStyle(
+              fontSize: 13.sp,
+              height: 2,
+            ),
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+            minFontSize: 10,
+            maxLines: 2,
+          ),
+        ),
         trailing: comment.distance != null
             ? Text(
                 "${comment.distance} m",
@@ -349,7 +372,7 @@ class CommentCell extends GetView<PostDetailController> {
                             title: "Message",
                             onPressed: () {
                               Navigator.of(context).pop();
-                              print(comment.user.id);
+                              controller.pushMessageScreen(comment);
                             },
                           ),
                         ],
