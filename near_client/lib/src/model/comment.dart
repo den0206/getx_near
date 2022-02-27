@@ -37,10 +37,9 @@ class Comment extends JsonModel {
     return {
       'id': id,
       'text': text,
-      'user': user.toMap(),
-      'post': postId,
-      "latitude": coordinate.latitude,
-      'longitude': coordinate.longitude,
+      'userId': user.toMap(),
+      'postId': postId,
+      "location": parseToLatlng(coordinate),
       'createdAt': createdAt.toIso8601String(),
     };
   }

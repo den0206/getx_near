@@ -64,10 +64,24 @@ async function updateMessage(req, res) {
   const value = {readBy};
   try {
     await Message.findByIdAndUpdate(messageId, value);
-    res.status(200).json({status: true, message: 'Success,Update Message'});
+    res.status(200).json({status: true, data: 'Success,Update Message'});
   } catch (e) {
     res.status(500).json({status: false, message: 'Can not update Message'});
   }
 }
 
-module.exports = {loadMessage, sendTextMessage, updateMessage};
+async function deleteMessage(req, res) {
+  const {messageId} = req.body;
+
+  if (!checkId(messageId))
+    return res.status(400).json({status: false, message: 'Invalid id'});
+
+  try {
+    const deleteMessage = await Message.findByIdAndDelete(messageId);
+    res.status(200).json({status: true, data: deleteMessage});
+  } catch (e) {
+    res.status(500).json({status: false, message: e.message});
+  }
+}
+
+module.exports = {loadMessage, sendTextMessage, updateMessage, deleteMessage};

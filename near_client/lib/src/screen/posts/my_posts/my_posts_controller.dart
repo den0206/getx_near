@@ -15,8 +15,6 @@ class MyPostsController extends LoadingGetController {
   final PostAPI _postAPI = PostAPI();
   final User currentUser = AuthService.to.currentUser.value!;
   final LocationService _locationService = LocationService();
-  String? nextCursor;
-  bool reachLast = false;
 
   @override
   void onInit() async {
@@ -53,11 +51,12 @@ class MyPostsController extends LoadingGetController {
 
   Future<void> getPosts() async {
     if (reachLast || cellLoading) return;
-    cellLoading = true;
+    showCellLoading(true);
     await Future.delayed(Duration(seconds: 1));
 
     try {
       final res = await _postAPI.getPosts(currentUser.id, nextCursor);
+
       if (!res.status) return;
       final Pages<Post> pages = Pages.fromMap(res.data, Post.fromJsonModel);
 
@@ -66,20 +65,17 @@ class MyPostsController extends LoadingGetController {
 
       final temp = pages.pageFeeds;
       posts.addAll(temp);
-      print(posts.length);
-
-      update();
     } catch (e) {
       print(e.toString());
     } finally {
-      cellLoading = true;
+      showCellLoading(false);
     }
   }
 
   Future<void> getDummy() async {
     if (reachLast || cellLoading) return;
 
-    cellLoading = true;
+    showCellLoading(true);
 
     await Future.delayed(Duration(seconds: 1));
 
@@ -94,11 +90,10 @@ class MyPostsController extends LoadingGetController {
       final temp = List<Post>.from(items.map((e) => Post.fromMap(e)));
 
       posts.addAll(temp);
-      update();
     } catch (e) {
       print(e.toString());
     } finally {
-      cellLoading = false;
+      showCellLoading(false);
       reachLast = false;
     }
   }

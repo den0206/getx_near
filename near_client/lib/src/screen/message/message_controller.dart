@@ -72,6 +72,21 @@ class MessageController extends LoadingGetController {
     }
   }
 
+  Future<void> deleteMessage(Message message) async {
+    isLoading.call(true);
+
+    try {
+      final canDelete = await extention.deleteMessage(message);
+      if (!canDelete) return;
+      messages.remove(message);
+      await extention.updateDeleteRecent();
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoading.call(false);
+    }
+  }
+
   bool checkRead(Message message) {
     final withUser = extention.withUser;
     return message.readBy.contains(withUser.id);

@@ -1,7 +1,11 @@
 import 'package:getx_near/src/api/api_base.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-enum NameSpace { recent, message }
+enum NameSpace {
+  recent,
+  message,
+  post,
+}
 
 extension NameSpaceEXT on NameSpace {
   String get path {
@@ -10,6 +14,8 @@ extension NameSpaceEXT on NameSpace {
         return "recents";
       case NameSpace.message:
         return "message";
+      case NameSpace.post:
+        return "post";
     }
   }
 }

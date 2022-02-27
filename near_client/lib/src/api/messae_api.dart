@@ -37,4 +37,15 @@ class MessageApi extends APIBase {
       return catchAPIError(e.toString());
     }
   }
+
+  Future<ResponseAPI> deleteMessage(String messageId) async {
+    final Map<String, dynamic> body = {"messageId": messageId};
+
+    try {
+      final Uri uri = setUri("/delete");
+      return await deleteRequest(uri: uri, body: body, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
 }

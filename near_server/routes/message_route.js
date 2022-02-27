@@ -6,5 +6,6 @@ const checkAuth = require('../middleware/check_auth');
 router.get('/load', checkAuth, messageController.loadMessage);
 router.post('/text', checkAuth, messageController.sendTextMessage);
 router.put('/update', messageController.updateMessage);
+router.delete('/delete', checkAuth, messageController.deleteMessage);
 
 module.exports = router;

@@ -142,13 +142,13 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                       );
                     }
 
-                    if (index == controller.comments.length &&
+                    if (index == controller.sorted.length &&
                         controller.cellLoading) return LoadingCellWidget();
 
-                    final comment = controller.comments[index - 1];
+                    final comment = controller.sorted[index - 1];
                     return CommentCell(comment: comment);
                   },
-                  childCount: controller.comments.length + 1,
+                  childCount: controller.sorted.length + 1,
                 ),
               ),
             ],
