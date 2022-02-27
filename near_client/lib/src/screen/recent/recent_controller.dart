@@ -13,8 +13,6 @@ class RecentController extends LoadingGetController {
   final List<Recent> recents = [];
   final RecentAPI _recentAPI = RecentAPI();
   final RecentIO recentIO = RecentIO();
-  String? nextCursor;
-  bool reachLast = false;
 
   @override
   void onInit() async {

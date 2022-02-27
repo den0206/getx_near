@@ -16,21 +16,24 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/message_extention.dart';
 import 'package:getx_near/src/service/recent_extension.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:getx_near/src/socket/post_io.dart';
 
 class PostDetailController extends LoadingGetController {
   final Post post = Get.arguments;
-  final PanelController panelController = PanelController();
   final TextEditingController commentContoller = TextEditingController();
   final PostAPI _postAPI = PostAPI();
   final CommentAPI _commentAPI = CommentAPI();
   final LocationService _locationService = LocationService();
   final ScrollController sc = ScrollController();
   final RxDouble textScale = 1.0.obs;
+  late PostIO _postIO;
 
   final List<Comment> comments = [];
-  String? nextCursor;
-  bool reachLast = false;
+  List<Comment> get sorted {
+    final current = comments;
+    current.sort((a, b) => a.distance!.compareTo(b.distance!));
+    return current;
+  }
 
   RxBool get buttonEnable {
     return (commentContoller.text != "").obs;
@@ -39,13 +42,16 @@ class PostDetailController extends LoadingGetController {
   @override
   void onInit() async {
     super.onInit();
+    addSocket();
     listenScroll();
+
     await getComments();
   }
 
   @override
   void onClose() {
     sc.dispose();
+    _postIO.destroySocket();
     super.onClose();
   }
 
@@ -54,6 +60,13 @@ class PostDetailController extends LoadingGetController {
       changeScale();
       changeOffset();
     });
+  }
+
+  void addSocket() {
+    _postIO = PostIO(this);
+    _postIO.initSocket();
+
+    _postIO.addNewCommentListner();
   }
 
   void changeOffset() {
@@ -95,8 +108,7 @@ class PostDetailController extends LoadingGetController {
   Future<void> getComments() async {
     if (reachLast) return;
 
-    cellLoading = true;
-    update();
+    showCellLoading(true);
     await Future.delayed(Duration(seconds: 1));
     try {
       final res = await _commentAPI.getComment(post.id, nextCursor);
@@ -108,24 +120,14 @@ class PostDetailController extends LoadingGetController {
       nextCursor = pages.pageInfo.nextPageCursor;
       final temp = pages.pageFeeds;
       comments.addAll(temp);
-
-      comments.map((e) => e.distance).toList().sort();
-
-      update();
     } catch (e) {
       print(e.toString());
     } finally {
-      cellLoading = false;
-      update();
+      showCellLoading(false);
     }
   }
 
   Future<void> addComment() async {
-    cellLoading = true;
-    update();
-
-    await Future.delayed(Duration(seconds: 1));
-
     try {
       final Position current = await _locationService.getCurrentPosition();
       final Map<String, dynamic> body = {
@@ -139,15 +141,11 @@ class PostDetailController extends LoadingGetController {
       if (!res.status) return;
 
       final newComment = Comment.fromMapWithPost(res.data, post);
-      comments.insert(0, newComment);
+      _postIO.sendNewComment(newComment);
 
       commentContoller.clear();
-      comments.sort((a, b) => a.distance!.compareTo(b.distance!));
     } catch (e) {
       print(e.toString());
-    } finally {
-      cellLoading = false;
-      update();
     }
   }
 
@@ -217,7 +215,6 @@ class PostDetailController extends LoadingGetController {
 
       comments.addAll(temp);
       commentContoller.clear();
-      comments.sort((a, b) => a.distance!.compareTo(b.distance!));
     } catch (e) {
       print(e.toString());
     } finally {

@@ -29,3 +29,9 @@ LatLng getLatLngFromMongoose(Map<String, dynamic> map) {
   /// CAUTION mongoose lat: [1], lng[0]
   return LatLng(cood[1], cood[0]);
 }
+
+Map<String, dynamic> parseToLatlng(LatLng lat) {
+  return {
+    "coordinates": [lat.longitude, lat.latitude]
+  };
+}

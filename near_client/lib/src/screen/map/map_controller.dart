@@ -44,6 +44,7 @@ class MapController extends LoadingGetController {
   Future<void> startSearch() async {
     mapService.resetMap();
     posts.clear();
+    update();
 
     await mapService.setVisibleRegion();
 
@@ -105,7 +106,9 @@ class MapController extends LoadingGetController {
 
     if (result is Post) {
       posts.insert(0, result);
-      await mapService.addPostMarker(result);
+      await mapService.addPostMarker(result, () {
+        mainSlidePanelController.selectPost(result);
+      });
       update();
     }
   }

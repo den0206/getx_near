@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/message.dart';
 import 'package:getx_near/src/screen/message/message_controller.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:sizer/sizer.dart';
 
 class MessageScreen extends LoadingGetView<MessageController> {
@@ -66,7 +69,35 @@ class MessageCell extends GetView<MessageController> {
                 ? MainAxisAlignment.end
                 : MainAxisAlignment.start,
             children: [
-              TextBubble(message: message),
+              CupertinoContextMenu(
+                actions: [
+                  CupertinoContextMenuAction(
+                    isDefaultAction: true,
+                    child: Text("Copy"),
+                    onPressed: () async {
+                      final data = ClipboardData(text: message.text);
+                      await Clipboard.setData(data);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  if (message.isCurrent)
+                    CupertinoContextMenuAction(
+                      isDestructiveAction: true,
+                      child: Text("Delete"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        controller.deleteMessage(message);
+                      },
+                    ),
+                  CupertinoContextMenuAction(
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+                child: TextBubble(message: message),
+              ),
             ],
           ),
           Padding(
@@ -214,6 +245,7 @@ class MessageInput extends GetView<MessageController> {
             ),
             backgroundColor: Colors.green,
             onPressed: () {
+              dismisskeyBord(context);
               controller.sendMessage();
             },
           )

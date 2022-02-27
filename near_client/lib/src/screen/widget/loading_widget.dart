@@ -8,6 +8,8 @@ import 'package:getx_near/src/utils/global_functions.dart';
 abstract class LoadingGetController extends GetxController {
   final RxBool isLoading = false.obs;
 
+  String? nextCursor;
+  bool reachLast = false;
   bool cellLoading = false;
 
   void showCellLoading(bool show) {

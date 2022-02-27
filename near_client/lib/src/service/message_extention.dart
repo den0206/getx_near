@@ -1,5 +1,6 @@
 import 'package:getx_near/src/api/messae_api.dart';
 import 'package:getx_near/src/model/message.dart';
+import 'package:getx_near/src/model/recent.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/service/auth_service.dart';
@@ -68,6 +69,28 @@ class MessageExtention {
       await Future.forEach(deletedUsers, (String id) async {
         await re.saveRecent(id, allUsers, chatRoomId);
       });
+    }
+  }
+
+  Future<void> updateDeleteRecent() async {
+    final remainRecents =
+        await re.updateRecentWithLastMessage(chatRoomId: chatRoomId);
+
+    if (remainRecents.isNotEmpty) {
+      remainRecents.forEach((Recent recent) {
+        re.updateRecentSocket(userId: recent.user.id, chatRoomId: chatRoomId);
+      });
+    }
+  }
+
+  Future<bool> deleteMessage(Message message) async {
+    if (!message.isCurrent) throw Exception("Not Math userId");
+    try {
+      final res = await _messageApi.deleteMessage(message.id);
+      if (!res.status) throw Exception("Not Delete message");
+      return res.status;
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
