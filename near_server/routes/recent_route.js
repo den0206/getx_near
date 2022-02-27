@@ -8,4 +8,6 @@ router.get('/roomId', checkAuth, recentController.findByRoomId);
 router.get('/userid/roomid', checkAuth, recentController.findByUserAndRoomid);
 router.post('/create', checkAuth, recentController.createChatRecet);
 
+router.put('/', checkAuth, recentController.updateRecent);
+
 module.exports = router;

@@ -10,7 +10,7 @@ function connectIO(server) {
   var messageIO = io.of('/message');
 
   recentsSocket(recentIO);
-  messageSocket(messageIO);
+  messageSocket(messageIO, recentIO);
 }
 
 module.exports = connectIO;

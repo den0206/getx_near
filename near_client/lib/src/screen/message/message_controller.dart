@@ -1,22 +1,89 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/state_manager.dart';
+import 'package:getx_near/src/model/message.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/message_extention.dart';
 import 'package:getx_near/src/socket/message_io.dart';
 
 class MessageController extends LoadingGetController {
+  final RxList<Message> messages = RxList<Message>();
   final MessageExtention extention = Get.arguments;
+
+  final TextEditingController tx = TextEditingController();
+  final ScrollController sc = ScrollController();
   late MessageIO _messageIO;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    _messageIO = MessageIO(extention.chatRoomId);
-    _messageIO.initSocket();
+    _addSocket();
+    await loadMessages();
   }
 
   @override
   void onClose() {
     super.onClose();
     _messageIO.destroySocket();
+    sc.dispose();
+  }
+
+  void _addSocket() {
+    _messageIO = MessageIO(this);
+    _messageIO.initSocket();
+
+    /// new message listner
+    _messageIO.addNewMessageListner();
+
+    /// read listner
+    _messageIO.addReadListner();
+  }
+
+  Future<void> loadMessages() async {
+    if (extention.reachLast || isLoading.value) return;
+    isLoading.call(true);
+    await Future.delayed(Duration(seconds: 1));
+
+    try {
+      final temp = await extention.loadMessge();
+      final unreads = await extention.updateReadList(temp);
+      if (unreads.isNotEmpty) _messageIO.sendUpdateRead(unreads);
+
+      messages.call(temp);
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoading.call(false);
+    }
+  }
+
+  Future<void> sendMessage() async {
+    if (tx.text == "") return;
+
+    try {
+      final newMessage = await extention.sendMessage(text: tx.text);
+      tx.clear();
+      _messageIO.sendNewMessage(newMessage);
+      await extention.updateLastRecent(newMessage);
+
+      _messageIO.sendUpdateRecent(extention.userIds);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  bool checkRead(Message message) {
+    final withUser = extention.withUser;
+    return message.readBy.contains(withUser.id);
+  }
+
+  void readUI(String id, String uid) {
+    final messageIds = messages.map((m) => m.id).toList();
+    if (messageIds.contains(id)) {
+      final index = messageIds.indexOf(id);
+      final temp = messages[index];
+      temp.readBy.add(uid);
+      messages[index] = temp;
+    }
   }
 }

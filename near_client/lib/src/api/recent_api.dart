@@ -13,6 +13,15 @@ class RecentAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> updateRecent(Map<String, dynamic> body) async {
+    try {
+      final Uri uri = setUri("/");
+      return await putRequest(uri: uri, body: body);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
   Future<ResponseAPI> findByUserId(String? nextCursor) async {
     final limit = 10;
     final query = {"limit": limit.toString()};

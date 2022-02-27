@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:getx_near/src/model/message.dart';
 import 'package:getx_near/src/screen/message/message_controller.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:sizer/sizer.dart';
 
 class MessageScreen extends LoadingGetView<MessageController> {
   static const routeName = '/Message';
@@ -11,10 +14,210 @@ class MessageScreen extends LoadingGetView<MessageController> {
   Widget get child {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Title'),
+        title: Text(controller.extention.withUser.name),
       ),
-      body: Center(
-        child: Text(controller.extention.chatRoomId),
+      body: Column(
+        children: [
+          Expanded(
+            child: Stack(
+              children: [
+                Scrollbar(
+                  controller: controller.sc,
+                  isAlwaysShown: true,
+                  child: Obx(
+                    () => ListView.builder(
+                      controller: controller.sc,
+                      reverse: true,
+                      itemCount: controller.messages.length,
+                      itemBuilder: (context, index) {
+                        final message = controller.messages[index];
+                        return MessageCell(message: message);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          MessageInput(),
+        ],
+      ),
+    );
+  }
+}
+
+class MessageCell extends GetView<MessageController> {
+  const MessageCell({Key? key, required this.message}) : super(key: key);
+
+  final Message message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 10,
+        left: message.isCurrent ? 0 : 10,
+        right: message.isCurrent ? 10 : 0,
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: message.isCurrent
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+            children: [
+              TextBubble(message: message),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 5),
+            child: Row(
+              mainAxisAlignment: message.isCurrent
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              children: [
+                if (controller.checkRead(message) && message.isCurrent)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Icon(
+                      Icons.done_all,
+                      size: 10.sp,
+                    ),
+                  ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    message.formattedTime,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class TextBubble extends StatelessWidget {
+  const TextBubble({
+    Key? key,
+    required this.message,
+  }) : super(key: key);
+
+  final Message message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(10),
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.7,
+        ),
+        decoration: BoxDecoration(
+          color: message.isCurrent ? Colors.green : Colors.grey[200]!,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 20.0,
+              offset: Offset(10, 10),
+              color: Colors.black54,
+            )
+          ],
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+            bottomLeft: Radius.circular(message.isCurrent ? 12 : 0),
+            bottomRight: Radius.circular(message.isCurrent ? 0 : 12),
+          ),
+        ),
+        child: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: RichText(
+            text: TextSpan(
+              text: message.text,
+              style: TextStyle(
+                  fontSize: 13.sp,
+                  letterSpacing: 1.5,
+                  fontWeight: FontWeight.w600,
+                  color: message.isCurrent ? Colors.white : Colors.grey[800]!),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MessageInput extends GetView<MessageController> {
+  const MessageInput({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 14),
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 3),
+                    blurRadius: 5,
+                    color: Colors.black,
+                  )
+                ],
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.emoji_emotions_outlined),
+                    color: Colors.grey[500],
+                    onPressed: () {},
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: controller.tx,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        hintText: "Message",
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 16,
+          ),
+          FloatingActionButton(
+            // key: Key("message"),
+            child: Icon(
+              Icons.send,
+              color: Colors.white,
+              size: 16.sp,
+            ),
+            backgroundColor: Colors.green,
+            onPressed: () {
+              controller.sendMessage();
+            },
+          )
+        ],
       ),
     );
   }
