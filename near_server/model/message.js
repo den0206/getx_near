@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 
-const messageSchema = mongoose.Schema(
-  {
-    chatRoomId: {type: String, required: true},
-    text: {type: String, required: true},
-    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    readBy: [{String, default: []}],
-  },
-  {timestamps: true}
-);
+const messageSchema = mongoose.Schema({
+  chatRoomId: {type: String, required: true},
+  text: {type: String, required: true},
+  userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  readBy: [{String, default: []}],
+  date: {type: Date, default: Date.now},
+});
 
 messageSchema.virtual('id').get(function () {
   if (this._id) return this._id.toHexString();

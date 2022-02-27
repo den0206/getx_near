@@ -6,8 +6,6 @@ async function sendTextMessage(req, res) {
 
   const newMessage = new Message({chatRoomId, text, userId});
 
-  console.log(newMessage);
-
   try {
     await newMessage.save();
     res.status(200).json({status: true, data: newMessage});

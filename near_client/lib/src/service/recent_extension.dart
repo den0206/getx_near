@@ -65,4 +65,52 @@ class RecentExtension {
     RecentController.to.recentIO
         .sendUpdateRecent(userId: userId, chatRoomId: chatRoomId);
   }
+
+  Future<List<Recent>> updateRecentWithLastMessage(
+      {required String chatRoomId, String? lastMessage}) async {
+    final res = await _recentAPI.finadByRoomId(chatRoomId);
+    if (!res.status) throw Exception("Not find Recent");
+    final item = List<Map<String, dynamic>>.from(res.data);
+    final recents = List<Recent>.from(item.map((e) => Recent.fromMap(e)));
+
+    String last;
+
+    if (lastMessage != null) {
+      last = lastMessage;
+    } else {
+      last = "Deleted";
+    }
+
+    if (recents.isNotEmpty) {
+      await Future.forEach(recents, (Recent recent) async {
+        await updateRecentItem(recent, last, lastMessage == null);
+      });
+    }
+    return recents;
+  }
+
+  Future<void> updateRecentItem(
+      Recent recent, String lastMessage, bool isDelete) async {
+    final uid = recent.user.id;
+    var counter = recent.counter;
+
+    if (currentUser.id != uid) {
+      if (!isDelete) {
+        counter++;
+      } else {
+        --counter;
+      }
+      if (counter < 0) {
+        counter = 0;
+      }
+    }
+
+    final value = {
+      "recentId": recent.id,
+      "lastMessage": lastMessage,
+      "counter": counter,
+    };
+
+    await _recentAPI.updateRecent(value);
+  }
 }

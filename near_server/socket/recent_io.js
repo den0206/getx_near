@@ -4,7 +4,6 @@ function recentSocket(IO) {
 
     userId = socket.handshake.query.userId;
     socket.join(userId);
-    console.log(socket.adapter.rooms);
 
     socket.on('update', (data) => {
       const roomId = data['userId'];

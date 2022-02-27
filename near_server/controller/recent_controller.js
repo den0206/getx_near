@@ -1,5 +1,6 @@
 const Recent = require('../model/recent');
 const base64 = require('../utils/base64');
+const {checkId} = require('../db/database');
 
 async function createChatRecet(req, res) {
   const {userId, chatRoomId, withUserId} = req.body;
@@ -11,6 +12,25 @@ async function createChatRecet(req, res) {
     res.status(200).json({status: true, data: recent});
   } catch (e) {
     res.status(500).json({status: false, message: 'Can not create Recent'});
+  }
+}
+async function updateRecent(req, res) {
+  const {recentId, lastMessage, counter} = req.body;
+
+  if (!checkId(recentId))
+    return res
+      .status(400)
+      .json({status: false, message: 'Invalid Chat Room Id'});
+
+  const value = {lastMessage, counter};
+  try {
+    const updateRecent = await Recent.findByIdAndUpdate(recentId, value, {
+      new: true,
+    });
+
+    res.status(200).json({status: true, data: updateRecent});
+  } catch (e) {
+    res.status(500).json({status: false, message: 'Can not update Recents'});
   }
 }
 
@@ -90,6 +110,7 @@ async function findByUserAndRoomid(req, res) {
 
 module.exports = {
   createChatRecet,
+  updateRecent,
   findByUserId,
   findByRoomId,
   findByUserAndRoomid,
