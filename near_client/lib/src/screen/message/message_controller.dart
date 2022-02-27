@@ -15,9 +15,10 @@ class MessageController extends LoadingGetController {
   late MessageIO _messageIO;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     _addSocket();
+    await loadMessages();
   }
 
   @override
@@ -28,10 +29,32 @@ class MessageController extends LoadingGetController {
   }
 
   void _addSocket() {
-    _messageIO = MessageIO(extention.chatRoomId);
+    _messageIO = MessageIO(this);
     _messageIO.initSocket();
 
-    _messageIO.addNewMessageListner((message) => messages.insert(0, message));
+    /// new message listner
+    _messageIO.addNewMessageListner();
+
+    /// read listner
+    _messageIO.addReadListner();
+  }
+
+  Future<void> loadMessages() async {
+    if (extention.reachLast || isLoading.value) return;
+    isLoading.call(true);
+    await Future.delayed(Duration(seconds: 1));
+
+    try {
+      final temp = await extention.loadMessge();
+      final unreads = await extention.updateReadList(temp);
+      if (unreads.isNotEmpty) _messageIO.sendUpdateRead(unreads);
+
+      messages.call(temp);
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoading.call(false);
+    }
   }
 
   Future<void> sendMessage() async {
@@ -39,14 +62,28 @@ class MessageController extends LoadingGetController {
 
     try {
       final newMessage = await extention.sendMessage(text: tx.text);
+      tx.clear();
       _messageIO.sendNewMessage(newMessage);
       await extention.updateLastRecent(newMessage);
 
       _messageIO.sendUpdateRecent(extention.userIds);
-
-      tx.clear();
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  bool checkRead(Message message) {
+    final withUser = extention.withUser;
+    return message.readBy.contains(withUser.id);
+  }
+
+  void readUI(String id, String uid) {
+    final messageIds = messages.map((m) => m.id).toList();
+    if (messageIds.contains(id)) {
+      final index = messageIds.indexOf(id);
+      final temp = messages[index];
+      temp.readBy.add(uid);
+      messages[index] = temp;
     }
   }
 }

@@ -1,14 +1,19 @@
 import 'package:getx_near/src/api/messae_api.dart';
 import 'package:getx_near/src/model/message.dart';
 import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/recent_extension.dart';
 
 class MessageExtention {
   final String chatRoomId;
   final User withUser;
-  final MessageApi _messageApi = MessageApi();
+  MessageExtention(this.chatRoomId, this.withUser);
 
+  bool reachLast = false;
+  String? nextCursor;
+
+  final MessageApi _messageApi = MessageApi();
   final RecentExtension re = RecentExtension();
 
   User get currentUser {
@@ -17,11 +22,19 @@ class MessageExtention {
     return current!;
   }
 
-  List<String> get userIds {
-    return [currentUser.id, withUser.id];
-  }
+  List<String> get userIds => [currentUser.id, withUser.id];
 
-  MessageExtention(this.chatRoomId, this.withUser);
+  Future<List<Message>> loadMessge() async {
+    final res = await _messageApi.loadMessage(chatRoomId, nextCursor);
+    if (!res.status) throw Exception("Cant load messages");
+
+    final Pages<Message> pages = Pages.fromMap(res.data, Message.fromJsonModel);
+
+    reachLast = !pages.pageInfo.hasNextPage;
+    nextCursor = pages.pageInfo.nextPageCursor;
+
+    return pages.pageFeeds;
+  }
 
   Future<Message> sendMessage({required String text}) async {
     final Map<String, dynamic> body = {"text": text, "chatRoomId": chatRoomId};
@@ -56,5 +69,32 @@ class MessageExtention {
         await re.saveRecent(id, allUsers, chatRoomId);
       });
     }
+  }
+
+  /// Reat Status
+  Future<List<String>> updateReadList(List<Message> messages) async {
+    /// unread を絞り出す
+    final unreads = messages
+        .where((message) => !message.isRead && !message.isCurrent)
+        .toList();
+    if (unreads.isEmpty) return [];
+    await Future.forEach(unreads, (Message message) async {
+      if (!message.isRead) await updateRead(message: message);
+    });
+
+    return unreads.map((u) => u.id).toList();
+  }
+
+  Future<void> updateRead(
+      {required Message message, bool useSocket = false}) async {
+    final uniqueRead = [currentUser.id, ...message.readBy].toSet().toList();
+    final body = {
+      "messageId": message.id,
+      "readBy": uniqueRead,
+    };
+
+    final res = await _messageApi.updateMessage(body);
+
+    if (!res.status) throw Exception("not update read");
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/service/auth_service.dart';
+import 'package:getx_near/src/utils/date_formate.dart';
 
 class Message {
   final String id;
@@ -16,6 +17,17 @@ class Message {
     final currentUser = AuthService.to.currentUser.value;
     if (currentUser == null) return false;
     return this.user.id == currentUser.id;
+  }
+
+  bool get isRead {
+    if (isCurrent) return true;
+    final currentUser = AuthService.to.currentUser.value;
+    if (currentUser == null) return false;
+    return readBy.contains(currentUser.id);
+  }
+
+  String get formattedTime {
+    return DateFormatter.getVerBoseDateString(date);
   }
 
   Message({

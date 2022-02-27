@@ -13,7 +13,7 @@ function messageScoket(messageIO, recentIO) {
     });
 
     socket.on('read', (ids) => {
-      messageIO.to(chatRoomId).emit('ead', ids);
+      messageIO.to(chatRoomId).emit('read', ids);
     });
 
     socket.on('update_recent', (data) => {
