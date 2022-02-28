@@ -13,6 +13,7 @@ import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
+import 'package:getx_near/src/utils/date_formate.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:sizer/sizer.dart';
@@ -163,10 +164,10 @@ class ContentArea extends SliverPersistentHeaderDelegate {
   ContentArea(this.controller);
 
   @override
-  double get maxExtent => 25.h;
+  double get maxExtent => 26.h;
 
   @override
-  double get minExtent => 15.h;
+  double get minExtent => 20.h;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
@@ -199,7 +200,7 @@ class ContentArea extends SliverPersistentHeaderDelegate {
           Obx(() => Text(
                 post.content,
                 textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 13.sp),
+                style: TextStyle(fontSize: 12.sp),
                 // maxLines: 6,
                 textScaleFactor: controller.textScale.value,
                 // overflow: TextOverflow.ellipsis
@@ -341,7 +342,7 @@ class CommentCell extends GetView<PostDetailController> {
         ),
         trailing: comment.distance != null
             ? Text(
-                "${comment.distance} m",
+                " ${distanceToString(comment.distance!)} km",
                 style: TextStyle(fontWeight: FontWeight.bold),
               )
             : null,

@@ -92,7 +92,14 @@ class MapService {
 
     final cameraUpdate = CameraUpdate.newLatLngZoom(
         LatLng(latLng.latitude, latLng.longitude), zoom);
-    googleController.animateCamera(cameraUpdate);
+    await googleController.animateCamera(cameraUpdate);
+  }
+
+  Future<void> fitTwoPointsZoom(
+      {required LatLng from, required LatLng to}) async {
+    final bounds = locationService.getCameraZoom(from, to);
+    await googleController
+        .animateCamera((CameraUpdate.newLatLngBounds(bounds, 90)));
   }
 
   Future<void> setZoom(bool zoomIn) async {
@@ -173,6 +180,36 @@ class MapService {
     );
 
     _circles[circleId] = circle;
+  }
+
+  void addCenterToPostPolyLine(
+      {required LatLng center,
+      required Post post,
+      Color? color,
+      Function()? onTap}) async {
+    /// clear polyline
+    _polyLines.clear();
+
+    final id = post.id;
+    final polylineId = PolylineId(id);
+
+    final points = [center, post.coordinate];
+    Polyline polyline;
+
+    polyline = Polyline(
+      polylineId: polylineId,
+      color: color ?? Color.fromARGB(255, 95, 109, 237),
+      points: points,
+      jointType: JointType.round,
+      consumeTapEvents: onTap != null,
+      width: 5,
+      startCap: Cap.roundCap,
+      endCap: Cap.roundCap,
+      geodesic: true,
+      onTap: onTap,
+    );
+
+    _polyLines[polylineId] = polyline;
   }
 
   void addPolygon(List<LatLng> points) {

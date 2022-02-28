@@ -170,26 +170,26 @@ class MapScreen extends LoadingGetView<MapController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  if (kDebugMode) ...[
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.purple,
-                      ),
-                      child: Builder(builder: (context) {
-                        return IconButton(
-                          color: Colors.white,
-                          icon: Icon(Icons.group),
-                          onPressed: () {
-                            controller.getDummy();
-                          },
-                        );
-                      }),
+                  // if (kDebugMode) ...[
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.purple,
                     ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                  ],
+                    child: Builder(builder: (context) {
+                      return IconButton(
+                        color: Colors.white,
+                        icon: Icon(Icons.group),
+                        onPressed: () {
+                          controller.getDummy();
+                        },
+                      );
+                    }),
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  // ],
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,

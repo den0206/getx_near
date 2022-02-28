@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:getx_near/src/model/user.dart';
@@ -56,6 +57,8 @@ class Post extends JsonModel {
   final DateTime? expireAt;
   final DateTime createdAt;
 
+  int? distance;
+
   List<String> likes;
   List<String> comments;
 
@@ -91,9 +94,8 @@ class Post extends JsonModel {
     return {
       'id': id,
       'content': content,
-      "latitude": coordinate.latitude,
-      "user": user.toMap(),
-      'longitude': coordinate.longitude,
+      "userId": user.toMap(),
+      'location': parseToLatlng(coordinate),
       "emergency": emergency,
       "expireAt": expireAt?.toIso8601String(),
       'createdAt': createdAt.toIso8601String(),

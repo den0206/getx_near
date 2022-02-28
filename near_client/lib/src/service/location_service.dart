@@ -35,6 +35,29 @@ class LocationService {
     return placemarks[0];
   }
 
+  LatLngBounds getCameraZoom(LatLng origin, LatLng destination) {
+    LatLngBounds bounds;
+
+    if (origin.latitude > destination.latitude &&
+        origin.longitude > destination.longitude) {
+      bounds = LatLngBounds(southwest: destination, northeast: origin);
+    } else if (origin.longitude > destination.longitude) {
+      bounds = LatLngBounds(
+        southwest: LatLng(origin.latitude, destination.longitude),
+        northeast: LatLng(destination.latitude, origin.longitude),
+      );
+    } else if (origin.latitude > destination.latitude) {
+      bounds = LatLngBounds(
+        southwest: LatLng(destination.latitude, origin.longitude),
+        northeast: LatLng(origin.latitude, destination.longitude),
+      );
+    } else {
+      bounds = LatLngBounds(southwest: origin, northeast: destination);
+    }
+
+    return bounds;
+  }
+
   double getRadiusOnVisible(VisibleRegion visibleRegion) {
     //east righ_t
     // west lef_t

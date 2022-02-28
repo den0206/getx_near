@@ -22,6 +22,8 @@ class AuthService extends GetxService {
     if (value == null) return;
 
     this.currentUser.call(User.fromMap(value!));
+
+    Get.put(RecentController());
     print(currentUser.value.toString());
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:get/get_utils/src/extensions/num_extensions.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/model/message.dart';
@@ -18,6 +19,7 @@ class MessageController extends LoadingGetController {
   void onInit() async {
     super.onInit();
     _addSocket();
+    _addSC();
     await loadMessages();
   }
 
@@ -39,6 +41,22 @@ class MessageController extends LoadingGetController {
     _messageIO.addReadListner();
   }
 
+  void _addSC() {
+    sc.addListener(() async {
+      if (sc.position.pixels == sc.position.maxScrollExtent) {
+        await loadMessages();
+      }
+    });
+  }
+
+  Future<void> _scrollToBottom() async {
+    await sc.animateTo(
+      sc.position.minScrollExtent,
+      duration: 100.milliseconds,
+      curve: Curves.easeIn,
+    );
+  }
+
   Future<void> loadMessages() async {
     if (extention.reachLast || isLoading.value) return;
     isLoading.call(true);
@@ -49,7 +67,7 @@ class MessageController extends LoadingGetController {
       final unreads = await extention.updateReadList(temp);
       if (unreads.isNotEmpty) _messageIO.sendUpdateRead(unreads);
 
-      messages.call(temp);
+      messages.addAll(temp);
     } catch (e) {
       print(e.toString());
     } finally {
@@ -59,14 +77,17 @@ class MessageController extends LoadingGetController {
 
   Future<void> sendMessage() async {
     if (tx.text == "") return;
+    final current = tx.text;
+    tx.clear();
 
     try {
-      final newMessage = await extention.sendMessage(text: tx.text);
-      tx.clear();
+      final newMessage = await extention.sendMessage(text: current);
+
       _messageIO.sendNewMessage(newMessage);
       await extention.updateLastRecent(newMessage);
 
       _messageIO.sendUpdateRecent(extention.userIds);
+      _scrollToBottom();
     } catch (e) {
       print(e.toString());
     }

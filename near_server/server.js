@@ -10,6 +10,7 @@ const {connection} = require('./db/database');
 const dotenv = require('dotenv');
 const checkAPIKey = require('./middleware/check_api');
 const socket = require('./socket/socket');
+const {connectTunnel} = require('./utils/local_tunnel');
 
 dotenv.config();
 const server = http.createServer(app);
@@ -46,6 +47,8 @@ app.use(`${ver}/post`, postRoutes);
 app.use(`${ver}/comment`, commentRoute);
 app.use(`${ver}/recent`, recentRoute);
 app.use(`${ver}/message`, messageRoute);
+
+// connectTunnel(port);
 
 server.listen(port, () => {
   console.log('server Start', port);

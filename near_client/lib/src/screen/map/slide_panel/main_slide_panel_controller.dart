@@ -5,7 +5,9 @@ import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
+import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
+import 'package:getx_near/src/screen/widget/custom_slider.dart';
 
 class MainSlidePanelController extends GetxController {
   final MapController mapController;
@@ -13,6 +15,10 @@ class MainSlidePanelController extends GetxController {
   MainSlidePanelController(this.mapController);
   final RxnInt currentPostIndex = RxnInt();
   bool selecting = false;
+
+  MapService get mapService {
+    return mapController.mapService;
+  }
 
   List<Post> get mPosts {
     return mapController.posts;
@@ -27,7 +33,6 @@ class MainSlidePanelController extends GetxController {
   }
 
   Future<void> postsOnChange(int index) async {
-    selecting = true;
     final post = mPosts[index];
     await selectPost(post);
   }
@@ -41,14 +46,20 @@ class MainSlidePanelController extends GetxController {
     currentPostIndex.call(index);
 
     if (useMap) {
-      await mapController.setCenterPosition(latLng: post.coordinate, zoom: 16);
-      mapController.mapService.showInfoService(post.id);
+      mapService.addCenterToPostPolyLine(
+        center: mapController.centerPosition,
+        post: post,
+        color: post.level.mainColor,
+      );
+
+      mapService.showInfoService(post.id);
+      mapController.update();
+
+      await mapService.fitTwoPointsZoom(
+          from: mapController.centerPosition, to: post.coordinate);
     }
     if (mapController.panelController.isPanelClosed)
       await mapController.panelController.open();
-
-    await Future.delayed(Duration(milliseconds: 500));
-    selecting = false;
   }
 
   Future<void> showPostDetail(Post post) async {

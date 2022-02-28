@@ -28,3 +28,9 @@ class DateFormatter {
     return '${DateFormat('yMd').format(dateTime)}, $roughTimeString';
   }
 }
+
+double distanceToString(int distance) {
+  final double distanceInKiloMeters = distance / 1000;
+  final res = double.parse((distanceInKiloMeters).toStringAsFixed(2));
+  return res;
+}

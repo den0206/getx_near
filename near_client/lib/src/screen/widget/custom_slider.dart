@@ -40,11 +40,13 @@ AlertLevel getAlert(double current) {
 }
 
 class AlertIndicator extends StatelessWidget {
-  const AlertIndicator({Key? key, required this.intValue, required this.level})
+  const AlertIndicator(
+      {Key? key, required this.intValue, required this.level, this.height = 25})
       : super(key: key);
 
   final int intValue;
   final AlertLevel level;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class AlertIndicator extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          height: 25,
+          height: height,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(

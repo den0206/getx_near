@@ -223,6 +223,7 @@ class MessageInput extends GetView<MessageController> {
                     child: TextField(
                       controller: controller.tx,
                       keyboardType: TextInputType.text,
+                      // autofocus: true,
                       decoration: InputDecoration(
                         hintText: "Message",
                         border: InputBorder.none,

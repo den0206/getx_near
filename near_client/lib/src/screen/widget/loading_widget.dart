@@ -30,7 +30,10 @@ abstract class LoadingGetView<T extends LoadingGetController>
 
   @override
   Widget build(BuildContext context) {
-    if (!Get.isRegistered<T>()) Get.lazyPut(() => ctr, fenix: isFenix);
+    if (!Get.isRegistered<T>()) {
+      print(" fenix is ${isFenix}");
+      Get.lazyPut(() => ctr, fenix: isFenix);
+    }
 
     return GestureDetector(
       onTap: () {

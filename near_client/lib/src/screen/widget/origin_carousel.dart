@@ -68,7 +68,7 @@ class OriginCarouselCell extends StatelessWidget {
 
   double get scale {
     if (currentIndex != null && index != null) {
-      return currentIndex!.value == index ? 0.8 : 0.6;
+      return currentIndex!.value == index ? 0.9 : 0.6;
     }
 
     return 0.8;
@@ -77,7 +77,7 @@ class OriginCarouselCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 5.h, bottom: 3.h, left: 3.w),
+      padding: EdgeInsets.only(top: 10, bottom: 3.h, left: 3.w),
       child: GestureDetector(
         onTap: onTap,
         child: Obx(
