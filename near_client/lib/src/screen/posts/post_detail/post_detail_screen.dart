@@ -164,10 +164,10 @@ class ContentArea extends SliverPersistentHeaderDelegate {
   ContentArea(this.controller);
 
   @override
-  double get maxExtent => 25.h;
+  double get maxExtent => 26.h;
 
   @override
-  double get minExtent => 15.h;
+  double get minExtent => 20.h;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
@@ -200,7 +200,7 @@ class ContentArea extends SliverPersistentHeaderDelegate {
           Obx(() => Text(
                 post.content,
                 textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 13.sp),
+                style: TextStyle(fontSize: 12.sp),
                 // maxLines: 6,
                 textScaleFactor: controller.textScale.value,
                 // overflow: TextOverflow.ellipsis

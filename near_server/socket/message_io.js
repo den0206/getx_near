@@ -18,9 +18,8 @@ function messageScoket(messageIO, recentIO) {
 
     socket.on('update_recent', (data) => {
       roomIds = data['userIds'];
-      roomIds.forEach(function (room) {
-        recentIO.to(room).emit('update', data);
-      });
+      /// socket.io V4
+      recentIO.in(roomIds).emit('update', data);
     });
 
     socket.on('disconnect', () => {

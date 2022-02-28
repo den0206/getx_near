@@ -77,10 +77,12 @@ class MessageController extends LoadingGetController {
 
   Future<void> sendMessage() async {
     if (tx.text == "") return;
+    final current = tx.text;
+    tx.clear();
 
     try {
-      final newMessage = await extention.sendMessage(text: tx.text);
-      tx.clear();
+      final newMessage = await extention.sendMessage(text: current);
+
       _messageIO.sendNewMessage(newMessage);
       await extention.updateLastRecent(newMessage);
 

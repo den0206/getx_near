@@ -23,7 +23,7 @@ class MessageExtention {
     return current!;
   }
 
-  List<String> get userIds => [currentUser.id, withUser.id];
+  List<String> get userIds => [currentUser.id, withUser.id].toSet().toList();
 
   Future<List<Message>> loadMessge() async {
     final res = await _messageApi.loadMessage(chatRoomId, nextCursor);

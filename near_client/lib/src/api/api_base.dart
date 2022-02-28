@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -16,6 +17,8 @@ abstract class APIBase {
     "Content-type": "application/json",
     "x-api-key": dotenv.env["API_KEY"] ?? "NO API"
   };
+
+  final Duration timeoutDuration = Duration(seconds: 10);
 
   final EndPoint endPoint;
   APIBase(this.endPoint);
@@ -85,11 +88,14 @@ extension APIBaseExtention on APIBase {
   Future<ResponseAPI> getRequest({required Uri uri, useToken = false}) async {
     try {
       _setToken(useToken);
-      final res = await http.get(uri, headers: headers);
+      final res =
+          await http.get(uri, headers: headers).timeout(timeoutDuration);
       return _filterResponse(res);
     } on UnauthorisedException catch (unauth) {
       await AuthService.to.logout();
       throw unauth;
+    } on TimeoutException {
+      throw Exception("Timeout Request");
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -102,11 +108,15 @@ extension APIBaseExtention on APIBase {
     try {
       _setToken(useToken);
       final String bodyparams = json.encode(body);
-      final res = await http.post(uri, headers: headers, body: bodyparams);
+      final res = await http
+          .post(uri, headers: headers, body: bodyparams)
+          .timeout(timeoutDuration);
       return _filterResponse(res);
     } on UnauthorisedException catch (unauth) {
       await AuthService.to.logout();
       throw unauth;
+    } on TimeoutException {
+      throw Exception("Timeout Request");
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -120,11 +130,15 @@ extension APIBaseExtention on APIBase {
       _setToken(useToken);
 
       final String bodyParams = json.encode(body);
-      final res = await http.put(uri, headers: headers, body: bodyParams);
+      final res = await http
+          .put(uri, headers: headers, body: bodyParams)
+          .timeout(timeoutDuration);
       return _filterResponse(res);
     } on UnauthorisedException catch (unauth) {
       await AuthService.to.logout();
       throw unauth;
+    } on TimeoutException {
+      throw Exception("Timeout Request");
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -137,11 +151,15 @@ extension APIBaseExtention on APIBase {
     try {
       _setToken(useToken);
       final String bodyParams = json.encode(body);
-      final res = await http.delete(uri, headers: headers, body: bodyParams);
+      final res = await http
+          .delete(uri, headers: headers, body: bodyParams)
+          .timeout(timeoutDuration);
       return _filterResponse(res);
     } on UnauthorisedException catch (unauth) {
       await AuthService.to.logout();
       throw unauth;
+    } on TimeoutException {
+      throw Exception("Timeout Request");
     } on SocketException {
       throw Exception("No Internet");
     }

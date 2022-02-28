@@ -43,7 +43,9 @@ async function getNearPost(req, res) {
           $maxDistance: parseInt(radius),
         },
       },
-    }).populate('userId', '-password');
+    })
+      .limit(100)
+      .populate('userId', '-password');
 
     res.status(200).json({status: true, data: posts});
   } catch (e) {
