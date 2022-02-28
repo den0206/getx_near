@@ -13,6 +13,7 @@ import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
+import 'package:getx_near/src/utils/date_formate.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:sizer/sizer.dart';
@@ -341,7 +342,7 @@ class CommentCell extends GetView<PostDetailController> {
         ),
         trailing: comment.distance != null
             ? Text(
-                "${comment.distance} m",
+                " ${distanceToString(comment.distance!)} km",
                 style: TextStyle(fontWeight: FontWeight.bold),
               )
             : null,

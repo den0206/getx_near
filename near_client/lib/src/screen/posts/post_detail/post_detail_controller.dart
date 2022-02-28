@@ -45,7 +45,7 @@ class PostDetailController extends LoadingGetController {
     addSocket();
     listenScroll();
 
-    await getComments();
+    await loadContents();
   }
 
   @override
@@ -128,6 +128,7 @@ class PostDetailController extends LoadingGetController {
   }
 
   Future<void> addComment() async {
+    if (commentContoller.text == "") return;
     try {
       final Position current = await _locationService.getCurrentPosition();
       final Map<String, dynamic> body = {

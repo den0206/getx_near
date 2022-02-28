@@ -73,9 +73,9 @@ class MyPostsController extends LoadingGetController {
   }
 
   Future<void> getDummy() async {
-    if (reachLast || cellLoading) return;
+    if (reachLast) return;
 
-    showCellLoading(true);
+    // showCellLoading(true);
 
     await Future.delayed(Duration(seconds: 1));
 
@@ -90,10 +90,11 @@ class MyPostsController extends LoadingGetController {
       final temp = List<Post>.from(items.map((e) => Post.fromMap(e)));
 
       posts.addAll(temp);
+      update();
     } catch (e) {
       print(e.toString());
     } finally {
-      showCellLoading(false);
+      // showCellLoading(false);
       reachLast = false;
     }
   }

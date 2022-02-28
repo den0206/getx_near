@@ -7,6 +7,7 @@ import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/origin_carousel.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
+import 'package:getx_near/src/utils/date_formate.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:sizer/sizer.dart';
 
@@ -87,8 +88,8 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                           Hero(
                             tag: post.id,
                             child: Container(
-                              width: 80.sp,
-                              height: 80.sp,
+                              width: 70.sp,
+                              height: 70.sp,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border:
@@ -102,7 +103,13 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                           AlertIndicator(
                             intValue: post.emergency,
                             level: post.level,
+                            height: 20,
                           ),
+                          if (post.distance != null)
+                            Text(
+                              "約 ${distanceToString(post.distance!)} km",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
                         ],
                       ),
                       onTap: () {
