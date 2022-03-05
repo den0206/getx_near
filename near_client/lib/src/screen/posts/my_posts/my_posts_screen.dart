@@ -2,10 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/my_posts/my_posts_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
@@ -74,27 +76,103 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final int currentIndex = controller.relationComments.length;
     return Container(
       height: 10.h,
       decoration: BoxDecoration(
           color: ConstsColor.panelColor,
           border: Border(bottom: BorderSide(color: Colors.grey))),
       child: ListView.builder(
-        itemCount: controller.relationComments.length,
+        itemCount: currentIndex != controller.commentLimit
+            ? currentIndex
+            : currentIndex + 1,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 10),
         itemBuilder: (context, index) {
+          if (index == currentIndex) {
+            return IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () {
+                print("Call");
+                controller.showRelationComments();
+              },
+            );
+          }
           final comment = controller.relationComments[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: CircleImageButton(
-              imageProvider: getUserImage(comment.user),
-              size: 35.sp,
-              border: Border.all(color: Colors.black, width: 2),
-              addShadow: false,
-              fit: BoxFit.contain,
-            ),
+          return CommentAvatar(comment: comment);
+        },
+      ),
+    );
+  }
+}
+
+class CommentAvatar extends StatelessWidget {
+  const CommentAvatar({
+    Key? key,
+    required this.comment,
+    this.onMessage,
+  }) : super(key: key);
+
+  final Comment comment;
+  final VoidCallback? onMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: CircleImageButton(
+        imageProvider: getUserImage(comment.user),
+        size: 35.sp,
+        border: Border.all(color: Colors.black, width: 2),
+        addShadow: false,
+        fit: BoxFit.contain,
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return CommentDialog(
+                comment: comment,
+                buttons: !comment.isCurrent
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomButton(
+                            width: 30.w,
+                            height: 40,
+                            background: Colors.grey,
+                            titleColor: Colors.white,
+                            title: "キャンセル",
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          CustomButton(
+                            width: 30.w,
+                            height: 40,
+                            background: Colors.green,
+                            title: "Message",
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              if (onMessage != null) onMessage!();
+                            },
+                          ),
+                        ],
+                      )
+                    : Align(
+                        alignment: Alignment.bottomRight,
+                        child: CustomButton(
+                          width: 100,
+                          height: 40,
+                          background: Colors.green,
+                          title: "Yes",
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+              );
+            },
           );
         },
       ),
