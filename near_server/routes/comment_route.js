@@ -6,6 +6,7 @@ const {makeDummyComments} = require('../controller/generator_controller');
 
 router.post('/add', checkAuth, commentController.addComment);
 router.get('/get', checkAuth, commentController.getComment);
+router.get('/total', checkAuth, commentController.getUserTotalCommnets);
 
 router.get('/dummy', makeDummyComments);
 

@@ -26,6 +26,21 @@ async function addComment(req, res) {
   }
 }
 
+async function getUserTotalCommnets(req, res) {
+  const userId = req.userData.userId;
+
+  try {
+    const comments = await Comment.find({postUserId: userId}).populate(
+      'userId',
+      '-password'
+    );
+
+    res.status(200).json({status: true, data: comments});
+  } catch (e) {
+    res.status(500).json({status: false, message: e.message});
+  }
+}
+
 async function getComment(req, res) {
   const {postId} = req.query;
 
@@ -65,6 +80,7 @@ async function getComment(req, res) {
 module.exports = {
   addComment,
   getComment,
+  getUserTotalCommnets,
 };
 
 /// relation でかける pre
@@ -78,3 +94,18 @@ module.exports = {
 
 //     comments.unshift(newComment._id);
 //     await Post.findByIdAndUpdate(postId, {comments: comments}, {new: true});
+
+// const posts = await Post.find({userId: userId})
+//   .select('comments')
+//   .populate({
+//     path: 'comments',
+//     model: 'Comment',
+//     populate: [
+//       {path: 'userId', model: 'User', select: '-password'},
+//       // {path: 'postId', model: 'Post'},
+//     ],
+//   });
+
+// const comments = posts.flatMap((value) => {
+//   return value.comments;
+// });

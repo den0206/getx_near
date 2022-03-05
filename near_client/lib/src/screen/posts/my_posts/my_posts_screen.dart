@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/my_posts/my_posts_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
@@ -33,7 +34,7 @@ class MyPostsScreen extends LoadingGetView<MyPostsController> {
               },
             ),
             SliverPersistentHeader(
-              delegate: AvatarsArea(),
+              delegate: AvatarsArea(controller),
               pinned: true,
               floating: false,
             ),
@@ -67,6 +68,9 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 
+  final MyPostsController controller;
+  AvatarsArea(this.controller);
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -76,18 +80,18 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
           color: ConstsColor.panelColor,
           border: Border(bottom: BorderSide(color: Colors.grey))),
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: controller.relationComments.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 10),
         itemBuilder: (context, index) {
+          final comment = controller.relationComments[index];
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CircleImageButton(
-              imageProvider:
-                  Image.asset("assets/images/default_user.png").image,
+              imageProvider: getUserImage(comment.user),
               size: 35.sp,
-              border: Border.all(color: Colors.white, width: 2),
+              border: Border.all(color: Colors.black, width: 2),
               addShadow: false,
               fit: BoxFit.contain,
             ),

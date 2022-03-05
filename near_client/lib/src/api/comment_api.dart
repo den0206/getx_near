@@ -31,6 +31,15 @@ class CommentAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> getTotalComment() async {
+    try {
+      final Uri uri = setUri("/total");
+      return await getRequest(uri: uri, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
   Future<ResponseAPI> generateDummy(Post post, double radius) async {
     final Map<String, dynamic> query = {
       "postId": post.id,
