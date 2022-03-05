@@ -1,6 +1,8 @@
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
+import 'package:getx_near/src/api/comment_api.dart';
 import 'package:getx_near/src/api/post_api.dart';
+import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
@@ -13,14 +15,20 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MyPostsController extends LoadingGetController {
   static MyPostsController get to => Get.find();
-  final List<Post> posts = [];
-  final PostAPI _postAPI = PostAPI();
   final User currentUser = AuthService.to.currentUser.value!;
   final LocationService _locationService = LocationService();
+
+  final List<Post> posts = [];
+  final PostAPI _postAPI = PostAPI();
+
+  final List<Comment> relationComments = [];
+  final CommentAPI _commentAPI = CommentAPI();
 
   @override
   void onInit() async {
     super.onInit();
+    await loadRelationComments();
+
     await loadContents();
   }
 
@@ -31,11 +39,13 @@ class MyPostsController extends LoadingGetController {
 
   Future<void> refreshPosts() async {
     resetParam();
+    await loadRelationComments();
     await loadContents();
   }
 
   void resetParam() {
     posts.clear();
+    relationComments.clear();
 
     reachLast = false;
     nextCursor = null;
@@ -58,6 +68,7 @@ class MyPostsController extends LoadingGetController {
     ;
   }
 
+  /// MARK  Posts
   Future<void> getPosts() async {
     if (reachLast || cellLoading) return;
     showCellLoading(true);
@@ -102,6 +113,21 @@ class MyPostsController extends LoadingGetController {
       print(e.toString());
     } finally {
       reachLast = false;
+    }
+  }
+
+  /// MARK Comment
+  Future<void> loadRelationComments() async {
+    try {
+      final res = await _commentAPI.getTotalComment();
+      if (!res.status) return;
+
+      final items = List<Map<String, dynamic>>.from(res.data);
+      final temp = List<Comment>.from(items.map((e) => Comment.fromMap(e)));
+
+      relationComments.addAll(temp);
+    } catch (e) {
+      print(e.toString());
     }
   }
 
