@@ -31,9 +31,14 @@ class CommentAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> getTotalComment() async {
+  Future<ResponseAPI> getTotalComment(
+      {required int limit, String? cursor}) async {
+    final Map<String, dynamic> query = {
+      "limit": limit.toString(),
+    };
+    if (cursor != null) query["cursor"] = cursor;
     try {
-      final Uri uri = setUri("/total");
+      final Uri uri = setUri("/total", query);
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());

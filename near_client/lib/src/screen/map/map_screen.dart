@@ -9,7 +9,7 @@ import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-final bool useMap = true;
+final bool useMap = false;
 
 class MapScreen extends LoadingGetView<MapController> {
   static const routeName = '/MapScreen';

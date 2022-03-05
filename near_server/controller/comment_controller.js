@@ -1,5 +1,4 @@
 const Comment = require('../model/comment');
-const Post = require('../model/post');
 const {checkId} = require('../db/database');
 const base64 = require('../utils/base64');
 
@@ -28,14 +27,37 @@ async function addComment(req, res) {
 
 async function getUserTotalCommnets(req, res) {
   const userId = req.userData.userId;
+  const cursor = req.query.cursor;
+  const limit = +req.query.limit || 10;
+
+  let query = {postUserId: userId};
+  if (cursor) {
+    query['_id'] = {$lt: base64.decodeToBase64(cursor)};
+  }
 
   try {
-    const comments = await Comment.find({postUserId: userId}).populate(
-      'userId',
-      '-password'
-    );
+    let comments = await Comment.find(query)
+      .sort({_id: -1})
+      .limit(limit + 1)
+      .populate('userId', '-password');
 
-    res.status(200).json({status: true, data: comments});
+    const hasNextPage = comments.length > limit;
+    comments = hasNextPage ? comments.slice(0, -1) : comments;
+
+    const nextPageCursor = hasNextPage
+      ? base64.encodeBase64(comments[comments.length - 1].id)
+      : null;
+
+    const data = {
+      pageFeeds: comments,
+      pageInfo: {
+        nextPageCursor: nextPageCursor,
+        hasNextPage: hasNextPage,
+      },
+    };
+
+    console.log(data);
+    res.status(200).json({status: true, data: data});
   } catch (e) {
     res.status(500).json({status: false, message: e.message});
   }
