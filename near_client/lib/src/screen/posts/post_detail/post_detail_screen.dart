@@ -41,6 +41,7 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                 foregroundColor: Colors.black,
                 elevation: 0,
                 actions: [
+                  if (post.isCurrent) PoptPopMenu(),
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: Hero(
@@ -156,6 +157,62 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
           );
         },
       ),
+    );
+  }
+}
+
+class PoptPopMenu extends GetView<PostDetailController> {
+  const PoptPopMenu({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      color: ConstsColor.commonBackground,
+      padding: EdgeInsets.zero,
+      onSelected: (value) {
+        switch (value) {
+          case "delete":
+            showDialog(
+              context: context,
+              builder: (context) {
+                return CustomDialog(
+                  title: "Dekete",
+                  descripon: "continue",
+                  icon: Icons.close,
+                  mainColor: Colors.red,
+                  onPress: () {
+                    controller.deletePost();
+                  },
+                );
+              },
+            );
+            break;
+          default:
+            return;
+        }
+      },
+      icon: Icon(Icons.more_vert),
+      itemBuilder: (context) {
+        return <PopupMenuEntry<String>>[
+          PopupMenuItem<String>(
+            value: 'delete',
+            child: ListTile(
+                iconColor: Colors.red,
+                leading: Icon(Icons.delete),
+                title: Text(
+                  "削除",
+                )),
+          ),
+          PopupMenuItem<String>(
+            value: 'cancel',
+            child: ListTile(
+                leading: Icon(Icons.close),
+                title: Text(
+                  "キャンセル",
+                )),
+          ),
+        ];
+      },
     );
   }
 }

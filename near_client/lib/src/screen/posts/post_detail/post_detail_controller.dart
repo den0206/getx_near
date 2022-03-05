@@ -223,4 +223,16 @@ class PostDetailController extends LoadingGetController {
       update();
     }
   }
+
+  Future<void> deletePost() async {
+    if (!post.isCurrent) return;
+    try {
+      final res = await _postAPI.deletePost(post.id);
+      if (!res.status) return;
+
+      Get.back();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

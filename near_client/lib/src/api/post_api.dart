@@ -52,6 +52,16 @@ class PostAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> deletePost(String postId) async {
+    final body = {"postId": postId};
+    try {
+      final Uri uri = setUri("/delete");
+      return await deleteRequest(uri: uri, body: body, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
   Future<ResponseAPI> generateDummyAll(
       LatLng centerPoint, double radius) async {
     final Map<String, dynamic> query = {

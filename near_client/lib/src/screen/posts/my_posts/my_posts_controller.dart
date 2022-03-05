@@ -1,3 +1,4 @@
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
@@ -11,6 +12,7 @@ import 'package:getx_near/src/service/location_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MyPostsController extends LoadingGetController {
+  static MyPostsController get to => Get.find();
   final List<Post> posts = [];
   final PostAPI _postAPI = PostAPI();
   final User currentUser = AuthService.to.currentUser.value!;
@@ -36,7 +38,6 @@ class MyPostsController extends LoadingGetController {
     posts.clear();
 
     reachLast = false;
-
     nextCursor = null;
     update();
   }
@@ -47,6 +48,14 @@ class MyPostsController extends LoadingGetController {
     } else {
       await getDummy();
     }
+  }
+
+  void insertPost(Post post) {
+    if (Get.isRegistered<MyPostsController>()) {
+      posts.insert(0, post);
+      update();
+    }
+    ;
   }
 
   Future<void> getPosts() async {
@@ -75,8 +84,6 @@ class MyPostsController extends LoadingGetController {
   Future<void> getDummy() async {
     if (reachLast) return;
 
-    // showCellLoading(true);
-
     await Future.delayed(Duration(seconds: 1));
 
     try {
@@ -94,7 +101,6 @@ class MyPostsController extends LoadingGetController {
     } catch (e) {
       print(e.toString());
     } finally {
-      // showCellLoading(false);
       reachLast = false;
     }
   }

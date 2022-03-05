@@ -11,6 +11,7 @@ router.post('/create', checkAuth, postController.createPost);
 router.get('/near', postController.getNearPost);
 router.get('/myposts', checkAuth, postController.getMyPosts);
 router.put('/like', checkAuth, postController.addLike);
+router.delete('/delete', checkAuth, postController.deletePost);
 
 /// dummy
 router.get('/dummy/all', makeDummyPosts);

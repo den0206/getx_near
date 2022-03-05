@@ -35,6 +35,7 @@ const postSchema = mongoose.Schema({
 /// Post Delete Relation
 
 postSchema.pre('remove', async function (next) {
+  console.log('=== POST DELETE RELATION');
   await Comment.deleteMany({postId: this._id});
   next();
 });
