@@ -11,7 +11,7 @@ import 'package:sizer/sizer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  runApp(DevicePreview(enabled: true, builder: (context) => MyApp()));
+  runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
 
 class MyApp extends StatelessWidget {

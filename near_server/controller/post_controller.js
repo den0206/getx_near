@@ -1,7 +1,7 @@
 const Post = require('../model/post');
-const mongoose = require('mongoose');
 const GeoJSON = require(`mongoose-geojson-schema`);
 const base64 = require('../utils/base64');
+const {checkId} = require('../db/database');
 
 async function createPost(req, res) {
   const body = req.body;
@@ -115,11 +115,34 @@ async function addLike(req, res) {
   }
 }
 
+async function deletePost(req, res) {
+  const userId = req.userData.userId;
+  const {postId} = req.body;
+
+  if (!checkId(postId))
+    return res.status(400).json({status: false, message: 'Invalid id'});
+
+  const findPost = await Post.findById(postId);
+
+  if (!findPost || findPost.userId != userId)
+    return res.status(400).json({status: false, message: 'Not Match OwnerId'});
+
+  try {
+    /// delete with pre reletaion
+    await findPost.delete();
+
+    console.log('=== Complete DELETE');
+    res.status(200).json({status: true, data: findPost});
+  } catch (e) {
+    res.status(500).json({status: false, message: 'Can not delete Post'});
+  }
+}
 module.exports = {
   createPost,
   getNearPost,
   getMyPosts,
   addLike,
+  deletePost,
 };
 
 // const area = {center: cood, radius: radius, unique: true, spherical: true};
