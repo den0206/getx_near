@@ -31,7 +31,10 @@ dependencies:
   socket_io_client: ^2.0.0-beta.3-nullsafety.0
   intl: ^0.17.0
   device_preview: ^1.0.0
+  flutter_slidable: ^1.2.0
+  image_picker: ^0.8.4+4
 
+# 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為)
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -68,6 +68,18 @@ class RecentController extends LoadingGetController {
     }
   }
 
+  Future<void> deleteRecent(Recent recent) async {
+    final recentId = recent.id;
+    final res = await _recentAPI.deleteRecent(recentId);
+
+    if (res.status) {
+      recents.remove(recent);
+      update();
+    } else {
+      print("Delete Fail, ${res.message}");
+    }
+  }
+
   /// socket
   void listenRecentUpdate() {
     recentIO.listenRecentUpdate((newRecent) {
