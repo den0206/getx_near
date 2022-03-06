@@ -6,7 +6,6 @@ import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/image_etension.dart';
-import 'package:image_picker/image_picker.dart';
 
 class SignUpController extends LoadingGetController {
   final TextEditingController nameController = TextEditingController();
@@ -27,8 +26,8 @@ class SignUpController extends LoadingGetController {
   Future<void> selectImage() async {
     final imageExt = ImageExtention();
     try {
-      userImage = await imageExt.selectImage(imageSource: ImageSource.gallery);
-      print(userImage);
+      userImage = await imageExt.selectImage();
+
       update();
     } catch (e) {
       print(e.toString());
@@ -37,6 +36,7 @@ class SignUpController extends LoadingGetController {
 
   Future<void> signUp() async {
     if (!buttonEnable.value) return;
+    print(userImage);
 
     final userData = {
       "name": nameController.text,
