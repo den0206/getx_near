@@ -22,6 +22,16 @@ class RecentAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> deleteRecent(String recentId) async {
+    final body = {"recentId": recentId};
+    try {
+      final uri = setUri("/delete");
+      return await deleteRequest(uri: uri, body: body);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
   Future<ResponseAPI> findByUserId(String? nextCursor) async {
     final limit = 10;
     final query = {"limit": limit.toString()};

@@ -9,5 +9,6 @@ router.get('/userid/roomid', checkAuth, recentController.findByUserAndRoomid);
 router.post('/create', checkAuth, recentController.createChatRecet);
 
 router.put('/', checkAuth, recentController.updateRecent);
+router.delete('/delete', checkAuth, recentController.deleteRecent);
 
 module.exports = router;

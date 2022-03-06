@@ -14,6 +14,7 @@ async function createChatRecet(req, res) {
     res.status(500).json({status: false, message: 'Can not create Recent'});
   }
 }
+
 async function updateRecent(req, res) {
   const {recentId, lastMessage, counter} = req.body;
 
@@ -31,6 +32,22 @@ async function updateRecent(req, res) {
     res.status(200).json({status: true, data: updateRecent});
   } catch (e) {
     res.status(500).json({status: false, message: 'Can not update Recents'});
+  }
+}
+
+async function deleteRecent(req, res) {
+  const {recentId} = req.body;
+  if (!checkId(recentId))
+    return res
+      .status(400)
+      .json({status: false, message: 'Invalid Chat Room Id'});
+
+  try {
+    const del = await Recent.findByIdAndDelete(recentId);
+    console.log('Success Delete');
+    res.status(200).json({status: true, data: del});
+  } catch (e) {
+    res.status(500).json({status: false, message: 'Can not delete recent'});
   }
 }
 
@@ -111,6 +128,7 @@ async function findByUserAndRoomid(req, res) {
 module.exports = {
   createChatRecet,
   updateRecent,
+  deleteRecent,
   findByUserId,
   findByRoomId,
   findByUserAndRoomid,

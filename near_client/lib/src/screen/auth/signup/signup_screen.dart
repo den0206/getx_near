@@ -23,9 +23,13 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
               child: Column(
                 children: [
                   CircleImageButton(
-                    imageProvider:
-                        Image.asset("assets/images/default_user.png").image,
+                    imageProvider: controller.userImage == null
+                        ? Image.asset("assets/images/default_user.png").image
+                        : FileImage(controller.userImage!),
                     size: 15.h,
+                    onTap: () {
+                      controller.selectImage();
+                    },
                   ),
                   SizedBox(
                     height: 20,
