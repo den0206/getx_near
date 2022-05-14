@@ -2,9 +2,13 @@ import {prop, pre, Ref, index} from '@typegoose/typegoose';
 import {User} from '../users/user.model';
 import {Location} from '../../utils/interface/location';
 import {Comment} from '../comments/comment.model';
+import {CommentModel} from '../../utils/database/models';
 
-@pre<Post>('remove', async function () {
+@pre<Post>('remove', async function (next) {
+  await CommentModel.deleteMany({postId: this._id});
+
   console.log('=== POST DELETE RELATION');
+  next();
 })
 @index({location: '2dsphere'})
 @index({expireAt: 1}, {expireAfterSeconds: 0})
