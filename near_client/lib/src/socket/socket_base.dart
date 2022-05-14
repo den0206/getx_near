@@ -42,6 +42,7 @@ abstract class SocketBase {
   }
 
   void destroySocket() {
+    socket.disconnect();
     socket.dispose();
     socket.destroy();
     print("${nameSpace.path}IO DESTROY");

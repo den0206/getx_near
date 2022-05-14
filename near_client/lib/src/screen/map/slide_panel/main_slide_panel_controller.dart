@@ -47,7 +47,7 @@ class MainSlidePanelController extends GetxController {
 
     if (useMap) {
       mapService.addCenterToPostPolyLine(
-        center: mapController.centerPosition,
+        center: mapController.currentPosition,
         post: post,
         color: post.level.mainColor,
       );
@@ -56,15 +56,14 @@ class MainSlidePanelController extends GetxController {
       mapController.update();
 
       await mapService.fitTwoPointsZoom(
-          from: mapController.centerPosition, to: post.coordinate);
+          from: mapController.currentPosition, to: post.coordinate);
     }
-    if (mapController.panelController.isPanelClosed)
-      await mapController.panelController.open();
   }
 
   Future<void> showPostDetail(Post post) async {
-    final _ = Get.toNamed(PostDettailScreen.routeName, arguments: post);
+    final _ = await Get.toNamed(PostDettailScreen.routeName, arguments: post);
 
-    // await mapController.panelController.open();
+    if (mapController.panelController.isPanelClosed)
+      await mapController.panelController.open();
   }
 }

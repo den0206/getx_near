@@ -98,6 +98,7 @@ class MapService {
   Future<void> fitTwoPointsZoom(
       {required LatLng from, required LatLng to}) async {
     final bounds = locationService.getCameraZoom(from, to);
+
     await googleController
         .animateCamera((CameraUpdate.newLatLngBounds(bounds, 90)));
   }
@@ -202,7 +203,7 @@ class MapService {
       points: points,
       jointType: JointType.round,
       consumeTapEvents: onTap != null,
-      width: 5,
+      width: 3,
       startCap: Cap.roundCap,
       endCap: Cap.roundCap,
       geodesic: true,
