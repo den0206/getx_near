@@ -106,7 +106,9 @@ async function addLike(req: Request, res: Response) {
 
 async function deletePost(req: Request, res: Response) {
   const userId = res.locals.user.userId;
-  const postId = req.query.postId as string;
+  const postId = req.body.postId as string;
+
+  console.log(postId);
 
   if (!checkMongoId(postId))
     new ResponseAPI(res, {message: 'Invalid id'}).excute(400);

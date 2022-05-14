@@ -9,8 +9,6 @@ import messageRoute from './resources/messages/message.route';
 import recentRoute from './resources/recents/recent.route';
 import http from 'http';
 import {connectIO} from './utils/socket/socket';
-import * as ListExpressEndpoints from 'express-list-endpoints';
-import listEndpoints from 'express-list-endpoints';
 
 class App {
   public app: Application;

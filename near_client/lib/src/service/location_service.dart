@@ -6,19 +6,17 @@ import 'package:getx_near/src/model/utils/visibleRegion.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationService {
-  Future<void> checkPermission() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        print('Location permissions are denied');
-      } else if (permission == LocationPermission.deniedForever) {
-        print("'Location permissions are permanently denied");
-      } else {
-        print("GPS Location service is granted");
-      }
-    } else {
-      print("GPS Location permission granted.");
+  Future<bool> checkPermission() async {
+    final permission = await Geolocator.requestPermission();
+    switch (permission) {
+      case LocationPermission.whileInUse:
+      case LocationPermission.always:
+        return true;
+      case LocationPermission.denied:
+      case LocationPermission.unableToDetermine:
+      case LocationPermission.deniedForever:
+        // await openAppSettings();
+        return false;
     }
   }
 

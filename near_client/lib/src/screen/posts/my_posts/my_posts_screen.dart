@@ -160,7 +160,7 @@ class CommentAvatar extends StatelessWidget {
                         ],
                       )
                     : Align(
-                        alignment: Alignment.bottomRight,
+                        alignment: Alignment.bottomCenter,
                         child: CustomButton(
                           width: 100,
                           height: 40,
