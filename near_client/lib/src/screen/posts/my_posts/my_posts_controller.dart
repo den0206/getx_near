@@ -8,6 +8,7 @@ import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
+import 'package:getx_near/src/screen/relation_comments/relation_comments_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
@@ -23,12 +24,13 @@ class MyPostsController extends LoadingGetController {
 
   final List<Comment> relationComments = [];
   final CommentAPI _commentAPI = CommentAPI();
+  final int commentLimit = 2;
 
   @override
   void onInit() async {
     super.onInit();
-    await loadRelationComments();
 
+    await loadRelationComments();
     await loadContents();
   }
 
@@ -119,13 +121,12 @@ class MyPostsController extends LoadingGetController {
   /// MARK Comment
   Future<void> loadRelationComments() async {
     try {
-      final res = await _commentAPI.getTotalComment();
+      final res = await _commentAPI.getTotalComment(limit: commentLimit);
       if (!res.status) return;
+      final Pages<Comment> pages =
+          Pages.fromMap(res.data, Comment.fromJsonModel);
 
-      final items = List<Map<String, dynamic>>.from(res.data);
-      final temp = List<Comment>.from(items.map((e) => Comment.fromMap(e)));
-
-      relationComments.addAll(temp);
+      relationComments.addAll(pages.pageFeeds);
     } catch (e) {
       print(e.toString());
     }
@@ -133,5 +134,9 @@ class MyPostsController extends LoadingGetController {
 
   Future<void> showPostDetail(Post post) async {
     final _ = await Get.toNamed(PostDettailScreen.routeName, arguments: post);
+  }
+
+  Future<void> showRelationComments() async {
+    final _ = await Get.toNamed(RelationCommentsScreen.routeName);
   }
 }

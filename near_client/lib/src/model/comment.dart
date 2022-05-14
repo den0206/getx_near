@@ -74,6 +74,10 @@ class Comment extends JsonModel {
   factory Comment.fromJson(String source) =>
       Comment.fromMap(json.decode(source));
 
+  // for pagination
+  static Comment fromJsonModel(Map<String, dynamic> json) =>
+      Comment.fromMap(json);
+
   static Comment fromJsonModelWithPost(Map<String, dynamic> json, Post post) =>
       Comment.fromMapWithPost(json, post);
 

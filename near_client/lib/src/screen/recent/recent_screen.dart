@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/recent.dart';
 import 'package:getx_near/src/model/user.dart';
@@ -54,54 +55,71 @@ class RecentCell extends GetView<RecentController> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {
-        controller.pushMessageScreen(recent);
-      },
-      leading: CircleImageButton(
-        imageProvider: getUserImage(recent.withUser),
-        size: 30.sp,
+    return Slidable(
+      key: Key(recent.id),
+      endActionPane: ActionPane(
+        motion: ScrollMotion(),
+        extentRatio: 0.25,
+        children: [
+          SlidableAction(
+            backgroundColor: Colors.red,
+            label: "Delete",
+            icon: Icons.delete,
+            onPressed: (context) {
+              controller.deleteRecent(recent);
+            },
+          )
+        ],
       ),
-      title: Text(
-        recent.withUser.name,
-        textAlign: TextAlign.start,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.5,
+      child: ListTile(
+        onTap: () {
+          controller.pushMessageScreen(recent);
+        },
+        leading: CircleImageButton(
+          imageProvider: getUserImage(recent.withUser),
+          size: 30.sp,
         ),
-      ),
-      subtitle: Container(
-        constraints: BoxConstraints(maxWidth: 200),
-        child: Text(
-          recent.lastMessage,
-          maxLines: 2,
+        title: Text(
+          recent.withUser.name,
+          textAlign: TextAlign.start,
           style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            letterSpacing: 1.2,
-            fontWeight: FontWeight.w500,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.5,
           ),
         ),
-      ),
-      trailing: recent.counter != 0
-          ? Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.green,
-              ),
-              child: Center(
-                  child: Text(
-                "${recent.counter}",
-                style: TextStyle(
-                  color: Colors.white,
+        subtitle: Container(
+          constraints: BoxConstraints(maxWidth: 200),
+          child: Text(
+            recent.lastMessage,
+            maxLines: 2,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              letterSpacing: 1.2,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        trailing: recent.counter != 0
+            ? Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.green,
                 ),
-              )),
-            )
-          : null,
+                child: Center(
+                    child: Text(
+                  "${recent.counter}",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                )),
+              )
+            : null,
+      ),
     );
   }
 }

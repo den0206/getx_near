@@ -25,6 +25,11 @@ class MyApp extends StatelessWidget {
         defaultTransition: Transition.fade,
         theme: ThemeData(
           scaffoldBackgroundColor: ConstsColor.panelColor,
+          appBarTheme: AppBarTheme(
+            backgroundColor: ConstsColor.panelColor,
+            foregroundColor: Colors.black,
+            elevation: 0,
+          ),
           primarySwatch: Colors.blue,
         ),
         getPages: AppRoot.pages,
