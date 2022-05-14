@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:getx_near/src/screen/auth/login/login_screen.dart';
 import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
-import 'package:getx_near/src/screen/get_address/get_address_screen.dart';
-
 import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/message/message_screen.dart';
@@ -41,10 +39,6 @@ final List<GetPage> _mainPages = [
   GetPage(
     name: MainTabScreen.routeName,
     page: () => MainTabScreen(),
-  ),
-  GetPage(
-    name: GetAddressScreen.routeName,
-    page: () => GetAddressScreen(),
   ),
   GetPage(
     name: AddPostScreen.routeName,

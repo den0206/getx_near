@@ -53,7 +53,8 @@ class AddPostController extends LoadingGetController {
       final res = await _postAPI.createPost(body);
       if (!res.status) return;
 
-      final Post post = Post.fromMap(res.data);
+      // notificaton を送るユーザーを集める
+      final Post post = Post.fromMap(res.data["newPost"]);
       MyPostsController.to.insertPost(post);
 
       Get.back(result: post);

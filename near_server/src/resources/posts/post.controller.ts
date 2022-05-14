@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import ResponseAPI from '../../utils/interface/response.api';
-import {PostModel} from '../../utils/database/models';
+import {PostModel, UserModel} from '../../utils/database/models';
 import {usePagenation} from '../../utils/database/pagenation';
 import {checkMongoId} from '../../utils/database/database';
 
@@ -20,6 +20,43 @@ async function createPost(req: Request, res: Response) {
     await newPost.populate('userId', '-password');
     await newPost.save();
     new ResponseAPI(res, {data: newPost}).excute(200);
+  } catch (e: any) {
+    new ResponseAPI(res, {message: e.message}).excute(500);
+  }
+}
+
+// experiment
+async function createPostWithNearUser(req: Request, res: Response) {
+  const {title, content, emergency, expireAt, longitude, latitude} = req.body;
+  const userId = res.locals.user.userId;
+  const cood = [longitude, latitude];
+  try {
+    const newPost = new PostModel({
+      title,
+      content,
+      userId,
+      emergency,
+      expireAt,
+      location: {type: 'Point', coordinates: cood},
+    });
+    await newPost.populate('userId', '-password');
+    await newPost.save();
+
+    const nearUsers = await UserModel.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: cood,
+          },
+          $maxDistance: 5000,
+        },
+      },
+    }).limit(30);
+
+    const data = {newPost, nearUsers};
+
+    new ResponseAPI(res, {data}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);
   }
@@ -92,11 +129,7 @@ async function addLike(req: Request, res: Response) {
       likes.push(userId);
     }
 
-    const newPost = await PostModel.findByIdAndUpdate(
-      postId,
-      {likes},
-      {new: true}
-    );
+    await PostModel.findByIdAndUpdate(postId, {likes}, {new: true});
 
     new ResponseAPI(res, {data: likes}).excute(200);
   } catch (e: any) {
@@ -135,4 +168,5 @@ export default {
   getMyPosts,
   addLike,
   deletePost,
+  createPostWithNearUser,
 };

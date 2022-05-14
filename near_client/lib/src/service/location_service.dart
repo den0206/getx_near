@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/model/utils/visibleRegion.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -21,10 +22,20 @@ class LocationService {
   }
 
   Future<Position> getCurrentPosition() async {
+    final UserAPI _userAPI = UserAPI();
     await checkPermission();
-    return await Geolocator.getCurrentPosition(
+    final current = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
         forceAndroidLocationManager: true);
+    final cood = {
+      "lng": current.longitude,
+      "lat": current.latitude,
+    };
+
+    await _userAPI.updateLocation(cood);
+
+    print("Update Location");
+    return current;
   }
 
   Future<Placemark> positionToAddress(Position position) async {

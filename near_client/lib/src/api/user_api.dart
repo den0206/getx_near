@@ -21,4 +21,13 @@ class UserAPI extends APIBase {
       return catchAPIError(e.toString());
     }
   }
+
+  Future<ResponseAPI> updateLocation(Map<String, dynamic> cood) async {
+    try {
+      final Uri uri = setUri("/location");
+      return await putRequest(uri: uri, body: cood, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
 }
