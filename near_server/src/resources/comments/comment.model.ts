@@ -6,15 +6,20 @@ import {PostModel} from '../../utils/database/models';
 
 @pre<Comment>('save', async function (next) {
   console.log('===== Relation Save');
-  //   const PostModel = require('../model/post');
   var findPostArray = await PostModel.findById(
     this.postId,
     'userId comments expireAt'
   );
 
-  if (!findPostArray) return next();
+  if (!findPostArray) {
+    var expire = new Date();
+    expire.setHours(expire.getHours() + 3);
+    this.expireAt = expire;
+    return next();
+  }
 
   var {comments, expireAt} = findPostArray;
+  console.log(expireAt);
   this.expireAt = expireAt;
   comments.unshift(this._id);
   await PostModel.findByIdAndUpdate(
@@ -26,6 +31,7 @@ import {PostModel} from '../../utils/database/models';
   console.log(comments);
   next();
 })
+@index({location: '2dsphere'})
 @index({expireAt: 1}, {expireAfterSeconds: 0})
 export class Comment {
   @prop({required: true, maxlength: 50})

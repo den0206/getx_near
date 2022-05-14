@@ -46,7 +46,27 @@ async function login(req: Request, res: Response) {
   }
 }
 
+async function updateLocation(req: Request, res: Response) {
+  const userId = res.locals.user.userId;
+  const {lng, lat} = req.body;
+
+  try {
+    const findUser = await UserModel.findById(userId);
+    if (!findUser)
+      return new ResponseAPI(res, {message: 'Can not fint The User'}).excute(
+        404
+      );
+
+    const location = {type: 'Point', coordinates: [lng, lat]};
+
+    const newUser = await findUser.updateOne({location: location}, {new: true});
+    new ResponseAPI(res, {data: newUser}).excute(200);
+  } catch (e: any) {
+    new ResponseAPI(res, {message: e.message}).excute(500);
+  }
+}
 export default {
   signUp,
   login,
+  updateLocation,
 };

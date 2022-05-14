@@ -1,5 +1,6 @@
-import {prop, pre} from '@typegoose/typegoose';
+import {prop, pre, index} from '@typegoose/typegoose';
 import argon2 from 'argon2';
+import {Location} from '../../utils/interface/location';
 
 @pre<User>('save', async function (next) {
   if (this.isModified('password') || this.isNew) {
@@ -9,6 +10,7 @@ import argon2 from 'argon2';
   }
   return next();
 })
+@index({location: '2dsphere'})
 export class User {
   @prop({required: true, maxlength: 20})
   name: string;
@@ -18,6 +20,9 @@ export class User {
   avatarUrl: string;
   @prop({required: true})
   password: string;
+
+  @prop({_id: false})
+  location: Location;
 
   async comparePasswrd(password: string): Promise<boolean> {
     return await argon2.verify(this.password, password);
