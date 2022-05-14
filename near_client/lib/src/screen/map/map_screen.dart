@@ -180,7 +180,7 @@ class MapScreen extends LoadingGetView<MapController> {
                         color: Colors.white,
                         icon: Icon(Icons.group),
                         onPressed: () {
-                          controller.getDummy();
+                          controller.startSearch(useDummy: true);
                         },
                       );
                     }),
@@ -221,7 +221,7 @@ class MapScreen extends LoadingGetView<MapController> {
                       color: Colors.red,
                     ),
                     onPressed: () {
-                      controller.setCenterPosition(zoom: 10);
+                      controller.setCenterPosition(zoom: 15);
                     },
                   )
                 ],
