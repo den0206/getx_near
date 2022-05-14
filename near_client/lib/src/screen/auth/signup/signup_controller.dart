@@ -5,7 +5,6 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
-import 'package:getx_near/src/service/image_etension.dart';
 
 class SignUpController extends LoadingGetController {
   final TextEditingController nameController = TextEditingController();
@@ -24,9 +23,10 @@ class SignUpController extends LoadingGetController {
   }
 
   Future<void> selectImage() async {
-    final imageExt = ImageExtention();
+    // final imageExt = ImageExtention();
     try {
-      userImage = await imageExt.selectImage();
+      print("Select Image");
+      // userImage = await imageExt.selectImage();
 
       update();
     } catch (e) {
