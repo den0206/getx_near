@@ -9,7 +9,9 @@
     "clean": "rimraf dist node_modules",
     "tsc": "tsc",
     "dev": "ts-node src/index.ts",
-    "start:dev": "ts-node-dev --respawn src/index.ts"
+    "start:dev": "ts-node-dev --respawn src/index.ts",
+    "lc": "lt -s yuuki0206 --port 3000",
+    "try:loca": "npm-run-all -p start:dev lc"
   },
   "keywords": [],
   "author": "",

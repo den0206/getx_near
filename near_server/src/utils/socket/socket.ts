@@ -5,8 +5,10 @@ import {recentSocket} from './recent_io';
 import {postSocket} from './post_io';
 
 export function connectIO(server: http.Server) {
-  const local = process.env.LOCAL;
-  const io = new socket.Server(server, {cors: {origin: local}});
+  const local = process.env.LOCAL as string;
+  const lc = process.env.LOLACTUNNEL as string;
+
+  const io = new socket.Server(server, {cors: {origin: [local, lc]}});
 
   var recentIO = io.of('/recents');
   var messageIO = io.of('/message');

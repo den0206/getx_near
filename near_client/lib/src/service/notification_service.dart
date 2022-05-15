@@ -75,6 +75,11 @@ class NotificationService extends GetxService {
     );
   }
 
+  Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    print("BackGround");
+    showNotification(message);
+  }
+
   void showNotification(RemoteMessage message) {
     RemoteNotification? notification = message.notification;
 
