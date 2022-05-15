@@ -1,16 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/app_root.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:device_preview/device_preview.dart';
 
 import 'package:getx_near/src/screen/root_screen.dart';
+import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
+
+  await Get.put(NotificationService()).initService();
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
 

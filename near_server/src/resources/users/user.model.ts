@@ -21,6 +21,8 @@ export class User {
   @prop({required: true})
   password: string;
 
+  @prop()
+  fcmToken: string;
   @prop({_id: false})
   location: Location;
 

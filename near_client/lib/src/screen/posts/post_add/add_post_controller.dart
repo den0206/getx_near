@@ -7,6 +7,7 @@ import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/posts/my_posts/my_posts_controller.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/location_service.dart';
+import 'package:getx_near/src/service/notification_service.dart';
 
 class AddPostController extends LoadingGetController {
   final TextEditingController tX = TextEditingController();
@@ -54,7 +55,14 @@ class AddPostController extends LoadingGetController {
       if (!res.status) return;
 
       // notificaton を送るユーザーを集める
+      final tokens = List<String>.from(res.data["tokens"]);
+      // notification　を送る
+      if (tokens.isNotEmpty)
+        await NotificationService.to
+            .pushPostNotification(tokens: tokens, content: "Help!");
+
       final Post post = Post.fromMap(res.data["newPost"]);
+
       MyPostsController.to.insertPost(post);
 
       Get.back(result: post);

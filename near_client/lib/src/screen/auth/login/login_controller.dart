@@ -8,6 +8,7 @@ import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
+import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 
 class LoginController extends LoadingGetController {
@@ -29,9 +30,14 @@ class LoginController extends LoadingGetController {
   Future<void> login() async {
     if (!buttonEnale.value) return;
 
+    final fcm = await NotificationService.to.getFCMToken();
+
+    if (fcm == null) throw Exception("Can't get FCM");
+
     final authData = {
       "email": emailController.text,
-      "password": passwordController.text
+      "password": passwordController.text,
+      "fcmToken": fcm,
     };
 
     isLoading.call(true);

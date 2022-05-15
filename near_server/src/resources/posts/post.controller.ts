@@ -52,9 +52,13 @@ async function createPostWithNearUser(req: Request, res: Response) {
           $maxDistance: 5000,
         },
       },
-    }).limit(30);
+    })
+      .select('fcmToken')
+      .limit(20);
 
-    const data = {newPost, nearUsers};
+    const tokens = nearUsers.map(({fcmToken}) => fcmToken);
+
+    const data = {newPost, tokens};
 
     new ResponseAPI(res, {data}).excute(200);
   } catch (e: any) {
