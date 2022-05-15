@@ -24,7 +24,6 @@ class LoginController extends LoadingGetController {
   @override
   void onClose() {
     super.onClose();
-    print("Close Login");
   }
 
   Future<void> login() async {

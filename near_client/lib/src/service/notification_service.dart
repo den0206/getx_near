@@ -3,6 +3,19 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:getx_near/src/api/notification_api.dart';
 
+enum NotificationType { message, post }
+
+extension NotificationTypeEXT on NotificationType {
+  String get title {
+    switch (this) {
+      case NotificationType.message:
+        return "New Message";
+      case NotificationType.post:
+        return "Help!";
+    }
+  }
+}
+
 class NotificationService extends GetxService {
   static NotificationService get to => Get.find();
   late AndroidNotificationChannel channel;
@@ -86,13 +99,13 @@ class NotificationService extends GetxService {
   /// MARK Send
   Future<void> pushPostNotification({
     required List<String> tokens,
+    required NotificationType type,
     required String content,
-    String title = "Help Post",
   }) async {
     final Map<String, dynamic> data = {
       "registration_ids": tokens,
       "notification": {
-        "Title": title,
+        "Title": type.title,
         "body": content,
         "content_available": true,
         "priority": "high",
@@ -107,6 +120,8 @@ class NotificationService extends GetxService {
     };
 
     final res = await _notificationAPI.sendNotification(data);
+
+    print("Push Notification! ${tokens.length}");
     print(res.toString());
   }
 }

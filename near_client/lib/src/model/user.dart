@@ -13,6 +13,7 @@ class User extends JsonModel {
   final String name;
   final String email;
 
+  String fcmToken;
   String? avatarUrl;
   String? sessionToken;
 
@@ -20,6 +21,7 @@ class User extends JsonModel {
     required this.id,
     required this.name,
     required this.email,
+    required this.fcmToken,
     this.avatarUrl,
     this.sessionToken,
   });
@@ -31,6 +33,7 @@ class User extends JsonModel {
       'email': email,
       'avatarUrl': avatarUrl,
       "sessionToken": sessionToken,
+      "fcmToken": fcmToken,
     };
   }
 
@@ -41,6 +44,7 @@ class User extends JsonModel {
       email: map['email'] ?? '',
       avatarUrl: map['avatarUrl'] ?? dummyUserImageUrl(),
       sessionToken: map["sessionToken"],
+      fcmToken: map["fcmToken"] ?? "",
     );
   }
 
@@ -50,7 +54,7 @@ class User extends JsonModel {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
+    return 'User(id: $id, name: $name, email: $email, avatarUrl: $avatarUrl, sessionToken: $sessionToken, fcmToken: $fcmToken)';
   }
 }
 
