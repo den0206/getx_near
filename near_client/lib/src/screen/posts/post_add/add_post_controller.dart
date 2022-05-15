@@ -6,6 +6,7 @@ import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/posts/my_posts/my_posts_controller.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
 
@@ -54,14 +55,19 @@ class AddPostController extends LoadingGetController {
       final res = await _postAPI.createPost(body);
       if (!res.status) return;
 
+      final Post post = Post.fromMap(res.data["newPost"]);
+
       // notificaton を送るユーザーを集める
       final tokens = List<String>.from(res.data["tokens"]);
+
+      // 自身のFCMを除く
+      final myToken = AuthService.to.currentUser.value!.fcmToken;
+      tokens.remove(myToken);
+
       // notification　を送る
       if (tokens.isNotEmpty)
-        await NotificationService.to
-            .pushPostNotification(tokens: tokens, content: "Help!");
-
-      final Post post = Post.fromMap(res.data["newPost"]);
+        await NotificationService.to.pushPostNotification(
+            tokens: tokens, type: NotificationType.post, content: "Help!");
 
       MyPostsController.to.insertPost(post);
 

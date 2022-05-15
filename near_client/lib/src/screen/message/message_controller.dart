@@ -87,6 +87,7 @@ class MessageController extends LoadingGetController {
       await extention.updateLastRecent(newMessage);
 
       _messageIO.sendUpdateRecent(extention.userIds);
+      await extention.sendNotification(newMessage: newMessage);
       _scrollToBottom();
     } catch (e) {
       print(e.toString());

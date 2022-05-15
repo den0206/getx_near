@@ -4,6 +4,7 @@ import 'package:getx_near/src/model/recent.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/service/auth_service.dart';
+import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/service/recent_extension.dart';
 
 class MessageExtention {
@@ -70,6 +71,15 @@ class MessageExtention {
         await re.saveRecent(id, allUsers, chatRoomId);
       });
     }
+  }
+
+  Future<void> sendNotification({required Message newMessage}) async {
+    if (withUser.fcmToken != "")
+      await NotificationService.to.pushPostNotification(
+        tokens: [withUser.fcmToken],
+        type: NotificationType.message,
+        content: newMessage.text,
+      );
   }
 
   Future<void> updateDeleteRecent() async {
