@@ -22,9 +22,15 @@ async function signUp(req: Request<{}, {}, SignUpBody>, res: Response) {
 }
 
 async function login(req: Request, res: Response) {
-  const {email, password} = req.body;
+  const {email, password, fcmToken} = req.body;
+
   try {
-    const isFind = await UserModel.findOne({email});
+    const isFind = await UserModel.findOneAndUpdate(
+      {email},
+      {fcmToken},
+      {new: true}
+    );
+    // const isFind = await UserModel.findOne({email});
     if (!isFind)
       return new ResponseAPI(res, {message: 'No Exist Email'}).excute(400);
 

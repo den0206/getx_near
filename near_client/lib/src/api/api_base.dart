@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'dart:io' as io;
 
 abstract class APIBase {
-  final String host = Enviroment.getHost();
+  String host = Enviroment.getHost();
   final JsonCodec json = JsonCodec();
   final Map<String, String> headers = {
     "Content-type": "application/json",
@@ -50,8 +50,18 @@ abstract class APIBase {
 
   ResponseAPI _filterResponse(http.Response response) {
     final resJson = json.decode(response.body);
-    final responseAPI =
-        ResponseAPI.fromMapWithCode(resJson, response.statusCode);
+
+    ResponseAPI responseAPI;
+    switch (endPoint) {
+      // 自サーバー以外を処理
+      case EndPoint.notification:
+        responseAPI = ResponseAPI(
+            status: true, statusCode: response.statusCode, data: resJson);
+        break;
+      default:
+        responseAPI = ResponseAPI.fromMapWithCode(resJson, response.statusCode);
+    }
+
     return _checkStatusCode(responseAPI);
   }
 
@@ -192,6 +202,7 @@ enum EndPoint {
   comment,
   recent,
   message,
+  notification,
 }
 
 extension EndPointEXT on EndPoint {
@@ -209,6 +220,8 @@ extension EndPointEXT on EndPoint {
         return "$APIVer/recent";
       case EndPoint.message:
         return "$APIVer/message";
+      case EndPoint.notification:
+        return "fcm";
     }
   }
 }
