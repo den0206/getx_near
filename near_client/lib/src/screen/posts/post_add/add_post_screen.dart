@@ -1,6 +1,6 @@
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/post_add/add_post_controller.dart';
@@ -16,6 +16,9 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
   static const routeName = '/AddPost';
   @override
   AddPostController get ctr => AddPostController();
+
+  @override
+  bool get enableTap => false;
 
   @override
   Widget get child {
@@ -46,18 +49,10 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                             );
                           }
                         : null,
-                    elevation: 10.0,
-                    disabledElevation: 1,
                     fillColor: controller.canSend.value
-                        ? Colors.blue
-                        : Colors.blue[100],
-                    constraints: BoxConstraints(maxWidth: 45, minHeight: 45),
-                    child: Icon(
-                      Icons.send,
-                      size: 15.0,
-                    ),
-                    padding: EdgeInsets.all(10.0),
-                    shape: CircleBorder(),
+                        ? Colors.grey
+                        : ConstsColor.panelColor,
+                    child: Text("Send"),
                   ),
                 ))
           ],
@@ -71,91 +66,113 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleImageButton(
-                    imageProvider:
-                        getUserImage(AuthService.to.currentUser.value!),
-                    size: 40.sp,
-                    border: Border.all(color: Colors.white, width: 2),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: CircleImageButton(
+                      imageProvider:
+                          getUserImage(AuthService.to.currentUser.value!),
+                      size: 40.sp,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
                   ),
                   Container(
                     constraints: BoxConstraints(maxWidth: 80.w),
                     child: AutoSizeTextField(
                       controller: controller.tX,
                       autofocus: true,
+                      cursorColor: Colors.black,
                       maxLines: 10,
-                      maxLength: 200,
+                      // maxLength: 200,
                       style: TextStyle(fontSize: 17),
                       decoration: InputDecoration(
                         hintText: "You Doing",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
+                        focusColor: Colors.black,
+                        border: null,
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        contentPadding: const EdgeInsets.all(20),
+                            borderSide: BorderSide(color: Colors.transparent)),
+                        contentPadding: const EdgeInsets.all(10),
                       ),
                       onChanged: controller.streamText,
                     ),
                   ),
                 ],
               ),
-              Obx(() => Text("${controller.emergency.value}")),
-              CustomSlider(
-                rxValue: controller.emergencyValue,
-              ),
-              SelectExpireTime(onChange: controller.chanheExpire)
             ],
           ),
         ),
+        bottomSheet: AbovePostField(),
       );
     });
   }
 }
 
-// ignore: must_be_immutable
-class SelectExpireTime extends StatefulWidget {
-  SelectExpireTime({Key? key, required this.onChange}) : super(key: key);
-
-  void Function(ExpireTime?) onChange;
-
-  @override
-  State<SelectExpireTime> createState() => _SelectExpireTimeState();
-}
-
-class _SelectExpireTimeState extends State<SelectExpireTime> {
-  ExpireTime expireTime = ExpireTime.one_hour;
-  void onChange(ExpireTime? expire) {
-    if (expire == null) return;
-    setState(() {
-      expireTime = expire;
-    });
-    widget.onChange(expire);
-  }
+class AbovePostField extends GetView<AddPostController> {
+  const AbovePostField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      color: ConstsColor.panelColor,
       child: Column(
-        children: ExpireTime.values.map((expire) {
-          return RadioListTile(
-              activeColor: Colors.green,
-              title: Text(
-                "${expire.title} 後に削除",
-                style: TextStyle(fontSize: 13.sp),
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 10.h,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: ExpireTime.values.length,
+              itemBuilder: (context, index) {
+                final expire = ExpireTime.values[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Obx(() => Radio(
+                          activeColor: Colors.green,
+                          value: expire,
+                          groupValue: controller.expireTime.value,
+                          onChanged: (ExpireTime? expire) {
+                            if (expire != null)
+                              controller.expireTime.call(expire);
+                          })),
+                      Text(
+                        "${expire.title} に削除",
+                        style: TextStyle(fontSize: 7.sp),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              CustomSlider(
+                rxValue: controller.emergencyValue,
               ),
-              value: expire,
-              groupValue: expireTime,
-              onChanged: onChange);
-        }).toList(),
+              IgnorePointer(
+                child: Obx(
+                  () => Text(
+                    "緊急度 ${controller.emergency.value} %",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          )
+        ],
       ),
     );
   }
