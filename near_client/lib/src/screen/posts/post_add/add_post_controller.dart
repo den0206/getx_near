@@ -18,7 +18,8 @@ class AddPostController extends LoadingGetController {
   final LocationService _locationService = LocationService();
 
   final RxDouble emergencyValue = 50.0.obs;
-  ExpireTime expireTime = ExpireTime.one_hour;
+  final Rx<ExpireTime> expireTime = ExpireTime.one_hour.obs;
+  // ExpireTime expireTime = ExpireTime.one_hour;
 
   RxInt get emergency {
     return emergencyValue.round().obs;
@@ -33,17 +34,12 @@ class AddPostController extends LoadingGetController {
     canSend.call(!(value == null || value == ""));
   }
 
-  void chanheExpire(ExpireTime? expire) {
-    if (expire == null) return;
-    expireTime = expire;
-  }
-
   Future<void> sendPost() async {
     isLoading.call(true);
 
     try {
       final Position current = await _locationService.getCurrentPosition();
-      final expire = expireTime.time;
+      final expire = expireTime.value.time;
       final Map<String, dynamic> body = {
         "content": tX.text,
         "longitude": current.longitude,

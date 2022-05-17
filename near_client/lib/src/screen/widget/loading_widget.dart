@@ -22,6 +22,8 @@ abstract class LoadingGetView<T extends LoadingGetController>
     extends GetView<T> {
   T get ctr;
   final bool isFenix = false;
+  // use backgroundTap
+  final bool enableTap = true;
   Widget get child;
 
   void backgroundTap(BuildContext context) {
@@ -37,7 +39,7 @@ abstract class LoadingGetView<T extends LoadingGetController>
 
     return GestureDetector(
       onTap: () {
-        backgroundTap(context);
+        if (enableTap) backgroundTap(context);
       },
       child: Obx(
         () => Stack(
