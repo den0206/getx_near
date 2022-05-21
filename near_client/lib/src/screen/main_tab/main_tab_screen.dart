@@ -6,6 +6,7 @@ import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/posts/my_posts/my_posts_screen.dart';
 import 'package:getx_near/src/screen/recent/recent_screen.dart';
+import 'package:getx_near/src/screen/sos/sos_screen.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_screen.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 
@@ -16,6 +17,12 @@ class MainTabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bottomItems = [
+      BottomNavigationBarItem(
+        label: "SOS",
+        icon: Icon(
+          Icons.speaker_phone,
+        ),
+      ),
       BottomNavigationBarItem(
         label: "List",
         icon: Icon(
@@ -41,6 +48,7 @@ class MainTabScreen extends StatelessWidget {
     ];
 
     final List<Widget> pages = [
+      SOSScreen(),
       MyPostsScreen(),
       MapScreen(),
       UserDetailScreen(
@@ -59,7 +67,7 @@ class MainTabScreen extends StatelessWidget {
                   index: controller.currentIndex,
                   children: pages,
                 ),
-          bottomNavigationBar: controller.currentIndex != 1
+          bottomNavigationBar: controller.currentIndex != 2
               ? BottomNavigationBar(
                   backgroundColor: Colors.grey,
                   selectedItemColor: Colors.black,
