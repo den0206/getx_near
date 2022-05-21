@@ -34,12 +34,13 @@ dependencies:
   flutter_slidable: ^1.2.0
   path_provider: ^2.0.9
   flutter_image_compress: ^1.1.0
-  image_picker: ^0.8.5+3
+
   firebase_core: ^1.17.0
   firebase_messaging: ^11.4.0
   flutter_local_notifications: ^9.5.3+1
   location: ^4.4.0
   permission_handler: ^9.2.0
+  flutter_neumorphic: ^3.2.0
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
 # multiple_image_picker を使用

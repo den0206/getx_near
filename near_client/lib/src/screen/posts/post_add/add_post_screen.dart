@@ -28,33 +28,36 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
         appBar: AppBar(
           title: Text("投稿"),
           actions: [
-            Obx(() => Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: RawMaterialButton(
-                    onPressed: controller.canSend.value
-                        ? () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CustomDialog(
-                                  title: "Need Address",
-                                  descripon: "Contain Your Address this Post",
-                                  icon: Icons.home,
-                                  mainColor: Colors.pink,
-                                  onPress: () {
-                                    controller.sendPost();
-                                  },
-                                );
-                              },
-                            );
-                          }
-                        : null,
-                    fillColor: controller.canSend.value
-                        ? Colors.grey
-                        : ConstsColor.panelColor,
-                    child: Text("Send"),
-                  ),
-                ))
+            Obx(
+              () => Padding(
+                padding: const EdgeInsets.only(right: 10, bottom: 10, top: 10),
+                child: MaterialButton(
+                  elevation: 2,
+                  color: ConstsColor.panelColor,
+                  textColor: Colors.white,
+                  child: Text("Send"),
+                  shape: StadiumBorder(),
+                  onPressed: controller.canSend.value
+                      ? () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CustomDialog(
+                                title: "Need Address",
+                                descripon: "Contain Your Address this Post",
+                                icon: Icons.home,
+                                mainColor: Colors.pink,
+                                onPress: () {
+                                  controller.sendPost();
+                                },
+                              );
+                            },
+                          );
+                        }
+                      : null,
+                ),
+              ),
+            )
           ],
         ),
         body: SingleChildScrollView(

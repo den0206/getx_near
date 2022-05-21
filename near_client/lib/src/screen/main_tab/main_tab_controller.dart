@@ -13,7 +13,7 @@ class MainTabController extends GetxController {
   }
 
   void setIndex(int index) {
-    if (index == 1) oldIndex = currentIndex;
+    if (index == 2) oldIndex = currentIndex;
     currentIndex = index;
     update();
   }
