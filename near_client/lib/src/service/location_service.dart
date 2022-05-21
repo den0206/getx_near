@@ -7,23 +7,8 @@ import 'package:getx_near/src/model/utils/visibleRegion.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationService {
-  Future<bool> checkPermission() async {
-    final permission = await Geolocator.requestPermission();
-    switch (permission) {
-      case LocationPermission.whileInUse:
-      case LocationPermission.always:
-        return true;
-      case LocationPermission.denied:
-      case LocationPermission.unableToDetermine:
-      case LocationPermission.deniedForever:
-        // await openAppSettings();
-        return false;
-    }
-  }
-
   Future<Position> getCurrentPosition() async {
     final UserAPI _userAPI = UserAPI();
-    await checkPermission();
     final current = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
         forceAndroidLocationManager: true);

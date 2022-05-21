@@ -14,6 +14,8 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../service/permission_service.dart';
+
 class MyPostsController extends LoadingGetController {
   static MyPostsController get to => Get.find();
   final User currentUser = AuthService.to.currentUser.value!;
@@ -100,6 +102,10 @@ class MyPostsController extends LoadingGetController {
     await Future.delayed(Duration(seconds: 1));
 
     try {
+      final permission = PermissionService();
+      final locationEnable = await permission.checkLocation();
+      if (!locationEnable) return await permission.openSetting();
+
       final currentPostion = await _locationService.getCurrentPosition();
       final centerPosition =
           LatLng(currentPostion.latitude, currentPostion.latitude);
