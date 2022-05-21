@@ -34,6 +34,8 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         title: 'Flutter Demo',
         defaultTransition: Transition.fade,
+        // showPerformanceOverlay: kDebugMode,
+
         theme: ThemeData(
           scaffoldBackgroundColor: ConstsColor.panelColor,
           appBarTheme: AppBarTheme(
