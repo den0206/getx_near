@@ -18,6 +18,8 @@ import 'package:getx_near/src/service/message_extention.dart';
 import 'package:getx_near/src/service/recent_extension.dart';
 import 'package:getx_near/src/socket/post_io.dart';
 
+import '../../../service/permission_service.dart';
+
 class PostDetailController extends LoadingGetController {
   final Post post = Get.arguments;
   final TextEditingController commentContoller = TextEditingController();
@@ -130,6 +132,10 @@ class PostDetailController extends LoadingGetController {
   Future<void> addComment() async {
     if (commentContoller.text == "") return;
     try {
+      final permission = PermissionService();
+      final locationEnable = await permission.checkLocation();
+      if (!locationEnable) return await permission.openSetting();
+
       final Position current = await _locationService.getCurrentPosition();
       final Map<String, dynamic> body = {
         "text": commentContoller.text,

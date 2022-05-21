@@ -9,6 +9,7 @@ import 'package:getx_near/src/screen/posts/post_add/add_post_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/location_service.dart';
+import 'package:getx_near/src/service/permission_service.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
@@ -107,6 +108,10 @@ class MapController extends LoadingGetController {
   }
 
   Future<void> setCenterPosition({bool moveCamera = true, double? zoom}) async {
+    final permission = PermissionService();
+    final locationEnable = await permission.checkLocation();
+    if (!locationEnable) return await permission.openSetting();
+
     final current = await mapService.getCurrentPosition();
     currentPosition = LatLng(current.latitude, current.longitude);
 

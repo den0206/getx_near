@@ -39,15 +39,20 @@ class SOSScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Text(
-                          //   "SOS",
-                          //   style:
-                          //       TextStyle(color: Colors.red, fontSize: 30.sp),
-                          // ),
-                          Icon(
-                            Icons.local_police,
-                            color: Colors.yellow,
-                            size: 70,
+                          Text(
+                            "SOS",
+                            style: TextStyle(
+                              color: Colors.yellow,
+                              fontSize: 20.sp,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Image.asset(
+                            "assets/images/police.png",
+                            width: 120.sp,
+                            height: 120.sp,
                           ),
                           SizedBox(
                             height: 5.h,
@@ -56,10 +61,11 @@ class SOSScreen extends StatelessWidget {
                             // "HELP",
                             "Call The Police!",
                             style: TextStyle(
-                                color: controller.isPlaying.value
-                                    ? Colors.red
-                                    : Colors.blue,
-                                fontSize: 20.sp),
+                              color: controller.isPlaying.value
+                                  ? Colors.red
+                                  : Colors.blue,
+                              fontSize: 20.sp,
+                            ),
                           ),
                         ],
                       ),

@@ -84,6 +84,7 @@ class NotificationService extends GetxService {
     RemoteNotification? notification = message.notification;
 
     if (notification != null) {
+      // android/app/src/main/res/raw
       flutterLocalNotificationsPlugin.show(
         notification.hashCode,
         notification.title,
@@ -94,8 +95,15 @@ class NotificationService extends GetxService {
             channel.name,
             channelDescription: channel.description,
             icon: 'launch_background',
+            playSound: true,
+            sound: RawResourceAndroidNotificationSound("HELP!.wav"),
           ),
-          iOS: IOSNotificationDetails(),
+          iOS: IOSNotificationDetails(
+            presentSound: true,
+            presentBadge: true,
+            presentAlert: true,
+            sound: 'HELP!.wav', //←Xcodeにドロップしたファイル名
+          ),
         ),
       );
     }
@@ -118,7 +126,8 @@ class NotificationService extends GetxService {
       },
       "data": {
         "priority": "high",
-        "sound": "app_sound.wav",
+        "sound": "HELP!.wav",
+        // "sound": "app_sound.wav",
         "content_available": true,
         "bodyText": content,
       }
