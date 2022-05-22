@@ -20,14 +20,7 @@ class SOSScreen extends StatelessWidget {
               onPressed: () => controller.play(),
               onEnded: () => controller.pause(),
               minDistance: -5,
-              style: NeumorphicStyle(
-                shape: NeumorphicShape.concave,
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                depth: 10,
-                lightSource: LightSource.topLeft,
-                color: ConstsColor.panelColor,
-              ),
+              style: commonNeumorphic,
               child: Container(
                 width: 70.w,
                 height: 66.h,
@@ -39,11 +32,12 @@ class SOSScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          NeumorphicText(
                             "SOS",
-                            style: TextStyle(
-                              color: Colors.yellow,
-                              fontSize: 20.sp,
+                            style:
+                                commonNeumorphic.copyWith(color: Colors.yellow),
+                            textStyle: NeumorphicTextStyle(
+                              fontSize: 25.sp,
                             ),
                           ),
                           SizedBox(
@@ -57,13 +51,15 @@ class SOSScreen extends StatelessWidget {
                           SizedBox(
                             height: 5.h,
                           ),
-                          Text(
-                            // "HELP",
+                          NeumorphicText(
                             "Call The Police!",
-                            style: TextStyle(
+                            style: commonNeumorphic.copyWith(
                               color: controller.isPlaying.value
                                   ? Colors.red
                                   : Colors.blue,
+                            ),
+                            textStyle: NeumorphicTextStyle(
+                              fontWeight: FontWeight.bold,
                               fontSize: 20.sp,
                             ),
                           ),

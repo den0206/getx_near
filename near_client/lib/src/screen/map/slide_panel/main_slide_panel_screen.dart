@@ -27,6 +27,7 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
           minHeight: panelMinHeight,
           maxHeight: panelMaxHeight,
           // backdropEnabled: true,
+          defaultPanelState: PanelState.OPEN,
           panelSnapping: false,
           isDraggable: !controller.selecting,
           color: ConstsColor.panelColor,
@@ -85,20 +86,17 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                               ),
                             ],
                           ),
-                          Hero(
-                            tag: post.id,
-                            child: Container(
-                              width: 70.sp,
-                              height: 70.sp,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border:
-                                      Border.all(color: Colors.white, width: 2),
-                                  image: DecorationImage(
-                                    image: getUserImage(post.user),
-                                    fit: BoxFit.contain,
-                                  )),
-                            ),
+                          Container(
+                            width: 70.sp,
+                            height: 70.sp,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border:
+                                    Border.all(color: Colors.white, width: 2),
+                                image: DecorationImage(
+                                  image: getUserImage(post.user),
+                                  fit: BoxFit.contain,
+                                )),
                           ),
                           AlertIndicator(
                             intValue: post.emergency,

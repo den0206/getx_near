@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:get/state_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
@@ -17,7 +18,10 @@ class SOSController extends GetxController {
     super.onInit();
     await _setupSession();
     await _loadAsset();
-    _player.playingStream.listen((playing) => isPlaying.call(playing));
+    _player.playingStream.listen((playing) {
+      isPlaying.call(playing);
+      if (playing) HapticFeedback.vibrate();
+    });
   }
 
   @override

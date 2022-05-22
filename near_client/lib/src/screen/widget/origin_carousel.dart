@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
@@ -74,6 +74,14 @@ class OriginCarouselCell extends StatelessWidget {
     return 0.8;
   }
 
+  double get depth {
+    if (currentIndex != null && index != null) {
+      return currentIndex!.value == index ? 10 : -20;
+    }
+
+    return -20;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -83,20 +91,8 @@ class OriginCarouselCell extends StatelessWidget {
         child: Obx(
           () => Transform.scale(
             scale: scale,
-            child: Container(
-              decoration: BoxDecoration(
-                color: ConstsColor.panelColor,
-                borderRadius: BorderRadius.circular(8),
-                // border: Border.all(width: 1, color: Colors.white),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 8,
-                    offset: Offset(4, 5),
-                    color: Colors.white,
-                  ),
-                ],
-                image: backGroundImage,
-              ),
+            child: Neumorphic(
+              style: commonNeumorphic.copyWith(depth: depth),
               child: child,
             ),
           ),
