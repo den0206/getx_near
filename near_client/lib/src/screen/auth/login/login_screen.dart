@@ -19,7 +19,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
               CustomTextField(
                 controller: controller.emailController,
                 labelText: "Email",
-                icon: Icon(Icons.email),
+                iconData: Icons.email,
               ),
               SizedBox(
                 height: 15,
@@ -28,7 +28,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                 controller: controller.passwordController,
                 labelText: "Password",
                 isSecure: true,
-                icon: Icon(Icons.lock),
+                iconData: Icons.lock,
               ),
               SizedBox(
                 height: 15,
