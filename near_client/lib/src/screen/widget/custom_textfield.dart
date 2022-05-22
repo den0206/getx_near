@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
@@ -8,7 +9,7 @@ class CustomTextField extends StatelessWidget {
       this.inputType,
       this.isSecure = false,
       this.validator,
-      this.icon,
+      this.iconData,
       this.onChange})
       : super(key: key);
 
@@ -17,32 +18,36 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? inputType;
   final bool isSecure;
   final FormFieldValidator<String>? validator;
-  final Widget? icon;
+  final IconData? iconData;
   final Function(String text)? onChange;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        prefixIcon: icon,
-        hintText: labelText,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-          ),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-          ),
-        ),
+    return Neumorphic(
+      margin: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
+      style: commonNeumorphic.copyWith(
+        intensity: 5,
+        depth: -10,
+        boxShape: NeumorphicBoxShape.stadium(),
       ),
-      cursorColor: Colors.black,
-      keyboardType: inputType,
-      validator: validator,
-      obscureText: isSecure,
-      onChanged: onChange,
+      padding: EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            iconData,
+            color: Colors.black45,
+          ),
+          hintText: labelText,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+        ),
+        cursorColor: Colors.black,
+        keyboardType: inputType,
+        validator: validator,
+        obscureText: isSecure,
+        onChanged: onChange,
+      ),
     );
   }
 }
