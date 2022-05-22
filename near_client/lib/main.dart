@@ -10,6 +10,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
+import 'package:safe_device/safe_device.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
@@ -22,8 +23,12 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(
       NotificationService.to.firebaseMessagingBackgroundHandler);
 
+  isRealDevice = await SafeDevice.isRealDevice;
+
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
+
+bool isRealDevice = false;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

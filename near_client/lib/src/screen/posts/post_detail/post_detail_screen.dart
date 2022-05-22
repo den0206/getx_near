@@ -44,18 +44,15 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                   if (post.isCurrent) PoptPopMenu(),
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: Hero(
-                      tag: controller.post.id,
-                      child: Container(
-                        width: 30.sp,
-                        height: 30.sp,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2),
-                          image: DecorationImage(
-                            image: getUserImage(post.user),
-                            fit: BoxFit.contain,
-                          ),
+                    child: Container(
+                      width: 30.sp,
+                      height: 30.sp,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2),
+                        image: DecorationImage(
+                          image: getUserImage(post.user),
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),

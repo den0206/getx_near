@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:getx_near/main.dart';
 import 'package:getx_near/src/model/utils/custom_exception.dart';
 import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/service/auth_service.dart';
@@ -43,7 +44,7 @@ abstract class APIBase {
 
   Uri setUri(String path, [Map<String, dynamic>? query]) {
     final String withPath = "${endPoint.name}${path}";
-    return kDebugMode
+    return kDebugMode && !isRealDevice
         ? Uri.http(host, withPath, query)
         : Uri.https(host, withPath, query);
   }
@@ -183,7 +184,9 @@ class Enviroment {
     final dubugHost =
         io.Platform.isAndroid ? "10.0.2.2:3000" : "LOCALHOST:3000";
 
-    return kDebugMode ? dubugHost : domainHost!;
+    //simulator 確認
+    final checkDevice = isRealDevice ? domainHost : dubugHost;
+    return kDebugMode ? checkDevice! : domainHost!;
   }
 
   static String getMainUrl() {
@@ -192,7 +195,9 @@ class Enviroment {
     final debugDomain = io.Platform.isAndroid
         ? "http://10.0.2.2:3000"
         : "http://localhost:3000";
-    return kDebugMode ? debugDomain : domain!;
+
+    final checkDevice = isRealDevice ? domain : debugDomain;
+    return kDebugMode ? checkDevice! : domain!;
   }
 }
 
