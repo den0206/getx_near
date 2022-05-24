@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npm-run-all clean tsc",
     "start": "node .",
-    "clean": "rimraf dist node_modules",
+    "clean": "rimraf dist",
+    "clean all": "rimraf dist node_modules",
     "tsc": "tsc",
     "dev": "ts-node src/index.ts",
     "start:dev": "ts-node-dev --respawn src/index.ts",
