@@ -9,7 +9,6 @@ import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
-import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/message/message_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
@@ -18,6 +17,7 @@ import 'package:getx_near/src/service/message_extention.dart';
 import 'package:getx_near/src/service/recent_extension.dart';
 import 'package:getx_near/src/socket/post_io.dart';
 
+import '../../../../main.dart';
 import '../../../service/permission_service.dart';
 
 class PostDetailController extends LoadingGetController {

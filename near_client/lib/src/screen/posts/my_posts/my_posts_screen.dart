@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
@@ -190,50 +190,44 @@ class PostCell extends GetView<MyPostsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            controller.showPostDetail(post);
-          },
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  width: 70.w,
-                  child: AutoSizeText(
-                    post.content,
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      height: 2,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    minFontSize: 10,
-                    maxLines: 2,
-                  ),
+    return GestureDetector(
+      onTap: () {
+        controller.showPostDetail(post);
+      },
+      child: Neumorphic(
+        style: commonCellNeumorphic,
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              width: 70.w,
+              child: AutoSizeText(
+                post.content,
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  height: 2,
                 ),
-                _postIcon(
-                  Icons.comment,
-                  "${post.comments.length}",
-                  Colors.brown,
-                ),
-                _postIcon(
-                  Icons.warning_amber,
-                  "${post.likes.length}",
-                  ConstsColor.cautionColor,
-                ),
-              ],
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                minFontSize: 10,
+                maxLines: 2,
+              ),
             ),
-          ),
+            _postIcon(
+              Icons.comment,
+              "${post.comments.length}",
+              Colors.brown,
+            ),
+            _postIcon(
+              Icons.warning_amber,
+              "${post.likes.length}",
+              ConstsColor.cautionColor,
+            ),
+          ],
         ),
-        Divider(
-          height: 1,
-          color: Colors.black,
-        )
-      ],
+      ),
     );
   }
 
