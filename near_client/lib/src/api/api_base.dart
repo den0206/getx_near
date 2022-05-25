@@ -20,6 +20,7 @@ abstract class APIBase {
   };
 
   final Duration timeoutDuration = Duration(seconds: 10);
+  final String timeoutMessage = "時間を置いて、再度お試し下さい。";
 
   final EndPoint endPoint;
   APIBase(this.endPoint);
@@ -106,7 +107,7 @@ extension APIBaseExtention on APIBase {
       await AuthService.to.logout();
       throw unauth;
     } on TimeoutException {
-      throw Exception("Timeout Request");
+      throw Exception(timeoutMessage);
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -127,7 +128,7 @@ extension APIBaseExtention on APIBase {
       await AuthService.to.logout();
       throw unauth;
     } on TimeoutException {
-      throw Exception("Timeout Request");
+      throw Exception(timeoutMessage);
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -149,7 +150,7 @@ extension APIBaseExtention on APIBase {
       await AuthService.to.logout();
       throw unauth;
     } on TimeoutException {
-      throw Exception("Timeout Request");
+      throw Exception(timeoutMessage);
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -170,7 +171,7 @@ extension APIBaseExtention on APIBase {
       await AuthService.to.logout();
       throw unauth;
     } on TimeoutException {
-      throw Exception("Timeout Request");
+      throw Exception(timeoutMessage);
     } on SocketException {
       throw Exception("No Internet");
     }
