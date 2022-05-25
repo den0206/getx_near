@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/recent.dart';
@@ -8,6 +8,8 @@ import 'package:getx_near/src/screen/recent/recent_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../utils/consts_color.dart';
 
 class RecentScreen extends LoadingGetView<RecentController> {
   @override
@@ -71,55 +73,131 @@ class RecentCell extends GetView<RecentController> {
           )
         ],
       ),
-      child: ListTile(
+      child: InkWell(
         onTap: () {
           controller.pushMessageScreen(recent);
         },
-        leading: CircleImageButton(
-          imageProvider: getUserImage(recent.withUser),
-          size: 30.sp,
-        ),
-        title: Text(
-          recent.withUser.name,
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 1.5,
-          ),
-        ),
-        subtitle: Container(
-          constraints: BoxConstraints(maxWidth: 200),
-          child: Text(
-            recent.lastMessage,
-            maxLines: 2,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              letterSpacing: 1.2,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        trailing: recent.counter != 0
-            ? Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.green,
-                ),
-                child: Center(
-                    child: Text(
-                  "${recent.counter}",
-                  style: TextStyle(
-                    color: Colors.white,
+        child: Neumorphic(
+          style: commonCellNeumorphic,
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 5,
+              ),
+              CircleImageButton(
+                imageProvider: getUserImage(recent.withUser),
+                size: 30.sp,
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    recent.withUser.name,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.5,
+                    ),
                   ),
-                )),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 60.w),
+                    child: Text(
+                      recent.lastMessage,
+                      maxLines: 2,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  if (recent.counter != 0) ...[
+                    Spacer(),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.green,
+                      ),
+                      child: Center(
+                          child: Text(
+                        "${recent.counter}",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      )),
+                    )
+                  ]
+                ],
               )
-            : null,
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+
+
+// ListTile(
+//         onTap: () {
+//           controller.pushMessageScreen(recent);
+//         },
+//         leading: CircleImageButton(
+//           imageProvider: getUserImage(recent.withUser),
+//           size: 30.sp,
+//         ),
+//         title: Text(
+//           recent.withUser.name,
+//           textAlign: TextAlign.start,
+//           style: TextStyle(
+//             fontSize: 16,
+//             fontWeight: FontWeight.w600,
+//             letterSpacing: 1.5,
+//           ),
+//         ),
+//         subtitle: Container(
+//           constraints: BoxConstraints(maxWidth: 200),
+//           child: Text(
+//             recent.lastMessage,
+//             maxLines: 2,
+//             style: TextStyle(
+//               color: Colors.black,
+//               fontSize: 14,
+//               letterSpacing: 1.2,
+//               fontWeight: FontWeight.w500,
+//             ),
+//           ),
+//         ),
+//         trailing: recent.counter != 0
+//             ? Container(
+//                 margin: EdgeInsets.symmetric(horizontal: 10),
+//                 height: 30,
+//                 width: 30,
+//                 decoration: BoxDecoration(
+//                   shape: BoxShape.circle,
+//                   color: Colors.green,
+//                 ),
+//                 child: Center(
+//                     child: Text(
+//                   "${recent.counter}",
+//                   style: TextStyle(
+//                     color: Colors.white,
+//                   ),
+//                 )),
+//               )
+//             : null,
+//       ),

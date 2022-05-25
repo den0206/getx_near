@@ -6,7 +6,6 @@ import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
-import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
 import 'package:getx_near/src/screen/relation_comments/relation_comments_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
@@ -14,6 +13,7 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../../main.dart';
 import '../../../service/permission_service.dart';
 
 class MyPostsController extends LoadingGetController {

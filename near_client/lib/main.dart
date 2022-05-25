@@ -29,6 +29,8 @@ void main() async {
 }
 
 bool isRealDevice = false;
+final bool useMain = true;
+final bool useMap = false;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

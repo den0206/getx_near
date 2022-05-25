@@ -4,10 +4,11 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
-import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
+
+import '../../../../main.dart';
 
 class MainSlidePanelController extends GetxController {
   final MapController mapController;

@@ -45,6 +45,7 @@ abstract class APIBase {
 
   Uri setUri(String path, [Map<String, dynamic>? query]) {
     final String withPath = "${endPoint.name}${path}";
+    if (useMain) return Uri.https(host, withPath, query);
     return kDebugMode && !isRealDevice
         ? Uri.http(host, withPath, query)
         : Uri.https(host, withPath, query);
@@ -181,6 +182,7 @@ extension APIBaseExtention on APIBase {
 class Enviroment {
   static String getHost() {
     final domainHost = dotenv.env['DOMAIN_HOST'];
+    if (useMain) return domainHost!;
 
     final dubugHost =
         io.Platform.isAndroid ? "10.0.2.2:3000" : "LOCALHOST:3000";
