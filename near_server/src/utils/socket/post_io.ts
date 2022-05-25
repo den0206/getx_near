@@ -18,4 +18,8 @@ export function postSocket(postIO: socket.Namespace) {
       console.log('Post Disconnrect');
     });
   });
+
+  postIO.on('connect_error', (err) => {
+    console.log(`connect_error due to ${err.message}`);
+  });
 }

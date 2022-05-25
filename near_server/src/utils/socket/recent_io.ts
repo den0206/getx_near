@@ -20,4 +20,8 @@ export function recentSocket(recentIO: socket.Namespace) {
       console.log('Recent Disconnrect');
     });
   });
+
+  recentIO.on('connect_error', (err) => {
+    console.log(`connect_error due to ${err.message}`);
+  });
 }

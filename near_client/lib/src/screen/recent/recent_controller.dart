@@ -101,5 +101,22 @@ class RecentController extends LoadingGetController {
   Future<void> pushMessageScreen(Recent recent) async {
     final ext = MessageExtention(recent.chatRoomId, recent.withUser);
     final _ = await Get.toNamed(MessageScreen.routeName, arguments: ext);
+
+    resetCounter(recent);
+  }
+
+  void resetCounter(Recent tempRecent) {
+    if (tempRecent.counter != 0) {
+      print("Reset Counter");
+      tempRecent.counter = 0;
+
+      update();
+      final value = {
+        "recentId": tempRecent.id,
+        "counter": 0,
+      };
+
+      _recentAPI.updateRecent(value);
+    }
   }
 }
