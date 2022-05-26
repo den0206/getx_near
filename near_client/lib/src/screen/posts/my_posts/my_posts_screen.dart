@@ -212,7 +212,7 @@ class PostCell extends GetView<MyPostsController> {
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
                 minFontSize: 10,
-                maxLines: 2,
+                maxLines: 3,
               ),
             ),
             _postIcon(

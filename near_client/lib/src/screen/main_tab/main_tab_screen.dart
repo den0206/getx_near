@@ -34,15 +34,15 @@ class MainTabScreen extends StatelessWidget {
         icon: Icon(Icons.map),
       ),
       BottomNavigationBarItem(
-        label: "Profile",
-        icon: Icon(
-          Icons.person,
-        ),
-      ),
-      BottomNavigationBarItem(
         label: "Message",
         icon: Icon(
           Icons.message,
+        ),
+      ),
+      BottomNavigationBarItem(
+        label: "Profile",
+        icon: Icon(
+          Icons.person,
         ),
       ),
     ];
@@ -51,10 +51,10 @@ class MainTabScreen extends StatelessWidget {
       SOSScreen(),
       MyPostsScreen(),
       MapScreen(),
+      RecentScreen(),
       UserDetailScreen(
         user: AuthService.to.currentUser.value!,
       ),
-      RecentScreen(),
     ];
     return GetBuilder<MainTabController>(
       init: MainTabController(),
