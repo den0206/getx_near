@@ -3,6 +3,8 @@ import 'package:get/state_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
 
+enum AlertVoices { police, help, alert }
+
 class SOSController extends GetxController {
   late AudioPlayer _player;
 

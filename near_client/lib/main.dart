@@ -30,7 +30,7 @@ void main() async {
 
 bool isRealDevice = false;
 final bool useMain = true;
-final bool useMap = false;
+final bool useMap = true;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

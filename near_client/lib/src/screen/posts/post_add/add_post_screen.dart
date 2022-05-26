@@ -140,7 +140,7 @@ class AbovePostField extends GetView<AddPostController> {
                             style: NeumorphicRadioStyle(
                               selectedColor: Colors.green,
                               unselectedColor: Colors.transparent,
-                              intensity: 2,
+                              intensity: 1,
                               selectedDepth: -5,
                               unselectedDepth: 5,
                               boxShape: NeumorphicBoxShape.circle(),
