@@ -181,9 +181,9 @@ class PostDetailController extends LoadingGetController {
         withUser = comment.user;
       } else {
         final User sampleUser = User(
-          id: "621327bfbbdfe1ed98bea4e7",
+          id: "627a335d9d99fe79480b87f8",
           name: "sample",
-          email: "sss@email.com",
+          email: "ddd@email.com",
           fcmToken: "",
         );
 

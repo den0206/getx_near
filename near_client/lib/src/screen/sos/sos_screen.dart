@@ -15,61 +15,89 @@ class SOSScreen extends StatelessWidget {
       init: SOSController(),
       builder: (controller) {
         return Scaffold(
-          body: Center(
-            child: LongNeumorphicButton(
-              onPressed: () => controller.play(),
-              onEnded: () => controller.pause(),
-              minDistance: -5,
-              style: commonNeumorphic,
-              child: Container(
-                width: 70.w,
-                height: 66.h,
-                child: Center(
-                  child: Obx(
-                    () => BlinkingWidet(
-                      use: !controller.isPlaying.value,
-                      duration: Duration(seconds: 3),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          NeumorphicText(
-                            "SOS",
-                            style:
-                                commonNeumorphic.copyWith(color: Colors.yellow),
-                            textStyle: NeumorphicTextStyle(
-                              fontSize: 25.sp,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: AlertVoices.values.map((v) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: NeumorphicRadio(
+                      style: NeumorphicRadioStyle(
+                        unselectedColor: ConstsColor.panelColor,
+                        intensity: 1,
+                        selectedDepth: -5,
+                        unselectedDepth: 5,
+                        boxShape: NeumorphicBoxShape.circle(),
+                      ),
+                      child: Text(""),
+                      padding: EdgeInsets.all(30),
+                      value: v,
+                      groupValue: AlertVoices.police,
+                    ),
+                  );
+                }).toList(),
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              LongNeumorphicButton(
+                onPressed: () => controller.play(),
+                onEnded: () => controller.pause(),
+                minDistance: -5,
+                style: commonNeumorphic,
+                child: Container(
+                  width: 70.w,
+                  height: 55.h,
+                  child: Center(
+                    child: Obx(
+                      () => BlinkingWidet(
+                        use: !controller.isPlaying.value,
+                        duration: Duration(seconds: 3),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            NeumorphicText(
+                              "SOS",
+                              style: commonNeumorphic.copyWith(
+                                  color: Colors.yellow),
+                              textStyle: NeumorphicTextStyle(
+                                fontSize: 25.sp,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Image.asset(
-                            "assets/images/police.png",
-                            width: 120.sp,
-                            height: 120.sp,
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          NeumorphicText(
-                            "Call The Police!",
-                            style: commonNeumorphic.copyWith(
-                              color: controller.isPlaying.value
-                                  ? Colors.red
-                                  : Colors.blue,
+                            SizedBox(
+                              height: 10.h,
                             ),
-                            textStyle: NeumorphicTextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.sp,
+                            Image.asset(
+                              "assets/images/police.png",
+                              width: 120.sp,
+                              height: 120.sp,
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            NeumorphicText(
+                              "Call The Police!",
+                              style: commonNeumorphic.copyWith(
+                                color: controller.isPlaying.value
+                                    ? Colors.red
+                                    : Colors.blue,
+                              ),
+                              textStyle: NeumorphicTextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.sp,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         );
       },

@@ -93,7 +93,7 @@ class MapController extends LoadingGetController {
         });
         mapService.addCircle(currentCenter, radius);
       }
-
+      showSearch.call(false);
       await panelController.open();
       update();
     } catch (e) {
