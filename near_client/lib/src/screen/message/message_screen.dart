@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/message.dart';
 import 'package:getx_near/src/screen/message/message_controller.dart';
+import 'package:getx_near/src/screen/widget/custom_textfield.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:sizer/sizer.dart';
@@ -154,7 +155,7 @@ class TextBubble extends StatelessWidget {
           maxWidth: MediaQuery.of(context).size.width * 0.7,
         ),
         decoration: BoxDecoration(
-          color: message.isCurrent ? Colors.green : Colors.grey[200]!,
+          color: message.isCurrent ? Colors.green[300] : Colors.grey[200]!,
           boxShadow: [
             BoxShadow(
               blurRadius: 20.0,
@@ -193,63 +194,40 @@ class MessageInput extends GetView<MessageController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Row(
         children: [
           Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 14),
-              height: 60,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 3),
-                    blurRadius: 5,
-                    color: Colors.black,
-                  )
-                ],
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.emoji_emotions_outlined),
-                    color: Colors.grey[500],
-                    onPressed: () {},
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: controller.tx,
-                      keyboardType: TextInputType.text,
-                      // autofocus: true,
-                      decoration: InputDecoration(
-                        hintText: "Message",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  )
-                ],
-              ),
+            child: CustomTextField(
+              controller: controller.tx,
+              inputType: TextInputType.text,
+              labelText: "Message",
+              autoFocus: true,
+              padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
             ),
           ),
           SizedBox(
             width: 16,
           ),
-          FloatingActionButton(
-            // key: Key("message"),
+          NeumorphicButton(
             child: Icon(
               Icons.send,
               color: Colors.white,
               size: 16.sp,
             ),
-            backgroundColor: Colors.green,
+            style: NeumorphicStyle(
+              depth: 5,
+              intensity: 1,
+              shadowLightColor: Colors.black54,
+              color: Colors.green[300],
+              lightSource: LightSource.bottomLeft,
+              boxShape: NeumorphicBoxShape.circle(),
+            ),
             onPressed: () {
               dismisskeyBord(context);
               controller.sendMessage();
             },
-          )
+          ),
         ],
       ),
     );

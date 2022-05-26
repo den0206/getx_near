@@ -24,6 +24,7 @@ class MapController extends LoadingGetController {
 
   late LatLng currentPosition;
   final RxBool showSearch = true.obs;
+  bool isZooming = false;
   final PostAPI _postAPI = PostAPI();
 
   Future<void> onMapCreate(GoogleMapController controller) async {
@@ -103,20 +104,29 @@ class MapController extends LoadingGetController {
   }
 
   Future<void> zoomUp(bool isZoom) async {
-    showSearch.call(true);
+    isZooming = true;
     await mapService.setZoom(isZoom);
   }
 
   Future<void> setCenterPosition({bool moveCamera = true, double? zoom}) async {
-    final permission = PermissionService();
-    final locationEnable = await permission.checkLocation();
-    if (!locationEnable) return await permission.openSetting();
+    if (isLoading.value) return;
+    isLoading.call(true);
+    try {
+      final permission = PermissionService();
+      final locationEnable = await permission.checkLocation();
+      if (!locationEnable) return await permission.openSetting();
 
-    final current = await mapService.getCurrentPosition();
-    currentPosition = LatLng(current.latitude, current.longitude);
+      final current = await mapService.getCurrentPosition();
+      currentPosition = LatLng(current.latitude, current.longitude);
 
-    if (moveCamera)
-      await mapService.updateCamera(currentPosition, setZoom: zoom);
+      if (moveCamera)
+        await mapService.updateCamera(currentPosition, setZoom: zoom);
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoading.call(false);
+    }
+    ;
   }
 
   void onCmareMove(CameraPosition cameraPosition) {
@@ -126,6 +136,11 @@ class MapController extends LoadingGetController {
   }
 
   void onCameraIdle() async {
+    if (isZooming) {
+      print("STOP");
+      showSearch.call(true);
+      isZooming = false;
+    }
     // await panelController.open();
   }
 

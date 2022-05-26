@@ -16,12 +16,13 @@ final commonNeumorphic = NeumorphicStyle(
   depth: 10,
   lightSource: LightSource.topLeft,
   color: ConstsColor.panelColor,
+  intensity: 1,
 );
 
 final commonCellNeumorphic = NeumorphicStyle(
-  depth: -10,
-  color: ConstsColor.panelColor,
-  // shape: NeumorphicShape.concave,
-  lightSource: LightSource.bottomLeft,
-  intensity: 2,
-);
+    depth: -20,
+    color: ConstsColor.panelColor,
+    shape: NeumorphicShape.concave,
+    lightSource: LightSource.bottomLeft,
+    intensity: 1,
+    surfaceIntensity: -1);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -79,7 +80,7 @@ class CircleImageButton extends StatelessWidget {
                   BoxShadow(
                     offset: Offset(0, 5),
                     blurRadius: 15.0,
-                    color: Colors.grey,
+                    color: Colors.white,
                   ),
                 ]
               : null,
