@@ -12,6 +12,8 @@ import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../utils/neumorphic_style.dart';
+
 class MyPostsScreen extends LoadingGetView<MyPostsController> {
   @override
   MyPostsController get ctr => MyPostsController();
@@ -124,7 +126,6 @@ class CommentAvatar extends StatelessWidget {
       child: CircleImageButton(
         imageProvider: getUserImage(comment.user),
         size: 35.sp,
-        border: Border.all(color: Colors.black, width: 2),
         addShadow: false,
         fit: BoxFit.contain,
         onTap: () {
@@ -195,7 +196,7 @@ class PostCell extends GetView<MyPostsController> {
         controller.showPostDetail(post);
       },
       child: Neumorphic(
-        style: commonCellNeumorphic,
+        style: commonCellNeumorphic(),
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         child: Row(

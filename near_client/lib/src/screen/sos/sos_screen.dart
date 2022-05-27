@@ -3,8 +3,10 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/sos/sos_controller.dart';
 import 'package:getx_near/src/screen/widget/blinking_widget.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/longpress_button.dart';
-import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../model/alert_voice.dart';
+import '../../utils/neumorphic_style.dart';
 
 class SOSScreen extends StatelessWidget {
   const SOSScreen({Key? key}) : super(key: key);
@@ -21,21 +23,22 @@ class SOSScreen extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: AlertVoices.values.map((v) {
+                children: AlertVoice.values.map((alert) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: NeumorphicRadio(
-                      style: NeumorphicRadioStyle(
-                        unselectedColor: ConstsColor.panelColor,
-                        intensity: 1,
-                        selectedDepth: -5,
-                        unselectedDepth: 5,
-                        boxShape: NeumorphicBoxShape.circle(),
+                      style: commonRatioStyle(),
+                      child: Icon(
+                        alert.iconData,
+                        size: 30.sp,
                       ),
-                      child: Text(""),
-                      padding: EdgeInsets.all(30),
-                      value: v,
-                      groupValue: AlertVoices.police,
+                      padding: EdgeInsets.all(25),
+                      value: alert,
+                      groupValue: controller.currentAlert,
+                      onChanged: (AlertVoice? value) {
+                        if (value == null) return;
+                        controller.selectAlert(value);
+                      },
                     ),
                   );
                 }).toList(),
@@ -47,7 +50,7 @@ class SOSScreen extends StatelessWidget {
                 onPressed: () => controller.play(),
                 onEnded: () => controller.pause(),
                 minDistance: -5,
-                style: commonNeumorphic,
+                style: commonNeumorphic(),
                 child: Container(
                   width: 70.w,
                   height: 55.h,
@@ -61,8 +64,7 @@ class SOSScreen extends StatelessWidget {
                           children: [
                             NeumorphicText(
                               "SOS",
-                              style: commonNeumorphic.copyWith(
-                                  color: Colors.yellow),
+                              style: commonNeumorphic(color: Colors.yellow),
                               textStyle: NeumorphicTextStyle(
                                 fontSize: 25.sp,
                               ),
@@ -71,7 +73,7 @@ class SOSScreen extends StatelessWidget {
                               height: 10.h,
                             ),
                             Image.asset(
-                              "assets/images/police.png",
+                              controller.currentAlert.imagePath,
                               width: 120.sp,
                               height: 120.sp,
                             ),
@@ -79,8 +81,8 @@ class SOSScreen extends StatelessWidget {
                               height: 5.h,
                             ),
                             NeumorphicText(
-                              "Call The Police!",
-                              style: commonNeumorphic.copyWith(
+                              controller.currentAlert.description,
+                              style: commonNeumorphic(
                                 color: controller.isPlaying.value
                                     ? Colors.red
                                     : Colors.blue,

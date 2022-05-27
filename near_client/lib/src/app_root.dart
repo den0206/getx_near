@@ -4,11 +4,11 @@ import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/message/message_screen.dart';
+import 'package:getx_near/src/screen/posts/my_posts/relation_comments/relation_comments_screen.dart';
 import 'package:getx_near/src/screen/posts/post_add/add_post_controller.dart';
 import 'package:getx_near/src/screen/posts/post_add/add_post_screen.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_controller.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
-import 'package:getx_near/src/screen/relation_comments/relation_comments_screen.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
 
 class AppRoot {

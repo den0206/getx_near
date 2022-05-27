@@ -103,12 +103,12 @@ class MapService {
         .animateCamera((CameraUpdate.newLatLngBounds(bounds, 90)));
   }
 
-  Future<void> setZoom(bool zoomIn) async {
+  Future<double> setZoom(bool zoomIn) async {
     double zoom = await googleController.getZoomLevel();
 
     if (!zoomIn) {
       if (zoom - 1 <= 0) {
-        return;
+        return zoom;
       }
     }
 
@@ -122,6 +122,7 @@ class MapService {
     );
     final cameraUpdate = CameraUpdate.newLatLngZoom(center, zoom);
     await googleController.animateCamera(cameraUpdate);
+    return zoom;
   }
 
   Future<LatLng> getCenter() async {

@@ -1,19 +1,18 @@
 import 'package:flutter/services.dart';
 import 'package:get/state_manager.dart';
+import 'package:getx_near/src/model/alert_voice.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
-
-enum AlertVoices { police, help, alert }
 
 class SOSController extends GetxController {
   late AudioPlayer _player;
 
-  /* --- PLAYER CONTROL  --- */
   void play() => _player.play();
 
   void pause() => _player.pause();
 
   RxBool isPlaying = false.obs;
+  AlertVoice currentAlert = AlertVoice.police;
 
   @override
   void onInit() async {
@@ -40,7 +39,7 @@ class SOSController extends GetxController {
 
   Future<void> _loadAsset() async {
     try {
-      await _player.setAsset("assets/sounds/sos_sound.mp3");
+      await _player.setAsset(currentAlert.soundPath);
       await _player.setLoopMode(LoopMode.one);
 
       await _player.load();
@@ -50,5 +49,11 @@ class SOSController extends GetxController {
 
     print(_player.duration);
     print(_player.volume);
+  }
+
+  void selectAlert(AlertVoice alert) async {
+    currentAlert = alert;
+    await _loadAsset();
+    update();
   }
 }

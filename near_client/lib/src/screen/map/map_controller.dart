@@ -23,9 +23,15 @@ class MapController extends LoadingGetController {
   final PanelController panelController = PanelController();
 
   late LatLng currentPosition;
-  final RxBool showSearch = true.obs;
-  bool isZooming = false;
   final PostAPI _postAPI = PostAPI();
+
+  double currentZoom = 14;
+  bool isZooming = false;
+
+  final RxBool showSearch = true.obs;
+  bool get canSearch {
+    return currentZoom > 8;
+  }
 
   Future<void> onMapCreate(GoogleMapController controller) async {
     print("init Map");
@@ -53,6 +59,7 @@ class MapController extends LoadingGetController {
     await Future.delayed(Duration(seconds: 1));
     await setCenterPosition(moveCamera: false);
     try {
+      if (!canSearch) throw Exception("範囲が広すぎます");
       if (useMap) await mapService.setVisibleRegion();
       final currentCenter = useMap ? await mapService.getCenter() : shinjukuSta;
       final double radius = useMap ? mapService.GetRadiusOnVisible() : 1000;
@@ -105,7 +112,8 @@ class MapController extends LoadingGetController {
 
   Future<void> zoomUp(bool isZoom) async {
     isZooming = true;
-    await mapService.setZoom(isZoom);
+    currentZoom = await mapService.setZoom(isZoom);
+    print(currentZoom);
   }
 
   Future<void> setCenterPosition({bool moveCamera = true, double? zoom}) async {
@@ -132,13 +140,13 @@ class MapController extends LoadingGetController {
   void onCmareMove(CameraPosition cameraPosition) {
     if (mapService.visibleRegion == null) return;
 
-    showSearch.call(!mapService.visibleRegion!.contains(cameraPosition.target));
+    showSearch.call(canSearch &&
+        !mapService.visibleRegion!.contains(cameraPosition.target));
   }
 
   void onCameraIdle() async {
     if (isZooming) {
-      print("STOP");
-      showSearch.call(true);
+      showSearch.call(canSearch);
       isZooming = false;
     }
     // await panelController.open();
