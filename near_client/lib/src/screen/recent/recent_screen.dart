@@ -9,7 +9,7 @@ import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../utils/consts_color.dart';
+import '../../utils/neumorphic_style.dart';
 
 class RecentScreen extends LoadingGetView<RecentController> {
   @override
@@ -77,73 +77,75 @@ class RecentCell extends GetView<RecentController> {
         onTap: () {
           controller.pushMessageScreen(recent);
         },
-        child: Neumorphic(
-          style: commonCellNeumorphic,
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 5,
-              ),
-              CircleImageButton(
-                imageProvider: getUserImage(recent.withUser),
-                size: 30.sp,
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    recent.withUser.name,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.5,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    constraints: BoxConstraints(maxWidth: 60.w),
-                    child: Text(
-                      recent.lastMessage,
-                      maxLines: 2,
+        child: Container(
+          child: Neumorphic(
+            style: commonCellNeumorphic(),
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 5,
+                ),
+                CircleImageButton(
+                  imageProvider: getUserImage(recent.withUser),
+                  size: 30.sp,
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      recent.withUser.name,
+                      textAlign: TextAlign.start,
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.5,
                       ),
                     ),
-                  ),
-                  if (recent.counter != 0) ...[
-                    Spacer(),
+                    SizedBox(
+                      height: 5,
+                    ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.green,
-                      ),
-                      child: Center(
-                          child: Text(
-                        "${recent.counter}",
+                      constraints: BoxConstraints(maxWidth: 60.w),
+                      child: Text(
+                        recent.lastMessage,
+                        maxLines: 2,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
+                          fontSize: 14,
+                          letterSpacing: 1.2,
+                          fontWeight: FontWeight.w500,
                         ),
-                      )),
-                    )
-                  ]
-                ],
-              )
-            ],
+                      ),
+                    ),
+                  ],
+                ),
+                if (recent.counter != 0) ...[
+                  Spacer(),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.green,
+                    ),
+                    child: Center(
+                        child: Text(
+                      "${recent.counter}",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    )),
+                  )
+                ]
+              ],
+            ),
           ),
         ),
       ),

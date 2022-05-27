@@ -1,8 +1,9 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../utils/neumorphic_style.dart';
 
 class OriginCarousel extends StatefulWidget {
   OriginCarousel({
@@ -92,7 +93,7 @@ class OriginCarouselCell extends StatelessWidget {
           () => Transform.scale(
             scale: scale,
             child: Neumorphic(
-              style: commonNeumorphic.copyWith(depth: depth),
+              style: commonNeumorphic(depth: depth),
               child: child,
             ),
           ),

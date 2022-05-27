@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
@@ -71,7 +72,8 @@ class AddPostController extends LoadingGetController {
         await NotificationService.to.pushPostNotification(
             tokens: tokens, type: NotificationType.post, content: "Help!");
 
-      MyPostsController.to.insertPost(post);
+      if (Get.isRegistered<MyPostsController>())
+        MyPostsController.to.insertPost(post);
 
       Get.back(result: post);
     } catch (e) {

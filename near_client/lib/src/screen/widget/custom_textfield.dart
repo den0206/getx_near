@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:getx_near/src/utils/consts_color.dart';
+
+import '../../utils/neumorphic_style.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -29,8 +30,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Neumorphic(
       margin: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
-      style: commonNeumorphic.copyWith(
-        intensity: 5,
+      style: commonNeumorphic(
         depth: -10,
         boxShape: NeumorphicBoxShape.stadium(),
       ),

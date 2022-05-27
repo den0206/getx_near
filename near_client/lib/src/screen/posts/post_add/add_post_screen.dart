@@ -12,6 +12,8 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../utils/neumorphic_style.dart';
+
 class AddPostScreen extends LoadingGetView<AddPostController> {
   static const routeName = '/AddPost';
   @override
@@ -136,31 +138,18 @@ class AbovePostField extends GetView<AddPostController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Obx(() => NeumorphicRadio(
-                            style: NeumorphicRadioStyle(
-                              selectedColor: Colors.green,
-                              unselectedColor: Colors.transparent,
-                              intensity: 1,
-                              selectedDepth: -5,
-                              unselectedDepth: 5,
-                              boxShape: NeumorphicBoxShape.circle(),
-                              // border: controller.expireTime.value != expire
-                              //     ? NeumorphicBorder(color: Colors.white)
-                              //     : NeumorphicBorder.none(),
-                            ),
-                            child: Text(""),
-                            // Container(
-                            //   width: 20,
-                            //   height: 20,
-                            // ),
-                            padding: EdgeInsets.all(12),
-                            value: expire,
-                            groupValue: controller.expireTime.value,
-                            onChanged: (ExpireTime? expire) {
-                              if (expire != null)
-                                controller.expireTime.call(expire);
-                            },
-                          )),
+                      Obx(
+                        () => NeumorphicRadio(
+                          style: commonRatioStyle(selectedColor: Colors.green),
+                          padding: EdgeInsets.all(12),
+                          value: expire,
+                          groupValue: controller.expireTime.value,
+                          onChanged: (ExpireTime? expire) {
+                            if (expire != null)
+                              controller.expireTime.call(expire);
+                          },
+                        ),
+                      ),
                       Text(
                         "${expire.title} に削除",
                         style: TextStyle(fontSize: 7.sp),

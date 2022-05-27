@@ -1,23 +1,28 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../utils/neumorphic_style.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
     Key? key,
     required this.title,
-    this.titleColor = Colors.white,
+    this.titleColor = Colors.black,
     this.width = 250,
     this.height = 60,
     this.isLoading = false,
-    this.background = Colors.blue,
+    this.background,
+    this.shadowColor = Colors.white,
     this.onPressed,
   }) : super(key: key);
 
   final String title;
   final Color titleColor;
-  final Color background;
+  final Color? background;
   final double width;
   final double height;
+  final Color shadowColor;
   final bool isLoading;
   final void Function()? onPressed;
 
@@ -26,18 +31,23 @@ class CustomButton extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: background,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+      child: NeumorphicButton(
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              color: titleColor,
+              fontSize: 13.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        child: Text(
-          title,
-          style: TextStyle(color: titleColor),
-        ),
         onPressed: onPressed,
+        style: commonNeumorphic(
+          color: background ?? ConstsColor.panelColor,
+          lightSource: LightSource.bottomLeft,
+          shadowColor: shadowColor,
+        ),
       ),
     );
   }

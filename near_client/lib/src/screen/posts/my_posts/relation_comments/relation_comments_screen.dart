@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/posts/my_posts/my_posts_screen.dart';
-import 'package:getx_near/src/screen/relation_comments/relation_comments_controller.dart';
+import 'package:getx_near/src/screen/posts/my_posts/relation_comments/relation_comments_controller.dart';
 
 class RelationCommentsScreen extends StatelessWidget {
   static const routeName = '/RelationComments';
