@@ -41,9 +41,9 @@ dependencies:
   location: ^4.4.0
   permission_handler: ^9.2.0
   flutter_neumorphic: ^3.2.0
-  flutter_inset_box_shadow: ^1.0.8
   just_audio: ^0.9.21
   safe_device: ^1.1.1
+  modal_bottom_sheet: ^2.0.1
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
 # multiple_image_picker を使用

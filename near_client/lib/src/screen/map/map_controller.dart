@@ -113,7 +113,6 @@ class MapController extends LoadingGetController {
   Future<void> zoomUp(bool isZoom) async {
     isZooming = true;
     currentZoom = await mapService.setZoom(isZoom);
-    print(currentZoom);
   }
 
   Future<void> setCenterPosition({bool moveCamera = true, double? zoom}) async {

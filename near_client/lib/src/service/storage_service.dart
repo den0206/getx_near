@@ -2,13 +2,15 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum StorageKey { user }
+enum StorageKey { user, locationSize }
 
 extension StorageKeyEXT on StorageKey {
   String get keyString {
     switch (this) {
       case StorageKey.user:
         return "user";
+      case StorageKey.locationSize:
+        return "locationSize";
     }
   }
 
