@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.100.0",
     "@typegoose/typegoose": "^9.8.1",
     "argon2": "^0.28.5",
     "cors": "^2.8.5",
@@ -28,6 +29,7 @@
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.2",
+    "multer": "^1.4.4",
     "node-schedule": "^2.1.0",
     "simple-get": "^4.0.1",
     "socket.io": "^4.5.0",
@@ -44,6 +46,7 @@
     "@types/http-status-codes": "^1.2.0",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.7",
     "@types/node": "^17.0.31",
     "@types/node-schedule": "^2.1.0",
     "@types/rimraf": "^3.0.2",

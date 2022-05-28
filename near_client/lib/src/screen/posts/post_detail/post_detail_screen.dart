@@ -391,7 +391,7 @@ class CommentCell extends GetView<PostDetailController> {
               comment.text,
               style: TextStyle(
                 fontSize: 13.sp,
-                height: 2,
+                height: 1.5,
               ),
               overflow: TextOverflow.ellipsis,
               softWrap: true,
