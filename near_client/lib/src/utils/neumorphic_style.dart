@@ -20,17 +20,6 @@ NeumorphicStyle commonNeumorphic(
   );
 }
 
-NeumorphicStyle commonCellNeumorphic() {
-  return NeumorphicStyle(
-    depth: -10,
-    color: ConstsColor.panelColor,
-    shape: NeumorphicShape.concave,
-    lightSource: LightSource.bottomLeft,
-    intensity: 1,
-    surfaceIntensity: -1,
-  );
-}
-
 NeumorphicRadioStyle commonRatioStyle({Color? selectedColor}) {
   return NeumorphicRadioStyle(
     selectedColor: selectedColor,

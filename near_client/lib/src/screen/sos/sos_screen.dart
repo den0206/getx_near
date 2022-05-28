@@ -50,7 +50,7 @@ class SOSScreen extends StatelessWidget {
                 onPressed: () => controller.play(),
                 onEnded: () => controller.pause(),
                 minDistance: -5,
-                style: commonNeumorphic(),
+                style: commonNeumorphic(depth: 1.6),
                 child: Container(
                   width: 70.w,
                   height: 55.h,

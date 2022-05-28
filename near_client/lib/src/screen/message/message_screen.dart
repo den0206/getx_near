@@ -6,7 +6,9 @@ import 'package:getx_near/src/model/message.dart';
 import 'package:getx_near/src/screen/message/message_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_textfield.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
+import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:sizer/sizer.dart';
 
 class MessageScreen extends LoadingGetView<MessageController> {
@@ -149,37 +151,37 @@ class TextBubble extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(10),
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.7,
         ),
-        decoration: BoxDecoration(
-          color: message.isCurrent ? Colors.green[300] : Colors.grey[200]!,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20.0,
-              offset: Offset(10, 10),
-              color: Colors.black54,
-            )
-          ],
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-            bottomLeft: Radius.circular(message.isCurrent ? 12 : 0),
-            bottomRight: Radius.circular(message.isCurrent ? 0 : 12),
+        child: Neumorphic(
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.all(10),
+          style: commonNeumorphic(
+            color: message.isCurrent ? Colors.green[300] : Colors.grey[200]!,
+            depth: 0.4,
+          ).copyWith(
+            boxShape: NeumorphicBoxShape.roundRect(
+              BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+                bottomLeft: Radius.circular(message.isCurrent ? 12 : 0),
+                bottomRight: Radius.circular(message.isCurrent ? 0 : 12),
+              ),
+            ),
           ),
-        ),
-        child: FittedBox(
-          fit: BoxFit.fitWidth,
-          child: RichText(
-            text: TextSpan(
-              text: message.text,
-              style: TextStyle(
-                  fontSize: 13.sp,
-                  letterSpacing: 1.5,
-                  fontWeight: FontWeight.w600,
-                  color: message.isCurrent ? Colors.white : Colors.grey[800]!),
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: RichText(
+              text: TextSpan(
+                text: message.text,
+                style: TextStyle(
+                    fontSize: 13.sp,
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.w600,
+                    color:
+                        message.isCurrent ? Colors.white : Colors.grey[800]!),
+              ),
             ),
           ),
         ),
@@ -209,20 +211,10 @@ class MessageInput extends GetView<MessageController> {
           SizedBox(
             width: 16,
           ),
-          NeumorphicButton(
-            child: Icon(
-              Icons.send,
-              color: Colors.white,
-              size: 16.sp,
-            ),
-            style: NeumorphicStyle(
-              depth: 5,
-              intensity: 1,
-              shadowLightColor: Colors.black54,
-              color: Colors.green[300],
-              lightSource: LightSource.bottomLeft,
-              boxShape: NeumorphicBoxShape.circle(),
-            ),
+          NeumorphicIconButton(
+            iconData: Icons.send,
+            color: Colors.green[300],
+            iconColor: Colors.white,
             onPressed: () {
               dismisskeyBord(context);
               controller.sendMessage();

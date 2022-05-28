@@ -2,10 +2,9 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_controller.dart';
+import 'package:getx_near/src/screen/users/user_detail/user_settings_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
-import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../widget/neumorphic/nicon_button.dart';
@@ -28,74 +27,11 @@ class UserDetailScreen extends StatelessWidget {
                 NeumorphicIconButton(
                   iconData: Icons.settings,
                   onPressed: () {
-                    showCupertinoModalBottomSheet(
-                      expand: true,
+                    showModalBottomSheet(
                       context: context,
                       backgroundColor: ConstsColor.panelColor,
                       builder: (context) {
-                        return Scaffold(
-                            appBar: AppBar(
-                              title: const Text('Settings'),
-                              automaticallyImplyLeading: false,
-                              actions: [
-                                NeumorphicIconButton(
-                                  iconData: Icons.close,
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                )
-                              ],
-                            ),
-                            body: GetBuilder<UserDetailController>(
-                              builder: (controller) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text("位置情報の正確差"),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    NeumorphicToggle(
-                                      selectedIndex: controller.locationIndex,
-                                      displayForegroundOnlyIfSelected: true,
-                                      style: NeumorphicToggleStyle(
-                                          backgroundColor:
-                                              ConstsColor.panelColor),
-                                      children: LocationDetail.values.map((l) {
-                                        return ToggleElement(
-                                          background: Center(
-                                              child: Text(
-                                            l.title,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500),
-                                          )),
-                                          foreground: Center(
-                                              child: Text(
-                                            l.title,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700),
-                                          )),
-                                        );
-                                      }).toList(),
-                                      thumb: Neumorphic(
-                                        style: NeumorphicStyle(
-                                          color: ConstsColor.panelColor,
-                                          boxShape:
-                                              NeumorphicBoxShape.roundRect(
-                                            BorderRadius.all(
-                                              Radius.circular(12),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      onChanged: (int index) {
-                                        controller.setLocalLoc(index);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            ));
+                        return SettingsScreen();
                       },
                     );
                   },

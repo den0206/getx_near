@@ -45,7 +45,8 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed,
         style: commonNeumorphic(
           color: background ?? ConstsColor.panelColor,
-          lightSource: LightSource.bottomLeft,
+          lightSource: LightSource.bottomRight,
+          depth: 1.2,
           shadowColor: shadowColor,
         ),
       ),

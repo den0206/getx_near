@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 
@@ -15,6 +15,7 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:getx_near/src/utils/date_formate.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
+import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 
@@ -377,21 +378,26 @@ class CommentCell extends GetView<PostDetailController> {
         leading: CircleImageButton(
           imageProvider: getUserImage(comment.user),
           size: 30.sp,
+          addShadow: false,
           fit: BoxFit.contain,
-          border: Border.all(color: Colors.white, width: 2),
+          // border: Border.all(color: Colors.white, width: 2),
         ),
         title: Container(
           width: 60.w,
-          child: AutoSizeText(
-            comment.text,
-            style: TextStyle(
-              fontSize: 13.sp,
-              height: 2,
+          child: Neumorphic(
+            style: commonNeumorphic(depth: 0.4),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: AutoSizeText(
+              comment.text,
+              style: TextStyle(
+                fontSize: 13.sp,
+                height: 2,
+              ),
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              minFontSize: 10,
+              maxLines: 2,
             ),
-            overflow: TextOverflow.ellipsis,
-            softWrap: true,
-            minFontSize: 10,
-            maxLines: 2,
           ),
         ),
         trailing: comment.distance != null
