@@ -1,13 +1,21 @@
+import 'dart:io';
+
 import 'package:getx_near/src/api/api_base.dart';
 import 'package:getx_near/src/model/utils/response_api.dart';
 
 class UserAPI extends APIBase {
   UserAPI() : super(EndPoint.user);
 
-  Future<ResponseAPI> signUp(Map<String, dynamic> userData) async {
+  Future<ResponseAPI> signUp(
+      {required Map<String, dynamic> userData, File? avatarFile}) async {
     try {
       final Uri uri = setUri("/signup");
-      return await postRequest(uri: uri, body: userData);
+      if (avatarFile == null) {
+        return await postRequest(uri: uri, body: userData);
+      } else {
+        return await updateSingleFile(
+            uri: uri, body: userData, file: avatarFile);
+      }
     } catch (e) {
       return catchAPIError(e.toString());
     }

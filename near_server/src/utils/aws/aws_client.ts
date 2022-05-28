@@ -19,15 +19,13 @@ class AWSClient {
     const ID = process.env.AWS_ID;
     const SECRET = process.env.AWS_SECRET_KEY;
 
-    const client = new S3Client({
+    this.s3 = new S3Client({
       region: this.REGION,
       credentials: {
         accessKeyId: ID as string,
         secretAccessKey: SECRET as string,
       },
     });
-
-    console.log(client);
   }
 
   public async uploadImage(
@@ -39,6 +37,7 @@ class AWSClient {
       Key: `${fileName}`,
       Body: file.buffer,
     };
+
     try {
       const command = new PutObjectCommand(params);
       const response = await this.s3.send(command);
@@ -73,8 +72,9 @@ class AWSClient {
     }
   }
 
-  private getUrlFromBucket(params: PutObjectCommandInput) {
+  private getUrlFromBucket(params: PutObjectCommandInput): string {
     const {Bucket, Key} = params;
+
     return `https://${Bucket}.s3.${this.REGION}.amazonaws.com/${Key}`;
   }
 }

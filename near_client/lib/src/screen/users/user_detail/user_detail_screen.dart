@@ -54,15 +54,8 @@ class UserDetailScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Neumorphic(
-                        padding: EdgeInsets.all(10),
-                        style: NeumorphicStyle(
-                          boxShape: NeumorphicBoxShape.circle(),
-                          color: ConstsColor.panelColor,
-                          // depth: NeumorphicTheme.embossDepth(context),
-                        ),
-                        child: CircleImageButton(
-                            imageProvider: getUserImage(user), size: 120),
+                      NeumorphicAvatarButton(
+                        imageProvider: getUserImage(user),
                       ),
                       NeumorphicText(
                         user.name,

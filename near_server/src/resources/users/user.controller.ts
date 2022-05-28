@@ -21,6 +21,7 @@ async function signUp(req: Request<{}, {}, SignUpBody>, res: Response) {
       const extention = file.originalname.split('.').pop();
       const fileName = `${user._id}/avatar/avatar.${extention}`;
       const imagePath = await awsClient.uploadImage(file, fileName);
+      if (!imagePath) throw Error('画像が保存できません');
       user.avatarUrl = imagePath;
       console.log(imagePath);
     }

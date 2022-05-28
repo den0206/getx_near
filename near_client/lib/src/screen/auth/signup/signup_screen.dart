@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:getx_near/src/screen/auth/signup/signup_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_textfield.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
-import 'package:sizer/sizer.dart';
+import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 
 class SignUpScreen extends LoadingGetView<SignUpController> {
   static const routeName = '/SignUpScreen';
@@ -22,15 +23,16 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  CircleImageButton(
-                    imageProvider: controller.userImage == null
-                        ? Image.asset("assets/images/default_user.png").image
-                        : FileImage(controller.userImage!),
-                    size: 15.h,
-                    onTap: () {
-                      controller.selectImage();
-                    },
-                  ),
+                  Builder(builder: (context) {
+                    return NeumorphicAvatarButton(
+                      imageProvider: controller.userImage == null
+                          ? Image.asset("assets/images/default_user.png").image
+                          : FileImage(controller.userImage!),
+                      onTap: () {
+                        controller.selectImage(context);
+                      },
+                    );
+                  }),
                   SizedBox(
                     height: 20,
                   ),
@@ -58,6 +60,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                   ),
                   CustomButton(
                     title: "Sign Up",
+                    background: Colors.green[300],
                     onPressed: controller.buttonEnable.value
                         ? () {
                             controller.signUp();
