@@ -10,6 +10,9 @@ import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io' as io;
+import 'package:http_parser/http_parser.dart';
+
+import 'package:mime/mime.dart';
 
 abstract class APIBase {
   String host = Enviroment.getHost();
@@ -56,7 +59,7 @@ abstract class APIBase {
 
     ResponseAPI responseAPI;
     switch (endPoint) {
-      // 自サーバー以外を処理
+      // 外部API(自サーバー以外)を処理
       case EndPoint.notification:
         responseAPI = ResponseAPI(
             status: true, statusCode: response.statusCode, data: resJson);
@@ -64,6 +67,15 @@ abstract class APIBase {
       default:
         responseAPI = ResponseAPI.fromMapWithCode(resJson, response.statusCode);
     }
+
+    return _checkStatusCode(responseAPI);
+  }
+
+  Future<ResponseAPI> _filterStream(http.StreamedResponse response) async {
+    final resStr = await response.stream.bytesToString();
+    final resJson = json.decode(resStr);
+    final responseAPI =
+        ResponseAPI.fromMapWithCode(resJson, response.statusCode);
 
     return _checkStatusCode(responseAPI);
   }
@@ -168,6 +180,47 @@ extension APIBaseExtention on APIBase {
           .delete(uri, headers: headers, body: bodyParams)
           .timeout(timeoutDuration);
       return _filterResponse(res);
+    } on UnauthorisedException catch (unauth) {
+      await AuthService.to.logout();
+      throw unauth;
+    } on TimeoutException {
+      throw Exception(timeoutMessage);
+    } on SocketException {
+      throw Exception("No Internet");
+    }
+  }
+
+  Future<ResponseAPI> updateSingleFile({
+    required Uri uri,
+    required Map<String, dynamic> body,
+    required File file,
+    String type = "POST",
+    useToken = false,
+  }) async {
+    _setToken(useToken);
+
+    try {
+      final contentType = lookupMimeType(file.path);
+      if (contentType == null) throw Exception("NO Content Type");
+      final List<http.MultipartFile> multipartFiles = [];
+
+      final mulipart = await http.MultipartFile.fromPath("image", file.path,
+          contentType: MediaType.parse(contentType));
+
+      multipartFiles.add(mulipart);
+
+      // Map<String,dynamic> to <Str,Str>
+      final Map<String, String> stringParameters =
+          body.map((key, value) => MapEntry(key, value.toString()));
+
+      final request = http.MultipartRequest(type, uri);
+      request.headers.addAll(headers);
+      request.fields.addAll(stringParameters);
+      request.files.addAll(multipartFiles);
+
+      final res = await request.send();
+
+      return await _filterStream(res);
     } on UnauthorisedException catch (unauth) {
       await AuthService.to.logout();
       throw unauth;

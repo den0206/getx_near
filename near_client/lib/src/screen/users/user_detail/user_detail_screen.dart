@@ -7,6 +7,7 @@ import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../utils/neumorphic_style.dart';
 import '../../widget/neumorphic/nicon_button.dart';
 
 class UserDetailScreen extends StatelessWidget {
@@ -38,72 +39,67 @@ class UserDetailScreen extends StatelessWidget {
                 )
             ],
           ),
-          body: Neumorphic(
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            style: NeumorphicStyle(
-              color: ConstsColor.panelColor,
-              shadowLightColor: Colors.black54,
-              boxShape: NeumorphicBoxShape.roundRect(
-                BorderRadius.circular(12),
+          body: Column(
+            children: [
+              SizedBox(
+                height: 20,
               ),
-            ),
-            child: Container(
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Neumorphic(
-                    padding: EdgeInsets.all(10),
-                    style: NeumorphicStyle(
-                      boxShape: NeumorphicBoxShape.circle(),
-                      color: ConstsColor.panelColor,
-                      // depth: NeumorphicTheme.embossDepth(context),
-                    ),
-                    child: CircleImageButton(
-                        imageProvider: getUserImage(user), size: 120),
-                  ),
-                  NeumorphicText(
-                    user.name,
-                    style: NeumorphicStyle(
-                      color: ConstsColor.panelColor,
-                      intensity: 1,
-                      shadowLightColor: Colors.black,
-                      lightSource: LightSource.bottomRight,
-                    ),
-                    textStyle: NeumorphicTextStyle(
-                      fontSize: 35.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Row(
+              Neumorphic(
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                style: commonNeumorphic(depth: 1.6),
+                child: Container(
+                  width: double.infinity,
+                  height: 58.h,
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      CustomButton(
-                        width: 35.w,
-                        height: 7.h,
-                        titleColor: Colors.white,
-                        background: Colors.green,
-                        title: "Edit",
-                        shadowColor: Colors.black54,
-                        onPressed: () {},
+                      NeumorphicAvatarButton(
+                        imageProvider: getUserImage(user),
                       ),
-                      CustomButton(
-                        width: 35.w,
-                        height: 7.h,
-                        titleColor: Colors.white,
-                        background: Colors.red,
-                        title: "Log out",
-                        shadowColor: Colors.black54,
-                        onPressed: () {
-                          controller.tryLogout(context);
-                        },
+                      NeumorphicText(
+                        user.name,
+                        style: NeumorphicStyle(
+                          color: ConstsColor.panelColor,
+                          intensity: 1,
+                          shadowLightColor: Colors.black,
+                          lightSource: LightSource.bottomRight,
+                        ),
+                        textStyle: NeumorphicTextStyle(
+                          fontSize: 35.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CustomButton(
+                            width: 35.w,
+                            height: 7.h,
+                            titleColor: Colors.white,
+                            background: Colors.green,
+                            title: "Edit",
+                            shadowColor: Colors.black54,
+                            onPressed: () {},
+                          ),
+                          CustomButton(
+                            width: 35.w,
+                            height: 7.h,
+                            titleColor: Colors.white,
+                            background: Colors.red,
+                            title: "Log out",
+                            shadowColor: Colors.black54,
+                            onPressed: () {
+                              controller.tryLogout(context);
+                            },
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         );
       },

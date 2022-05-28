@@ -3,17 +3,28 @@ import jwt from 'jsonwebtoken';
 import {SignUpBody} from './user.validation';
 import ResponseAPI from '../../utils/interface/response.api';
 import {UserModel} from '../../utils/database/models';
+import AWSClient from '../../utils/aws/aws_client';
 
 async function signUp(req: Request<{}, {}, SignUpBody>, res: Response) {
   const {name, email, password} = req.body;
+  const file = req.file;
   const isFind = await UserModel.findOne({email});
 
   if (isFind)
     return new ResponseAPI(res, {message: 'Email Alreadty Exist'}).excute(400);
 
   try {
-    const user = new UserModel({name, email, password});
+    let user = new UserModel({name, email, password});
 
+    if (file) {
+      const awsClient = new AWSClient();
+      const extention = file.originalname.split('.').pop();
+      const fileName = `${user._id}/avatar/avatar.${extention}`;
+      const imagePath = await awsClient.uploadImage(file, fileName);
+      if (!imagePath) throw Error('画像が保存できません');
+      user.avatarUrl = imagePath;
+      console.log(imagePath);
+    }
     await user.save();
     new ResponseAPI(res, {data: user}).excute(200);
   } catch (e: any) {

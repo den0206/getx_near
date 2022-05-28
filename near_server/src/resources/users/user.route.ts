@@ -1,10 +1,11 @@
 import {Router} from 'express';
 import userController from './user.controller';
 import checkAuth from '../../middleware/check_auth';
+import upload from '../../utils/aws/upload_option';
 
 const usersRoute = Router();
 
-usersRoute.post('/signup', userController.signUp);
+usersRoute.post('/signup', upload.single('image'), userController.signUp);
 usersRoute.post('/login', userController.login);
 
 usersRoute.put('/location', checkAuth, userController.updateLocation);

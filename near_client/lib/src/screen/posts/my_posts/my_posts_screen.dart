@@ -208,7 +208,7 @@ class PostCell extends GetView<MyPostsController> {
                 post.content,
                 style: TextStyle(
                   fontSize: 13.sp,
-                  height: 2,
+                  height: 1.5,
                 ),
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
