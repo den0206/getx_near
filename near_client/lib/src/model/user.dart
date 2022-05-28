@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/dummy_generator.dart';
 
 abstract class JsonModel {
@@ -16,6 +17,10 @@ class User extends JsonModel {
   String fcmToken;
   String? avatarUrl;
   String? sessionToken;
+
+  bool get isCurrent {
+    return id == AuthService.to.currentUser.value?.id;
+  }
 
   User({
     required this.id,

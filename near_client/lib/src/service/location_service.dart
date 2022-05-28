@@ -4,14 +4,59 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/model/utils/visibleRegion.dart';
+import 'package:getx_near/src/service/storage_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+// LocatinDetail(粒度)
+enum LocationDetail { low, medium, high, best }
+
+extension LocationSizeEXT on LocationDetail {
+  String get title {
+    switch (this) {
+      case LocationDetail.low:
+        return "低い";
+      case LocationDetail.medium:
+        return "普通";
+      case LocationDetail.high:
+        return "高い";
+      case LocationDetail.best:
+        return "最高";
+    }
+  }
+
+  LocationAccuracy get accuracy {
+    switch (this) {
+      case LocationDetail.low:
+        return LocationAccuracy.low;
+      case LocationDetail.medium:
+        return LocationAccuracy.medium;
+      case LocationDetail.high:
+        return LocationAccuracy.high;
+      case LocationDetail.best:
+        return LocationAccuracy.best;
+    }
+  }
+}
+
+LocationDetail getLocationDetail(String? value) {
+  // degault value
+  if (value == null) return LocationDetail.high;
+
+  /// String to enum
+  final LocationDetail l =
+      LocationDetail.values.firstWhere((c) => c.name == value);
+
+  return l;
+}
 
 class LocationService {
   Future<Position> getCurrentPosition() async {
     final UserAPI _userAPI = UserAPI();
+    final LocationDetail localLoc =
+        await getLocationDetail(await StorageKey.locationSize.loadString());
+    print("精度は${localLoc.title}");
     final current = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-        forceAndroidLocationManager: true);
+        desiredAccuracy: localLoc.accuracy, forceAndroidLocationManager: true);
     final cood = {
       "lng": current.longitude,
       "lat": current.latitude,
