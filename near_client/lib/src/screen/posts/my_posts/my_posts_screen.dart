@@ -196,8 +196,8 @@ class PostCell extends GetView<MyPostsController> {
         controller.showPostDetail(post);
       },
       child: Neumorphic(
-        style: commonCellNeumorphic(),
-        padding: EdgeInsets.all(10),
+        style: commonNeumorphic(depth: 0.4),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
