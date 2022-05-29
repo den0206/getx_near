@@ -45,17 +45,10 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                   if (post.isCurrent) PoptPopMenu(),
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: Container(
-                      width: 30.sp,
-                      height: 30.sp,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
-                        image: DecorationImage(
-                          image: getUserImage(post.user),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
+                    child: CircleImageButton(
+                      imageProvider: getUserImage(post.user),
+                      size: 30.sp,
+                      addShadow: false,
                     ),
                   ),
                 ],
@@ -294,8 +287,10 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
         leading: CircleImageButton(
           imageProvider: getUserImage(AuthService.to.currentUser.value!),
           size: 30.sp,
-          fit: BoxFit.contain,
-          border: Border.all(color: Colors.white, width: 2),
+          border: Border.all(
+            color: Colors.white,
+            width: 2,
+          ),
         ),
         trailing: Icon(
           Icons.expand_less,
@@ -379,8 +374,6 @@ class CommentCell extends GetView<PostDetailController> {
           imageProvider: getUserImage(comment.user),
           size: 30.sp,
           addShadow: false,
-          fit: BoxFit.contain,
-          // border: Border.all(color: Colors.white, width: 2),
         ),
         title: Container(
           width: 60.w,

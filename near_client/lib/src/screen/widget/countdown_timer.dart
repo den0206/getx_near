@@ -34,7 +34,10 @@ class _CustomCountdownTimerState extends State<CustomCountdownTimer> {
   }
 
   void startTimer() async {
+    // 9時間差
+    final int nineHourSecounds = 32400;
     int timeDiff = widget.endTime.difference(DateTime.now()).inSeconds;
+    if (timeDiff > nineHourSecounds) timeDiff -= nineHourSecounds;
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       timeDiff -= 1;
       if (timeDiff <= 0) {
