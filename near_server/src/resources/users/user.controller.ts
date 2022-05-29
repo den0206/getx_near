@@ -63,6 +63,37 @@ async function login(req: Request, res: Response) {
   }
 }
 
+async function updateUser(req: Request, res: Response) {
+  const userId = res.locals.user.userId;
+  const {name, email, avatarUrl} = req.body;
+  const file = req.file;
+
+  try {
+    let imagePath = avatarUrl;
+    if (file) {
+      const awsClient = new AWSClient();
+      const extention = file.originalname.split('.').pop();
+      const fileName = `${userId}/avatar/avatar.${extention}`;
+      imagePath = await awsClient.uploadImage(file, fileName);
+      if (!imagePath) throw Error('画像が保存できません');
+      console.log(imagePath);
+    }
+
+    const value = {name, email, avatarUrl: imagePath};
+    const newUser = await UserModel.findByIdAndUpdate(userId, value, {
+      new: true,
+    });
+    if (!newUser)
+      return new ResponseAPI(res, {
+        message: 'Can not find edited user',
+      }).excute(400);
+
+    new ResponseAPI(res, {data: newUser}).excute(200);
+  } catch (e: any) {
+    new ResponseAPI(res, {message: e.message}).excute(500);
+  }
+}
+
 async function updateLocation(req: Request, res: Response) {
   const userId = res.locals.user.userId;
   const {lng, lat} = req.body;
@@ -85,5 +116,6 @@ async function updateLocation(req: Request, res: Response) {
 export default {
   signUp,
   login,
+  updateUser,
   updateLocation,
 };

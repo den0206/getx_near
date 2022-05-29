@@ -80,7 +80,9 @@ class UserDetailScreen extends StatelessWidget {
                             background: Colors.green,
                             title: "Edit",
                             shadowColor: Colors.black54,
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.pushEditPage();
+                            },
                           ),
                           CustomButton(
                             width: 35.w,

@@ -10,6 +10,8 @@ import 'package:getx_near/src/screen/posts/post_add/add_post_screen.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_controller.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
+import 'package:getx_near/src/screen/users/user_edit/user_edit_controller.dart';
+import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
 
 class AppRoot {
   static final List<GetPage> pages = [
@@ -28,6 +30,15 @@ final List<GetPage> _authPages = [
   GetPage(
     name: SignUpScreen.routeName,
     page: () => SignUpScreen(),
+  ),
+  GetPage(
+    name: UserEditScreen.routeName,
+    page: () => UserEditScreen(),
+    binding: BindingsBuilder(
+      () => Get.lazyPut(
+        () => UserEditController(),
+      ),
+    ),
   ),
 ];
 

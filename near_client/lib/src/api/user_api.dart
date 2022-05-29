@@ -30,6 +30,27 @@ class UserAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> updateUser(
+      {required Map<String, dynamic> updateData, File? avatarFile}) async {
+    try {
+      final Uri uri = setUri("/edit");
+      print(uri);
+      if (avatarFile == null) {
+        return await putRequest(uri: uri, body: updateData, useToken: true);
+      } else {
+        return await updateSingleFile(
+          uri: uri,
+          body: updateData,
+          file: avatarFile,
+          type: "PUT",
+          useToken: true,
+        );
+      }
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
   Future<ResponseAPI> updateLocation(Map<String, dynamic> cood) async {
     try {
       final Uri uri = setUri("/location");
