@@ -19,7 +19,12 @@ import {PostModel} from '../../utils/database/models';
   }
 
   var {comments, expireAt} = findPostArray;
-  console.log(expireAt);
+
+  // // utc to iso
+  // let isoString = expireAt.toISOString();
+  // let isoDate = new Date(isoString);
+  // console.log(isoDate);
+
   this.expireAt = expireAt;
   comments.unshift(this._id);
   await PostModel.findByIdAndUpdate(

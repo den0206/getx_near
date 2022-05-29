@@ -60,7 +60,7 @@ class CircleImageButton extends StatelessWidget {
     required this.imageProvider,
     required this.size,
     this.addShadow = true,
-    this.fit = BoxFit.cover,
+    this.fit = BoxFit.fill,
     this.border,
     this.onTap,
   }) : super(key: key);

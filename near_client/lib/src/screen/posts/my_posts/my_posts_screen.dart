@@ -127,7 +127,6 @@ class CommentAvatar extends StatelessWidget {
         imageProvider: getUserImage(comment.user),
         size: 35.sp,
         addShadow: false,
-        fit: BoxFit.contain,
         onTap: () {
           showDialog(
             context: context,
