@@ -8,5 +8,12 @@ const usersRoute = Router();
 usersRoute.post('/signup', upload.single('image'), userController.signUp);
 usersRoute.post('/login', userController.login);
 
+usersRoute.put(
+  '/edit',
+  checkAuth,
+  upload.single('image'),
+  userController.updateUser
+);
+
 usersRoute.put('/location', checkAuth, userController.updateLocation);
 export default usersRoute;

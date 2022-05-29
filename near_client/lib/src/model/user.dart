@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/dummy_generator.dart';
 
@@ -11,7 +12,7 @@ abstract class JsonModel {
 
 class User extends JsonModel {
   final String id;
-  final String name;
+  String name;
   final String email;
 
   String fcmToken;
@@ -60,6 +61,24 @@ class User extends JsonModel {
   @override
   String toString() {
     return 'User(id: $id, name: $name, email: $email, avatarUrl: $avatarUrl, sessionToken: $sessionToken, fcmToken: $fcmToken)';
+  }
+
+  User copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? fcmToken,
+    String? avatarUrl,
+    String? sessionToken,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      fcmToken: fcmToken ?? this.fcmToken,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+      sessionToken: sessionToken ?? this.sessionToken,
+    );
   }
 }
 
