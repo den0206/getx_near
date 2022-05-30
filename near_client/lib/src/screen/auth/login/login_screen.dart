@@ -3,6 +3,7 @@ import 'package:getx_near/src/screen/auth/login/login_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_textfield.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
 
 class LoginScreen extends LoadingGetView<LoginController> {
   static const routeName = '/LoginScreen';
@@ -47,6 +48,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                 builder: (context) {
                   return CustomButton(
                     title: "Login",
+                    background: ConstsColor.mainGreenColor,
                     onPressed: controller.buttonEnale.value
                         ? () {
                             controller.login();

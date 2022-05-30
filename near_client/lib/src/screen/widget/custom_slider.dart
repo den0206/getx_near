@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/widget/blinking_widget.dart';
@@ -14,7 +14,7 @@ extension AlertLevelEXT on AlertLevel {
       case AlertLevel.safe:
         return Colors.blue;
       case AlertLevel.easy:
-        return Colors.green;
+        return ConstsColor.mainGreenColor!;
       case AlertLevel.medium:
         return Colors.orange;
       case AlertLevel.strong:
@@ -103,8 +103,12 @@ class HelpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
+    return NeumorphicButton(
+      padding: EdgeInsets.all(10),
+      style: NeumorphicStyle(
+          boxShape: NeumorphicBoxShape.circle(),
+          color: ConstsColor.panelColor,
+          depth: 0.6),
       child: BlinkingWidet(
         duration: Duration(milliseconds: 500),
         use: !post.isLiked,
@@ -130,6 +134,7 @@ class HelpButton extends StatelessWidget {
           ],
         ),
       ),
+      onPressed: onTap,
     );
   }
 }
@@ -151,7 +156,7 @@ class CustomSlider extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SliderTheme(
         data: SliderTheme.of(context).copyWith(
-            // activeTrackColor: Colors.green,
+            // activeTrackColor: ConstsColor.mainGreenColor,
             trackHeight: trackHeight,
             thumbShape: RoundSliderThumbShape(
                 enabledThumbRadius: trackHeight / 2,

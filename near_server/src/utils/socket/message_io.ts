@@ -11,8 +11,8 @@ export function messageSocket(
 
     const chatRoomId = q as string;
 
-    messageIO.socketsJoin(chatRoomId);
-
+    // messageIO.socketsJoin(chatRoomId);
+    socket.join(chatRoomId);
     socket.on('new_message', (msg) => {
       messageIO.to(chatRoomId).emit('new_message', msg);
     });
@@ -31,9 +31,5 @@ export function messageSocket(
       socket.leave(chatRoomId);
       console.log('Chat Disconnrect');
     });
-  });
-
-  messageIO.on('connect_error', (err) => {
-    console.log(`connect_error due to ${err.message}`);
   });
 }

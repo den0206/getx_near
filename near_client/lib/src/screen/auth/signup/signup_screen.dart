@@ -6,6 +6,7 @@ import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_textfield.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
 
 class SignUpScreen extends LoadingGetView<SignUpController> {
   static const routeName = '/SignUpScreen';
@@ -60,7 +61,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                   ),
                   CustomButton(
                     title: "Sign Up",
-                    background: Colors.green[300],
+                    background: ConstsColor.mainGreenColor,
                     onPressed: controller.buttonEnable.value
                         ? () {
                             controller.signUp();

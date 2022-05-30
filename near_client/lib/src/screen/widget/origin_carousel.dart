@@ -93,7 +93,8 @@ class OriginCarouselCell extends StatelessWidget {
           () => Transform.scale(
             scale: scale,
             child: Neumorphic(
-              style: commonNeumorphic(depth: depth),
+              style: commonNeumorphic(
+                  depth: depth, lightSource: LightSource.bottomLeft),
               child: child,
             ),
           ),

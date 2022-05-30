@@ -6,8 +6,8 @@ export function recentSocket(recentIO: socket.Namespace) {
     if (!q) return;
     const userId = q as string;
     console.log('Recent user id', userId);
-    recentIO.socketsJoin(userId);
-    // socket.join(userId);
+    // recentIO.socketsJoin(userId);
+    socket.join(userId);
 
     console.log(recentIO.adapter.rooms.size);
     socket.on('update', (data) => {
@@ -19,9 +19,5 @@ export function recentSocket(recentIO: socket.Namespace) {
       socket.leave(userId);
       console.log('Recent Disconnrect');
     });
-  });
-
-  recentIO.on('connect_error', (err) => {
-    console.log(`connect_error due to ${err.message}`);
   });
 }

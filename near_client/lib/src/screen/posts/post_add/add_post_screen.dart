@@ -140,7 +140,8 @@ class AbovePostField extends GetView<AddPostController> {
                     children: [
                       Obx(
                         () => NeumorphicRadio(
-                          style: commonRatioStyle(selectedColor: Colors.green),
+                          style: commonRatioStyle(
+                              selectedColor: ConstsColor.mainGreenColor),
                           padding: EdgeInsets.all(12),
                           value: expire,
                           groupValue: controller.expireTime.value,

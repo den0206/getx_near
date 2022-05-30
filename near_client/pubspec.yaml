@@ -45,6 +45,8 @@ dependencies:
   safe_device: ^1.1.1
   wechat_assets_picker: ^7.2.0
   mime: ^1.0.2
+  map_launcher: ^2.2.3
+  flutter_svg: ^0.22.0
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
 # multiple_image_picker を使用

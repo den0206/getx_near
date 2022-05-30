@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void dismisskeyBord(BuildContext context) {
@@ -12,7 +13,7 @@ void showSnackBar({required String title}) {
     "Please Login",
     icon: Icon(Icons.person, color: Colors.white),
     snackPosition: SnackPosition.BOTTOM,
-    backgroundColor: Colors.green,
+    backgroundColor: ConstsColor.mainGreenColor,
     borderRadius: 20,
     margin: EdgeInsets.all(15),
     colorText: Colors.white,
