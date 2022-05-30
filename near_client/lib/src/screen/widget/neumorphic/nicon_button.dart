@@ -21,7 +21,6 @@ class NeumorphicIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return NeumorphicButton(
       padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(right: 10),
       style: NeumorphicStyle(
           boxShape: NeumorphicBoxShape.circle(),
           color: color ?? ConstsColor.panelColor,

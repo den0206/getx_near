@@ -8,4 +8,6 @@ class ConstsColor {
   static final commonBackground = Colors.grey[200];
   static final panelColor = Colors.grey[400]!;
   static final cautionColor = Colors.yellow;
+
+  static final mainGreenColor = Colors.green[300];
 }

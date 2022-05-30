@@ -25,17 +25,20 @@ class UserDetailScreen extends StatelessWidget {
             title: Text(user.name),
             actions: [
               if (user.isCurrent)
-                NeumorphicIconButton(
-                  iconData: Icons.settings,
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      backgroundColor: ConstsColor.panelColor,
-                      builder: (context) {
-                        return SettingsScreen();
-                      },
-                    );
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: NeumorphicIconButton(
+                    iconData: Icons.settings,
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        backgroundColor: ConstsColor.panelColor,
+                        builder: (context) {
+                          return SettingsScreen();
+                        },
+                      );
+                    },
+                  ),
                 )
             ],
           ),
@@ -77,7 +80,7 @@ class UserDetailScreen extends StatelessWidget {
                             width: 35.w,
                             height: 7.h,
                             titleColor: Colors.white,
-                            background: Colors.green,
+                            background: ConstsColor.mainGreenColor,
                             title: "Edit",
                             shadowColor: Colors.black54,
                             onPressed: () {

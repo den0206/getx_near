@@ -11,6 +11,8 @@ import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../utils/consts_color.dart';
+
 class MessageScreen extends LoadingGetView<MessageController> {
   static const routeName = '/Message';
   @override
@@ -158,7 +160,9 @@ class TextBubble extends StatelessWidget {
           padding: EdgeInsets.all(10),
           margin: EdgeInsets.all(10),
           style: commonNeumorphic(
-            color: message.isCurrent ? Colors.green[300] : Colors.grey[200]!,
+            color: message.isCurrent
+                ? ConstsColor.mainGreenColor
+                : Colors.grey[200]!,
             depth: 0.4,
           ).copyWith(
             boxShape: NeumorphicBoxShape.roundRect(
@@ -213,7 +217,7 @@ class MessageInput extends GetView<MessageController> {
           ),
           NeumorphicIconButton(
             iconData: Icons.send,
-            color: Colors.green[300],
+            color: ConstsColor.mainGreenColor,
             iconColor: Colors.white,
             onPressed: () {
               dismisskeyBord(context);

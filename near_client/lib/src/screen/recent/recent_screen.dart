@@ -9,6 +9,7 @@ import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../utils/consts_color.dart';
 import '../../utils/neumorphic_style.dart';
 
 class RecentScreen extends LoadingGetView<RecentController> {
@@ -133,7 +134,7 @@ class RecentCell extends GetView<RecentController> {
                     width: 30,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.green,
+                      color: ConstsColor.mainGreenColor,
                     ),
                     child: Center(
                         child: Text(
