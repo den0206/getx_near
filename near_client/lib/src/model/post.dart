@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/service/auth_service.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 // abstract class MarkerIdentifer {
 //   String get id;
@@ -61,6 +62,11 @@ class Post extends JsonModel {
 
   List<String> likes;
   List<String> comments;
+
+  // Maplauncher の為の変換
+  Coords get coordForLauncher {
+    return Coords(coordinate.latitude, coordinate.longitude);
+  }
 
   Post({
     required this.id,

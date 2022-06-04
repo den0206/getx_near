@@ -10,12 +10,14 @@ import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/message/message_screen.dart';
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/message_extention.dart';
 import 'package:getx_near/src/service/recent_extension.dart';
 import 'package:getx_near/src/socket/post_io.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 import '../../../../main.dart';
 import '../../../service/permission_service.dart';
@@ -243,5 +245,23 @@ class PostDetailController extends LoadingGetController {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<void> tryMapLauncher(
+      BuildContext context, AvailableMap current) async {
+    showCommonDialog(
+      context: context,
+      title: "外部アプリへ遷移します",
+      okAction: () async {
+        final locationService = LocationService();
+        final currentPosition = await locationService.getCurrentPosition();
+        current.showDirections(
+          origin: Coords(currentPosition.latitude, currentPosition.longitude),
+          originTitle: "貴方の現在地",
+          destination: post.coordForLauncher,
+          destinationTitle: "${post.user.name} さんの位置",
+        );
+      },
+    );
   }
 }

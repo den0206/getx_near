@@ -10,6 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../main.dart';
+import '../../utils/consts_color.dart';
 
 class MapScreen extends LoadingGetView<MapController> {
   static const routeName = '/MapScreen';
@@ -95,7 +96,8 @@ class MapScreen extends LoadingGetView<MapController> {
                             children: [
                               WidgetSpan(
                                 child: Icon(Icons.pin_drop_outlined,
-                                    size: 16.sp, color: Colors.green),
+                                    size: 16.sp,
+                                    color: ConstsColor.mainGreenColor),
                               ),
                               TextSpan(
                                 text: "このエリアを検索",
@@ -192,7 +194,7 @@ class MapScreen extends LoadingGetView<MapController> {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.green,
+                      color: ConstsColor.mainGreenColor,
                     ),
                     child: Builder(builder: (context) {
                       return IconButton(
@@ -209,7 +211,7 @@ class MapScreen extends LoadingGetView<MapController> {
                   ),
                   FloatingActionButton.extended(
                     heroTag: "btn2",
-                    backgroundColor: Colors.green[200],
+                    backgroundColor: ConstsColor.mainGreenColor,
                     label: Text(
                       'Default Position',
                       style: TextStyle(

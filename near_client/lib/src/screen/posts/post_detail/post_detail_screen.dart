@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 
@@ -11,12 +12,14 @@ import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:getx_near/src/utils/date_formate.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:sizer/sizer.dart';
 
 class PostDettailScreen extends LoadingGetView<PostDetailController> {
@@ -73,13 +76,13 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                     children: [
                       HelpButton(
                         post: post,
-                        size: 23.sp,
+                        size: 20.sp,
                         onTap: () {
                           controller.addAndRemoveLike();
                         },
                       ),
                       Container(
-                        constraints: BoxConstraints(maxWidth: 70.w),
+                        constraints: BoxConstraints(maxWidth: 55.w),
                         height: 30,
                         child: LiquidLinearProgressIndicator(
                           value: post.emergency / 100,
@@ -96,6 +99,60 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                           ),
                         ),
                       ),
+                      Builder(builder: (context) {
+                        return NeumorphicIconButton(
+                          iconData: Icons.location_on,
+                          iconColor: Colors.redAccent,
+                          color: Colors.yellow.withOpacity(0.3),
+                          onPressed: () async {
+                            final availableMaps =
+                                await MapLauncher.installedMaps;
+
+                            await showModalBottomSheet(
+                              backgroundColor: ConstsColor.panelColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              context: context,
+                              builder: (_) {
+                                return ListView.separated(
+                                  shrinkWrap: true,
+                                  itemCount: availableMaps.length + 1,
+                                  reverse: true,
+                                  separatorBuilder: (_, __) {
+                                    return Divider();
+                                  },
+                                  itemBuilder: (context, index) {
+                                    if (index != 0) {
+                                      final current = availableMaps[index - 1];
+                                      return ListTile(
+                                        leading: SvgPicture.asset(
+                                          current.icon,
+                                          width: 30,
+                                          height: 30,
+                                        ),
+                                        title: Text(current.mapName),
+                                        onTap: () {
+                                          controller.tryMapLauncher(
+                                              context, current);
+                                        },
+                                      );
+                                    } else {
+                                      return ListTile(
+                                        leading: Icon(Icons.close),
+                                        title: Text("キャンセル"),
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      );
+                                    }
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        );
+                      })
                     ],
                   ),
                 ),
@@ -344,7 +401,7 @@ class AboveCommentField extends GetView<PostDetailController> {
         trailing: IconButton(
           icon: Icon(
             Icons.send,
-            color: Colors.green,
+            color: ConstsColor.mainGreenColor,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -422,7 +479,7 @@ class CommentCell extends GetView<PostDetailController> {
                           CustomButton(
                             width: 30.w,
                             height: 40,
-                            background: Colors.green,
+                            background: ConstsColor.mainGreenColor,
                             title: "Message",
                             onPressed: () {
                               Navigator.of(context).pop();
@@ -436,7 +493,7 @@ class CommentCell extends GetView<PostDetailController> {
                         child: CustomButton(
                           width: 100,
                           height: 40,
-                          background: Colors.green,
+                          background: ConstsColor.mainGreenColor,
                           title: "Yes",
                           onPressed: () {
                             Navigator.of(context).pop();

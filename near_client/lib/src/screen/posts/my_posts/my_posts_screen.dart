@@ -150,7 +150,7 @@ class CommentAvatar extends StatelessWidget {
                           CustomButton(
                             width: 30.w,
                             height: 40,
-                            background: Colors.green,
+                            background: ConstsColor.mainGreenColor,
                             title: "Message",
                             onPressed: () {
                               Navigator.of(context).pop();
@@ -164,7 +164,7 @@ class CommentAvatar extends StatelessWidget {
                         child: CustomButton(
                           width: 100,
                           height: 40,
-                          background: Colors.green,
+                          background: ConstsColor.mainGreenColor,
                           title: "Yes",
                           onPressed: () {
                             Navigator.of(context).pop();
