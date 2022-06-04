@@ -31,7 +31,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
               children: [
                 Scrollbar(
                   controller: controller.sc,
-                  isAlwaysShown: true,
+                  thumbVisibility: true,
                   child: Obx(
                     () => ListView.builder(
                       controller: controller.sc,

@@ -13,6 +13,7 @@ export function messageSocket(
 
     // messageIO.socketsJoin(chatRoomId);
     socket.join(chatRoomId);
+
     socket.on('new_message', (msg) => {
       messageIO.to(chatRoomId).emit('new_message', msg);
     });
