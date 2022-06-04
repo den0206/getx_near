@@ -7,8 +7,8 @@ export function postSocket(postIO: socket.Namespace) {
     if (!q) return;
     const postId = q as string;
 
-    postIO.socketsJoin(postId);
-    // socket.join(postId);
+    // postIO.socketsJoin(postId);
+    socket.join(postId);
     socket.on('new_comment', (com) => {
       postIO.to(postId).emit('new_comment', com);
     });
@@ -17,9 +17,5 @@ export function postSocket(postIO: socket.Namespace) {
       socket.leave(postId);
       console.log('Post Disconnrect');
     });
-  });
-
-  postIO.on('connect_error', (err) => {
-    console.log(`connect_error due to ${err.message}`);
   });
 }

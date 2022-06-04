@@ -6,8 +6,8 @@ export function recentSocket(recentIO: socket.Namespace) {
     if (!q) return;
     const userId = q as string;
     console.log('Recent user id', userId);
-    recentIO.socketsJoin(userId);
-    // socket.join(userId);
+    // recentIO.socketsJoin(userId);
+    socket.join(userId);
 
     console.log(recentIO.adapter.rooms.size);
     socket.on('update', (data) => {
