@@ -75,11 +75,6 @@ class NotificationService extends GetxService {
     );
   }
 
-  Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    print("BackGround");
-    showNotification(message);
-  }
-
   void showNotification(RemoteMessage message) {
     RemoteNotification? notification = message.notification;
 
@@ -102,7 +97,7 @@ class NotificationService extends GetxService {
             presentSound: true,
             presentBadge: true,
             presentAlert: true,
-            sound: 'HELP!.wav', //←Xcodeにドロップしたファイル名
+            sound: 'help.wav', //←Xcodeにドロップしたファイル名
           ),
         ),
       );
@@ -126,7 +121,7 @@ class NotificationService extends GetxService {
       },
       "data": {
         "priority": "high",
-        "sound": "HELP!.wav",
+        "sound": "help.wav",
         // "sound": "app_sound.wav",
         "content_available": true,
         "bodyText": content,

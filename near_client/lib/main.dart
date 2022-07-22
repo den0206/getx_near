@@ -13,6 +13,11 @@ import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:sizer/sizer.dart';
 
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("BackGround");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -20,8 +25,7 @@ void main() async {
 
   await Get.put(NotificationService()).initService();
 
-  FirebaseMessaging.onBackgroundMessage(
-      NotificationService.to.firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   isRealDevice = await SafeDevice.isRealDevice;
 
