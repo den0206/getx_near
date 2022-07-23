@@ -26,19 +26,19 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open and in the background.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app needs access to location when in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
-	<key>NSAppTransportSecurity</key>
-    <dict>
-	<key>NSAllowsArbitraryLoads</key>
-	<true/>
-    </dict>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>カメラを使います.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>カメラを使います.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
