@@ -1,4 +1,4 @@
-package com.example.getx_near
+package com.yuuki.help
 
 import io.flutter.embedding.android.FlutterActivity
 
