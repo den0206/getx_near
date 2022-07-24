@@ -48,6 +48,7 @@ dependencies:
   map_launcher: ^2.2.3
   flutter_svg: ^0.22.0
   flutter_launcher_icons: ^0.9.3
+  flutter_native_splash: ^2.2.0+1
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
 # multiple_image_picker を使用
@@ -71,3 +72,11 @@ flutter_icons:
   ios: true
   adaptive_icon_foreground: 'assets/icon/icon-android.png'
   adaptive_icon_background: '#ffccd6'
+
+flutter_native_splash:
+  image: 'assets/icon/splash-icon.png'
+  color: '#ffccd6'
+  fullscreen: true
+  android_12:
+    icon_background_color: '#ffccd6'
+    image: 'assets/icon/splash-icon.png'
