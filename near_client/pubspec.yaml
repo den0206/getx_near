@@ -47,6 +47,7 @@ dependencies:
   mime: ^1.0.2
   map_launcher: ^2.2.3
   flutter_svg: ^0.22.0
+  flutter_launcher_icons: ^0.9.3
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
 # multiple_image_picker を使用
@@ -59,5 +60,14 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icon/
     - assets/sounds/
     - .env
+
+flutter_icons:
+  image_path: 'assets/icon/icon-ios.png'
+  image_path_ios: 'assets/icon/icon-ios.png'
+  android: true
+  ios: true
+  adaptive_icon_foreground: 'assets/icon/icon-android.png'
+  adaptive_icon_background: '#ffccd6'
