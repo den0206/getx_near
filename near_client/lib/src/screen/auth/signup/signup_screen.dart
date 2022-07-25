@@ -40,6 +40,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                   CustomTextField(
                     controller: controller.nameController,
                     labelText: "name",
+                    iconData: Icons.person,
                   ),
                   SizedBox(
                     height: 10,
@@ -47,6 +48,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                   CustomTextField(
                     controller: controller.emailController,
                     labelText: "email",
+                    iconData: Icons.email,
                   ),
                   SizedBox(
                     height: 10,
@@ -55,6 +57,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                     controller: controller.passwordController,
                     labelText: "Pasword",
                     isSecure: true,
+                    iconData: Icons.lock,
                   ),
                   SizedBox(
                     height: 10,

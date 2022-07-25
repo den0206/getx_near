@@ -91,7 +91,7 @@ class CircleImageButton extends StatelessWidget {
                   BoxShadow(
                     offset: Offset(0, 5),
                     blurRadius: 15.0,
-                    color: Colors.white,
+                    color: Colors.black12,
                   ),
                 ]
               : null,

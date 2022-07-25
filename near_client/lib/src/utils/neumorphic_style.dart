@@ -7,6 +7,7 @@ NeumorphicStyle commonNeumorphic(
     double? depth,
     Color? color,
     Color? shadowColor,
+    Color? shadowLightColorEmboss,
     LightSource? lightSource}) {
   return NeumorphicStyle(
     shape: NeumorphicShape.concave,
@@ -16,6 +17,7 @@ NeumorphicStyle commonNeumorphic(
     lightSource: lightSource ?? LightSource.topLeft,
     color: color ?? ConstsColor.panelColor,
     shadowLightColor: shadowColor,
+    shadowLightColorEmboss: shadowLightColorEmboss,
     intensity: 1,
   );
 }

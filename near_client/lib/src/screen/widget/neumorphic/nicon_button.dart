@@ -51,10 +51,11 @@ class NeumorphicAvatarButton extends StatelessWidget {
     return Neumorphic(
       padding: EdgeInsets.all(10),
       style: NeumorphicStyle(
-        boxShape: NeumorphicBoxShape.circle(),
-        color: ConstsColor.panelColor,
-        // depth: NeumorphicTheme.embossDepth(context),
-      ),
+          boxShape: NeumorphicBoxShape.circle(),
+          color: ConstsColor.panelColor,
+          shadowLightColor: Colors.black45
+          // depth: NeumorphicTheme.embossDepth(context),
+          ),
       child: CircleImageButton(
         imageProvider: imageProvider,
         size: size,

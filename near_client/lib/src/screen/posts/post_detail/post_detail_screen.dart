@@ -215,7 +215,7 @@ class PoptPopMenu extends GetView<PostDetailController> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      color: ConstsColor.commonBackground,
+      color: ConstsColor.panelColor,
       padding: EdgeInsets.zero,
       onSelected: (value) {
         switch (value) {
