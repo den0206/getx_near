@@ -27,7 +27,7 @@ class MyPostsScreen extends LoadingGetView<MyPostsController> {
           slivers: [
             SliverAppBar(
               pinned: true,
-              backgroundColor: ConstsColor.panelColor,
+              backgroundColor: ConstsColor.mainBackColor,
               title: Text("TOP"),
               foregroundColor: Colors.black,
               elevation: 0,
@@ -82,7 +82,7 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
     return Container(
       height: 10.h,
       decoration: BoxDecoration(
-          color: ConstsColor.panelColor,
+          color: ConstsColor.mainBackColor,
           border: Border(bottom: BorderSide(color: Colors.grey))),
       child: ListView.builder(
         itemCount: currentIndex != controller.commentLimit

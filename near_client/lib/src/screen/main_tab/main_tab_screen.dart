@@ -52,7 +52,7 @@ class MainTabScreen extends StatelessWidget {
               ? Container(
                   margin: EdgeInsets.only(bottom: 20),
                   height: kBottomNavigationBarHeight,
-                  decoration: BoxDecoration(color: ConstsColor.panelColor),
+                  decoration: BoxDecoration(color: ConstsColor.mainBackColor),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: bottomIcons

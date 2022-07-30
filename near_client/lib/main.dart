@@ -33,7 +33,7 @@ void main() async {
 }
 
 bool isRealDevice = false;
-final bool useMain = true;
+final bool useMain = false;
 final bool useMap = true;
 
 class MyApp extends StatelessWidget {
@@ -48,9 +48,9 @@ class MyApp extends StatelessWidget {
         // showPerformanceOverlay: kDebugMode,
 
         theme: ThemeData(
-          scaffoldBackgroundColor: ConstsColor.panelColor,
+          scaffoldBackgroundColor: ConstsColor.mainBackColor,
           appBarTheme: AppBarTheme(
-            backgroundColor: ConstsColor.panelColor,
+            backgroundColor: ConstsColor.mainBackColor,
             foregroundColor: Colors.black,
             elevation: 0,
           ),

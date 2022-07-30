@@ -33,7 +33,7 @@ class CustomTextField extends StatelessWidget {
       margin: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
       style: commonNeumorphic(
         depth: -10,
-        shadowLightColorEmboss: ConstsColor.panelColor,
+        shadowLightColorEmboss: ConstsColor.mainBackColor,
         boxShape: NeumorphicBoxShape.stadium(),
       ),
       padding: padding ?? EdgeInsets.symmetric(vertical: 7, horizontal: 18),

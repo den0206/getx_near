@@ -5,11 +5,11 @@ Color hexToColor(String code) {
 }
 
 class ConstsColor {
-  static final panelColor = hexToColor("#ffccd6");
+  static final mainBackColor = Colors.grey[400]!;
   static final cautionColor = Colors.yellow;
-
+  static final mianPinkColor = hexToColor("#ffccd6");
   static final mainGreenColor = Colors.green[300];
 }
 
 // static final commonBackground = Colors.grey[200];
-// static final panelColor = Colors.grey[400]!;
+

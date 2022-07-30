@@ -23,7 +23,7 @@ class NeumorphicIconButton extends StatelessWidget {
       padding: EdgeInsets.all(10),
       style: NeumorphicStyle(
           boxShape: NeumorphicBoxShape.circle(),
-          color: color ?? ConstsColor.panelColor,
+          color: color ?? ConstsColor.mainBackColor,
           depth: 0.6),
       child: Icon(
         iconData,
@@ -52,7 +52,7 @@ class NeumorphicAvatarButton extends StatelessWidget {
       padding: EdgeInsets.all(10),
       style: NeumorphicStyle(
           boxShape: NeumorphicBoxShape.circle(),
-          color: ConstsColor.panelColor,
+          color: ConstsColor.mainBackColor,
           shadowLightColor: Colors.black45
           // depth: NeumorphicTheme.embossDepth(context),
           ),

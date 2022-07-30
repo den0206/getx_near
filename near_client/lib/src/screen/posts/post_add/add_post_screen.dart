@@ -26,7 +26,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
   Widget get child {
     return Builder(builder: (context) {
       return Scaffold(
-        backgroundColor: ConstsColor.panelColor,
+        backgroundColor: ConstsColor.mainBackColor,
         appBar: AppBar(
           title: Text("投稿"),
           actions: [
@@ -35,7 +35,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                 padding: const EdgeInsets.only(right: 10, bottom: 10, top: 10),
                 child: MaterialButton(
                   elevation: 2,
-                  color: ConstsColor.panelColor,
+                  color: ConstsColor.mainBackColor,
                   textColor: Colors.white,
                   child: Text("Send"),
                   shape: StadiumBorder(),
@@ -119,7 +119,7 @@ class AbovePostField extends GetView<AddPostController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ConstsColor.panelColor,
+      color: ConstsColor.mainBackColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

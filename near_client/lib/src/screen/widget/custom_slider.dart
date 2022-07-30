@@ -107,7 +107,7 @@ class HelpButton extends StatelessWidget {
       padding: EdgeInsets.all(10),
       style: NeumorphicStyle(
           boxShape: NeumorphicBoxShape.circle(),
-          color: ConstsColor.panelColor,
+          color: ConstsColor.mainBackColor,
           depth: 0.6),
       child: BlinkingWidet(
         duration: Duration(milliseconds: 500),
