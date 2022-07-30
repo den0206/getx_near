@@ -6,11 +6,11 @@ extension AlertVoiceEXT on AlertVoice {
   String get soundPath {
     switch (this) {
       case AlertVoice.police:
-        return "assets/sounds/sos_sound.mp3";
+        return "assets/sounds/police_sound.mp3";
       case AlertVoice.help:
-        return "assets/sounds/sos_sound.mp3";
+        return "assets/sounds/help_sound.mp3";
       case AlertVoice.alert:
-        return "assets/sounds/sos_sound.mp3";
+        return "assets/sounds/danger_sound.mp3";
     }
   }
 
