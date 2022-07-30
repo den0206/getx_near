@@ -22,7 +22,7 @@ class AuthTabScreen extends StatelessWidget {
               tabs: [
                 Tab(
                     child: Text(
-                  "Help!",
+                  "音声",
                   style: TextStyle(
                     fontSize: 20.0,
                     color: Colors.black87,
