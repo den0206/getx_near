@@ -81,8 +81,8 @@ class SettingsScreen extends StatelessWidget {
           NeumorphicToggle(
             selectedIndex: controller.locationIndex,
             displayForegroundOnlyIfSelected: true,
-            style:
-                NeumorphicToggleStyle(backgroundColor: ConstsColor.panelColor),
+            style: NeumorphicToggleStyle(
+                backgroundColor: ConstsColor.mainBackColor),
             children: LocationDetail.values.map((l) {
               return ToggleElement(
                 background: Center(
@@ -99,7 +99,7 @@ class SettingsScreen extends StatelessWidget {
             }).toList(),
             thumb: Neumorphic(
               style: NeumorphicStyle(
-                color: ConstsColor.panelColor,
+                color: ConstsColor.mainBackColor,
                 boxShape: NeumorphicBoxShape.roundRect(
                   BorderRadius.all(
                     Radius.circular(12),

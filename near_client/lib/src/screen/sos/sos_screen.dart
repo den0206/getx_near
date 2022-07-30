@@ -30,9 +30,9 @@ class SOSScreen extends StatelessWidget {
                       style: commonRatioStyle(),
                       child: Icon(
                         alert.iconData,
-                        size: 30.sp,
+                        size: 25.sp,
                       ),
-                      padding: EdgeInsets.all(25),
+                      padding: EdgeInsets.all(20),
                       value: alert,
                       groupValue: controller.currentAlert,
                       onChanged: (AlertVoice? value) {

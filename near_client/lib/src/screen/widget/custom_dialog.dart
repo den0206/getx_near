@@ -132,7 +132,7 @@ class CommentDialog extends StatelessWidget {
             margin: EdgeInsets.only(top: avatarPad),
             decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: ConstsColor.panelColor,
+                color: ConstsColor.mainBackColor,
                 borderRadius: BorderRadius.circular(pad),
                 boxShadow: [
                   BoxShadow(

@@ -30,7 +30,7 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
           defaultPanelState: PanelState.OPEN,
           panelSnapping: false,
           isDraggable: !controller.selecting,
-          color: ConstsColor.panelColor,
+          color: ConstsColor.mainBackColor,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           margin: EdgeInsets.symmetric(horizontal: 5),
           borderRadius: BorderRadius.only(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/model/alert_voice.dart';
@@ -6,6 +8,7 @@ import 'package:audio_session/audio_session.dart';
 
 class SOSController extends GetxController {
   late AudioPlayer _player;
+  Timer? _timer;
 
   void play() => _player.play();
 
@@ -19,14 +22,12 @@ class SOSController extends GetxController {
     super.onInit();
     await _setupSession();
     await _loadAsset();
-    _player.playingStream.listen((playing) {
-      isPlaying.call(playing);
-      if (playing) HapticFeedback.vibrate();
-    });
+    continuousViblation();
   }
 
   @override
   void dispose() {
+    _timer?.cancel();
     _player.dispose();
     super.dispose();
   }
@@ -46,9 +47,23 @@ class SOSController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
 
-    print(_player.duration);
-    print(_player.volume);
+  void continuousViblation() {
+    _player.playingStream.listen((playing) {
+      isPlaying.call(playing);
+      if (playing) {
+        // 一秒毎にバイブレーション
+        _timer = Timer.periodic(
+          Duration(seconds: 1),
+          (timer) {
+            HapticFeedback.vibrate();
+          },
+        );
+      } else {
+        _timer?.cancel();
+      }
+    });
   }
 
   void selectAlert(AlertVoice alert) async {

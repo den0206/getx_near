@@ -31,7 +31,7 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
   Widget get child {
     final post = controller.post;
     return Scaffold(
-      backgroundColor: ConstsColor.panelColor,
+      backgroundColor: ConstsColor.mainBackColor,
       body: GetBuilder<PostDetailController>(
         builder: (controller) {
           return CustomScrollView(
@@ -40,7 +40,7 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
             slivers: [
               SliverAppBar(
                 pinned: true,
-                backgroundColor: ConstsColor.panelColor,
+                backgroundColor: ConstsColor.mainBackColor,
                 title: Text(post.user.name),
                 foregroundColor: Colors.black,
                 elevation: 0,
@@ -109,7 +109,7 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                                 await MapLauncher.installedMaps;
 
                             await showModalBottomSheet(
-                              backgroundColor: ConstsColor.panelColor,
+                              backgroundColor: ConstsColor.mainBackColor,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -215,7 +215,7 @@ class PoptPopMenu extends GetView<PostDetailController> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      color: ConstsColor.panelColor,
+      color: ConstsColor.mainBackColor,
       padding: EdgeInsets.zero,
       onSelected: (value) {
         switch (value) {
@@ -283,7 +283,7 @@ class ContentArea extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final post = controller.post;
     return Container(
-      decoration: BoxDecoration(color: ConstsColor.panelColor),
+      decoration: BoxDecoration(color: ConstsColor.mainBackColor),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,7 +334,7 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       decoration: BoxDecoration(
-          color: ConstsColor.panelColor,
+          color: ConstsColor.mainBackColor,
           border: Border(top: BorderSide(color: Colors.grey))),
       child: ListTile(
         title: BlinkingWidet(
@@ -371,7 +371,7 @@ class AboveCommentField extends GetView<PostDetailController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: ConstsColor.panelColor),
+      decoration: BoxDecoration(color: ConstsColor.mainBackColor),
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),

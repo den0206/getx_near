@@ -32,7 +32,7 @@ class UserDetailScreen extends StatelessWidget {
                     onPressed: () {
                       showModalBottomSheet(
                         context: context,
-                        backgroundColor: ConstsColor.panelColor,
+                        backgroundColor: ConstsColor.mainBackColor,
                         builder: (context) {
                           return SettingsScreen();
                         },
@@ -63,7 +63,7 @@ class UserDetailScreen extends StatelessWidget {
                       NeumorphicText(
                         user.name,
                         style: NeumorphicStyle(
-                          color: ConstsColor.panelColor,
+                          color: ConstsColor.mainBackColor,
                           intensity: 1,
                           shadowLightColor: Colors.black,
                           lightSource: LightSource.bottomRight,
