@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
-import 'package:getx_near/src/screen/auth/login/login_screen.dart';
+import 'package:getx_near/src/screen/auth/auth_tab_screen.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 
@@ -16,7 +16,7 @@ class RootScreen extends StatelessWidget {
         if (service.currentUser.value != null) {
           return MainTabScreen();
         } else {
-          return LoginScreen();
+          return AuthTabScreen();
         }
       },
     );
