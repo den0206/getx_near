@@ -11,8 +11,6 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
 
-import '../../../service/permission_service.dart';
-
 class AddPostController extends LoadingGetController {
   final TextEditingController tX = TextEditingController();
   final RxBool canSend = false.obs;
@@ -41,11 +39,8 @@ class AddPostController extends LoadingGetController {
     isLoading.call(true);
 
     try {
-      final permission = PermissionService();
-      final locationEnable = await permission.checkLocation();
-      if (!locationEnable) return await permission.openSetting();
-
       final Position current = await _locationService.getCurrentPosition();
+
       final expire = expireTime.value.time;
       final Map<String, dynamic> body = {
         "content": tX.text,
