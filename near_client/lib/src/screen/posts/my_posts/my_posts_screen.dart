@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
@@ -13,6 +14,7 @@ import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../utils/neumorphic_style.dart';
+import '../post_detail/post_detail_screen.dart';
 
 class MyPostsScreen extends LoadingGetView<MyPostsController> {
   @override
@@ -29,23 +31,23 @@ class MyPostsScreen extends LoadingGetView<MyPostsController> {
         return CustomScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           slivers: [
-            SliverAppBar(
-              pinned: true,
-              backgroundColor: ConstsColor.mainBackColor,
-              title: Text("TOP"),
-              foregroundColor: Colors.black,
-              elevation: 0,
-            ),
+            // SliverAppBar(
+            //   pinned: true,
+            //   backgroundColor: ConstsColor.mainBackColor,
+            //   title: Text("TOP"),
+            //   foregroundColor: Colors.black,
+            //   elevation: 0,
+            // ),
             CupertinoSliverRefreshControl(
               onRefresh: () async {
                 await controller.refreshPosts();
               },
             ),
-            SliverPersistentHeader(
-              delegate: AvatarsArea(controller),
-              pinned: true,
-              floating: false,
-            ),
+            // SliverPersistentHeader(
+            //   delegate: AvatarsArea(controller),
+            //   pinned: true,
+            //   floating: false,
+            // ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
@@ -184,7 +186,7 @@ class CommentAvatar extends StatelessWidget {
   }
 }
 
-class PostCell extends GetView<MyPostsController> {
+class PostCell extends StatelessWidget {
   const PostCell({
     Key? key,
     required this.post,
@@ -195,8 +197,9 @@ class PostCell extends GetView<MyPostsController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        controller.showPostDetail(post);
+      onTap: () async {
+        final _ =
+            await Get.toNamed(PostDettailScreen.routeName, arguments: post);
       },
       child: Neumorphic(
         style: commonNeumorphic(depth: 0.4),

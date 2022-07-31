@@ -7,14 +7,11 @@ import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/my_posts/relation_comments/relation_comments_screen.dart';
-import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../../../main.dart';
-import '../../../service/permission_service.dart';
 
 class MyPostsController extends LoadingGetController {
   static MyPostsController get to => Get.find();
@@ -102,11 +99,8 @@ class MyPostsController extends LoadingGetController {
     await Future.delayed(Duration(seconds: 1));
 
     try {
-      final permission = PermissionService();
-      final locationEnable = await permission.checkLocation();
-      if (!locationEnable) return await permission.openSetting();
-
       final currentPostion = await _locationService.getCurrentPosition();
+
       final centerPosition =
           LatLng(currentPostion.latitude, currentPostion.latitude);
       final res = await _postAPI.generateDummyMy(centerPosition, 1000);
@@ -136,10 +130,6 @@ class MyPostsController extends LoadingGetController {
     } catch (e) {
       print(e.toString());
     }
-  }
-
-  Future<void> showPostDetail(Post post) async {
-    final _ = await Get.toNamed(PostDettailScreen.routeName, arguments: post);
   }
 
   Future<void> showRelationComments() async {

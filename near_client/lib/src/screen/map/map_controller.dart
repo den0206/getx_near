@@ -1,14 +1,13 @@
-import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
-import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
+import 'package:getx_near/src/screen/posts/my_posts/near_posts/near_posts_controller.dart';
 import 'package:getx_near/src/screen/posts/post_add/add_post_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/location_service.dart';
-import 'package:getx_near/src/service/permission_service.dart';
+import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
@@ -17,13 +16,12 @@ import '../../../main.dart';
 
 class MapController extends LoadingGetController {
   final mapService = MapService();
-  final List<Post> posts = [];
+  late List<Post> posts;
 
   late MainSlidePanelController mainSlidePanelController;
   final PanelController panelController = PanelController();
 
   late LatLng currentPosition;
-  final PostAPI _postAPI = PostAPI();
 
   double currentZoom = 14;
   bool isZooming = false;
@@ -31,6 +29,12 @@ class MapController extends LoadingGetController {
   final RxBool showSearch = true.obs;
   bool get canSearch {
     return currentZoom > 8;
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    initNearPosts();
   }
 
   Future<void> onMapCreate(GoogleMapController controller) async {
@@ -44,6 +48,15 @@ class MapController extends LoadingGetController {
     } finally {
       isLoading.call(false);
     }
+  }
+
+  void initNearPosts() {
+    if (!Get.isRegistered<NearPostsController>()) {
+      Get.put(NearPostsController());
+    }
+
+    // NearPostsController と共有する
+    posts = NearPostsController.to.nearPosts;
   }
 
   void setMainBar(MainSlidePanelController controller) {
@@ -64,33 +77,12 @@ class MapController extends LoadingGetController {
       final currentCenter = useMap ? await mapService.getCenter() : shinjukuSta;
       final double radius = useMap ? mapService.GetRadiusOnVisible() : 1000;
 
-      ResponseAPI res;
+      final tempPosts = await getTempNearPosts(
+          from: !useMap ? currentCenter : currentPosition,
+          radius: radius,
+          useDummy: useDummy);
 
-      if (!useDummy) {
-        final Map<String, dynamic> query = {
-          "lng": currentCenter.longitude.toString(),
-          "lat": currentCenter.latitude.toString(),
-          "radius": radius.toString(),
-        };
-
-        res = await _postAPI.getNearPosts(query);
-      } else {
-        res = await _postAPI.generateDummyAll(currentCenter, radius);
-      }
-
-      if (!res.status) return;
-      final items = List<Map<String, dynamic>>.from(res.data);
-      final temp = List<Post>.from(items.map((m) => Post.fromMap(m)));
-
-      /// distanceの取得
-      temp
-          .map((p) => {
-                p.distance = getDistansePoints(
-                    !useMap ? currentCenter : currentPosition, p.coordinate)
-              })
-          .toList();
-
-      posts.addAll(temp);
+      posts.addAll(tempPosts);
 
       if (useMap) {
         await Future.forEach(posts, (Post post) async {
@@ -119,11 +111,8 @@ class MapController extends LoadingGetController {
     if (isLoading.value) return;
     isLoading.call(true);
     try {
-      final permission = PermissionService();
-      final locationEnable = await permission.checkLocation();
-      if (!locationEnable) return await permission.openSetting();
+      final current = await LocationService().getCurrentPosition();
 
-      final current = await mapService.getCurrentPosition();
       currentPosition = LatLng(current.latitude, current.longitude);
 
       if (moveCamera)
