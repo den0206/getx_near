@@ -4,6 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/model/utils/visibleRegion.dart';
+import 'package:getx_near/src/service/permission_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -51,21 +52,31 @@ LocationDetail getLocationDetail(String? value) {
 
 class LocationService {
   Future<Position> getCurrentPosition() async {
-    final UserAPI _userAPI = UserAPI();
-    final LocationDetail localLoc =
-        await getLocationDetail(await StorageKey.locationSize.loadString());
-    print("精度は${localLoc.title}");
-    final current = await Geolocator.getCurrentPosition(
-        desiredAccuracy: localLoc.accuracy, forceAndroidLocationManager: true);
-    final cood = {
-      "lng": current.longitude,
-      "lat": current.latitude,
-    };
+    final permission = PermissionService();
+    final locationEnable = await permission.checkLocation();
 
-    await _userAPI.updateLocation(cood);
+    try {
+      if (!locationEnable) throw Exception("現在地を取得できません");
 
-    print("Update Location");
-    return current;
+      final UserAPI _userAPI = UserAPI();
+      final LocationDetail localLoc =
+          await getLocationDetail(await StorageKey.locationSize.loadString());
+      print("精度は${localLoc.title}");
+      final current = await Geolocator.getCurrentPosition(
+          desiredAccuracy: localLoc.accuracy,
+          forceAndroidLocationManager: true);
+      final cood = {
+        "lng": current.longitude,
+        "lat": current.latitude,
+      };
+
+      await _userAPI.updateLocation(cood);
+
+      print("Update Location");
+      return current;
+    } catch (e) {
+      throw e;
+    }
   }
 
   Future<Placemark> positionToAddress(Position position) async {

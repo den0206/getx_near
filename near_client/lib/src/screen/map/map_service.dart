@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/utils/visibleRegion.dart';
@@ -49,10 +48,6 @@ class MapService {
       mapRenderBox.size.width * devicePixelRatio,
       mapRenderBox.size.height * devicePixelRatio,
     );
-  }
-
-  Future<Position> getCurrentPosition() async {
-    return await locationService.getCurrentPosition();
   }
 
   double GetRadiusOnVisible() {

@@ -11,6 +11,7 @@ class PermissionService {
       case LocationPermission.denied:
       case LocationPermission.unableToDetermine:
       case LocationPermission.deniedForever:
+        await openSetting();
         return false;
     }
   }
