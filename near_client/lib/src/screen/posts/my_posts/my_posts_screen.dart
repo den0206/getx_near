@@ -18,6 +18,10 @@ class MyPostsScreen extends LoadingGetView<MyPostsController> {
   @override
   MyPostsController get ctr => MyPostsController();
 
+  // 強制的にclose する
+  @override
+  bool get isForceDelete => true;
+
   @override
   Widget get child {
     return GetBuilder<MyPostsController>(
