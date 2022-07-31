@@ -28,6 +28,7 @@ class SOSController extends GetxController {
   @override
   void dispose() {
     _timer?.cancel();
+    _player.stop();
     _player.dispose();
     super.dispose();
   }

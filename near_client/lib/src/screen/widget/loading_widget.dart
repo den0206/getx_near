@@ -22,6 +22,7 @@ abstract class LoadingGetView<T extends LoadingGetController>
     extends GetView<T> {
   T get ctr;
   final bool isFenix = false;
+
   // use backgroundTap
   final bool enableTap = true;
   Widget get child;
