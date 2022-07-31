@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 abstract class LoadingGetController extends GetxController {
   final RxBool isLoading = false.obs;
@@ -22,6 +23,7 @@ abstract class LoadingGetView<T extends LoadingGetController>
     extends GetView<T> {
   T get ctr;
   final bool isFenix = false;
+  final bool isForceDelete = false;
 
   // use backgroundTap
   final bool enableTap = true;
@@ -38,23 +40,35 @@ abstract class LoadingGetView<T extends LoadingGetController>
       Get.lazyPut(() => ctr, fenix: isFenix);
     }
 
-    return GestureDetector(
-      onTap: () {
-        if (enableTap) backgroundTap(context);
-      },
-      child: Obx(
-        () => Stack(
-          fit: StackFit.expand,
-          children: [
-            child,
-            if (controller.isLoading.value)
-              Container(
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(0, 0, 0, 0.6),
-                ),
-                child: PlainLoadingWidget(),
-              )
-          ],
+    return VisibilityDetector(
+      key: Key("${ctr}"),
+      onVisibilityChanged: isForceDelete
+          ? (visibilityInfo) {
+              var visiblePercentage = visibilityInfo.visibleFraction * 100;
+              if (visiblePercentage == 0 && Get.isRegistered<T>())
+                Get.delete<T>();
+
+              ;
+            }
+          : null,
+      child: GestureDetector(
+        onTap: () {
+          if (enableTap) backgroundTap(context);
+        },
+        child: Obx(
+          () => Stack(
+            fit: StackFit.expand,
+            children: [
+              child,
+              if (controller.isLoading.value)
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(0, 0, 0, 0.6),
+                  ),
+                  child: PlainLoadingWidget(),
+                )
+            ],
+          ),
         ),
       ),
     );

@@ -3,7 +3,6 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
-import 'package:getx_near/src/screen/posts/my_posts/my_posts_controller.dart';
 import 'package:getx_near/src/screen/posts/my_posts/my_posts_screen.dart';
 import 'package:getx_near/src/screen/sos/sos_screen.dart';
 
@@ -60,7 +59,6 @@ class MainTabController extends GetxController {
   void refreshAnotherPages(int index) {
     final indexes = fixPages.asMap().keys.toList();
 
-    final myPostIndex = _getByTypeofIndex<MyPostsScreen>();
     final mapIndex = _getByTypeofIndex<MapScreen>();
     final recentIndex = _getByTypeofIndex<RecentScreen>();
 
@@ -71,11 +69,6 @@ class MainTabController extends GetxController {
       stackPages.removeAt(i);
       stackPages.insert(i, Container());
     });
-
-    // 強制的に closeする
-    if (index != myPostIndex && Get.isRegistered<MyPostsController>()) {
-      Get.delete<MyPostsController>();
-    }
 
     stackPages[index] = fixPages[index];
     print(stackPages);
