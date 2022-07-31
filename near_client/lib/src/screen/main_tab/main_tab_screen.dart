@@ -2,15 +2,7 @@ import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:get/instance_manager.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
-import 'package:getx_near/src/screen/map/map_controller.dart';
-import 'package:getx_near/src/screen/map/map_screen.dart';
-import 'package:getx_near/src/screen/posts/my_posts/my_posts_screen.dart';
-import 'package:getx_near/src/screen/recent/recent_screen.dart';
-import 'package:getx_near/src/screen/sos/sos_screen.dart';
-import 'package:getx_near/src/screen/users/user_detail/user_detail_screen.dart';
-import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 
 class MainTabScreen extends StatelessWidget {
@@ -27,26 +19,16 @@ class MainTabScreen extends StatelessWidget {
       Icons.person,
     ];
 
-    final List<Widget> pages = [
-      SOSScreen(),
-      MyPostsScreen(),
-      MapScreen(),
-      RecentScreen(),
-      UserDetailScreen(
-        user: AuthService.to.currentUser.value!,
-      ),
-    ];
-
     return GetBuilder<MainTabController>(
       init: MainTabController(),
       autoRemove: false,
       builder: (controller) {
         return Scaffold(
-          body: !Get.isRegistered<MapController>()
-              ? pages[controller.currentIndex]
+          body: !controller.isExistMap
+              ? controller.currentPages[controller.currentIndex]
               : IndexedStack(
                   index: controller.currentIndex,
-                  children: pages,
+                  children: controller.currentPages,
                 ),
           bottomNavigationBar: controller.currentIndex != 2
               ? Container(
