@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/route_manager.dart';
@@ -20,6 +22,7 @@ import 'package:getx_near/src/socket/post_io.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 import '../../../../main.dart';
+import '../../widget/animation_widget.dart';
 
 class PostDetailController extends LoadingGetController {
   final Post post = Get.arguments;
@@ -153,7 +156,18 @@ class PostDetailController extends LoadingGetController {
     }
   }
 
-  Future<void> addAndRemoveLike() async {
+  Future<void> addAndRemoveLike(BuildContext context) async {
+    if (!post.isLiked) {
+      // Help Animation
+      var _overlayEntry = OverlayEntry(
+        builder: (BuildContext context) {
+          return HelpAnimatedWidet();
+        },
+      );
+      Navigator.of(context).overlay?.insert(_overlayEntry);
+      Timer(Duration(seconds: 2), () => _overlayEntry.remove());
+    }
+
     try {
       final res = await _postAPI.addLike(post.id);
       if (!res.status) return;

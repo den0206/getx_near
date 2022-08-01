@@ -79,31 +79,6 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      HelpButton(
-                        post: post,
-                        size: 20.sp,
-                        onTap: () {
-                          controller.addAndRemoveLike();
-                        },
-                      ),
-                      Container(
-                        constraints: BoxConstraints(maxWidth: 55.w),
-                        height: 30,
-                        child: LiquidLinearProgressIndicator(
-                          value: post.emergency / 100,
-                          valueColor:
-                              AlwaysStoppedAnimation(post.level.mainColor),
-                          backgroundColor: Color(0xffD6D6D6),
-                          borderColor: Colors.grey,
-                          borderWidth: 2.0,
-                          borderRadius: 12.0,
-                          direction: Axis.horizontal,
-                          center: Text(
-                            "${post.emergency} %",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
                       Builder(builder: (context) {
                         return NeumorphicIconButton(
                           iconData: Icons.location_on,
@@ -157,7 +132,34 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                             );
                           },
                         );
-                      })
+                      }),
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 55.w),
+                        height: 30,
+                        child: LiquidLinearProgressIndicator(
+                          value: post.emergency / 100,
+                          valueColor:
+                              AlwaysStoppedAnimation(post.level.mainColor),
+                          backgroundColor: Color(0xffD6D6D6),
+                          borderColor: Colors.grey,
+                          borderWidth: 2.0,
+                          borderRadius: 12.0,
+                          direction: Axis.horizontal,
+                          center: Text(
+                            "${post.emergency} %",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Builder(builder: (context) {
+                        return HelpButton(
+                          post: post,
+                          size: 20.sp,
+                          onTap: () {
+                            controller.addAndRemoveLike(context);
+                          },
+                        );
+                      }),
                     ],
                   ),
                 ),
