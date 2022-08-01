@@ -108,18 +108,23 @@ class HelpButton extends StatelessWidget {
       style: NeumorphicStyle(
           boxShape: NeumorphicBoxShape.circle(),
           color: ConstsColor.mainBackColor,
-          depth: 0.6),
+          depth: post.isLiked ? -2 : 0.6),
       child: BlinkingWidet(
         duration: Duration(milliseconds: 500),
         use: !post.isLiked,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.warning_amber,
-              color: mainColor,
-              size: size,
+            Image.asset(
+              "assets/images/icon-remove_background.png",
+              width: size,
+              height: size,
             ),
+            // Icon(
+            //   Icons.warning_amber,
+            //   color: mainColor,
+            //   size: size,
+            // ),
             if (uselabel)
               Text(
                 "Want Help!",
