@@ -1,8 +1,5 @@
 import 'package:get/get.dart';
 import 'package:getx_near/src/model/user.dart';
-import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
-import 'package:getx_near/src/screen/map/map_controller.dart';
-import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
 import 'package:getx_near/src/screen/recent/recent_controller.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 
@@ -22,8 +19,7 @@ class AuthService extends GetxService {
     if (value == null) return;
 
     this.currentUser.call(User.fromMap(value!));
-
-    Get.put(RecentController());
+    _registerMustControllers();
     print(currentUser.value.toString());
   }
 
@@ -32,17 +28,18 @@ class AuthService extends GetxService {
       newUser.sessionToken = currentUser.value!.sessionToken;
     await StorageKey.user.saveString(newUser.toMap());
     this.currentUser.call(newUser);
+
+    _registerMustControllers();
   }
 
   Future<void> logout() async {
-    await Get.delete<MainTabController>();
-    await Get.delete<RecentController>();
-    if (Get.isRegistered<MapController>()) await Get.delete<MapController>();
-    if (Get.isRegistered<MainSlidePanelController>())
-      await Get.delete<MainSlidePanelController>();
-
+    await Get.deleteAll();
     await StorageKey.user.deleteLocal();
     this.currentUser.value = null;
     print("DELETE");
+  }
+
+  void _registerMustControllers() {
+    if (!Get.isRegistered<RecentController>()) Get.put(RecentController());
   }
 }

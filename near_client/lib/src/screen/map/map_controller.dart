@@ -25,6 +25,7 @@ class MapController extends LoadingGetController {
 
   double currentZoom = 14;
   bool isZooming = false;
+  bool isSetDefault = false;
 
   final RxBool showSearch = true.obs;
   bool get canSearch {
@@ -115,8 +116,10 @@ class MapController extends LoadingGetController {
 
       currentPosition = LatLng(current.latitude, current.longitude);
 
-      if (moveCamera)
+      if (moveCamera) {
+        isSetDefault = true;
         await mapService.updateCamera(currentPosition, setZoom: zoom);
+      }
     } catch (e) {
       print(e.toString());
     } finally {
@@ -127,15 +130,21 @@ class MapController extends LoadingGetController {
 
   void onCmareMove(CameraPosition cameraPosition) {
     if (mapService.visibleRegion == null) return;
-
+    if (isZooming || isSetDefault) return;
     showSearch.call(canSearch &&
         !mapService.visibleRegion!.contains(cameraPosition.target));
   }
 
   void onCameraIdle() async {
+    // zoom した後は検索可
     if (isZooming) {
       showSearch.call(canSearch);
       isZooming = false;
+    }
+    // default に戻ったのちは検索可
+    if (isSetDefault) {
+      showSearch.call(canSearch);
+      isSetDefault = false;
     }
     // await panelController.open();
   }

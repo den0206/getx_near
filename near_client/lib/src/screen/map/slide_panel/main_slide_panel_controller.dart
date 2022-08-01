@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
@@ -11,6 +12,7 @@ import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import '../../../../main.dart';
 
 class MainSlidePanelController extends GetxController {
+  static MainSlidePanelController get to => Get.find();
   final MapController mapController;
 
   MainSlidePanelController(this.mapController);
@@ -40,7 +42,7 @@ class MainSlidePanelController extends GetxController {
 
   Future<void> selectPost(Post post) async {
     final index = mPosts.indexWhere((p) => p.id == post.id);
-    if (currentPostIndex.value == index) showPostDetail(post);
+    if (currentPostIndex.value == index) await showPostDetail(post);
 
     if (pageController.hasClients) pageController.jumpToPage(index);
 

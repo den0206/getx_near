@@ -60,7 +60,12 @@ class PostDettailScreen extends LoadingGetView<PostDetailController> {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: CustomCountdownTimer(endTime: post.expireAt!),
+                    child: CustomCountdownTimer(
+                      endTime: post.expireAt!,
+                      onEnd: () async {
+                        await controller.expirePost();
+                      },
+                    ),
                   ),
                 ),
               SliverPersistentHeader(

@@ -2,31 +2,25 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/my_posts/my_posts_controller.dart';
+import 'package:getx_near/src/screen/posts/my_posts/near_posts/near_posts_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
-
+import '../../../utils/date_formate.dart';
 import '../../../utils/neumorphic_style.dart';
-import '../post_detail/post_detail_screen.dart';
 
-class MyPostsScreen extends LoadingGetView<MyPostsController> {
+class MyPostsScreen extends GetView<MyPostsController> {
   @override
-  MyPostsController get ctr => MyPostsController();
-
-  // 強制的にclose する
-  @override
-  bool get isForceDelete => true;
-
-  @override
-  Widget get child {
+  Widget build(Object context) {
     return GetBuilder<MyPostsController>(
+      init: MyPostsController(),
+      autoRemove: false,
       builder: (controller) {
         return CustomScrollView(
           physics: AlwaysScrollableScrollPhysics(),
@@ -43,11 +37,11 @@ class MyPostsScreen extends LoadingGetView<MyPostsController> {
                 await controller.refreshPosts();
               },
             ),
-            // SliverPersistentHeader(
-            //   delegate: AvatarsArea(controller),
-            //   pinned: true,
-            //   floating: false,
-            // ),
+            SliverPersistentHeader(
+              delegate: LengthArea(MyPostsType.mine),
+              pinned: false,
+              floating: false,
+            ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
@@ -56,7 +50,12 @@ class MyPostsScreen extends LoadingGetView<MyPostsController> {
                     if (controller.cellLoading) return LoadingCellWidget();
                   }
                   final post = controller.posts[index];
-                  return PostCell(post: post);
+                  return PostCell(
+                    post: post,
+                    onTap: () async {
+                      await controller.tapCell(post);
+                    },
+                  );
                 },
                 childCount: controller.posts.length,
               ),
@@ -190,17 +189,16 @@ class PostCell extends StatelessWidget {
   const PostCell({
     Key? key,
     required this.post,
+    this.onTap,
   }) : super(key: key);
 
   final Post post;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        final _ =
-            await Get.toNamed(PostDettailScreen.routeName, arguments: post);
-      },
+      onTap: onTap,
       child: Neumorphic(
         style: commonNeumorphic(depth: 0.4),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -208,8 +206,33 @@ class PostCell extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            Column(
+              children: [
+                CircleImageButton(
+                  imageProvider: getUserImage(post.user),
+                  size: 30.sp,
+                ),
+                SizedBox(
+                  height: 3.sp,
+                ),
+                if (post.isCurrent) ...[
+                  Text(
+                    "Yours",
+                    style: TextStyle(color: Colors.red, fontSize: 10),
+                  )
+                ] else if (post.distance != null) ...[
+                  Text(
+                    "約 ${distanceToString(post.distance!)} km",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 6.sp,
+                    ),
+                  )
+                ]
+              ],
+            ),
             Container(
-              width: 70.w,
+              width: 60.w,
               child: AutoSizeText(
                 post.content,
                 style: TextStyle(
@@ -219,7 +242,7 @@ class PostCell extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
                 minFontSize: 10,
-                maxLines: 3,
+                maxLines: 4,
               ),
             ),
             _postIcon(
