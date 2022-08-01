@@ -12,6 +12,7 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../main.dart';
+import '../post_detail/post_detail_screen.dart';
 
 class MyPostsController extends LoadingGetController {
   static MyPostsController get to => Get.find();
@@ -51,6 +52,10 @@ class MyPostsController extends LoadingGetController {
     reachLast = false;
     nextCursor = null;
     update();
+  }
+
+  Future<void> tapCell(Post post) async {
+    await Get.toNamed(PostDettailScreen.routeName, arguments: post);
   }
 
   Future<void> loadContents() async {

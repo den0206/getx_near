@@ -230,6 +230,7 @@ class PostDetailController extends LoadingGetController {
     }
   }
 
+  // 故意に消した時
   Future<void> deletePost() async {
     if (!post.isCurrent) return;
     try {
@@ -240,6 +241,11 @@ class PostDetailController extends LoadingGetController {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  // 時間制限で消えた時
+  Future<void> expirePost() async {
+    print("Expire!");
   }
 
   Future<void> tryMapLauncher(

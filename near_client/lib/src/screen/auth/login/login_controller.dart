@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
-import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 
-class LoginController extends LoadingGetController {
+class LoginController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -19,11 +18,6 @@ class LoginController extends LoadingGetController {
 
   RxBool get buttonEnale {
     return (emailController.text != "" && passwordController.text != "").obs;
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   Future<void> login() async {
@@ -39,7 +33,7 @@ class LoginController extends LoadingGetController {
       "fcmToken": fcm,
     };
 
-    isLoading.call(true);
+    topLoading.call(true);
 
     try {
       final res = await _userAPI.login(authData);
@@ -51,13 +45,12 @@ class LoginController extends LoadingGetController {
       final user = User.fromMap(userData);
       user.sessionToken = token;
       await Future.delayed(Duration(seconds: 1));
-      await Get.delete<LoginController>();
 
       await AuthService.to.updateUser(user);
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoading.call(false);
+      topLoading.call(false);
     }
   }
 
