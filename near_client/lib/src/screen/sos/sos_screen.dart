@@ -15,6 +15,11 @@ class SOSScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SOSController>(
       init: SOSController(),
+      global: false,
+      dispose: (state) {
+        // release Controller
+        state.controller?.releaseController(state);
+      },
       builder: (controller) {
         return Scaffold(
           body: Column(
