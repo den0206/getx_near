@@ -25,12 +25,11 @@ class SOSController extends GetxController {
     continuousViblation();
   }
 
-  @override
-  void dispose() {
+  void releaseController(GetBuilderState<SOSController> state) {
+    print("close SOS");
     _timer?.cancel();
     _player.stop();
     _player.dispose();
-    super.dispose();
   }
 
   Future<void> _setupSession() async {

@@ -79,7 +79,7 @@ class MapController extends LoadingGetController {
       final double radius = useMap ? mapService.GetRadiusOnVisible() : 1000;
 
       final tempPosts = await getTempNearPosts(
-          from: !useMap ? currentCenter : currentPosition,
+          from: useMap ? currentCenter : currentPosition,
           radius: radius,
           useDummy: useDummy);
 
