@@ -4,7 +4,6 @@ import 'package:getx_near/src/api/recent_api.dart';
 import 'package:getx_near/src/model/recent.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/screen/message/message_screen.dart';
-import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/message_extention.dart';
 import 'package:getx_near/src/socket/recent_io.dart';
@@ -45,7 +44,7 @@ class RecentController extends LoadingGetController {
 
   Future<void> loadRecents() async {
     if (reachLast) return;
-    topLoading.call(true);
+    isLoading.call(true);
 
     await Future.delayed(Duration(seconds: 1));
 
@@ -65,7 +64,7 @@ class RecentController extends LoadingGetController {
     } catch (e) {
       print(e.toString());
     } finally {
-      topLoading.call(false);
+      isLoading.call(false);
     }
   }
 
