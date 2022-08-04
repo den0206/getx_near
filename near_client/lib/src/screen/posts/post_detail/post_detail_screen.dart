@@ -22,7 +22,7 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:sizer/sizer.dart';
 
-class PostDettailScreen extends LoadingGetView<PostDetailController> {
+class PostDetailScreen extends LoadingGetView<PostDetailController> {
   static const routeName = '/PostDetail';
   @override
   PostDetailController get ctr => PostDetailController();

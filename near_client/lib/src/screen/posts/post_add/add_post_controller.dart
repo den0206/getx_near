@@ -5,11 +5,12 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
-import 'package:getx_near/src/screen/posts/my_posts/my_posts_controller.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
+
+import '../posts_tab/my_posts/my_posts_controller.dart';
 
 class AddPostController extends LoadingGetController {
   final TextEditingController tX = TextEditingController();

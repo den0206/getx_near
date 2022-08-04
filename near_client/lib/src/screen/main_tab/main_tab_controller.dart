@@ -6,7 +6,7 @@ import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/sos/sos_screen.dart';
 import '../../service/auth_service.dart';
 import '../map/map_screen.dart';
-import '../posts/my_posts/my_post_tab_screen.dart';
+import '../posts/posts_tab/my_post_tab_screen.dart';
 import '../recent/recent_screen.dart';
 import '../users/user_detail/user_detail_screen.dart';
 

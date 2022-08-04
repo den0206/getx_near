@@ -6,13 +6,15 @@ import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
-import 'package:getx_near/src/screen/posts/my_posts/relation_comments/relation_comments_screen.dart';
+
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../../../main.dart';
-import '../post_detail/post_detail_screen.dart';
+
+import '../../../../../main.dart';
+import '../../post_detail/post_detail_screen.dart';
+import '../comments/comments_screen.dart';
 
 class MyPostsController extends LoadingGetController {
   static MyPostsController get to => Get.find();
@@ -55,7 +57,7 @@ class MyPostsController extends LoadingGetController {
   }
 
   Future<void> tapCell(Post post) async {
-    await Get.toNamed(PostDettailScreen.routeName, arguments: post);
+    await Get.toNamed(PostDetailScreen.routeName, arguments: post);
   }
 
   Future<void> loadContents() async {
@@ -138,6 +140,6 @@ class MyPostsController extends LoadingGetController {
   }
 
   Future<void> showRelationComments() async {
-    final _ = await Get.toNamed(RelationCommentsScreen.routeName);
+    final _ = await Get.toNamed(CommentsScreen.routeName);
   }
 }

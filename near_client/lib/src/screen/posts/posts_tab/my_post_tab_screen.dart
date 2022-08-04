@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:getx_near/src/screen/posts/my_posts/my_posts_screen.dart';
-import 'package:getx_near/src/screen/posts/my_posts/near_posts/near_posts_screen.dart';
+import 'package:getx_near/src/screen/posts/posts_tab/comments/comments_screen.dart';
+
 import 'package:sizer/sizer.dart';
+
+import 'my_posts/my_posts_screen.dart';
+import 'near_posts/near_posts_screen.dart';
 
 class MyPostTabScreen extends StatelessWidget {
   const MyPostTabScreen({Key? key}) : super(key: key);
@@ -11,7 +14,7 @@ class MyPostTabScreen extends StatelessWidget {
     List<Widget> _tabView = [
       NearPostsScreen(),
       MyPostsScreen(),
-      Text("Comments"),
+      CommentsScreen(),
     ];
     return DefaultTabController(
       length: _tabView.length,
