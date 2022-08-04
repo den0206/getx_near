@@ -25,7 +25,7 @@ import '../../../../main.dart';
 import '../../widget/animation_widget.dart';
 
 class PostDetailController extends LoadingGetController {
-  final Post post = Get.arguments;
+  late Post post = Get.arguments;
   final TextEditingController commentContoller = TextEditingController();
   final PostAPI _postAPI = PostAPI();
   final CommentAPI _commentAPI = CommentAPI();
@@ -144,7 +144,7 @@ class PostDetailController extends LoadingGetController {
         "latitude": current.latitude,
       };
       final res = await _commentAPI.addPost(body);
-
+      print(res.toString());
       if (!res.status) return;
 
       final newComment = Comment.fromMapWithPost(res.data, post);

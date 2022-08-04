@@ -276,7 +276,7 @@ class ContentArea extends SliverPersistentHeaderDelegate {
   ContentArea(this.controller);
 
   @override
-  double get maxExtent => 26.h;
+  double get maxExtent => 27.h;
 
   @override
   double get minExtent => 20.h;
@@ -291,7 +291,7 @@ class ContentArea extends SliverPersistentHeaderDelegate {
     final post = controller.post;
     return Container(
       decoration: BoxDecoration(color: ConstsColor.mainBackColor),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -432,37 +432,45 @@ class CommentCell extends GetView<PostDetailController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: ListTile(
-        leading: CircleImageButton(
-          imageProvider: getUserImage(comment.user),
-          size: 30.sp,
-          addShadow: false,
-        ),
-        title: Container(
-          width: 60.w,
-          child: Neumorphic(
-            style: commonNeumorphic(depth: 0.4),
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: AutoSizeText(
-              comment.text,
-              style: TextStyle(
-                fontSize: 13.sp,
-                height: 1.5,
-              ),
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-              minFontSize: 10,
-              maxLines: 2,
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      child: GestureDetector(
+        child: Row(
+          children: [
+            CircleImageButton(
+              imageProvider: getUserImage(comment.user),
+              size: 30.sp,
+              addShadow: false,
             ),
-          ),
-        ),
-        trailing: comment.distance != null
-            ? Text(
+            SizedBox(
+              width: 20,
+            ),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 60.w),
+              child: Neumorphic(
+                style: commonNeumorphic(depth: 0.4),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: AutoSizeText(
+                  comment.text,
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    height: 1.5,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  minFontSize: 10,
+                  maxLines: 2,
+                ),
+              ),
+            ),
+            Spacer(),
+            if (comment.distance != null) ...[
+              Text(
                 " ${distanceToString(comment.distance!)} km",
                 style: TextStyle(fontWeight: FontWeight.bold),
               )
-            : null,
+            ]
+          ],
+        ),
         onTap: () {
           showDialog(
             context: context,

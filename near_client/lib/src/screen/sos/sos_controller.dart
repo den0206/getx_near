@@ -28,7 +28,7 @@ class SOSController extends GetxController {
   void releaseController(GetBuilderState<SOSController> state) {
     print("close SOS");
     _timer?.cancel();
-    _player.stop();
+    // _player.stop();
     _player.dispose();
   }
 

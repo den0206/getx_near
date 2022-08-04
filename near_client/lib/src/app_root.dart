@@ -5,9 +5,7 @@ import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/message/message_screen.dart';
 import 'package:getx_near/src/screen/posts/my_posts/relation_comments/relation_comments_screen.dart';
-import 'package:getx_near/src/screen/posts/post_add/add_post_controller.dart';
 import 'package:getx_near/src/screen/posts/post_add/add_post_screen.dart';
-import 'package:getx_near/src/screen/posts/post_detail/post_detail_controller.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_controller.dart';
@@ -52,16 +50,6 @@ final List<GetPage> _mainPages = [
     page: () => MainTabScreen(),
   ),
   GetPage(
-    name: AddPostScreen.routeName,
-    page: () => AddPostScreen(),
-    fullscreenDialog: true,
-    binding: BindingsBuilder(
-      () => Get.lazyPut(
-        () => AddPostController(),
-      ),
-    ),
-  ),
-  GetPage(
     name: MapScreen.routeName,
     page: () => MapScreen(),
   )
@@ -69,13 +57,14 @@ final List<GetPage> _mainPages = [
 
 final List<GetPage> _postPages = [
   GetPage(
+    name: AddPostScreen.routeName,
+    page: () => AddPostScreen(),
+    fullscreenDialog: true,
+  ),
+  GetPage(
     name: PostDettailScreen.routeName,
     page: () => PostDettailScreen(),
-    binding: BindingsBuilder(
-      () => Get.lazyPut(
-        () => PostDetailController(),
-      ),
-    ),
+    fullscreenDialog: true,
   ),
   GetPage(
     name: RelationCommentsScreen.routeName,
