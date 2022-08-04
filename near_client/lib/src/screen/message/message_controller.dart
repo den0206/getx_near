@@ -9,7 +9,7 @@ import 'package:getx_near/src/socket/message_io.dart';
 
 class MessageController extends LoadingGetController {
   final RxList<Message> messages = RxList<Message>();
-  final MessageExtention extention = Get.arguments;
+  late MessageExtention extention = Get.arguments;
 
   final TextEditingController tx = TextEditingController();
   final ScrollController sc = ScrollController();

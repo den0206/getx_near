@@ -29,7 +29,7 @@ class MapController extends LoadingGetController {
 
   final RxBool showSearch = true.obs;
   bool get canSearch {
-    return currentZoom > 8;
+    return currentZoom > 10;
   }
 
   @override
