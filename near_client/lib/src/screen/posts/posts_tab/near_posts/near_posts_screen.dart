@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:getx_near/src/screen/posts/my_posts/my_posts_controller.dart';
-import 'package:getx_near/src/screen/posts/my_posts/near_posts/near_posts_controller.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
-import '../my_posts_screen.dart';
+import '../my_posts/my_posts_controller.dart';
+import '../my_posts/my_posts_screen.dart';
+import 'near_posts_controller.dart';
 
 enum MyPostsType { near, mine }
 

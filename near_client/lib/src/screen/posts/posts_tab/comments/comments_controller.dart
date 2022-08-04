@@ -3,7 +3,7 @@ import 'package:getx_near/src/api/comment_api.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 
-class RelationCommentsController extends GetxController {
+class CommentsController extends GetxController {
   final CommentAPI _commentAPI = CommentAPI();
   final List<Comment> comments = [];
 

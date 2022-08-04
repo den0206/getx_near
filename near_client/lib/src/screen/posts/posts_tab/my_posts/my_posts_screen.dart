@@ -5,15 +5,15 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
-import 'package:getx_near/src/screen/posts/my_posts/my_posts_controller.dart';
-import 'package:getx_near/src/screen/posts/my_posts/near_posts/near_posts_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
-import '../../../utils/date_formate.dart';
-import '../../../utils/neumorphic_style.dart';
+import '../../../../utils/date_formate.dart';
+import '../../../../utils/neumorphic_style.dart';
+import '../near_posts/near_posts_screen.dart';
+import 'my_posts_controller.dart';
 
 class MyPostsScreen extends GetView<MyPostsController> {
   @override
