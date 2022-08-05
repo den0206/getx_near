@@ -1,9 +1,12 @@
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:getx_near/src/api/comment_api.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 
 class CommentsController extends GetxController {
+  static CommentsController get to => Get.find();
   final CommentAPI _commentAPI = CommentAPI();
   final List<Comment> comments = [];
 
