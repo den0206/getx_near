@@ -247,6 +247,7 @@ class Enviroment {
 
   static String getMainUrl() {
     final domain = dotenv.env['DOMAIN'];
+    if (useMain) return domain!;
 
     final debugDomain = io.Platform.isAndroid
         ? "http://10.0.2.2:3000"
