@@ -29,7 +29,7 @@ class Recent {
       'withUser': withUser.toMap(),
       'lastMessage': lastMessage,
       'counter': counter,
-      'date': date.toIso8601String(),
+      'date': date.toUtc().toIso8601String(),
     };
   }
 
@@ -41,7 +41,7 @@ class Recent {
       withUser: User.fromMap(map['withUserId']),
       lastMessage: map['lastMessage'] ?? '',
       counter: map['counter']?.toInt() ?? 0,
-      date: DateTime.parse(map["updatedAt"]).toUtc(),
+      date: DateTime.parse(map["updatedAt"]).toLocal(),
     );
   }
 

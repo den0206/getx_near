@@ -103,8 +103,8 @@ class Post extends JsonModel {
       "userId": user.toMap(),
       'location': parseToLatlng(coordinate),
       "emergency": emergency,
-      "expireAt": expireAt?.toIso8601String(),
-      'createdAt': createdAt.toIso8601String(),
+      "expireAt": expireAt?..toUtc().toIso8601String(),
+      'createdAt': createdAt.toUtc().toIso8601String(),
       "likes": likes,
       "comments": comments
     };
@@ -123,9 +123,9 @@ class Post extends JsonModel {
       emergency: map["emergency"],
       coordinate: latLng,
       expireAt: (map["expireAt"] != null)
-          ? DateTime.parse(map["expireAt"]).toUtc()
+          ? DateTime.parse(map["expireAt"]).toLocal()
           : null,
-      createdAt: DateTime.parse(map["createdAt"]).toUtc(),
+      createdAt: DateTime.parse(map["createdAt"]).toLocal(),
       likes: List<String>.from(map["likes"] ?? []),
       comments: List<String>.from(map["comments"] ?? []),
     );
