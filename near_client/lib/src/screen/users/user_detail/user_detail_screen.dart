@@ -3,7 +3,6 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_controller.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_settings_screen.dart';
-import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
@@ -23,24 +22,20 @@ class UserDetailScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(user.name),
-            actions: [
-              if (user.isCurrent)
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: NeumorphicIconButton(
-                    iconData: Icons.settings,
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        backgroundColor: ConstsColor.mainBackColor,
-                        builder: (context) {
-                          return SettingsScreen();
-                        },
-                      );
-                    },
-                  ),
-                )
-            ],
+            actions: !user.isCurrent
+                ? [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: NeumorphicIconButton(
+                        icon: Icon(
+                          Icons.emergency_share,
+                          color: Colors.red[400],
+                        ),
+                        onPressed: () {},
+                      ),
+                    )
+                  ]
+                : null,
           ),
           body: Column(
             children: [
@@ -51,57 +46,73 @@ class UserDetailScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 style: commonNeumorphic(depth: 1.6),
-                child: Container(
-                  width: double.infinity,
-                  height: 58.h,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      NeumorphicAvatarButton(
-                        imageProvider: getUserImage(user),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    NeumorphicAvatarButton(
+                      imageProvider: getUserImage(user),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                    NeumorphicText(
+                      user.name,
+                      style: NeumorphicStyle(
+                        color: ConstsColor.mainBackColor,
+                        intensity: 1,
+                        shadowLightColor: Colors.black,
+                        lightSource: LightSource.bottomRight,
                       ),
-                      NeumorphicText(
-                        user.name,
-                        style: NeumorphicStyle(
-                          color: ConstsColor.mainBackColor,
-                          intensity: 1,
-                          shadowLightColor: Colors.black,
-                          lightSource: LightSource.bottomRight,
-                        ),
-                        textStyle: NeumorphicTextStyle(
-                          fontSize: 35.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      textStyle: NeumorphicTextStyle(
+                        fontSize: 35.sp,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          CustomButton(
-                            width: 35.w,
-                            height: 7.h,
-                            titleColor: Colors.white,
-                            background: ConstsColor.mainGreenColor,
-                            title: "Edit",
-                            shadowColor: Colors.black54,
-                            onPressed: () {
-                              controller.pushEditPage();
-                            },
-                          ),
-                          CustomButton(
-                            width: 35.w,
-                            height: 7.h,
-                            titleColor: Colors.white,
-                            background: Colors.red,
-                            title: "Log out",
-                            shadowColor: Colors.black54,
-                            onPressed: () {
-                              controller.tryLogout(context);
-                            },
-                          ),
-                        ],
-                      )
+                    ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    if (user.isCurrent) ...[
+                      Text(user.email),
+                      SizedBox(
+                        height: 6.h,
+                      ),
                     ],
-                  ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: user.isCurrent
+                            ? [
+                                NeumorphicIconButton(
+                                    icon: Icon(
+                                      Icons.edit,
+                                      size: 35.sp,
+                                    ),
+                                    onPressed: () {
+                                      controller.pushEditPage();
+                                    }),
+                                NeumorphicIconButton(
+                                    icon: Icon(
+                                      Icons.settings,
+                                      size: 35.sp,
+                                    ),
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        backgroundColor:
+                                            ConstsColor.mainBackColor,
+                                        isScrollControlled: true,
+                                        builder: (context) {
+                                          return SettingsScreen();
+                                        },
+                                      );
+                                    }),
+                              ]
+                            : []),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                  ],
                 ),
               ),
             ],

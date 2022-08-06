@@ -6,15 +6,19 @@ import '../../../utils/consts_color.dart';
 class NeumorphicIconButton extends StatelessWidget {
   const NeumorphicIconButton({
     Key? key,
-    required this.iconData,
+    required this.icon,
     this.color,
-    this.iconColor,
+    this.depth,
     this.onPressed,
+    this.boxShape,
   }) : super(key: key);
 
-  final IconData iconData;
-  final Color? iconColor;
+  final Widget icon;
+
   final Color? color;
+
+  final double? depth;
+  final NeumorphicBoxShape? boxShape;
   final void Function()? onPressed;
 
   @override
@@ -22,13 +26,12 @@ class NeumorphicIconButton extends StatelessWidget {
     return NeumorphicButton(
       padding: EdgeInsets.all(10),
       style: NeumorphicStyle(
-          boxShape: NeumorphicBoxShape.circle(),
-          color: color ?? ConstsColor.mainBackColor,
-          depth: 0.6),
-      child: Icon(
-        iconData,
-        color: iconColor,
+        boxShape: boxShape ?? NeumorphicBoxShape.circle(),
+        color: color ?? ConstsColor.mainBackColor,
+        depth: depth ?? 1,
+        intensity: 2,
       ),
+      child: icon,
       onPressed: onPressed,
     );
   }
