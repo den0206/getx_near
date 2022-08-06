@@ -66,6 +66,7 @@ class SettingsScreen extends StatelessWidget {
                           title: Text("ログアウト"),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onTap: () {
+                            Navigator.of(context).pop();
                             controller.tryLogout(context);
                           },
                         ),
