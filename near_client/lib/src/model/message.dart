@@ -45,7 +45,7 @@ class Message {
       'chatRoomId': chatRoomId,
       'text': text,
       'userId': user.toMap(),
-      'date': date.toIso8601String(),
+      'date': date.toUtc().toIso8601String(),
       'readBy': readBy,
     };
   }
@@ -57,7 +57,7 @@ class Message {
       text: map['text'] ?? '',
       user: User.fromMap(map['userId']),
       readBy: List<String>.from(map['readBy'] ?? []),
-      date: DateTime.parse(map["date"]).toUtc(),
+      date: DateTime.parse(map["date"]).toLocal(),
     );
   }
 
@@ -69,7 +69,7 @@ class Message {
       text: map['text'] ?? '',
       user: user,
       readBy: List<String>.from(map["readBy"]),
-      date: DateTime.parse(map["date"]).toUtc(),
+      date: DateTime.parse(map["date"]).toLocal(),
     );
   }
 

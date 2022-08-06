@@ -40,7 +40,7 @@ class Comment extends JsonModel {
       'userId': user.toMap(),
       'postId': postId,
       "location": parseToLatlng(coordinate),
-      'createdAt': createdAt.toIso8601String(),
+      'createdAt': createdAt.toUtc().toIso8601String(),
     };
   }
 
@@ -51,7 +51,7 @@ class Comment extends JsonModel {
       user: User.fromMap(map['userId']),
       postId: map["postId"],
       coordinate: getLatLngFromMongoose(map),
-      createdAt: DateTime.parse(map["createdAt"]).toUtc(),
+      createdAt: DateTime.parse(map["createdAt"]).toLocal(),
     );
   }
 
@@ -65,7 +65,7 @@ class Comment extends JsonModel {
       postId: map["postId"],
       coordinate: from,
       distance: distance,
-      createdAt: DateTime.parse(map["createdAt"]).toUtc(),
+      createdAt: DateTime.parse(map["createdAt"]).toLocal(),
     );
   }
 
