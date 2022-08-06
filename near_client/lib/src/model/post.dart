@@ -103,7 +103,7 @@ class Post extends JsonModel {
       "userId": user.toMap(),
       'location': parseToLatlng(coordinate),
       "emergency": emergency,
-      "expireAt": expireAt?..toUtc().toIso8601String(),
+      "expireAt": expireAt?.toUtc().toIso8601String(),
       'createdAt': createdAt.toUtc().toIso8601String(),
       "likes": likes,
       "comments": comments
