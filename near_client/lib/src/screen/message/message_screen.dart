@@ -216,9 +216,8 @@ class MessageInput extends GetView<MessageController> {
             width: 16,
           ),
           NeumorphicIconButton(
-            iconData: Icons.send,
+            icon: Icon(Icons.send),
             color: ConstsColor.mainGreenColor,
-            iconColor: Colors.white,
             onPressed: () {
               dismisskeyBord(context);
               controller.sendMessage();

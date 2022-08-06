@@ -2,6 +2,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../service/location_service.dart';
 import '../../../utils/consts_color.dart';
@@ -14,57 +15,73 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-        automaticallyImplyLeading: false,
-        actions: [
-          NeumorphicIconButton(
-            iconData: Icons.close,
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      ),
-      body: GetBuilder<UserDetailController>(
-        builder: (controller) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _selectLocationArea(controller),
-              SizedBox(
-                height: 10,
+    return Container(
+      height: 60.h,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Settings'),
+          automaticallyImplyLeading: false,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: NeumorphicIconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
-              ListView(
-                shrinkWrap: true,
-                children: ListTile.divideTiles(
-                  context: context,
-                  tiles: [
-                    ListTile(
-                      title: Text("通知"),
-                      trailing: Icon(Icons.arrow_forward_ios),
-                      onTap: () {
-                        openAppSettings();
-                      },
-                    ),
-                    ListTile(
-                      title: Text("レビュー"),
-                      trailing: Icon(Icons.arrow_forward_ios),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      title: Text("お問い合わせ"),
-                      trailing: Icon(Icons.arrow_forward_ios),
-                      onTap: () {},
-                    ),
-                  ],
-                ).toList(),
-              )
-            ],
-          );
-        },
+            )
+          ],
+        ),
+        body: GetBuilder<UserDetailController>(
+          builder: (controller) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _selectLocationArea(controller),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 35.h,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: ListTile.divideTiles(
+                      context: context,
+                      tiles: [
+                        ListTile(
+                          title: Text("通知"),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            openAppSettings();
+                          },
+                        ),
+                        ListTile(
+                          title: Text("レビュー"),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          title: Text("ログアウト"),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            controller.tryLogout(context);
+                          },
+                        ),
+                        ListTile(
+                          title: Text("お問い合わせ"),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {},
+                        ),
+                      ],
+                    ).toList(),
+                  ),
+                )
+              ],
+            );
+          },
+        ),
       ),
     );
   }
