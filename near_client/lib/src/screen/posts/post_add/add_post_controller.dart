@@ -48,7 +48,7 @@ class AddPostController extends LoadingGetController {
         "longitude": current.longitude,
         "latitude": current.latitude,
         "emergency": emergency.value,
-        "expireAt": expire.toIso8601String(),
+        "expireAt": expire.toUtc().toIso8601String(),
       };
 
       final res = await _postAPI.createPost(body);
