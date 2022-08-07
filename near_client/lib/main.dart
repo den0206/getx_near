@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'Help!!!',
         defaultTransition: Transition.fade,
         debugShowCheckedModeBanner: kDebugMode,
         localizationsDelegates: [
