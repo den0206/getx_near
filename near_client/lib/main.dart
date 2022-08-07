@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/app_root.dart';
@@ -45,8 +47,14 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         title: 'Flutter Demo',
         defaultTransition: Transition.fade,
-        // showPerformanceOverlay: kDebugMode,
-
+        debugShowCheckedModeBanner: kDebugMode,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [Locale('English'), Locale('ja')],
+        locale: Locale('ja', 'JP'),
         theme: ThemeData(
           scaffoldBackgroundColor: ConstsColor.mainBackColor,
           appBarTheme: AppBarTheme(
