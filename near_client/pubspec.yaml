@@ -50,6 +50,8 @@ dependencies:
   flutter_launcher_icons: ^0.9.3
   flutter_native_splash: ^2.2.0+1
   visibility_detector: ^0.3.3
+  flutter_localizations:
+    sdk: flutter
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
 # multiple_image_picker を使用
