@@ -11,11 +11,9 @@ import GoogleMaps
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
 
-    if let iosMapKey = FlutterConfigPlugin.env(for: "GOOGLE_MAPS_IOS_KEY") {
-        print(iosMapKey)
-        GMSServices.provideAPIKey(iosMapKey)
-    }
 
+
+    GMSServices.provideAPIKey(FlutterConfigPlugin.env(for:"GOOGLE_MAPS_IOS_KEY"))  
 
     
     GeneratedPluginRegistrant.register(with: self)
