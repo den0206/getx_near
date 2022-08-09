@@ -7,6 +7,7 @@ import postRoute from './resources/posts/post.route';
 import commentRoute from './resources/comments/comment.route';
 import messageRoute from './resources/messages/message.route';
 import recentRoute from './resources/recents/recent.route';
+import tokenRoute from './resources/temp_token/temp_token.route';
 import http from 'http';
 import {connectIO} from './utils/socket/socket';
 import nodeSchedule from 'node-schedule';
@@ -52,6 +53,7 @@ class App {
     this.app.use(`${apiVer}/comment`, commentRoute);
     this.app.use(`${apiVer}/message`, messageRoute);
     this.app.use(`${apiVer}/recent`, recentRoute);
+    this.app.use(`${apiVer}/temptoken`, tokenRoute);
   }
 
   public listen(): void {
