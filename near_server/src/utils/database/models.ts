@@ -5,6 +5,7 @@ import {getModelForClass} from '@typegoose/typegoose';
 import {commoneSchemaOption} from '../../helper/common';
 import {Message} from '../../resources/messages/message.model';
 import {Recent} from '../../resources/recents/recent.model';
+import {TempToken} from '../../resources/temp_token/temp_token.model';
 
 export const UserModel = getModelForClass(User, commoneSchemaOption<User>({}));
 
@@ -22,4 +23,8 @@ export const MessageModel = getModelForClass(
 export const RecentModel = getModelForClass(
   Recent,
   commoneSchemaOption<Recent>({useTimestamp: true})
+);
+export const TempTokenModel = getModelForClass(
+  TempToken,
+  commoneSchemaOption<TempToken>({})
 );

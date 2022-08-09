@@ -30,3 +30,7 @@ export class User {
     return await argon2.verify(this.password, password);
   }
 }
+
+export async function hashdPassword(value: string): Promise<string> {
+  return await argon2.hash(value);
+}
