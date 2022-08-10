@@ -17,7 +17,12 @@ class NearPostsController extends GetxController {
 
   double radius = 830;
 
+  bool get isCompEmpty {
+    return nearPosts.isEmpty && !topLoading.value;
+  }
+
   Future<void> getNearPosts() async {
+    topLoading.call(true);
     try {
       nearPosts.clear();
       update();
@@ -31,6 +36,8 @@ class NearPostsController extends GetxController {
       update();
     } catch (e) {
       showError(e.toString());
+    } finally {
+      topLoading.call(false);
     }
   }
 
