@@ -73,7 +73,11 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                       ),
                     ],
                     if (controller.state == VerifyState.verify) ...[
-                      /// Pin
+                      CustomPinCodeField(
+                        controller: controller.pinCodeController,
+                        inputType: controller.state.inputType,
+                        isSecure: true,
+                      )
                     ],
                     SizedBox(
                       height: 3.h,
@@ -81,7 +85,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                     CustomButton(
                       title: "Sign Up",
                       background: ConstsColor.mainGreenColor,
-                      onPressed: controller.buttonEnable.value
+                      onPressed: controller.buttonEnable
                           ? () {
                               if (_formKey.currentState?.validate() ?? false) {
                                 controller.signUp();
