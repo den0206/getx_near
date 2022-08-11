@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm-run-all clean tsc",
+    "build": "npm-run-all clean tsc copy:handlebars",
     "start": "node .",
     "clean": "rimraf dist",
     "clean all": "rimraf dist node_modules",
@@ -12,7 +12,8 @@
     "dev": "ts-node src/index.ts",
     "start:dev": "ts-node-dev --respawn src/index.ts",
     "lc": "lt -s yuuki0206 --port 3000",
-    "try:loca": "npm-run-all -p start:dev lc"
+    "try:loca": "npm-run-all -p start:dev lc",
+    "copy:handlebars": "cpx \"./src/utils/email/template/**/*\" ./dist/utils/email/template --clean"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "@typegoose/typegoose": "^9.8.1",
     "argon2": "^0.28.5",
     "cors": "^2.8.5",
+    "cpx": "^1.5.0",
     "dotenv": "^16.0.0",
     "express": "^4.18.1",
     "express-list-endpoints": "^6.0.0",
