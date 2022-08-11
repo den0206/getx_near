@@ -10,7 +10,7 @@ async function requestNewEmail(req: Request, res: Response) {
 
   try {
     const isFind = await UserModel.findOne({email});
-    if (!isFind)
+    if (isFind)
       return new ResponseAPI(res, {message: 'Already Use Thie Email'}).excute(
         400
       );
@@ -24,7 +24,7 @@ async function requestNewEmail(req: Request, res: Response) {
       payload: payload,
       template: '../email/template/sendOTP.handlebars',
     });
-    new ResponseAPI(res, {data: isFind._id}).excute(200);
+    new ResponseAPI(res, {data: 'Send Change Email'}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);
   }

@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/temp_token_api.dart';
 import 'package:getx_near/src/api/user_api.dart';
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/custom_pin.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/image_extention.dart';
@@ -79,7 +80,7 @@ class SignUpController extends LoadingGetController {
           break;
       }
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       isLoading.call(false);
       update();

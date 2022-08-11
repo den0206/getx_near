@@ -66,7 +66,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                       ),
                       CustomTextField(
                         controller: controller.passwordController,
-                        labelText: "Pasword",
+                        labelText: "Password",
                         iconData: Icons.lock,
                         validator: validPassword,
                         isSecure: true,
