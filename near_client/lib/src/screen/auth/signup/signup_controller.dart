@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/user_api.dart';
+import 'package:getx_near/src/screen/widget/custom_pin.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/image_extention.dart';
 
@@ -15,6 +16,8 @@ class SignUpController extends LoadingGetController {
   File? userImage;
 
   final UserAPI _userAPI = UserAPI();
+
+  VerifyState state = VerifyState.checkEmail;
 
   RxBool get buttonEnable {
     return (nameController.text != "" &&

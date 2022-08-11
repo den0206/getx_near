@@ -265,9 +265,8 @@ enum EndPoint {
   recent,
   message,
   notification,
-}
+  temptoken;
 
-extension EndPointEXT on EndPoint {
   String get name {
     final String APIVer = "/api/v1";
 
@@ -284,6 +283,8 @@ extension EndPointEXT on EndPoint {
         return "$APIVer/message";
       case EndPoint.notification:
         return "fcm";
+      case EndPoint.temptoken:
+        return "$APIVer/temptoken";
     }
   }
 }
