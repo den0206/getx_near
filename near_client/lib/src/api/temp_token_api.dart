@@ -2,7 +2,7 @@ import 'package:getx_near/src/api/api_base.dart';
 import 'package:getx_near/src/model/utils/response_api.dart';
 
 class TempTokenAPI extends APIBase {
-  TempTokenAPI() : super(EndPoint.comment);
+  TempTokenAPI() : super(EndPoint.temptoken);
 
   Future<ResponseAPI> requestNewEmail(String email) async {
     final body = {"email": email};
