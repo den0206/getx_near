@@ -33,3 +33,13 @@ String? validPassword(String? value) {
     return null;
   }
 }
+
+String? validPinCode(String? value) {
+  if (value == null || value.isEmpty) {
+    return "Please add in a Passwrod";
+  } else if (value.length < 6) {
+    return "More Long Pincode(6)";
+  } else {
+    return null;
+  }
+}

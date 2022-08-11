@@ -12,6 +12,7 @@ class SignUpController extends LoadingGetController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController pinCodeController = TextEditingController();
 
   File? userImage;
 
@@ -19,11 +20,9 @@ class SignUpController extends LoadingGetController {
 
   VerifyState state = VerifyState.checkEmail;
 
-  RxBool get buttonEnable {
-    return (nameController.text != "" &&
-            emailController.text != "" &&
-            passwordController.text != "")
-        .obs;
+  bool get buttonEnable {
+    // current
+    return true;
   }
 
   Future<void> selectImage(BuildContext context) async {
@@ -40,7 +39,7 @@ class SignUpController extends LoadingGetController {
   }
 
   Future<void> signUp() async {
-    if (!buttonEnable.value) return;
+    if (!buttonEnable) return;
     print(userImage);
 
     final userData = {
