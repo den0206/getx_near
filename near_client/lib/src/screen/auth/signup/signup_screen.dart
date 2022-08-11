@@ -50,7 +50,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                         controller: controller.nameController,
                         labelText: "name",
                         iconData: Icons.person,
-                        validator: validateEmail,
+                        validator: valideName,
                       ),
                       SizedBox(
                         height: 10,

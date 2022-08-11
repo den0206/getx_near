@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
+import 'package:getx_near/src/api/temp_token_api.dart';
 import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/screen/widget/custom_pin.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
@@ -17,6 +18,7 @@ class SignUpController extends LoadingGetController {
   File? userImage;
 
   final UserAPI _userAPI = UserAPI();
+  final TempTokenAPI _tempTokenAPI = TempTokenAPI();
 
   VerifyState state = VerifyState.checkEmail;
 
@@ -42,26 +44,45 @@ class SignUpController extends LoadingGetController {
     if (!buttonEnable) return;
     print(userImage);
 
-    final userData = {
-      "name": nameController.text,
-      "email": emailController.text,
-      "password": passwordController.text
-    };
-
     isLoading.call(true);
-
     await Future.delayed(Duration(seconds: 1));
-
+    final String emailLower = emailController.text.toLowerCase();
     try {
-      final res =
-          await _userAPI.signUp(userData: userData, avatarFile: userImage);
-      if (!res.status) return;
+      switch (this.state) {
+        case VerifyState.checkEmail:
+          final res = await _tempTokenAPI.requestNewEmail(emailLower);
+          if (!res.status) break;
+          state = VerifyState.verify;
+          break;
+        case VerifyState.verify:
+          final userData = {
+            "name": nameController.text,
+            "email": emailController.text,
+            "password": passwordController.text,
+            "verify": pinCodeController.text,
+          };
 
-      Get.back(result: res);
+          // pincodeの確認
+          final checkRes = await _tempTokenAPI.verifyEmail(userData);
+          if (!checkRes.status) break;
+
+          // New Userの確認
+          final res =
+              await _userAPI.signUp(userData: userData, avatarFile: userImage);
+          if (!res.status) return;
+
+          Get.back(result: res);
+
+          break;
+
+        default:
+          break;
+      }
     } catch (e) {
       print(e.toString());
     } finally {
       isLoading.call(false);
+      update();
     }
   }
 }
