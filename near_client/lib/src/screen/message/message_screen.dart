@@ -12,6 +12,7 @@ import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../utils/consts_color.dart';
+import '../report/report_screen.dart';
 
 class MessageScreen extends LoadingGetView<MessageController> {
   static const routeName = '/Message';
@@ -85,7 +86,7 @@ class MessageCell extends GetView<MessageController> {
                       Navigator.of(context).pop();
                     },
                   ),
-                  if (message.isCurrent)
+                  if (message.isCurrent) ...[
                     CupertinoContextMenuAction(
                       isDestructiveAction: true,
                       child: Text("Delete"),
@@ -94,6 +95,22 @@ class MessageCell extends GetView<MessageController> {
                         controller.deleteMessage(message);
                       },
                     ),
+                  ],
+                  if (!message.isCurrent) ...[
+                    CupertinoContextMenuAction(
+                      isDestructiveAction: true,
+                      child: Text("通報"),
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+
+                        await showReportScreen(
+                          context: context,
+                          user: message.user,
+                          message: message,
+                        );
+                      },
+                    ),
+                  ],
                   CupertinoContextMenuAction(
                     child: const Text('Cancel'),
                     onPressed: () {
