@@ -3,7 +3,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
-
+import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_controller.dart';
 import 'package:getx_near/src/screen/widget/blinking_widget.dart';
@@ -21,6 +21,7 @@ import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:sizer/sizer.dart';
+import '../../report/report_screen.dart';
 
 class PostDetailScreen extends LoadingGetView<PostDetailController> {
   static const routeName = '/PostDetail';
@@ -45,7 +46,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                 foregroundColor: Colors.black,
                 elevation: 0,
                 actions: [
-                  if (post.isCurrent) PoptPopMenu(),
+                  PoptPopMenu(post),
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: CircleImageButton(
@@ -219,21 +220,23 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
 }
 
 class PoptPopMenu extends GetView<PostDetailController> {
-  const PoptPopMenu({Key? key}) : super(key: key);
+  const PoptPopMenu(this.post, {Key? key}) : super(key: key);
+
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
       color: ConstsColor.mainBackColor,
       padding: EdgeInsets.zero,
-      onSelected: (value) {
+      onSelected: (value) async {
         switch (value) {
           case "delete":
             showDialog(
               context: context,
               builder: (context) {
                 return CustomDialog(
-                  title: "Dekete",
+                  title: "Delete",
                   descripon: "continue",
                   icon: Icons.close,
                   mainColor: Colors.red,
@@ -244,6 +247,13 @@ class PoptPopMenu extends GetView<PostDetailController> {
               },
             );
             break;
+          case "report":
+            await showReportScreen(
+              context: context,
+              user: post.user,
+              post: post,
+            );
+            break;
           default:
             return;
         }
@@ -251,15 +261,27 @@ class PoptPopMenu extends GetView<PostDetailController> {
       icon: Icon(Icons.more_vert),
       itemBuilder: (context) {
         return <PopupMenuEntry<String>>[
-          PopupMenuItem<String>(
-            value: 'delete',
-            child: ListTile(
+          if (post.isCurrent)
+            PopupMenuItem<String>(
+              value: 'delete',
+              child: ListTile(
+                  iconColor: Colors.red,
+                  leading: Icon(Icons.delete),
+                  title: Text(
+                    "削除",
+                  )),
+            )
+          else
+            PopupMenuItem<String>(
+              value: 'report',
+              child: ListTile(
                 iconColor: Colors.red,
-                leading: Icon(Icons.delete),
+                leading: Icon(Icons.report),
                 title: Text(
-                  "削除",
-                )),
-          ),
+                  "通報",
+                ),
+              ),
+            ),
           PopupMenuItem<String>(
             value: 'cancel',
             child: ListTile(

@@ -61,7 +61,10 @@ class LoginController extends GetxController {
       final user = User.fromMap(result.data);
       emailController.text = user.email;
 
-      showSnackBar(title: "Lets Login");
+      showSnackBar(
+        title: "ユーザー登録を完了しました",
+        message: "ログインお願い致します。",
+      );
     }
   }
 }

@@ -265,7 +265,8 @@ enum EndPoint {
   recent,
   message,
   notification,
-  temptoken;
+  temptoken,
+  report;
 
   String get name {
     final String APIVer = "/api/v1";
@@ -285,6 +286,8 @@ enum EndPoint {
         return "fcm";
       case EndPoint.temptoken:
         return "$APIVer/temptoken";
+      case EndPoint.report:
+        return "$APIVer/report";
     }
   }
 }

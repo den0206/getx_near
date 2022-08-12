@@ -11,6 +11,7 @@ import tokenRoute from './resources/temp_token/temp_token.route';
 import http from 'http';
 import {connectIO} from './utils/socket/socket';
 import nodeSchedule from 'node-schedule';
+import reportRoute from './resources/report/report.route';
 const get = require('simple-get');
 
 class App {
@@ -54,6 +55,7 @@ class App {
     this.app.use(`${apiVer}/message`, messageRoute);
     this.app.use(`${apiVer}/recent`, recentRoute);
     this.app.use(`${apiVer}/temptoken`, tokenRoute);
+    this.app.use(`${apiVer}/report`, reportRoute);
   }
 
   public listen(): void {

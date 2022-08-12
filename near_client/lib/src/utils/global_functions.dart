@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_near/src/api/post_api.dart';
-import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../model/post.dart';
@@ -12,13 +11,18 @@ void dismisskeyBord(BuildContext context) {
   FocusScope.of(context).unfocus();
 }
 
-void showSnackBar({required String title}) {
+void showSnackBar({
+  required String title,
+  required String message,
+  Color background = Colors.green,
+  SnackPosition position = SnackPosition.BOTTOM,
+}) {
   Get.snackbar(
     title,
-    "Please Login",
+    message,
     icon: Icon(Icons.person, color: Colors.white),
-    snackPosition: SnackPosition.BOTTOM,
-    backgroundColor: ConstsColor.mainGreenColor,
+    snackPosition: position,
+    backgroundColor: background,
     borderRadius: 20,
     margin: EdgeInsets.all(15),
     colorText: Colors.white,

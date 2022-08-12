@@ -7,6 +7,7 @@ import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../utils/neumorphic_style.dart';
+import '../../report/report_screen.dart';
 import '../../widget/neumorphic/nicon_button.dart';
 
 class UserDetailScreen extends StatelessWidget {
@@ -108,7 +109,21 @@ class UserDetailScreen extends StatelessWidget {
                                       );
                                     }),
                               ]
-                            : []),
+                            : [
+                                NeumorphicIconButton(
+                                  icon: Icon(
+                                    Icons.report,
+                                    color: Colors.redAccent,
+                                    size: 35.sp,
+                                  ),
+                                  onPressed: () async {
+                                    await showReportScreen(
+                                      context: context,
+                                      user: user,
+                                    );
+                                  },
+                                ),
+                              ]),
                     SizedBox(
                       height: 4.h,
                     ),
