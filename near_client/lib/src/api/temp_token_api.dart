@@ -33,7 +33,7 @@ class TempTokenAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> verufyPassword(Map<String, dynamic> data) async {
+  Future<ResponseAPI> verifyPassword(Map<String, dynamic> data) async {
     try {
       final Uri uri = setUri("/verifyPassword");
       return await postRequest(uri: uri, body: data);
