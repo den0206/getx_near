@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
 import '../../utils/validator.dart';
+import 'custom_textfield.dart';
 
 enum VerifyState {
   checkEmail,
@@ -115,6 +116,72 @@ class CustomPinCodeField extends StatelessWidget {
 
         return true;
       },
+    );
+  }
+}
+
+class PinCodeArea extends StatelessWidget {
+  const PinCodeArea({
+    Key? key,
+    required this.currentState,
+    required this.currentTX,
+    this.onChange,
+    this.onPressed,
+  }) : super(key: key);
+
+  final VerifyState currentState;
+  final TextEditingController currentTX;
+  final Function(String)? onChange;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Flex(
+        direction: Axis.vertical,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (currentState == VerifyState.verify)
+            Text(
+              "Please Check Your Email",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Stack(
+              children: [
+                if (currentState != VerifyState.verify)
+                  CustomTextField(
+                    controller: currentTX,
+                    iconData: Icons.email,
+                    labelText: currentState.title,
+                    inputType: currentState.inputType,
+                    isSecure: currentState.isSecure,
+                    validator: currentState.validator,
+                    onChange: onChange,
+                  ),
+                if (currentState == VerifyState.verify)
+                  CustomPinCodeField(
+                    controller: currentTX,
+                    inputType: currentState.inputType,
+                    isSecure: currentState.isSecure,
+                    onChange: onChange,
+                  ),
+              ],
+            ),
+          ),
+          Builder(builder: (context) {
+            return CustomButton(
+              title: currentState.title,
+              background: Colors.green,
+              titleColor: Colors.white,
+              onPressed: onPressed,
+            );
+          }),
+        ],
+      ),
     );
   }
 }

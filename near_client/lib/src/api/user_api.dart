@@ -34,7 +34,6 @@ class UserAPI extends APIBase {
       {required Map<String, dynamic> updateData, File? avatarFile}) async {
     try {
       final Uri uri = setUri("/edit");
-      print(uri);
       if (avatarFile == null) {
         return await putRequest(uri: uri, body: updateData, useToken: true);
       } else {

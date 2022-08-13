@@ -4,6 +4,8 @@ import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/model/user.dart';
+
+import 'package:getx_near/src/screen/auth/reset_password/reset_password_screen.dart';
 import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:getx_near/src/service/auth_service.dart';
@@ -65,6 +67,17 @@ class LoginController extends GetxController {
         title: "ユーザー登録を完了しました",
         message: "ログインお願い致します。",
       );
+    }
+  }
+
+  Future<void> showResetPassword() async {
+    final bool isEditPassword = true;
+    final _res = await Get.toNamed(ResetPasswordAndEmailScreen.routeName,
+        arguments: isEditPassword);
+
+    if (_res is ResponseAPI) {
+      final user = User.fromMap(_res.data);
+      emailController.text = user.email;
     }
   }
 }

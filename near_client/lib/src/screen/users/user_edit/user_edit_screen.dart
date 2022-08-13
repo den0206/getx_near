@@ -59,11 +59,11 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: TextButton(
-                    child: Text(
-                      "Change Email",
-                    ),
-                    onPressed: () {},
+                  child: NeumorphicTextButton(
+                    title: "Change Email",
+                    onPressed: () {
+                      controller.showEditEmail();
+                    },
                   ),
                 ),
                 Obx(
