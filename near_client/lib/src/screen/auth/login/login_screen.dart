@@ -3,6 +3,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/auth/login/login_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_textfield.dart';
+import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 
@@ -42,8 +43,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: TextButton(
-                        child: Text("Forgot Password"),
+                      child: NeumorphicTextButton(
+                        title: "Forgot Password",
                         onPressed: () {},
                       ),
                     ),
@@ -64,12 +65,12 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    TextButton(
-                      child: Text("Sign Up"),
+                    NeumorphicTextButton(
+                      title: "Sign Up",
                       onPressed: () {
                         controller.showSignUpScreen();
                       },
-                    )
+                    ),
                   ],
                 ),
               ),
