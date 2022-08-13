@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:getx_near/src/screen/auth/login/login_screen.dart';
+import 'package:getx_near/src/screen/auth/reset_password/reset_password_screen.dart';
 import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
@@ -39,6 +40,10 @@ final List<GetPage> _authPages = [
       ),
     ),
   ),
+  GetPage(
+    name: ResetPasswordAndEmailScreen.routeName,
+    page: () => ResetPasswordAndEmailScreen(),
+  )
 ];
 
 final List<GetPage> _mainPages = [
