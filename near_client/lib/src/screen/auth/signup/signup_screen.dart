@@ -94,8 +94,8 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                           : null,
                     ),
                     Builder(builder: (context) {
-                      return TextButton(
-                        child: Text("Alredy Have"),
+                      return NeumorphicTextButton(
+                        title: "Alredy Have",
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

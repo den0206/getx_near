@@ -67,3 +67,33 @@ class NeumorphicAvatarButton extends StatelessWidget {
     );
   }
 }
+
+class NeumorphicTextButton extends StatelessWidget {
+  const NeumorphicTextButton({
+    Key? key,
+    required this.title,
+    this.titleColor = Colors.green,
+    this.onPressed,
+  }) : super(key: key);
+
+  final String title;
+  final Color titleColor;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      child: NeumorphicText(
+        title,
+        style: NeumorphicStyle(
+          intensity: 1,
+          depth: 1,
+          color: titleColor,
+          surfaceIntensity: 2,
+        ),
+        textStyle: NeumorphicTextStyle(fontWeight: FontWeight.bold),
+      ),
+      onPressed: onPressed ?? null,
+    );
+  }
+}
