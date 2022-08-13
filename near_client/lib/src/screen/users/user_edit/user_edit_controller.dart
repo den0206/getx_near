@@ -8,6 +8,7 @@ import 'package:getx_near/src/service/auth_service.dart';
 import '../../../api/user_api.dart';
 import '../../../model/user.dart';
 import '../../../service/image_extention.dart';
+import '../../auth/reset_password/reset_password_screen.dart';
 import '../../widget/loading_widget.dart';
 
 class UserEditController extends LoadingGetController {
@@ -75,5 +76,13 @@ class UserEditController extends LoadingGetController {
     } finally {
       isLoading.call(false);
     }
+  }
+
+  Future<void> showEditEmail() async {
+    final bool isEditPassword = false;
+    Get.toNamed(
+      ResetPasswordAndEmailScreen.routeName,
+      arguments: isEditPassword,
+    );
   }
 }
