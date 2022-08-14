@@ -12,19 +12,23 @@ import 'package:getx_near/src/service/storage_service.dart';
 class UserDetailController extends GetxController {
   User user;
   LocationDetail currentSize = LocationDetail.high;
+  final currentUser = AuthService.to.currentUser.value!;
+
+  bool isBlocked = false;
+  UserDetailController(this.user);
+
   int get locationIndex {
     return LocationDetail.values.indexOf(currentSize);
   }
 
-  UserDetailController(this.user);
-
   @override
   void onInit() async {
     super.onInit();
-    await getLocalLoc();
+    isBlocked = currentUser.checkBlock(user);
+    await _getLocalLoc();
   }
 
-  Future<void> getLocalLoc() async {
+  Future<void> _getLocalLoc() async {
     final localLoc =
         getLocationDetail(await StorageKey.locationSize.loadString());
     currentSize = localLoc;

@@ -196,6 +196,7 @@ class PostDetailController extends LoadingGetController {
           name: "sample",
           email: "ddd@email.com",
           fcmToken: "",
+          blockedUsers: [],
         );
 
         withUser = sampleUser;

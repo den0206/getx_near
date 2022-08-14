@@ -166,10 +166,12 @@ class CommentDialog extends StatelessWidget {
                           children: [
                             TextSpan(text: "※ "),
                             TextSpan(
-                                text: "Your Comment",
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                ))
+                              text: "Your Comment",
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontSize: 8.sp,
+                              ),
+                            )
                           ],
                           style: TextStyle(
                             color: Colors.red,
