@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
@@ -13,6 +14,8 @@ import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../utils/date_formate.dart';
 import '../../../../utils/neumorphic_style.dart';
+import '../../../users/user_detail/user_detail_screen.dart';
+import '../../../widget/neumorphic/nicon_button.dart';
 import 'my_posts_controller.dart';
 
 class MyPostsScreen extends GetView<MyPostsController> {
@@ -138,39 +141,45 @@ class CommentAvatar extends StatelessWidget {
             builder: (context) {
               return CommentDialog(
                 comment: comment,
-                buttons: !comment.isCurrent
+                buttons: comment.isCurrent
                     ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomButton(
-                            width: 30.w,
-                            height: 40,
-                            background: Colors.grey,
-                            titleColor: Colors.white,
-                            title: "キャンセル",
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          CustomButton(
-                            width: 30.w,
-                            height: 40,
-                            background: ConstsColor.mainGreenColor,
-                            title: "Message",
+                          Spacer(),
+                          NeumorphicIconButton(
+                            icon: Icon(
+                              Icons.message,
+                            ),
                             onPressed: () {
                               Navigator.of(context).pop();
                               if (onMessage != null) onMessage!();
                             },
                           ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5.w),
+                            child: NeumorphicIconButton(
+                              icon: Icon(
+                                Icons.person,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Get.to(
+                                    () => UserDetailScreen(user: comment.user));
+                              },
+                            ),
+                          ),
+                          NeumorphicIconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          Spacer(),
                         ],
                       )
                     : Align(
                         alignment: Alignment.bottomCenter,
-                        child: CustomButton(
-                          width: 100,
-                          height: 40,
-                          background: ConstsColor.mainGreenColor,
-                          title: "Yes",
+                        child: NeumorphicIconButton(
+                          icon: Icon(Icons.close),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -211,6 +220,9 @@ class PostCell extends StatelessWidget {
                 CircleImageButton(
                   imageProvider: getUserImage(post.user),
                   size: 30.sp,
+                  onTap: () {
+                    Get.to(() => UserDetailScreen(user: post.user));
+                  },
                 ),
                 SizedBox(
                   height: 3.sp,

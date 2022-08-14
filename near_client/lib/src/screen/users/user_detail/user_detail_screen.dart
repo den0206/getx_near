@@ -112,6 +112,19 @@ class UserDetailScreen extends StatelessWidget {
                             : [
                                 NeumorphicIconButton(
                                   icon: Icon(
+                                    Icons.block,
+                                    color: controller.isBlocked
+                                        ? Colors.black
+                                        : Colors.red,
+                                    size: 40.sp,
+                                  ),
+                                  depth: controller.isBlocked ? -2 : 1,
+                                  onPressed: () {
+                                    // controller.blockUser();
+                                  },
+                                ),
+                                NeumorphicIconButton(
+                                  icon: Icon(
                                     Icons.report,
                                     color: Colors.redAccent,
                                     size: 35.sp,

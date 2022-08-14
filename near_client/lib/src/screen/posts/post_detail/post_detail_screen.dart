@@ -2,10 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_controller.dart';
+import 'package:getx_near/src/screen/users/user_detail/user_detail_screen.dart';
 import 'package:getx_near/src/screen/widget/blinking_widget.dart';
 import 'package:getx_near/src/screen/widget/countdown_timer.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
@@ -53,6 +55,9 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                       imageProvider: getUserImage(post.user),
                       size: 30.sp,
                       addShadow: false,
+                      onTap: () {
+                        Get.to(() => UserDetailScreen(user: post.user));
+                      },
                     ),
                   ),
                 ],
