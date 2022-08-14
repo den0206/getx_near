@@ -1,5 +1,11 @@
-import {prop, pre, index} from '@typegoose/typegoose';
+import {prop, pre, index, Ref} from '@typegoose/typegoose';
 import argon2 from 'argon2';
+import AWSClient from '../../utils/aws/aws_client';
+import {
+  MessageModel,
+  PostModel,
+  RecentModel,
+} from '../../utils/database/models';
 import {Location} from '../../utils/interface/location';
 
 @pre<User>('save', async function (next) {
@@ -9,6 +15,29 @@ import {Location} from '../../utils/interface/location';
     this.password = hashed;
   }
   return next();
+})
+@pre<User>('remove', async function (next) {
+  console.log('=== Start USER DELETE');
+  console.log('DELETE RELATION', this._id);
+
+  // Messageの削除
+  await MessageModel.deleteMany({userId: this._id});
+
+  // Postの削除
+  await PostModel.deleteMany({userId: this._id});
+
+  // Recentの削除
+  await RecentModel.deleteMany({userId: this._id});
+  await RecentModel.deleteMany({withUserId: this._id});
+
+  /// アバターの削除
+  if (this.avatarUrl) {
+    const awsClient = new AWSClient();
+    console.log('DELETE AVATAR RELATION', this._id);
+    await awsClient.deleteImage(this.avatarUrl);
+  }
+
+  next();
 })
 @index({location: '2dsphere'})
 export class User {
@@ -20,7 +49,8 @@ export class User {
   avatarUrl: string;
   @prop({required: true})
   password: string;
-
+  @prop({default: [], ref: () => User})
+  blocked: Ref<User>[];
   @prop()
   fcmToken: string;
   @prop({_id: false})

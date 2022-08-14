@@ -15,5 +15,7 @@ usersRoute.put(
   userController.updateUser
 );
 
+usersRoute.put('/updateBlock', checkAuth, userController.updateBlock);
+
 usersRoute.put('/location', checkAuth, userController.updateLocation);
 export default usersRoute;
