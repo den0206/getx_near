@@ -45,7 +45,7 @@ class _HelpAnimatedWidetState extends State<HelpAnimatedWidet>
         scale: scaleAnimatoin,
         child: Visibility(
           visible: showImage,
-          child: FadeinWidget(
+          child: FadeinOutWidget(
               child: Image.asset("assets/images/icon-remove_background.png")),
         ),
       )),
@@ -65,6 +65,58 @@ class FadeinWidget extends StatefulWidget {
 }
 
 class _FadeinWidgetState extends State<FadeinWidget>
+    with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: widget.duration == null
+          ? Duration(milliseconds: 1000)
+          : widget.duration,
+    );
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
+    controller.forward();
+
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.stop();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    animation.removeStatusListener((status) {});
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: animation,
+      child: widget.child,
+    );
+  }
+}
+
+class FadeinOutWidget extends StatefulWidget {
+  FadeinOutWidget({Key? key, required this.child, this.duration})
+      : super(key: key);
+
+  final Widget child;
+  final Duration? duration;
+
+  @override
+  State<FadeinOutWidget> createState() => _FadeinOutWidgetState();
+}
+
+class _FadeinOutWidgetState extends State<FadeinOutWidget>
     with TickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
