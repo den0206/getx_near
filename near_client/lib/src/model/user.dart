@@ -18,9 +18,19 @@ class User extends JsonModel {
   String fcmToken;
   String? avatarUrl;
   String? sessionToken;
+  List<String> blockedUsers;
 
   bool get isCurrent {
     return id == AuthService.to.currentUser.value?.id;
+  }
+
+  bool checkBlock(User user) {
+    return this.blockedUsers.contains(user.id);
+  }
+
+  bool canContact(User user) {
+    return this.blockedUsers.contains(user.id) ||
+        user.blockedUsers.contains(this.id);
   }
 
   User({
@@ -28,6 +38,7 @@ class User extends JsonModel {
     required this.name,
     required this.email,
     required this.fcmToken,
+    required this.blockedUsers,
     this.avatarUrl,
     this.sessionToken,
   });
@@ -39,6 +50,7 @@ class User extends JsonModel {
       'email': email,
       'avatarUrl': avatarUrl,
       "sessionToken": sessionToken,
+      "blocked": blockedUsers,
       "fcmToken": fcmToken,
     };
   }
@@ -50,6 +62,7 @@ class User extends JsonModel {
       email: map['email'] ?? '',
       avatarUrl: map['avatarUrl'] ?? dummyUserImageUrl(),
       sessionToken: map["sessionToken"],
+      blockedUsers: List<String>.from(map["blocked"] ?? []),
       fcmToken: map["fcmToken"] ?? "",
     );
   }
@@ -69,6 +82,7 @@ class User extends JsonModel {
     String? email,
     String? fcmToken,
     String? avatarUrl,
+    List<String>? blockedUsers,
     String? sessionToken,
   }) {
     return User(
@@ -76,6 +90,7 @@ class User extends JsonModel {
       name: name ?? this.name,
       email: email ?? this.email,
       fcmToken: fcmToken ?? this.fcmToken,
+      blockedUsers: blockedUsers ?? this.blockedUsers,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       sessionToken: sessionToken ?? this.sessionToken,
     );
