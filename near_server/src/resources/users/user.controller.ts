@@ -113,9 +113,28 @@ async function updateLocation(req: Request, res: Response) {
     new ResponseAPI(res, {message: e.message}).excute(500);
   }
 }
+
+// MARK Block User
+async function updateBlock(req: Request, res: Response) {
+  const userId = res.locals.user.userId;
+  const {blocked} = req.body;
+
+  try {
+    const value = {blocked};
+
+    const newUser = await UserModel.findByIdAndUpdate(userId, value, {
+      new: true,
+    });
+
+    new ResponseAPI(res, {data: newUser}).excute(200);
+  } catch (e: any) {
+    new ResponseAPI(res, {message: e.message}).excute(500);
+  }
+}
 export default {
   signUp,
   login,
   updateUser,
   updateLocation,
+  updateBlock,
 };
