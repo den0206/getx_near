@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum StorageKey { user, locationSize }
+enum StorageKey { user, locationSize, checkTerms }
 
 extension StorageKeyEXT on StorageKey {
   String get keyString {
@@ -11,6 +11,8 @@ extension StorageKeyEXT on StorageKey {
         return "user";
       case StorageKey.locationSize:
         return "locationSize";
+      case StorageKey.checkTerms:
+        return "checkTerms";
     }
   }
 
@@ -29,6 +31,17 @@ extension StorageKeyEXT on StorageKey {
     }
     final decoded = json.decode(value);
     return decoded;
+  }
+
+  Future<bool> saveBool(bool value) async {
+    final pref = await SharedPreferences.getInstance();
+    return await pref.setBool(this.keyString, value);
+  }
+
+  Future<bool?> loadBool() async {
+    final pref = await SharedPreferences.getInstance();
+    final value = await pref.getBool(this.keyString);
+    return value ?? null;
   }
 
   Future<bool> deleteLocal() async {

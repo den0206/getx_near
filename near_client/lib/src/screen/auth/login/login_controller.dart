@@ -10,6 +10,7 @@ import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
+import 'package:getx_near/src/service/storage_service.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 
 class LoginController extends GetxController {
@@ -17,9 +18,23 @@ class LoginController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
 
   final UserAPI _userAPI = UserAPI();
+  bool acceptTerms = false;
 
   RxBool get buttonEnale {
     return (emailController.text != "" && passwordController.text != "").obs;
+  }
+
+  @override
+  void onInit() async {
+    super.onInit();
+
+    acceptTerms = await StorageKey.checkTerms.loadBool() ?? false;
+  }
+
+  Future<void> setTerms(BuildContext context) async {
+    if (!acceptTerms) return;
+    await StorageKey.checkTerms.saveBool(true);
+    Navigator.pop(context);
   }
 
   Future<void> login() async {
