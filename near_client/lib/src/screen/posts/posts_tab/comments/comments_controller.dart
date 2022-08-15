@@ -4,6 +4,10 @@ import 'package:get/route_manager.dart';
 import 'package:getx_near/src/api/comment_api.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
+import 'package:getx_near/src/screen/root_screen.dart';
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
+
+import '../../../../utils/global_functions.dart';
 
 class CommentsController extends GetxController {
   static CommentsController get to => Get.find();
@@ -39,6 +43,18 @@ class CommentsController extends GetxController {
       update();
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future<void> pushMessageScreen(Comment comment) async {
+    topLoading.call(true);
+
+    try {
+      await getToMessScreen(user: comment.user);
+    } catch (e) {
+      showError(e.toString());
+    } finally {
+      topLoading.call(false);
     }
   }
 }

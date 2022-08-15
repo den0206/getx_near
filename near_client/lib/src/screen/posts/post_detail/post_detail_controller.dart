@@ -9,16 +9,13 @@ import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
-import 'package:getx_near/src/model/user.dart';
-import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
-import 'package:getx_near/src/screen/message/message_screen.dart';
+
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
-import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
-import 'package:getx_near/src/service/message_extention.dart';
-import 'package:getx_near/src/service/recent_extension.dart';
+
 import 'package:getx_near/src/socket/post_io.dart';
+import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 import '../../../../main.dart';
@@ -181,42 +178,12 @@ class PostDetailController extends LoadingGetController {
   }
 
   Future<void> pushMessageScreen(Comment comment) async {
-    final re = RecentExtension();
-    final User currentUser = AuthService.to.currentUser.value!;
     isLoading.call(true);
 
     try {
-      var withUser;
-
-      if (useMap) {
-        withUser = comment.user;
-      } else {
-        final User sampleUser = User(
-          id: "627a335d9d99fe79480b87f8",
-          name: "sample",
-          email: "ddd@email.com",
-          fcmToken: "",
-          blockedUsers: [],
-        );
-
-        withUser = sampleUser;
-      }
-
-      final chatRoomId =
-          await re.createPrivateChatRoom(withUser.id, [currentUser, withUser]);
-
-      if (chatRoomId == null) throw Exception("Not Generate ChatRoom Id");
-
-      Get.until((route) => route.isFirst);
-
-      // message
-      MainTabController.to.setIndex(3);
-
-      final ext = MessageExtention(chatRoomId, withUser);
-
-      Get.toNamed(MessageScreen.routeName, arguments: ext);
+      await getToMessScreen(user: comment.user);
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       isLoading.call(false);
     }

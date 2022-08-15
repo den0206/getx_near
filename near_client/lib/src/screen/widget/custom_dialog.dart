@@ -9,6 +9,9 @@ import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
+import '../users/user_detail/user_detail_screen.dart';
+import 'neumorphic/nicon_button.dart';
+
 class CustomDialog extends StatelessWidget {
   const CustomDialog({
     Key? key,
@@ -112,13 +115,16 @@ class CustomDialog extends StatelessWidget {
 }
 
 class CommentDialog extends StatelessWidget {
-  const CommentDialog({Key? key, required this.comment, required this.buttons})
-      : super(key: key);
+  const CommentDialog({
+    Key? key,
+    required this.comment,
+    this.onMessage,
+  }) : super(key: key);
 
   final Comment comment;
   final double pad = 20;
   final double avatarPad = 55;
-  final Widget buttons;
+  final VoidCallback? onMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +214,51 @@ class CommentDialog extends StatelessWidget {
                     height: 22,
                   ),
                 ],
-                buttons,
+                if (comment.isCurrent) ...[
+                  Row(
+                    children: [
+                      Spacer(),
+                      NeumorphicIconButton(
+                        icon: Icon(
+                          Icons.message,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          if (onMessage != null) onMessage!();
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5.w),
+                        child: NeumorphicIconButton(
+                          icon: Icon(
+                            Icons.person,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Get.to(() => UserDetailScreen(user: comment.user));
+                          },
+                        ),
+                      ),
+                      NeumorphicIconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      Spacer(),
+                    ],
+                  )
+                ] else ...[
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: NeumorphicIconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                ]
               ],
             ),
           ),

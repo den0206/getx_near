@@ -27,6 +27,9 @@ class CommentsScreen extends StatelessWidget {
                   final comment = controller.comments[index];
                   return CommentAvatar(
                     comment: comment,
+                    onMessage: () async {
+                      await controller.pushMessageScreen(comment);
+                    },
                   );
                 },
                 childCount: controller.comments.length,
