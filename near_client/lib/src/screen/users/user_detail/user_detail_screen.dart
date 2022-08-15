@@ -32,7 +32,12 @@ class UserDetailScreen extends StatelessWidget {
                           Icons.emergency_share,
                           color: Colors.red[400],
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await showReportScreen(
+                            context: context,
+                            user: user,
+                          );
+                        },
                       ),
                     )
                   ]
@@ -121,19 +126,6 @@ class UserDetailScreen extends StatelessWidget {
                                   depth: controller.isBlocked ? -2 : 1,
                                   onPressed: () {
                                     controller.blockUser();
-                                  },
-                                ),
-                                NeumorphicIconButton(
-                                  icon: Icon(
-                                    Icons.report,
-                                    color: Colors.redAccent,
-                                    size: 35.sp,
-                                  ),
-                                  onPressed: () async {
-                                    await showReportScreen(
-                                      context: context,
-                                      user: user,
-                                    );
                                   },
                                 ),
                               ]),

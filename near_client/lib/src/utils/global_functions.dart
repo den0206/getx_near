@@ -3,9 +3,16 @@ import 'package:get/get.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../main.dart';
 import '../model/post.dart';
+import '../model/user.dart';
 import '../model/utils/response_api.dart';
+import '../screen/main_tab/main_tab_controller.dart';
+import '../screen/message/message_screen.dart';
+import '../service/auth_service.dart';
 import '../service/location_service.dart';
+import '../service/message_extention.dart';
+import '../service/recent_extension.dart';
 
 void dismisskeyBord(BuildContext context) {
   FocusScope.of(context).unfocus();
@@ -74,6 +81,49 @@ Future<List<Post>> getTempNearPosts(
         .map((p) => {p.distance = getDistansePoints(from, p.coordinate)})
         .toList();
     return temp;
+  } catch (e) {
+    throw e;
+  }
+}
+
+// to Message Screen
+
+Future<void> getToMessScreen({required User user}) async {
+  final re = RecentExtension();
+  final User currentUser = AuthService.to.currentUser.value!;
+
+  if (user.id == currentUser.id) throw Exception("same One");
+
+  try {
+    var withUser;
+
+    if (useMap) {
+      withUser = user;
+    } else {
+      final User sampleUser = User(
+        id: "627a335d9d99fe79480b87f8",
+        name: "sample",
+        email: "ddd@email.com",
+        fcmToken: "",
+        blockedUsers: [],
+      );
+
+      withUser = sampleUser;
+    }
+
+    final chatRoomId =
+        await re.createPrivateChatRoom(withUser.id, [currentUser, withUser]);
+
+    if (chatRoomId == null) throw Exception("Not Generate ChatRoom Id");
+
+    Get.until((route) => route.isFirst);
+
+    // message
+    MainTabController.to.setIndex(3);
+
+    final ext = MessageExtention(chatRoomId, withUser);
+
+    Get.toNamed(MessageScreen.routeName, arguments: ext);
   } catch (e) {
     throw e;
   }

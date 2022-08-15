@@ -506,44 +506,9 @@ class CommentCell extends GetView<PostDetailController> {
             builder: (context) {
               return CommentDialog(
                 comment: comment,
-                buttons: controller.post.isCurrent && !comment.isCurrent
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CustomButton(
-                            width: 30.w,
-                            height: 40,
-                            background: Colors.grey,
-                            titleColor: Colors.white,
-                            title: "キャンセル",
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          CustomButton(
-                            width: 30.w,
-                            height: 40,
-                            background: ConstsColor.mainGreenColor,
-                            title: "Message",
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              controller.pushMessageScreen(comment);
-                            },
-                          ),
-                        ],
-                      )
-                    : Align(
-                        alignment: Alignment.bottomCenter,
-                        child: CustomButton(
-                          width: 100,
-                          height: 40,
-                          background: ConstsColor.mainGreenColor,
-                          title: "Yes",
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ),
+                onMessage: () async {
+                  await controller.pushMessageScreen(comment);
+                },
               );
             },
           );

@@ -15,7 +15,6 @@ import 'package:sizer/sizer.dart';
 import '../../../../utils/date_formate.dart';
 import '../../../../utils/neumorphic_style.dart';
 import '../../../users/user_detail/user_detail_screen.dart';
-import '../../../widget/neumorphic/nicon_button.dart';
 import 'my_posts_controller.dart';
 
 class MyPostsScreen extends GetView<MyPostsController> {
@@ -141,50 +140,7 @@ class CommentAvatar extends StatelessWidget {
             builder: (context) {
               return CommentDialog(
                 comment: comment,
-                buttons: comment.isCurrent
-                    ? Row(
-                        children: [
-                          Spacer(),
-                          NeumorphicIconButton(
-                            icon: Icon(
-                              Icons.message,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              if (onMessage != null) onMessage!();
-                            },
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            child: NeumorphicIconButton(
-                              icon: Icon(
-                                Icons.person,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                Get.to(
-                                    () => UserDetailScreen(user: comment.user));
-                              },
-                            ),
-                          ),
-                          NeumorphicIconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          Spacer(),
-                        ],
-                      )
-                    : Align(
-                        alignment: Alignment.bottomCenter,
-                        child: NeumorphicIconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ),
+                onMessage: onMessage,
               );
             },
           );
