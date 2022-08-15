@@ -9,10 +9,13 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 
+import '../../../api/user_api.dart';
+
 class UserDetailController extends GetxController {
   User user;
   LocationDetail currentSize = LocationDetail.high;
   final currentUser = AuthService.to.currentUser.value!;
+  final UserAPI _userAPI = UserAPI();
 
   bool isBlocked = false;
   UserDetailController(this.user);
@@ -68,5 +71,32 @@ class UserDetailController extends GetxController {
         );
       },
     );
+  }
+
+  Future<void> blockUser() async {
+    if (user.isCurrent) return;
+
+    try {
+      if (currentUser.checkBlock(user)) {
+        currentUser.blockedUsers.remove(user.id);
+      } else {
+        currentUser.blockedUsers.add(user.id);
+      }
+
+      final Map<String, dynamic> data = {
+        "blocked": currentUser.blockedUsers.toSet().toList()
+      };
+
+      final res = await _userAPI.updateBlock(userData: data);
+      if (!res.status) return;
+
+      final newUser = User.fromMap(res.data);
+      await AuthService.to.updateUser(newUser);
+
+      isBlocked = !isBlocked;
+      update();
+    } catch (e) {
+      showError(e.toString());
+    }
   }
 }
