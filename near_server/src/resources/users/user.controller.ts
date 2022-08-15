@@ -120,11 +120,17 @@ async function updateBlock(req: Request, res: Response) {
   const {blocked} = req.body;
 
   try {
-    const value = {blocked};
+    const value = {
+      blocked,
+    };
 
     const newUser = await UserModel.findByIdAndUpdate(userId, value, {
       new: true,
     });
+    if (!newUser)
+      return new ResponseAPI(res, {
+        message: 'Can not find edited user',
+      }).excute(400);
 
     new ResponseAPI(res, {data: newUser}).excute(200);
   } catch (e: any) {
