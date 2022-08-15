@@ -120,7 +120,7 @@ class UserDetailScreen extends StatelessWidget {
                                   ),
                                   depth: controller.isBlocked ? -2 : 1,
                                   onPressed: () {
-                                    // controller.blockUser();
+                                    controller.blockUser();
                                   },
                                 ),
                                 NeumorphicIconButton(
