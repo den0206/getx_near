@@ -14,6 +14,8 @@ class Comment extends JsonModel {
   final User user;
   final String postId;
   final LatLng coordinate;
+
+  final DateTime? expireAt;
   final DateTime createdAt;
 
   int? distance;
@@ -24,14 +26,16 @@ class Comment extends JsonModel {
     return this.user.id == currentUser.id;
   }
 
-  Comment(
-      {required this.id,
-      required this.text,
-      required this.user,
-      required this.postId,
-      required this.coordinate,
-      required this.createdAt,
-      this.distance});
+  Comment({
+    required this.id,
+    required this.text,
+    required this.user,
+    required this.postId,
+    required this.coordinate,
+    this.expireAt,
+    required this.createdAt,
+    this.distance,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -40,6 +44,7 @@ class Comment extends JsonModel {
       'userId': user.toMap(),
       'postId': postId,
       "location": parseToLatlng(coordinate),
+      "expireAt": expireAt?.toUtc().toIso8601String(),
       'createdAt': createdAt.toUtc().toIso8601String(),
     };
   }
@@ -51,6 +56,9 @@ class Comment extends JsonModel {
       user: User.fromMap(map['userId']),
       postId: map["postId"],
       coordinate: getLatLngFromMongoose(map),
+      expireAt: (map["expireAt"] != null)
+          ? DateTime.parse(map["expireAt"]).toLocal()
+          : null,
       createdAt: DateTime.parse(map["createdAt"]).toLocal(),
     );
   }
@@ -65,6 +73,9 @@ class Comment extends JsonModel {
       postId: map["postId"],
       coordinate: from,
       distance: distance,
+      expireAt: (map["expireAt"] != null)
+          ? DateTime.parse(map["expireAt"]).toLocal()
+          : null,
       createdAt: DateTime.parse(map["createdAt"]).toLocal(),
     );
   }
@@ -83,6 +94,6 @@ class Comment extends JsonModel {
 
   @override
   String toString() {
-    return 'Comment(id: $id, text: $text, user: $user, postId: $postId, coordinate: $coordinate, createdAt: $createdAt)';
+    return 'Comment(id: $id, text: $text, user: $user, postId: $postId, coordinate: $coordinate, createdAt: $createdAt,expireAt: $expireAt,)';
   }
 }

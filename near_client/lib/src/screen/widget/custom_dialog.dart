@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/screen/widget/countdown_timer.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
@@ -163,11 +164,13 @@ class CommentDialog extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                if (comment.isCurrent)
-                  Container(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      width: double.infinity,
-                      child: Text.rich(
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    if (comment.isCurrent) ...[
+                      Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(text: "※ "),
@@ -185,7 +188,20 @@ class CommentDialog extends StatelessWidget {
                           ),
                         ),
                         textAlign: TextAlign.end,
-                      )),
+                      ),
+                    ],
+                    Spacer(),
+                    if (comment.expireAt != null) ...[
+                      CustomCountdownTimer(
+                        endTime: comment.expireAt!,
+                        onEnd: () {
+                          print("Expire Comment");
+                        },
+                        fontSize: 12,
+                      )
+                    ],
+                  ],
+                ),
                 SizedBox(
                   height: 20,
                 ),
