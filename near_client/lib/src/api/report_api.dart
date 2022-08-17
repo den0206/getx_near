@@ -2,7 +2,7 @@ import 'package:getx_near/src/api/api_base.dart';
 import 'package:getx_near/src/model/utils/response_api.dart';
 
 class ReportAPI extends APIBase {
-  ReportAPI() : super(EndPoint.comment);
+  ReportAPI() : super(EndPoint.report);
 
   Future<ResponseAPI> sendReport(
       {required Map<String, dynamic> reportData}) async {

@@ -3,7 +3,7 @@ import {UserModel, ReportModel} from '../../utils/database/models';
 import ResponseAPI from '../../utils/interface/response.api';
 
 async function reportUser(req: Request, res: Response) {
-  const informer = res.locals.user.userid;
+  const informer = res.locals.user.userId;
 
   const {reported, reportedContent, message, post} = req.body;
   try {
