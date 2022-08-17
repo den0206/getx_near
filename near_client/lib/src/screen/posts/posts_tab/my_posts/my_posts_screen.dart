@@ -10,6 +10,7 @@ import 'package:getx_near/src/screen/posts/posts_tab/my_post_tab_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../utils/date_formate.dart';
@@ -103,7 +104,6 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
             return IconButton(
               icon: Icon(Icons.more_vert),
               onPressed: () {
-                print("Call");
                 controller.showRelationComments();
               },
             );
@@ -128,24 +128,19 @@ class CommentAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: CircleImageButton(
-        imageProvider: getUserImage(comment.user),
-        size: 35.sp,
-        addShadow: false,
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return CommentDialog(
-                comment: comment,
-                onMessage: onMessage,
-              );
-            },
-          );
-        },
-      ),
+    return NeumorphicAvatarButton(
+      imageProvider: getUserImage(comment.user),
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return CommentDialog(
+              comment: comment,
+              onMessage: onMessage,
+            );
+          },
+        );
+      },
     );
   }
 }
