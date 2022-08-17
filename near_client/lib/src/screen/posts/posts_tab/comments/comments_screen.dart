@@ -8,6 +8,16 @@ class CommentsScreen extends StatelessWidget {
   static const routeName = '/RelationComments';
   const CommentsScreen({Key? key}) : super(key: key);
 
+  EdgeInsets caluculatePadding(int index) {
+    if (index == 0 || index % 3 == 0) {
+      return EdgeInsets.only(left: 10);
+    } else if (index % 2 == 0) {
+      return EdgeInsets.only(right: 10);
+    } else {
+      return EdgeInsets.zero;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CommentsController>(
@@ -25,11 +35,15 @@ class CommentsScreen extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
                   final comment = controller.comments[index];
-                  return CommentAvatar(
-                    comment: comment,
-                    onMessage: () async {
-                      await controller.pushMessageScreen(comment);
-                    },
+
+                  return Padding(
+                    padding: caluculatePadding(index),
+                    child: CommentAvatar(
+                      comment: comment,
+                      onMessage: () async {
+                        await controller.pushMessageScreen(comment);
+                      },
+                    ),
                   );
                 },
                 childCount: controller.comments.length,
