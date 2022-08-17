@@ -43,11 +43,11 @@ dependencies:
   flutter_neumorphic: ^3.2.0
   just_audio: ^0.9.21
   safe_device: ^1.1.1
-  wechat_assets_picker: ^7.2.0
+  wechat_assets_picker: ^8.0.0
   mime: ^1.0.2
   map_launcher: ^2.2.3
   flutter_svg: ^0.22.0
-  flutter_launcher_icons: ^0.9.3
+  flutter_launcher_icons: ^0.10.0
   flutter_native_splash: ^2.2.0+1
   visibility_detector: ^0.3.3
   flutter_localizations:
