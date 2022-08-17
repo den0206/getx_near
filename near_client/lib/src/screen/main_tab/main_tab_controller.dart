@@ -15,6 +15,9 @@ class MainTabController extends GetxController {
   var currentIndex = 0;
   var oldIndex = 0;
 
+  late final int mapIndex;
+  late final int recentIndex;
+
   final List<Widget> fixPages = [
     SOSScreen(),
     MyPostTabScreen(),
@@ -40,11 +43,18 @@ class MainTabController extends GetxController {
     super.onInit();
 
     stackPages.addAll(fixPages);
+    _setSpecificIndex();
+  }
+
+  void _setSpecificIndex() {
+    mapIndex = _getByTypeofIndex<MapScreen>();
+    recentIndex = _getByTypeofIndex<RecentScreen>();
+    print(mapIndex);
   }
 
   void setIndex(int index) {
     refreshAnotherPages(index);
-    if (index == 2) oldIndex = currentIndex;
+    if (index == mapIndex) oldIndex = currentIndex;
     currentIndex = index;
     update();
   }
@@ -57,9 +67,6 @@ class MainTabController extends GetxController {
 
   void refreshAnotherPages(int index) {
     final indexes = fixPages.asMap().keys.toList();
-
-    final mapIndex = _getByTypeofIndex<MapScreen>();
-    final recentIndex = _getByTypeofIndex<RecentScreen>();
 
     indexes.removeWhere((element) =>
         element == index || element == mapIndex || element == recentIndex);
