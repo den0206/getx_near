@@ -10,6 +10,7 @@ import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 
 import '../../../api/user_api.dart';
+import '../../main_tab/main_tab_controller.dart';
 
 class UserDetailController extends GetxController {
   User user;
@@ -66,6 +67,16 @@ class UserDetailController extends GetxController {
           icon: Icons.logout,
           mainColor: Colors.red,
           onPress: () {
+            // map screnn からの退避
+            if (MainTabController.to.currentIndex ==
+                MainTabController.to.mapIndex) {
+              MainTabController.to.setIndex(0);
+            }
+            // root に戻す
+            if (Navigator.canPop(context))
+              Navigator.popUntil(context, (route) => route.isFirst);
+
+            // ログアウト
             AuthService.to.logout();
           },
         );
