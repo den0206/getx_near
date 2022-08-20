@@ -16,6 +16,6 @@ usersRoute.put(
 );
 
 usersRoute.put('/updateBlock', checkAuth, userController.updateBlock);
-
+usersRoute.delete('/delete', checkAuth, userController.deleteUser);
 usersRoute.put('/location', checkAuth, userController.updateLocation);
 export default usersRoute;

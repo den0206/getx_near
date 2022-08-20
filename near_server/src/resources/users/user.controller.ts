@@ -137,10 +137,29 @@ async function updateBlock(req: Request, res: Response) {
     new ResponseAPI(res, {message: e.message}).excute(500);
   }
 }
+
+async function deleteUser(req: Request, res: Response) {
+  const userId = res.locals.user.userId;
+  try {
+    const isFind = await UserModel.findById(userId);
+    if (!isFind)
+      return new ResponseAPI(res, {
+        message: 'Can not find Delete user',
+      }).excute(400);
+
+    await isFind.delete();
+    console.log('=== Complete DELETE');
+
+    new ResponseAPI(res, {data: isFind}).excute(200);
+  } catch (e: any) {
+    new ResponseAPI(res, {message: e.message}).excute(500);
+  }
+}
 export default {
   signUp,
   login,
   updateUser,
   updateLocation,
   updateBlock,
+  deleteUser,
 };
