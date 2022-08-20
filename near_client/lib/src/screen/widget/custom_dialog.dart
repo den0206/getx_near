@@ -230,10 +230,10 @@ class CommentDialog extends StatelessWidget {
                     height: 22,
                   ),
                 ],
-                if (comment.isCurrent) ...[
-                  Row(
-                    children: [
-                      Spacer(),
+                Row(
+                  children: [
+                    Spacer(),
+                    if (!comment.isCurrent) ...[
                       NeumorphicIconButton(
                         icon: Icon(
                           Icons.message,
@@ -243,38 +243,28 @@ class CommentDialog extends StatelessWidget {
                           if (onMessage != null) onMessage!();
                         },
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5.w),
-                        child: NeumorphicIconButton(
-                          icon: Icon(
-                            Icons.person,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Get.to(() => UserDetailScreen(user: comment.user));
-                          },
+                    ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: NeumorphicIconButton(
+                        icon: Icon(
+                          Icons.person,
                         ),
-                      ),
-                      NeumorphicIconButton(
-                        icon: Icon(Icons.close),
                         onPressed: () {
                           Navigator.of(context).pop();
+                          Get.to(() => UserDetailScreen(user: comment.user));
                         },
                       ),
-                      Spacer(),
-                    ],
-                  )
-                ] else ...[
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: NeumorphicIconButton(
+                    ),
+                    NeumorphicIconButton(
                       icon: Icon(Icons.close),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
                     ),
-                  ),
-                ]
+                    Spacer(),
+                  ],
+                )
               ],
             ),
           ),
