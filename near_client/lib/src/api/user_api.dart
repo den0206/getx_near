@@ -69,4 +69,13 @@ class UserAPI extends APIBase {
       throw e;
     }
   }
+
+  Future<ResponseAPI> deleteUser() async {
+    try {
+      final Uri uri = setUri("/delete");
+      return await deleteRequest(uri: uri, body: {}, useToken: true);
+    } catch (e) {
+      throw e;
+    }
+  }
 }
