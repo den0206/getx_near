@@ -6,7 +6,6 @@ import 'package:sizer/sizer.dart';
 
 import '../../../service/location_service.dart';
 import '../../../utils/consts_color.dart';
-import '../../widget/neumorphic/nicon_button.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
@@ -22,15 +21,12 @@ class SettingsScreen extends StatelessWidget {
           title: const Text('Settings'),
           automaticallyImplyLeading: false,
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: NeumorphicIconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            )
+            IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ],
         ),
         body: GetBuilder<UserDetailController>(
@@ -74,6 +70,17 @@ class SettingsScreen extends StatelessWidget {
                           title: Text("お問い合わせ"),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onTap: () {},
+                        ),
+                        ListTile(
+                          title: Text(
+                            "ユーザー削除",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            controller.showDeleteScreen();
+                          },
                         ),
                       ],
                     ).toList(),

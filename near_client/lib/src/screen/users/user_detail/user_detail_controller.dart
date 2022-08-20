@@ -3,6 +3,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/screen/users/user_delete/user_delete_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/service/auth_service.dart';
@@ -82,6 +83,10 @@ class UserDetailController extends GetxController {
         );
       },
     );
+  }
+
+  Future<void> showDeleteScreen() async {
+    final _ = await Get.toNamed(UserDeleteScreen.routeName);
   }
 
   Future<void> blockUser() async {
