@@ -22,7 +22,7 @@ class ResetPasswordAndEmailController extends LoadingGetController {
 
   late final String userId;
 
-  final bool isEditPassword = Get.arguments;
+  final bool isEditPassword = Get.arguments ?? false;
   bool buttonEnable = false;
 
   TextEditingController get currentTx {

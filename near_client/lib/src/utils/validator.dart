@@ -36,9 +36,10 @@ String? validPassword(String? value) {
 
 String? validPinCode(String? value) {
   if (value == null || value.isEmpty) {
-    return "Please add in a Passwrod";
+    return "Codeが必要です";
   } else if (value.length < 6) {
-    return "More Long Pincode(6)";
+    return "";
+    // return "More Long Pincode(6)";
   } else {
     return null;
   }
