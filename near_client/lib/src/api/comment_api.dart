@@ -22,7 +22,7 @@ class CommentAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> addPost(Map<String, dynamic> body) async {
+  Future<ResponseAPI> addComment(Map<String, dynamic> body) async {
     try {
       final Uri uri = setUri("/add");
       return await postRequest(uri: uri, body: body, useToken: true);
@@ -31,7 +31,7 @@ class CommentAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> getTotalComment(
+  Future<ResponseAPI> getRelationComment(
       {required int limit, String? cursor}) async {
     final Map<String, dynamic> query = {
       "limit": limit.toString(),

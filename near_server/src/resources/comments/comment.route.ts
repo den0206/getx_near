@@ -7,7 +7,11 @@ const commentRoute = Router();
 
 commentRoute.post('/add', checkAuth, commentController.addComment);
 commentRoute.get('/get', checkAuth, commentController.getComment);
-commentRoute.get('/total', checkAuth, commentController.getUserTotalComments);
+commentRoute.get(
+  '/total',
+  checkAuth,
+  commentController.getUserRelationComments
+);
 
 commentRoute.get('/dummy', randomController.makeDummyComments);
 export default commentRoute;

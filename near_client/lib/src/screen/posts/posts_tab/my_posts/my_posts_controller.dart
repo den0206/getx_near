@@ -128,7 +128,7 @@ class MyPostsController extends LoadingGetController {
   /// MARK Comment
   Future<void> loadRelationComments() async {
     try {
-      final res = await _commentAPI.getTotalComment(limit: commentLimit);
+      final res = await _commentAPI.getRelationComment(limit: commentLimit);
       if (!res.status) return;
       final Pages<Comment> pages =
           Pages.fromMap(res.data, Comment.fromJsonModel);
