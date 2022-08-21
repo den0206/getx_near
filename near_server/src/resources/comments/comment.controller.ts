@@ -6,7 +6,7 @@ import {usePagenation} from '../../utils/database/pagenation';
 
 async function addComment(req: Request, res: Response) {
   const userId = res.locals.user.userId;
-  const {postId, text, longitude, latitude} = req.body;
+  const {postId, text, postUserId, longitude, latitude} = req.body;
   if (!checkMongoId(postId))
     return new ResponseAPI(res, {message: 'Invalid PotId'}).excute(400);
 
@@ -15,6 +15,7 @@ async function addComment(req: Request, res: Response) {
       text,
       userId,
       postId,
+      postUserId,
       location: {type: 'Point', coordinates: [longitude, latitude]},
     });
 
@@ -26,7 +27,26 @@ async function addComment(req: Request, res: Response) {
   }
 }
 
-async function getUserTotalComments(req: Request, res: Response) {
+async function getComment(req: Request, res: Response) {
+  const postId = req.query.postId as string;
+  const cursor = req.query.cursor as string;
+  const limit: number = parseInt(req.query.limit as string) || 10;
+  try {
+    const data = await usePagenation({
+      model: CommentModel,
+      limit,
+      cursor,
+      populate: 'userId',
+      exclued: '-password',
+      specific: {postId},
+    });
+    new ResponseAPI(res, {data: data}).excute(200);
+  } catch (e: any) {
+    new ResponseAPI(res, {message: e.message}).excute(500);
+  }
+}
+
+async function getUserRelationComments(req: Request, res: Response) {
   const userId = res.locals.user.userId;
   const cursor = req.query.cursor as string;
   const limit: number = parseInt(req.query.limit as string) || 10;
@@ -37,29 +57,8 @@ async function getUserTotalComments(req: Request, res: Response) {
       cursor,
       populate: 'userId',
       exclued: '-password',
-      specific: {userId},
+      specific: {postUserId: userId},
     });
-    new ResponseAPI(res, {data: data}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
-  }
-}
-
-async function getComment(req: Request, res: Response) {
-  const postId = req.query.postId as string;
-  const cursor = req.query.cursor as string;
-  const limit: number = parseInt(req.query.limit as string) || 10;
-
-  try {
-    const data = await usePagenation({
-      model: CommentModel,
-      limit,
-      cursor,
-      populate: 'userId',
-      exclued: '-password',
-      specific: {postId},
-    });
-
     new ResponseAPI(res, {data: data}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);
@@ -69,5 +68,5 @@ async function getComment(req: Request, res: Response) {
 export default {
   addComment,
   getComment,
-  getUserTotalComments,
+  getUserRelationComments,
 };
