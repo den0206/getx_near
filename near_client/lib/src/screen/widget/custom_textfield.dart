@@ -1,4 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+
 import 'package:getx_near/src/utils/consts_color.dart';
 
 import '../../utils/neumorphic_style.dart';
@@ -29,6 +32,8 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RxBool visiblity = isSecure.obs;
+
     return Neumorphic(
       margin: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
       style: commonNeumorphic(
@@ -37,23 +42,36 @@ class CustomTextField extends StatelessWidget {
         boxShape: NeumorphicBoxShape.stadium(),
       ),
       padding: padding ?? EdgeInsets.symmetric(vertical: 7, horizontal: 18),
-      child: TextFormField(
-        controller: controller,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            iconData,
-            color: Colors.black45,
+      child: Obx(
+        () => TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              iconData,
+              color: Colors.black45,
+            ),
+            suffixIcon: isSecure
+                ? IconButton(
+                    icon: Icon(
+                      visiblity.value ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.black45,
+                    ),
+                    onPressed: () {
+                      visiblity.toggle();
+                    },
+                  )
+                : null,
+            hintText: labelText,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
           ),
-          hintText: labelText,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
+          cursorColor: Colors.black,
+          keyboardType: inputType,
+          validator: validator,
+          obscureText: visiblity.value,
+          autofocus: autoFocus ?? false,
+          onChanged: onChange,
         ),
-        cursorColor: Colors.black,
-        keyboardType: inputType,
-        validator: validator,
-        obscureText: isSecure,
-        autofocus: autoFocus ?? false,
-        onChanged: onChange,
       ),
     );
   }
