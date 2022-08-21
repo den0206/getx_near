@@ -137,10 +137,11 @@ class PostDetailController extends LoadingGetController {
       final Map<String, dynamic> body = {
         "text": commentContoller.text,
         "postId": post.id,
+        "postUserId": post.user.id,
         "longitude": current.longitude,
         "latitude": current.latitude,
       };
-      final res = await _commentAPI.addPost(body);
+      final res = await _commentAPI.addComment(body);
       print(res.toString());
       if (!res.status) return;
 

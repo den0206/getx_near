@@ -27,7 +27,7 @@ class CommentsController extends GetxController {
   Future<void> loadComments() async {
     if (reachLast) return;
     try {
-      final res = await _commentAPI.getTotalComment(
+      final res = await _commentAPI.getRelationComment(
         limit: limit,
         cursor: nextCursor,
       );
