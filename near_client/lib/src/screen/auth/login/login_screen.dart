@@ -59,7 +59,9 @@ class LoginScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: NeumorphicTextButton(
                           title: "Forgot Password",
-                          onPressed: () {},
+                          onPressed: () async {
+                            await controller.showResetPassword();
+                          },
                         ),
                       ),
                       SizedBox(
