@@ -15,6 +15,7 @@ class MainTabController extends GetxController {
   var currentIndex = 0;
   var oldIndex = 0;
 
+  late final int postsIndex;
   late final int mapIndex;
   late final int recentIndex;
 
@@ -47,9 +48,9 @@ class MainTabController extends GetxController {
   }
 
   void _setSpecificIndex() {
+    postsIndex = _getByTypeofIndex<MyPostTabScreen>();
     mapIndex = _getByTypeofIndex<MapScreen>();
     recentIndex = _getByTypeofIndex<RecentScreen>();
-    print(mapIndex);
   }
 
   void setIndex(int index) {

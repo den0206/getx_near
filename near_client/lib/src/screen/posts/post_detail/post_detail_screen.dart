@@ -65,12 +65,41 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
               if (post.expireAt != null)
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: CustomCountdownTimer(
-                      endTime: post.expireAt!,
-                      onEnd: () async {
-                        await controller.expirePost();
-                      },
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (post.isCurrent) ...[
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(text: "※ "),
+                                TextSpan(
+                                  text: "Your Post",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 8.sp,
+                                  ),
+                                )
+                              ],
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            textAlign: TextAlign.end,
+                          ),
+                        ] else ...[
+                          Spacer()
+                        ],
+                        CustomCountdownTimer(
+                          endTime: post.expireAt!,
+                          onEnd: () async {
+                            await controller.expirePost();
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -319,34 +348,42 @@ class ContentArea extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final post = controller.post;
     return Container(
+      height: maxExtent,
       decoration: BoxDecoration(color: ConstsColor.mainBackColor),
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Content",
-              textScaleFactor: controller.textScale.value,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.sp,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Content",
+                textScaleFactor: controller.textScale.value,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.sp,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Obx(() => Text(
+            SizedBox(
+              height: 10,
+            ),
+            Obx(
+              () => Text(
                 post.content,
                 textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 12.sp),
+                softWrap: true,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                ),
                 // maxLines: 6,
                 textScaleFactor: controller.textScale.value,
                 // overflow: TextOverflow.ellipsis
-              )),
-        ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

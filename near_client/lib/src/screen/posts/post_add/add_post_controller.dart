@@ -10,6 +10,7 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
 
+import '../../main_tab/main_tab_controller.dart';
 import '../posts_tab/my_posts/my_posts_controller.dart';
 
 class AddPostController extends LoadingGetController {
@@ -70,6 +71,11 @@ class AddPostController extends LoadingGetController {
 
       if (Get.isRegistered<MyPostsController>())
         MyPostsController.to.insertPost(post);
+
+      if (MainTabController.to.currentIndex !=
+          MainTabController.to.postsIndex) {
+        MainTabController.to.setIndex(MainTabController.to.postsIndex);
+      }
 
       Get.back(result: post);
     } catch (e) {

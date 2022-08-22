@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/comment_api.dart';
@@ -9,6 +10,9 @@ import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
+import 'package:getx_near/src/screen/posts/posts_tab/my_posts/my_posts_controller.dart';
+import 'package:getx_near/src/screen/posts/posts_tab/near_posts/near_posts_controller.dart';
 
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
@@ -142,7 +146,7 @@ class PostDetailController extends LoadingGetController {
         "latitude": current.latitude,
       };
       final res = await _commentAPI.addComment(body);
-      print(res.toString());
+
       if (!res.status) return;
 
       final newComment = Comment.fromMapWithPost(res.data, post);
@@ -220,15 +224,30 @@ class PostDetailController extends LoadingGetController {
       final res = await _postAPI.deletePost(post.id);
       if (!res.status) return;
 
+      if (Get.isRegistered<MyPostsController>() &&
+          MyPostsController.to.posts.contains(post)) {
+        MyPostsController.to.posts.remove(post);
+        MyPostsController.to.update();
+      }
+
+      if (Get.isRegistered<NearPostsController>() &&
+          NearPostsController.to.nearPosts.contains(post)) {
+        NearPostsController.to.nearPosts.remove(post);
+        NearPostsController.to.update();
+
+        if (Get.isRegistered<MainSlidePanelController>())
+          MainSlidePanelController.to.update();
+      }
+
       Get.back();
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     }
   }
 
   // 時間制限で消えた時
   Future<void> expirePost() async {
-    print("Expire!");
+    await deletePost();
   }
 
   Future<void> tryMapLauncher(

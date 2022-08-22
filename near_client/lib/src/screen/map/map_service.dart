@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 final double panelMinHeight = 10.h;
 final double panelMaxHeight = 40.h;
 final double mapButtonHeight = 13.h;
-final double logoHeifht = panelMinHeight + mapButtonHeight;
+final double logoHeifht = panelMaxHeight;
 
 class MapService {
   late GoogleMapController googleController;
