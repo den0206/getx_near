@@ -43,99 +43,99 @@ class UserDetailScreen extends StatelessWidget {
                   ]
                 : null,
           ),
-          body: Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Neumorphic(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                style: commonNeumorphic(depth: 1.6),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                    NeumorphicAvatarButton(
-                      imageProvider: getUserImage(user),
-                    ),
-                    SizedBox(
-                      height: 6.h,
-                    ),
-                    NeumorphicText(
-                      user.name,
-                      style: NeumorphicStyle(
-                        color: ConstsColor.mainBackColor,
-                        intensity: 1,
-                        shadowLightColor: Colors.black,
-                        lightSource: LightSource.bottomRight,
-                      ),
-                      textStyle: NeumorphicTextStyle(
-                        fontSize: 35.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                    if (user.isCurrent) ...[
-                      Text(user.email),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Neumorphic(
+                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  style: commonNeumorphic(depth: 1.6),
+                  child: Column(
+                    children: [
                       SizedBox(
-                        height: 6.h,
+                        height: 4.h,
+                      ),
+                      UserAvatarButton(user: user),
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      NeumorphicText(
+                        user.name,
+                        style: NeumorphicStyle(
+                          color: ConstsColor.mainBackColor,
+                          intensity: 1,
+                          shadowLightColor: Colors.black,
+                          lightSource: LightSource.bottomRight,
+                        ),
+                        textStyle: NeumorphicTextStyle(
+                          fontSize: 35.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      if (user.isCurrent) ...[
+                        Text(user.email),
+                        SizedBox(
+                          height: 6.h,
+                        ),
+                      ],
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: user.isCurrent
+                              ? [
+                                  NeumorphicIconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        size: 35.sp,
+                                      ),
+                                      onPressed: () {
+                                        controller.pushEditPage();
+                                      }),
+                                  NeumorphicIconButton(
+                                      icon: Icon(
+                                        Icons.settings,
+                                        size: 35.sp,
+                                      ),
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          backgroundColor:
+                                              ConstsColor.mainBackColor,
+                                          isScrollControlled: true,
+                                          builder: (context) {
+                                            return SettingsScreen();
+                                          },
+                                        );
+                                      }),
+                                ]
+                              : [
+                                  NeumorphicIconButton(
+                                    icon: Icon(
+                                      Icons.block,
+                                      color: controller.isBlocked
+                                          ? Colors.black
+                                          : Colors.red,
+                                      size: 40.sp,
+                                    ),
+                                    depth: controller.isBlocked ? -2 : 1,
+                                    onPressed: () {
+                                      controller.blockUser();
+                                    },
+                                  ),
+                                ]),
+                      SizedBox(
+                        height: 4.h,
                       ),
                     ],
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: user.isCurrent
-                            ? [
-                                NeumorphicIconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      size: 35.sp,
-                                    ),
-                                    onPressed: () {
-                                      controller.pushEditPage();
-                                    }),
-                                NeumorphicIconButton(
-                                    icon: Icon(
-                                      Icons.settings,
-                                      size: 35.sp,
-                                    ),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        backgroundColor:
-                                            ConstsColor.mainBackColor,
-                                        isScrollControlled: true,
-                                        builder: (context) {
-                                          return SettingsScreen();
-                                        },
-                                      );
-                                    }),
-                              ]
-                            : [
-                                NeumorphicIconButton(
-                                  icon: Icon(
-                                    Icons.block,
-                                    color: controller.isBlocked
-                                        ? Colors.black
-                                        : Colors.red,
-                                    size: 40.sp,
-                                  ),
-                                  depth: controller.isBlocked ? -2 : 1,
-                                  onPressed: () {
-                                    controller.blockUser();
-                                  },
-                                ),
-                              ]),
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

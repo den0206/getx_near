@@ -38,6 +38,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                         imageProvider: controller.userImage.value == null
                             ? getUserImage(controller.currentUser)
                             : FileImage(controller.userImage.value!),
+                        size: 120,
                         onTap: () {
                           controller.selectImage(context);
                         },

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
+import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/screen/widget/origin_carousel.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:getx_near/src/utils/date_formate.dart';
@@ -86,17 +86,9 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                               ),
                             ],
                           ),
-                          Container(
-                            width: 70.sp,
-                            height: 70.sp,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border:
-                                    Border.all(color: Colors.white, width: 2),
-                                image: DecorationImage(
-                                  image: getUserImage(post.user),
-                                  fit: BoxFit.contain,
-                                )),
+                          UserAvatarButton(
+                            user: post.user,
+                            size: 70.sp,
                           ),
                           AlertIndicator(
                             intValue: post.emergency,

@@ -128,8 +128,8 @@ class CommentAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicAvatarButton(
-      imageProvider: getUserImage(comment.user),
+    return UserAvatarButton(
+      user: comment.user,
       onTap: () {
         showDialog(
           context: context,
