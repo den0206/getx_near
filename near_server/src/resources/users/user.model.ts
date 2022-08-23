@@ -49,6 +49,8 @@ export class User {
   name: string;
   @prop({required: true, unique: true})
   email: string;
+  @prop({required: true, enum: ['man', 'woman']})
+  sex: string;
   @prop()
   avatarUrl: string;
   @prop({required: true})

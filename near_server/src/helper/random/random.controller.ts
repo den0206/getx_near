@@ -3,6 +3,12 @@ import {Request, Response} from 'express';
 import ResponseAPI from '../../utils/interface/response.api';
 import {UserModel, PostModel, CommentModel} from '../../utils/database/models';
 
+function dummySex(): string {
+  const n: number = randomGenerator.intR(20);
+
+  return n % 2 == 0 ? 'man' : 'woman';
+}
+
 async function makeDummyPosts(req: Request, res: Response) {
   const lng = parseFloat(req.query.lng as string);
   const lat = parseFloat(req.query.lat as string);
@@ -14,6 +20,7 @@ async function makeDummyPosts(req: Request, res: Response) {
       const dummyUser = new UserModel({
         name: `Sample${i}`,
         email: 'sample@email.com',
+        sex: dummySex(),
         password: '12345',
       });
 
@@ -51,6 +58,7 @@ async function makeDummyComments(req: Request, res: Response) {
       const userId = new UserModel({
         name: `Sample${i}`,
         email: 'sample@email.com',
+        sex: dummySex(),
         password: '12345',
       });
 
@@ -94,6 +102,7 @@ async function makeDummyMyPosts(req: Request, res: Response) {
       const user = new UserModel({
         name: `Sample${i}`,
         email: 'sample@email.com',
+        sex: dummySex(),
         password: '12345',
       });
 

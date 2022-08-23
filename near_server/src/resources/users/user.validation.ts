@@ -5,7 +5,8 @@ export const signUpSchema = {
     name: string({
       required_error: 'nameが必要です',
     }),
-    email: string({required_error: 'emailが必要です'}).email(),
+    email: string({ required_error: 'emailが必要です' }).email(),
+    sex: string({required_error : "性別が必要です"}),
     password: string({required_error: 'パスワードが必要です'})
       .min(6, 'at least 6')
       .max(64, 'password too long'),
