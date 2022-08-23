@@ -6,7 +6,7 @@ import {UserModel} from '../../utils/database/models';
 import AWSClient from '../../utils/aws/aws_client';
 
 async function signUp(req: Request<{}, {}, SignUpBody>, res: Response) {
-  const {name, email, password} = req.body;
+  const {name, email, sex, password} = req.body;
   const file = req.file;
   const isFind = await UserModel.findOne({email});
 
@@ -14,7 +14,7 @@ async function signUp(req: Request<{}, {}, SignUpBody>, res: Response) {
     return new ResponseAPI(res, {message: 'Email Alreadty Exist'}).excute(400);
 
   try {
-    let user = new UserModel({name, email, password});
+    let user = new UserModel({name, email, sex, password});
 
     if (file) {
       const awsClient = new AWSClient();

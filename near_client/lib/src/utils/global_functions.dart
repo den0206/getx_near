@@ -104,6 +104,7 @@ Future<void> getToMessScreen({required User user}) async {
         id: "627a335d9d99fe79480b87f8",
         name: "sample",
         email: "ddd@email.com",
+        sex: Sex.man,
         fcmToken: "",
         blockedUsers: [],
       );

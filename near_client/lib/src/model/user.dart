@@ -14,7 +14,7 @@ class User extends JsonModel {
   final String id;
   String name;
   final String email;
-
+  final Sex sex;
   String fcmToken;
   String? avatarUrl;
   String? sessionToken;
@@ -37,6 +37,7 @@ class User extends JsonModel {
     required this.id,
     required this.name,
     required this.email,
+    required this.sex,
     required this.fcmToken,
     required this.blockedUsers,
     this.avatarUrl,
@@ -48,6 +49,7 @@ class User extends JsonModel {
       'id': id,
       'name': name,
       'email': email,
+      "sex": sex.name,
       'avatarUrl': avatarUrl,
       "sessionToken": sessionToken,
       "blocked": blockedUsers,
@@ -60,6 +62,7 @@ class User extends JsonModel {
       id: map['id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
+      sex: map["sex"] != null ? getSex(map["sex"]) : Sex.man,
       avatarUrl: map['avatarUrl'] ?? dummyUserImageUrl(),
       sessionToken: map["sessionToken"],
       blockedUsers: List<String>.from(map["blocked"] ?? []),
@@ -73,13 +76,14 @@ class User extends JsonModel {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, avatarUrl: $avatarUrl, sessionToken: $sessionToken, fcmToken: $fcmToken)';
+    return 'User(id: $id, name: $name, email: $email, sex: $sex, fcmToken: $fcmToken, avatarUrl: $avatarUrl, sessionToken: $sessionToken, blockedUsers: $blockedUsers)';
   }
 
   User copyWith({
     String? id,
     String? name,
     String? email,
+    Sex? sex,
     String? fcmToken,
     String? avatarUrl,
     List<String>? blockedUsers,
@@ -89,6 +93,7 @@ class User extends JsonModel {
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
+      sex: sex ?? this.sex,
       fcmToken: fcmToken ?? this.fcmToken,
       blockedUsers: blockedUsers ?? this.blockedUsers,
       avatarUrl: avatarUrl ?? this.avatarUrl,
@@ -114,4 +119,45 @@ ImageProvider getUserImage(User user) {
       },
     ).image;
   }
+}
+
+enum Sex {
+  man,
+  woman;
+
+  String get title {
+    switch (this) {
+      case Sex.man:
+        return "男性";
+      case Sex.woman:
+        return "女性";
+    }
+  }
+
+  IconData get icon {
+    switch (this) {
+      case Sex.man:
+        return Icons.male;
+      case Sex.woman:
+        return Icons.female;
+    }
+  }
+
+  Color get mainColor {
+    switch (this) {
+      case Sex.man:
+        return Colors.blue.withOpacity(0.5);
+      case Sex.woman:
+        return Colors.pink;
+    }
+  }
+}
+
+Sex getSex(String value) {
+  final Sex s = Sex.values.firstWhere(
+    (c) => c.name == value,
+    orElse: () => Sex.man,
+  );
+  // if you know Locale use l.locale
+  return s;
 }

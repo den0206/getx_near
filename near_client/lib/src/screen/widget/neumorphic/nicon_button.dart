@@ -1,6 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 
+import '../../../model/user.dart';
 import '../../../utils/consts_color.dart';
 
 class NeumorphicIconButton extends StatelessWidget {
@@ -8,6 +9,7 @@ class NeumorphicIconButton extends StatelessWidget {
     Key? key,
     required this.icon,
     this.color,
+    this.size,
     this.depth,
     this.onPressed,
     this.boxShape,
@@ -16,7 +18,7 @@ class NeumorphicIconButton extends StatelessWidget {
   final Widget icon;
 
   final Color? color;
-
+  final double? size;
   final double? depth;
   final NeumorphicBoxShape? boxShape;
   final void Function()? onPressed;
@@ -37,11 +39,75 @@ class NeumorphicIconButton extends StatelessWidget {
   }
 }
 
+class UserAvatarButton extends StatelessWidget {
+  const UserAvatarButton({
+    super.key,
+    required this.user,
+    this.size = 120,
+    this.useNeumorphic = true,
+    this.useSex = true,
+    this.onTap,
+  });
+  final User user;
+  final double size;
+  final bool useNeumorphic;
+  final bool useSex;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomRight,
+      children: [
+        if (useNeumorphic)
+          NeumorphicAvatarButton(
+            imageProvider: getUserImage(user),
+            size: size,
+            onTap: onTap,
+          ),
+        if (!useNeumorphic)
+          CircleImageButton(
+            imageProvider: getUserImage(user),
+            size: size,
+            onTap: onTap,
+          ),
+        if (useSex)
+          SexButton(
+            user: user,
+            size: size / 2,
+          )
+      ],
+    );
+  }
+}
+
+class SexButton extends StatelessWidget {
+  const SexButton({
+    Key? key,
+    required this.user,
+    required this.size,
+  }) : super(key: key);
+
+  final User user;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return NeumorphicIconButton(
+      icon: Icon(
+        user.sex.icon,
+      ),
+      color: user.sex.mainColor,
+      size: size,
+    );
+  }
+}
+
 class NeumorphicAvatarButton extends StatelessWidget {
   const NeumorphicAvatarButton({
     Key? key,
     required this.imageProvider,
-    this.size = 120,
+    required this.size,
     this.onTap,
   }) : super(key: key);
 

@@ -10,6 +10,8 @@ import 'package:getx_near/src/screen/widget/custom_pin.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/image_extention.dart';
 
+import '../../../model/user.dart';
+
 class SignUpController extends LoadingGetController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -22,6 +24,10 @@ class SignUpController extends LoadingGetController {
   final TempTokenAPI _tempTokenAPI = TempTokenAPI();
 
   VerifyState state = VerifyState.checkEmail;
+  int sexIndex = 0;
+  Sex get currentSex {
+    return Sex.values[sexIndex];
+  }
 
   bool get buttonEnable {
     // current
@@ -39,6 +45,12 @@ class SignUpController extends LoadingGetController {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void changeSex(int index) {
+    sexIndex = index;
+    print(currentSex.name);
+    update();
   }
 
   Future<void> signUp() async {
