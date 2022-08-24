@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/utils/visibleRegion.dart';
 import 'package:getx_near/src/service/location_service.dart';
-import 'package:getx_near/src/utils/dummy_generator.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:marker_icon/marker_icon.dart';
@@ -142,14 +141,21 @@ class MapService {
   Future<void> addPostMarker(Post obj, [Function()? ontap]) async {
     final markerId = MarkerId(obj.id);
 
-    /// user url
-    final icon = await MarkerIcon.downloadResizePictureCircle(
-      obj.user.avatarUrl ?? dummyUserImageUrl(),
-      size: 120,
-      addBorder: true,
-      borderColor: Colors.white,
-      borderSize: 15,
-    );
+    BitmapDescriptor icon;
+    if (obj.user.avatarUrl == null) {
+      icon = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(size: Size(120, 120)),
+          "assets/images/default_user.png");
+    } else {
+      /// user url
+      icon = await MarkerIcon.downloadResizePictureCircle(
+        obj.user.avatarUrl!,
+        size: 120,
+        addBorder: true,
+        borderColor: Colors.white,
+        borderSize: 15,
+      );
+    }
 
     final marker = Marker(
       markerId: markerId,
