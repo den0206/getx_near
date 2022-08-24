@@ -3,12 +3,6 @@ import {Request, Response} from 'express';
 import ResponseAPI from '../../utils/interface/response.api';
 import {UserModel, PostModel, CommentModel} from '../../utils/database/models';
 
-function dummySex(): string {
-  const n: number = randomGenerator.intR(20);
-
-  return n % 2 == 0 ? 'man' : 'woman';
-}
-
 async function makeDummyPosts(req: Request, res: Response) {
   const lng = parseFloat(req.query.lng as string);
   const lat = parseFloat(req.query.lat as string);
@@ -17,13 +11,7 @@ async function makeDummyPosts(req: Request, res: Response) {
 
   try {
     const result = [...Array(randomNum)].map((_, i) => {
-      const dummyUser = new UserModel({
-        name: `Sample${i}`,
-        email: 'sample@email.com',
-        sex: dummySex(),
-        password: '12345',
-      });
-
+      const dummyUser = randomGenerator.dummyUser(i);
       var expireAt = new Date();
       expireAt.setHours(expireAt.getHours() + 3);
 
@@ -55,12 +43,7 @@ async function makeDummyComments(req: Request, res: Response) {
 
   try {
     const result = [...Array(randomNum)].map((_, i) => {
-      const userId = new UserModel({
-        name: `Sample${i}`,
-        email: 'sample@email.com',
-        sex: dummySex(),
-        password: '12345',
-      });
+      const userId = randomGenerator.dummyUser(i);
 
       const loc = randomGenerator.locationR(lat, lng, radius);
       const {longitude, latitude} = loc;
@@ -99,14 +82,7 @@ async function makeDummyMyPosts(req: Request, res: Response) {
     const userLength = randomGenerator.intR(20) + 1;
 
     const dummyUsers = [...Array(userLength)].map((_, i) => {
-      const user = new UserModel({
-        name: `Sample${i}`,
-        email: 'sample@email.com',
-        sex: dummySex(),
-        password: '12345',
-      });
-
-      return user;
+      return randomGenerator.dummyUser(i);
     });
 
     const postLength = randomGenerator.intR(30);
