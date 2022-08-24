@@ -72,6 +72,7 @@ class SignUpController extends LoadingGetController {
             "name": nameController.text,
             "email": emailController.text,
             "password": passwordController.text,
+            "sex": currentSex.name,
             "verify": pinCodeController.text,
           };
 

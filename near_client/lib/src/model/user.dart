@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:getx_near/src/service/auth_service.dart';
-import 'package:getx_near/src/utils/dummy_generator.dart';
 
 abstract class JsonModel {
   JsonModel();
@@ -62,8 +61,8 @@ class User extends JsonModel {
       id: map['id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      sex: map["sex"] != null ? getSex(map["sex"]) : Sex.man,
-      avatarUrl: map['avatarUrl'] ?? dummyUserImageUrl(),
+      sex: getSex(map["sex"]),
+      avatarUrl: map['avatarUrl'] ?? null,
       sessionToken: map["sessionToken"],
       blockedUsers: List<String>.from(map["blocked"] ?? []),
       fcmToken: map["fcmToken"] ?? "",
@@ -148,7 +147,7 @@ enum Sex {
       case Sex.man:
         return Colors.blue.withOpacity(0.5);
       case Sex.woman:
-        return Colors.pink;
+        return Colors.pink.withOpacity(0.8);
     }
   }
 }
