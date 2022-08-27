@@ -1,4 +1,4 @@
-import {CommentModel} from './../../utils/database/models';
+import {CommentModel, ReportModel} from './../../utils/database/models';
 import {prop, pre, index, Ref} from '@typegoose/typegoose';
 import argon2 from 'argon2';
 import AWSClient from '../../utils/aws/aws_client';
@@ -33,6 +33,9 @@ import {Location} from '../../utils/interface/location';
 
   // Commentの削除
   await CommentModel.deleteMany({userId: this._id});
+
+  // Reportの削除
+  await ReportModel.deleteMany({reported: this._id});
 
   /// アバターの削除
   if (this.avatarUrl) {
