@@ -8,7 +8,6 @@ import {
   RecentModel,
 } from '../../utils/database/models';
 import {Location} from '../../utils/interface/location';
-import {Date} from 'mongoose';
 
 @pre<User>('save', async function (next) {
   if (this.isModified('password') || this.isNew) {
