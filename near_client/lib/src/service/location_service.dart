@@ -50,6 +50,15 @@ LocationDetail getLocationDetail(String? value) {
   return l;
 }
 
+final kMinDistance = 500;
+final kMaxDistance = 5000;
+
+int getMaxDistance(int? value) {
+  // default value
+  if (value == null) return kMinDistance;
+  return value;
+}
+
 class LocationService {
   Future<Position> getCurrentPosition() async {
     final permission = PermissionService();

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum StorageKey { user, locationSize, checkTerms }
+enum StorageKey { user, locationSize, searchDistance, checkTerms }
 
 extension StorageKeyEXT on StorageKey {
   String get keyString {
@@ -13,6 +13,8 @@ extension StorageKeyEXT on StorageKey {
         return "locationSize";
       case StorageKey.checkTerms:
         return "checkTerms";
+      case StorageKey.searchDistance:
+        return "searchDistance";
     }
   }
 
@@ -33,6 +35,21 @@ extension StorageKeyEXT on StorageKey {
     return decoded;
   }
 
+  Future<bool> saveInt(int value) async {
+    final pref = await SharedPreferences.getInstance();
+    return pref.setInt(keyString, value);
+  }
+
+  Future<dynamic> loadInt() async {
+    final pref = await SharedPreferences.getInstance();
+    final value = await pref.getInt(keyString);
+    if (value == null) {
+      print("No Local Storage");
+      return null;
+    }
+    return value;
+  }
+
   Future<bool> saveBool(bool value) async {
     final pref = await SharedPreferences.getInstance();
     return await pref.setBool(this.keyString, value);
@@ -47,5 +64,10 @@ extension StorageKeyEXT on StorageKey {
   Future<bool> deleteLocal() async {
     final pref = await SharedPreferences.getInstance();
     return await pref.remove(keyString);
+  }
+
+  Future<bool> deleteAll() async {
+    final pref = await SharedPreferences.getInstance();
+    return await pref.clear();
   }
 }

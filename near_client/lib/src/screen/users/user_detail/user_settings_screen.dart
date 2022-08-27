@@ -15,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60.h,
+      height: 80.h,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Settings'),
@@ -36,6 +36,45 @@ class SettingsScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _selectLocationArea(controller),
+                Obx(() => Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text("通知範囲"),
+                            Text(
+                              "${controller.searchDistance} m",
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 2.h,
+                        ),
+                        NeumorphicSlider(
+                          min: kMinDistance.toDouble(),
+                          max: kMaxDistance.toDouble(),
+                          value: controller.currentDistance.value,
+                          style: SliderStyle(
+                            variant: ConstsColor.mainBackColor,
+                            accent: controller.user.sex.mainColor,
+                            depth: 1,
+                          ),
+                          sliderHeight: 30,
+                          onChanged: (percent) {
+                            controller.currentDistance.value = percent;
+                          },
+                          onChangeEnd: (percent) async {
+                            await controller.setLocalDistance();
+                          },
+                        ),
+                      ],
+                    ))),
                 SizedBox(
                   height: 10,
                 ),
