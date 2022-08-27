@@ -15,6 +15,7 @@ import '../../../main.dart';
 import '../posts/posts_tab/near_posts/near_posts_controller.dart';
 
 class MapController extends LoadingGetController {
+  static MapController get to => Get.find();
   final mapService = MapService();
   late List<Post> posts;
 

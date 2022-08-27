@@ -10,6 +10,7 @@ import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/my_posts/my_posts_controller.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/near_posts/near_posts_controller.dart';
@@ -239,19 +240,26 @@ class PostDetailController extends LoadingGetController {
           MainSlidePanelController.to.update();
       }
 
+      // map の更新
+      _cleanMap();
+
       Get.back();
     } catch (e) {
       showError(e.toString());
     }
   }
 
+  void _cleanMap() {
+    if (Get.isRegistered<MapController>()) {
+      print("delete marker");
+      MapController.to.mapService.deletePostMarker(obj: post);
+      MapController.to.update();
+    }
+  }
+
   // 時間制限で消えた時
   Future<void> expirePost() async {
-    showSnackBar(
-        title: "削除",
-        message: "ポストが削除されました",
-        background: Colors.red,
-        position: SnackPosition.TOP);
+    _cleanMap();
   }
 
   Future<void> tryMapLauncher(

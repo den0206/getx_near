@@ -145,7 +145,7 @@ class MapService {
     if (obj.user.avatarUrl == null) {
       icon = await iconFromAsset(
         "assets/images/default_user.png",
-        size: 90,
+        size: 120,
         addBorder: true,
         borderColor: Colors.white,
         borderSize: 15,
@@ -173,6 +173,16 @@ class MapService {
       onTap: ontap,
     );
     _markers[markerId] = marker;
+  }
+
+  void deletePostMarker({required Post obj}) {
+    final markerId = MarkerId(obj.id);
+    final polylineId = PolylineId(obj.id);
+    if (_markers.containsKey(markerId))
+      _markers.removeWhere((key, value) => key == markerId);
+
+    if (_polyLines.containsKey(polylineId))
+      _polyLines.removeWhere((key, value) => key == polylineId);
   }
 
   void addCircle(LatLng latLng, double radius) {
