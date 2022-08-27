@@ -23,25 +23,7 @@ class UserDetailScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(user.name),
-            actions: !user.isCurrent
-                ? [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: NeumorphicIconButton(
-                        icon: Icon(
-                          Icons.emergency_share,
-                          color: Colors.red[400],
-                        ),
-                        onPressed: () async {
-                          await showReportScreen(
-                            context: context,
-                            user: user,
-                          );
-                        },
-                      ),
-                    )
-                  ]
-                : null,
+            actions: [],
           ),
           body: SingleChildScrollView(
             child: Column(
@@ -114,6 +96,19 @@ class UserDetailScreen extends StatelessWidget {
                                     }),
                               ]
                             : [
+                                NeumorphicIconButton(
+                                  icon: Icon(
+                                    Icons.emergency_share,
+                                    color: Colors.red[400],
+                                    size: 40.sp,
+                                  ),
+                                  onPressed: () async {
+                                    await showReportScreen(
+                                      context: context,
+                                      user: user,
+                                    );
+                                  },
+                                ),
                                 NeumorphicIconButton(
                                   icon: Icon(
                                     Icons.block,

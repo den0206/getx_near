@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/recent.dart';
-import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/recent/recent_controller.dart';
-import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../utils/consts_color.dart';
 import '../../utils/neumorphic_style.dart';
+import '../users/user_detail/user_detail_screen.dart';
 
 class RecentScreen extends LoadingGetView<RecentController> {
   @override
@@ -88,9 +88,13 @@ class RecentCell extends GetView<RecentController> {
                 SizedBox(
                   width: 5,
                 ),
-                CircleImageButton(
-                  imageProvider: getUserImage(recent.withUser),
+                UserAvatarButton(
+                  user: recent.withUser,
                   size: 30.sp,
+                  useNeumorphic: false,
+                  onTap: () {
+                    Get.to(() => UserDetailScreen(user: recent.withUser));
+                  },
                 ),
                 SizedBox(
                   width: 20,

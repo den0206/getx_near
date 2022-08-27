@@ -95,7 +95,7 @@ Future<void> getToMessScreen({required User user}) async {
   if (user.id == currentUser.id) throw Exception("same One");
 
   try {
-    var withUser;
+    User withUser;
 
     if (useMap) {
       withUser = user;
@@ -112,6 +112,8 @@ Future<void> getToMessScreen({required User user}) async {
 
       withUser = sampleUser;
     }
+
+    if (currentUser.id == withUser.id) throw Exception("same with user");
 
     final chatRoomId =
         await re.createPrivateChatRoom(withUser.id, [currentUser, withUser]);
