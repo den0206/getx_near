@@ -8,6 +8,7 @@ import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
@@ -31,34 +32,33 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
           title: Text("投稿"),
           actions: [
             Obx(
-              () => Padding(
-                padding: const EdgeInsets.only(right: 10, bottom: 10, top: 10),
-                child: MaterialButton(
-                  elevation: 2,
-                  color: ConstsColor.mainBackColor,
-                  textColor: Colors.white,
-                  child: Text("Send"),
-                  shape: StadiumBorder(),
-                  onPressed: controller.canSend.value
-                      ? () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return CustomDialog(
-                                title: "Need Address",
-                                descripon: "Contain Your Address this Post",
-                                icon: Icons.home,
-                                mainColor: Colors.pink,
-                                onPress: () {
-                                  controller.sendPost();
-                                },
-                              );
-                            },
-                          );
-                        }
-                      : null,
+              () => NeumorphicIconButton(
+                icon: Icon(
+                  Icons.send,
+                  color: Colors.white,
                 ),
+                onPressed: controller.canSend.value
+                    ? () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomDialog(
+                              title: "Need Address",
+                              descripon: "Contain Your Address this Post",
+                              icon: Icons.home,
+                              mainColor: Colors.pink,
+                              onPress: () {
+                                controller.sendPost();
+                              },
+                            );
+                          },
+                        );
+                      }
+                    : null,
               ),
+            ),
+            SizedBox(
+              width: 20,
             )
           ],
         ),

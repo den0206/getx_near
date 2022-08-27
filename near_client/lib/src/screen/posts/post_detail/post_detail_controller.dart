@@ -247,7 +247,11 @@ class PostDetailController extends LoadingGetController {
 
   // 時間制限で消えた時
   Future<void> expirePost() async {
-    await deletePost();
+    showSnackBar(
+        title: "削除",
+        message: "ポストが削除されました",
+        background: Colors.red,
+        position: SnackPosition.TOP);
   }
 
   Future<void> tryMapLauncher(

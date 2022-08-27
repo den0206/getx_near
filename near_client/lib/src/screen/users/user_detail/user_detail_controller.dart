@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/state_manager.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/users/user_delete/user_delete_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
@@ -15,28 +14,43 @@ import '../../main_tab/main_tab_controller.dart';
 
 class UserDetailController extends GetxController {
   User user;
-  LocationDetail currentSize = LocationDetail.high;
+
   final currentUser = AuthService.to.currentUser.value!;
   final UserAPI _userAPI = UserAPI();
 
   bool isBlocked = false;
   UserDetailController(this.user);
 
+  LocationDetail currentSize = LocationDetail.high;
   int get locationIndex {
     return LocationDetail.values.indexOf(currentSize);
+  }
+
+  final RxDouble currentDistance = kMinDistance.toDouble().obs;
+  int get searchDistance {
+    return currentDistance.value.round();
   }
 
   @override
   void onInit() async {
     super.onInit();
     isBlocked = currentUser.checkBlock(user);
-    await _getLocalLoc();
+    await _getLocalStorage();
   }
 
-  Future<void> _getLocalLoc() async {
+  Future<void> _getLocalStorage() async {
+    // Location
     final localLoc =
         getLocationDetail(await StorageKey.locationSize.loadString());
     currentSize = localLoc;
+
+    // search Radius
+    final int localDistance =
+        getMaxDistance(await StorageKey.searchDistance.loadInt());
+
+    currentDistance.call(localDistance.roundToDouble());
+
+    // 更新
     update();
   }
 
@@ -46,6 +60,10 @@ class UserDetailController extends GetxController {
 
     update();
     await StorageKey.locationSize.saveString(temp.name);
+  }
+
+  Future<void> setLocalDistance() async {
+    await StorageKey.searchDistance.saveInt(searchDistance);
   }
 
   Future<void> pushEditPage() async {

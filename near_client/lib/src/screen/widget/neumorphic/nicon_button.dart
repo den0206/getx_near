@@ -93,12 +93,15 @@ class SexButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicIconButton(
-      icon: Icon(
+    return Container(
+      width: size,
+      height: size,
+      decoration:
+          BoxDecoration(color: user.sex.mainColor, shape: BoxShape.circle),
+      child: Icon(
         user.sex.icon,
+        size: size / 2,
       ),
-      color: user.sex.mainColor,
-      size: size,
     );
   }
 }

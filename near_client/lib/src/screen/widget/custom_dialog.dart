@@ -4,9 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
-import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/widget/countdown_timer.dart';
-import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 
@@ -123,7 +121,7 @@ class CommentDialog extends StatelessWidget {
   }) : super(key: key);
 
   final Comment comment;
-  final double pad = 20;
+  final double pad = 30;
   final double avatarPad = 55;
   final VoidCallback? onMessage;
 
@@ -269,14 +267,16 @@ class CommentDialog extends StatelessWidget {
             ),
           ),
           Positioned(
-              left: pad,
-              right: pad,
-              child: CircleImageButton(
-                imageProvider: getUserImage(comment.user),
-                border: Border.all(color: Colors.white, width: 2),
+            left: pad,
+            right: pad,
+            child: Container(
+              alignment: Alignment.center,
+              child: UserAvatarButton(
+                user: comment.user,
                 size: 80.sp,
-                fit: BoxFit.contain,
-              ))
+              ),
+            ),
+          ),
         ],
       ),
     );
