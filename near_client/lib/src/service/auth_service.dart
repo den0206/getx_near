@@ -34,7 +34,7 @@ class AuthService extends GetxService {
 
   Future<void> logout() async {
     await Get.deleteAll();
-    await StorageKey.user.deleteLocal();
+    await deleteStorageLogout();
     this.currentUser.value = null;
     print("DELETE");
   }

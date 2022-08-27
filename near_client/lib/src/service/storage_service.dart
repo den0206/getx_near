@@ -65,9 +65,12 @@ extension StorageKeyEXT on StorageKey {
     final pref = await SharedPreferences.getInstance();
     return await pref.remove(keyString);
   }
+}
 
-  Future<bool> deleteAll() async {
-    final pref = await SharedPreferences.getInstance();
-    return await pref.clear();
-  }
+Future<void> deleteStorageLogout() async {
+  final pref = await SharedPreferences.getInstance();
+
+  await pref.remove(StorageKey.locationSize.keyString);
+  await pref.remove(StorageKey.searchDistance.keyString);
+  await pref.remove(StorageKey.user.keyString);
 }
