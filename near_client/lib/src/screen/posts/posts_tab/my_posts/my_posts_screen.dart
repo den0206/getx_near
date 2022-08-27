@@ -5,9 +5,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
-import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/my_post_tab_screen.dart';
-import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
@@ -168,8 +166,9 @@ class PostCell extends StatelessWidget {
           children: [
             Column(
               children: [
-                CircleImageButton(
-                  imageProvider: getUserImage(post.user),
+                UserAvatarButton(
+                  user: post.user,
+                  useNeumorphic: false,
                   size: 30.sp,
                   onTap: () {
                     Get.to(() => UserDetailScreen(user: post.user));

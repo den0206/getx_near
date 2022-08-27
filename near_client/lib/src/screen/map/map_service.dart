@@ -143,9 +143,13 @@ class MapService {
 
     BitmapDescriptor icon;
     if (obj.user.avatarUrl == null) {
-      icon = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(size: Size(120, 120)),
-          "assets/images/default_user.png");
+      icon = await iconFromAsset(
+        "assets/images/default_user.png",
+        size: 90,
+        addBorder: true,
+        borderColor: Colors.white,
+        borderSize: 15,
+      );
     } else {
       /// user url
       icon = await MarkerIcon.downloadResizePictureCircle(

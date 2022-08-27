@@ -406,6 +406,7 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
+      constraints: BoxConstraints(maxHeight: maxExtent),
       decoration: BoxDecoration(
           color: ConstsColor.mainBackColor,
           border: Border(top: BorderSide(color: Colors.grey))),
@@ -502,10 +503,10 @@ class CommentCell extends GetView<PostDetailController> {
       child: GestureDetector(
         child: Row(
           children: [
-            CircleImageButton(
-              imageProvider: getUserImage(comment.user),
+            UserAvatarButton(
+              user: comment.user,
+              useNeumorphic: false,
               size: 30.sp,
-              addShadow: false,
             ),
             SizedBox(
               width: 20,
