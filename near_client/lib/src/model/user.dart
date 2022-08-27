@@ -152,7 +152,7 @@ enum Sex {
   }
 }
 
-Sex getSex(String value) {
+Sex getSex(String? value) {
   final Sex s = Sex.values.firstWhere(
     (c) => c.name == value,
     orElse: () => Sex.man,
