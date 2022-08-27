@@ -142,22 +142,36 @@ class UserDetailScreen extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   style: commonNeumorphic(depth: 1.6),
-                  child: DataTable(columns: [
-                    DataColumn(
-                      label: Text('通報数'),
-                    ),
-                    DataColumn(
-                      label: Container(
-                        width: 100,
-                        child: Text('開始日'),
-                      ),
-                    ),
-                  ], rows: [
-                    DataRow(cells: [
-                      DataCell(Text('${controller.reportedCount} 回')),
-                      DataCell(Text('Flutter Basics')),
-                    ]),
-                  ]),
+                  child: DataTable(
+                      columnSpacing: 83,
+                      headingRowHeight: 0,
+                      border: TableBorder(top: BorderSide.none),
+                      // dataRowHeight: double.parse('20'),
+                      columns: [
+                        DataColumn(
+                          label: Container(),
+                        ),
+                        DataColumn(
+                          label: Container(),
+                        ),
+                      ],
+                      rows: [
+                        DataRow(cells: [
+                          DataCell(
+                            Text('通報回数'),
+                          ),
+                          DataCell(
+                            Container(
+                              width: 100,
+                              child: Text('${controller.reportedCount} 回'),
+                            ),
+                          ),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text("開始日")),
+                          DataCell(Text(controller.createdAtOnFormat)),
+                        ]),
+                      ]),
                 )
               ],
             ),

@@ -39,6 +39,11 @@ class DateFormatter {
       return '${DateFormat('yMd', locale).format(dateTime)}, $roughTimeString';
     }
   }
+
+  static String getCreatedAtString(DateTime createdAt) {
+    final outputFormat = DateFormat('yyyy/MM/dd');
+    return outputFormat.format((createdAt));
+  }
 }
 
 double distanceToString(int distance) {

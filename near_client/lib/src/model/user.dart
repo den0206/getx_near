@@ -18,6 +18,7 @@ class User extends JsonModel {
   String? avatarUrl;
   String? sessionToken;
   List<String> blockedUsers;
+  final DateTime createdAt;
 
   bool get isCurrent {
     return id == AuthService.to.currentUser.value?.id;
@@ -39,6 +40,7 @@ class User extends JsonModel {
     required this.sex,
     required this.fcmToken,
     required this.blockedUsers,
+    required this.createdAt,
     this.avatarUrl,
     this.sessionToken,
   });
@@ -52,6 +54,7 @@ class User extends JsonModel {
       'avatarUrl': avatarUrl,
       "sessionToken": sessionToken,
       "blocked": blockedUsers,
+      'createdAt': createdAt.toUtc().toIso8601String(),
       "fcmToken": fcmToken,
     };
   }
@@ -65,6 +68,9 @@ class User extends JsonModel {
       avatarUrl: map['avatarUrl'] ?? null,
       sessionToken: map["sessionToken"],
       blockedUsers: List<String>.from(map["blocked"] ?? []),
+      createdAt: map["createdAt"] != null
+          ? DateTime.parse(map["createdAt"]).toLocal()
+          : DateTime.now(),
       fcmToken: map["fcmToken"] ?? "",
     );
   }
@@ -75,7 +81,7 @@ class User extends JsonModel {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, sex: $sex, fcmToken: $fcmToken, avatarUrl: $avatarUrl, sessionToken: $sessionToken, blockedUsers: $blockedUsers)';
+    return 'User(id: $id, name: $name, email: $email, sex: $sex, fcmToken: $fcmToken, avatarUrl: $avatarUrl, sessionToken: $sessionToken, blockedUsers: $blockedUsers, createdAt: $createdAt)';
   }
 
   User copyWith({
@@ -86,6 +92,7 @@ class User extends JsonModel {
     String? fcmToken,
     String? avatarUrl,
     List<String>? blockedUsers,
+    DateTime? createdAt,
     String? sessionToken,
   }) {
     return User(
@@ -95,6 +102,7 @@ class User extends JsonModel {
       sex: sex ?? this.sex,
       fcmToken: fcmToken ?? this.fcmToken,
       blockedUsers: blockedUsers ?? this.blockedUsers,
+      createdAt: createdAt ?? this.createdAt,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       sessionToken: sessionToken ?? this.sessionToken,
     );

@@ -9,6 +9,7 @@ import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
+import 'package:getx_near/src/utils/date_formate.dart';
 
 import '../../../api/user_api.dart';
 import '../../main_tab/main_tab_controller.dart';
@@ -32,6 +33,10 @@ class UserDetailController extends GetxController {
   final RxDouble currentDistance = kMinDistance.toDouble().obs;
   int get searchDistance {
     return currentDistance.value.round();
+  }
+
+  String get createdAtOnFormat {
+    return DateFormatter.getCreatedAtString(user.createdAt);
   }
 
   @override
