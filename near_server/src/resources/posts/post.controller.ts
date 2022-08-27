@@ -27,7 +27,15 @@ async function createPost(req: Request, res: Response) {
 
 // experiment
 async function createPostWithNearUser(req: Request, res: Response) {
-  const {title, content, emergency, expireAt, longitude, latitude} = req.body;
+  const {
+    title,
+    content,
+    emergency,
+    maxDistance,
+    expireAt,
+    longitude,
+    latitude,
+  } = req.body;
   const userId = res.locals.user.userId;
   const cood = [longitude, latitude];
   try {
@@ -49,7 +57,7 @@ async function createPostWithNearUser(req: Request, res: Response) {
             type: 'Point',
             coordinates: cood,
           },
-          $maxDistance: 5000,
+          $maxDistance: parseInt(maxDistance as string),
         },
       },
     })
