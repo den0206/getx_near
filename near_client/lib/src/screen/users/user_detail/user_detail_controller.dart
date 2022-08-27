@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
+import 'package:getx_near/src/api/report_api.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/users/user_delete/user_delete_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
@@ -17,8 +18,10 @@ class UserDetailController extends GetxController {
 
   final currentUser = AuthService.to.currentUser.value!;
   final UserAPI _userAPI = UserAPI();
+  final ReportAPI _reportAPI = ReportAPI();
 
   bool isBlocked = false;
+  int reportedCount = 0;
   UserDetailController(this.user);
 
   LocationDetail currentSize = LocationDetail.high;
@@ -35,7 +38,11 @@ class UserDetailController extends GetxController {
   void onInit() async {
     super.onInit();
     isBlocked = currentUser.checkBlock(user);
+    await _getReportedCount();
     await _getLocalStorage();
+
+    // 更新
+    update();
   }
 
   Future<void> _getLocalStorage() async {
@@ -49,9 +56,6 @@ class UserDetailController extends GetxController {
         getMaxDistance(await StorageKey.searchDistance.loadInt());
 
     currentDistance.call(localDistance.roundToDouble());
-
-    // 更新
-    update();
   }
 
   Future<void> setLocalLoc(int value) async {
@@ -73,6 +77,17 @@ class UserDetailController extends GetxController {
     if (result is User) {
       user = result;
       update();
+    }
+  }
+
+  Future<void> _getReportedCount() async {
+    try {
+      final res = await _reportAPI.getReportedCount(userId: user.id);
+      reportedCount = int.parse(res.data);
+
+      if (!res.status) return;
+    } catch (e) {
+      showError(e.toString());
     }
   }
 

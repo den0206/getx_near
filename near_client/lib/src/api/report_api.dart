@@ -14,4 +14,13 @@ class ReportAPI extends APIBase {
       throw e;
     }
   }
+
+  Future<ResponseAPI> getReportedCount({required String userId}) async {
+    try {
+      final Uri uri = setUri("/getReportedCount/${userId}");
+      return await getRequest(uri: uri);
+    } catch (e) {
+      throw e;
+    }
+  }
 }

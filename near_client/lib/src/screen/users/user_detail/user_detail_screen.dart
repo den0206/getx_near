@@ -47,7 +47,7 @@ class UserDetailScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 20,
+                  height: 3.h,
                 ),
                 Neumorphic(
                   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -85,55 +85,80 @@ class UserDetailScreen extends StatelessWidget {
                         ),
                       ],
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: user.isCurrent
-                              ? [
-                                  NeumorphicIconButton(
-                                      icon: Icon(
-                                        Icons.edit,
-                                        size: 35.sp,
-                                      ),
-                                      onPressed: () {
-                                        controller.pushEditPage();
-                                      }),
-                                  NeumorphicIconButton(
-                                      icon: Icon(
-                                        Icons.settings,
-                                        size: 35.sp,
-                                      ),
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          backgroundColor:
-                                              ConstsColor.mainBackColor,
-                                          isScrollControlled: true,
-                                          builder: (context) {
-                                            return SettingsScreen();
-                                          },
-                                        );
-                                      }),
-                                ]
-                              : [
-                                  NeumorphicIconButton(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: user.isCurrent
+                            ? [
+                                NeumorphicIconButton(
                                     icon: Icon(
-                                      Icons.block,
-                                      color: controller.isBlocked
-                                          ? Colors.black
-                                          : Colors.red,
-                                      size: 40.sp,
+                                      Icons.edit,
+                                      size: 35.sp,
                                     ),
-                                    depth: controller.isBlocked ? -2 : 1,
                                     onPressed: () {
-                                      controller.blockUser();
-                                    },
+                                      controller.pushEditPage();
+                                    }),
+                                NeumorphicIconButton(
+                                    icon: Icon(
+                                      Icons.settings,
+                                      size: 35.sp,
+                                    ),
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        backgroundColor:
+                                            ConstsColor.mainBackColor,
+                                        isScrollControlled: true,
+                                        builder: (context) {
+                                          return SettingsScreen();
+                                        },
+                                      );
+                                    }),
+                              ]
+                            : [
+                                NeumorphicIconButton(
+                                  icon: Icon(
+                                    Icons.block,
+                                    color: controller.isBlocked
+                                        ? Colors.black
+                                        : Colors.red,
+                                    size: 40.sp,
                                   ),
-                                ]),
+                                  depth: controller.isBlocked ? -2 : 1,
+                                  onPressed: () {
+                                    controller.blockUser();
+                                  },
+                                ),
+                              ],
+                      ),
                       SizedBox(
                         height: 4.h,
                       ),
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Neumorphic(
+                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  style: commonNeumorphic(depth: 1.6),
+                  child: DataTable(columns: [
+                    DataColumn(
+                      label: Text('通報数'),
+                    ),
+                    DataColumn(
+                      label: Container(
+                        width: 100,
+                        child: Text('開始日'),
+                      ),
+                    ),
+                  ], rows: [
+                    DataRow(cells: [
+                      DataCell(Text('${controller.reportedCount} 回')),
+                      DataCell(Text('Flutter Basics')),
+                    ]),
+                  ]),
+                )
               ],
             ),
           ),
