@@ -39,6 +39,7 @@ extension LocationSizeEXT on LocationDetail {
   }
 }
 
+// storage default
 LocationDetail getLocationDetail(String? value) {
   // degault value
   if (value == null) return LocationDetail.high;
@@ -52,10 +53,17 @@ LocationDetail getLocationDetail(String? value) {
 
 final kMinDistance = 500;
 final kMaxDistance = 5000;
+final kDefaultDistance = 2500;
 
-int getMaxDistance(int? value) {
+int getNotificationDistance(int? value) {
   // default value
-  if (value == null) return kMinDistance;
+  if (value == null) return kDefaultDistance;
+  return value;
+}
+
+int getHomeDistance(int? value) {
+  // default value
+  if (value == null) return kDefaultDistance;
   return value;
 }
 

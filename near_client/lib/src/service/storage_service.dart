@@ -2,7 +2,13 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum StorageKey { user, locationSize, searchDistance, checkTerms }
+enum StorageKey {
+  user,
+  locationSize,
+  notificationDistance,
+  homeDistance,
+  checkTerms,
+}
 
 extension StorageKeyEXT on StorageKey {
   String get keyString {
@@ -13,8 +19,10 @@ extension StorageKeyEXT on StorageKey {
         return "locationSize";
       case StorageKey.checkTerms:
         return "checkTerms";
-      case StorageKey.searchDistance:
-        return "searchDistance";
+      case StorageKey.notificationDistance:
+        return "notificationDistance";
+      case StorageKey.homeDistance:
+        return "homeDistance";
     }
   }
 
@@ -71,6 +79,12 @@ Future<void> deleteStorageLogout() async {
   final pref = await SharedPreferences.getInstance();
 
   await pref.remove(StorageKey.locationSize.keyString);
-  await pref.remove(StorageKey.searchDistance.keyString);
+  await pref.remove(StorageKey.notificationDistance.keyString);
   await pref.remove(StorageKey.user.keyString);
+}
+
+Future<void> deleteAllStorage() async {
+  final pref = await SharedPreferences.getInstance();
+
+  await pref.clear();
 }

@@ -54,7 +54,7 @@ class CustomDialog extends StatelessWidget {
                 Text(
                   descripon,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 13.sp,
                   ),
                 ),
                 SizedBox(
