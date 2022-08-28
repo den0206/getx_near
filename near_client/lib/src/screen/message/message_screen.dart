@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/message.dart';
 import 'package:getx_near/src/screen/message/message_controller.dart';
+import 'package:getx_near/src/screen/users/user_detail/user_detail_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_textfield.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
@@ -24,6 +26,21 @@ class MessageScreen extends LoadingGetView<MessageController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(controller.extention.withUser.name),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: UserAvatarButton(
+              user: controller.extention.withUser,
+              size: 30.sp,
+              useNeumorphic: false,
+              onTap: () {
+                Get.to(
+                  () => UserDetailScreen(user: controller.extention.withUser),
+                );
+              },
+            ),
+          )
+        ],
       ),
       body: Column(
         children: [

@@ -1,8 +1,16 @@
-import {prop, Ref} from '@typegoose/typegoose';
+import {index, pre, prop, Ref} from '@typegoose/typegoose';
 import {User} from '../users/user.model';
 import {Message} from '../messages/message.model';
 import {Post} from '../posts/post.model';
+@pre<Report>('save', async function (next) {
+  // 一ヶ月後に削除
+  var expire = new Date();
+  expire.setMonth(expire.getMonth() + 1);
+  this.expireAt = expire;
 
+  next();
+})
+@index({expireAt: 1}, {expireAfterSeconds: 0})
 export class Report {
   @prop({required: true, ref: () => User})
   informer: Ref<User>;
@@ -14,4 +22,6 @@ export class Report {
   post: Ref<Post>;
   @prop({required: true})
   reportedContent: string;
+  @prop({default: null})
+  expireAt: Date;
 }

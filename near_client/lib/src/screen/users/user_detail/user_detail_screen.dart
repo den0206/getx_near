@@ -79,6 +79,13 @@ class UserDetailScreen extends StatelessWidget {
                                       controller.pushEditPage();
                                     }),
                                 NeumorphicIconButton(
+                                  icon: Icon(
+                                    Icons.home,
+                                    size: 35.sp,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                                NeumorphicIconButton(
                                     icon: Icon(
                                       Icons.settings,
                                       size: 35.sp,
@@ -144,7 +151,9 @@ class UserDetailScreen extends StatelessWidget {
                       // dataRowHeight: double.parse('20'),
                       columns: [
                         DataColumn(
-                          label: Container(),
+                          label: Container(
+                            width: 35.w,
+                          ),
                         ),
                         DataColumn(
                           label: Container(),
@@ -153,7 +162,10 @@ class UserDetailScreen extends StatelessWidget {
                       rows: [
                         DataRow(cells: [
                           DataCell(
-                            Text('通報回数'),
+                            Text(
+                              '1ヶ月間の通報回数',
+                              style: TextStyle(fontSize: 9.sp),
+                            ),
                           ),
                           DataCell(
                             Container(

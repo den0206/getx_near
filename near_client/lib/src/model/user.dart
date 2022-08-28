@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:getx_near/src/service/auth_service.dart';
+import 'package:getx_near/src/utils/global_functions.dart';
 
 abstract class JsonModel {
   JsonModel();
@@ -18,7 +20,11 @@ class User extends JsonModel {
   String? avatarUrl;
   String? sessionToken;
   List<String> blockedUsers;
+  final bool isFrozen;
   final DateTime createdAt;
+
+  // local storage
+  LatLng? home;
 
   bool get isCurrent {
     return id == AuthService.to.currentUser.value?.id;
@@ -41,6 +47,7 @@ class User extends JsonModel {
     required this.fcmToken,
     required this.blockedUsers,
     required this.createdAt,
+    required this.isFrozen,
     this.avatarUrl,
     this.sessionToken,
   });
@@ -54,6 +61,8 @@ class User extends JsonModel {
       'avatarUrl': avatarUrl,
       "sessionToken": sessionToken,
       "blocked": blockedUsers,
+      "home": home != null ? parseToLatlng(home!) : null,
+      "isFrozen": isFrozen,
       'createdAt': createdAt.toUtc().toIso8601String(),
       "fcmToken": fcmToken,
     };
@@ -68,6 +77,7 @@ class User extends JsonModel {
       avatarUrl: map['avatarUrl'] ?? null,
       sessionToken: map["sessionToken"],
       blockedUsers: List<String>.from(map["blocked"] ?? []),
+      isFrozen: map["isFrozen"] ?? false,
       createdAt: map["createdAt"] != null
           ? DateTime.parse(map["createdAt"]).toLocal()
           : DateTime.now(),
@@ -81,7 +91,7 @@ class User extends JsonModel {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, sex: $sex, fcmToken: $fcmToken, avatarUrl: $avatarUrl, sessionToken: $sessionToken, blockedUsers: $blockedUsers, createdAt: $createdAt)';
+    return 'User(id: $id, name: $name, email: $email, sex: $sex, fcmToken: $fcmToken, avatarUrl: $avatarUrl, sessionToken: $sessionToken, blockedUsers: $blockedUsers, isFrozen: $isFrozen, createdAt: $createdAt, home: $home)';
   }
 
   User copyWith({
@@ -92,6 +102,7 @@ class User extends JsonModel {
     String? fcmToken,
     String? avatarUrl,
     List<String>? blockedUsers,
+    bool? isFrozen,
     DateTime? createdAt,
     String? sessionToken,
   }) {
@@ -102,6 +113,7 @@ class User extends JsonModel {
       sex: sex ?? this.sex,
       fcmToken: fcmToken ?? this.fcmToken,
       blockedUsers: blockedUsers ?? this.blockedUsers,
+      isFrozen: isFrozen ?? this.isFrozen,
       createdAt: createdAt ?? this.createdAt,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       sessionToken: sessionToken ?? this.sessionToken,

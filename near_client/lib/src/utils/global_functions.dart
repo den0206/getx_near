@@ -107,6 +107,7 @@ Future<void> getToMessScreen({required User user}) async {
         sex: Sex.man,
         fcmToken: "",
         blockedUsers: [],
+        isFrozen: false,
         createdAt: DateTime.now(),
       );
 
