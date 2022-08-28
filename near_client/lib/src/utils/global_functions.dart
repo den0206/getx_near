@@ -80,6 +80,13 @@ Future<List<Post>> getTempNearPosts(
     temp
         .map((p) => {p.distance = getDistansePoints(from, p.coordinate)})
         .toList();
+
+    showSnackBar(
+      title: temp.isEmpty ? " 投稿が見つかりませんでした" : "${temp.length} 個の投稿が見つかりました",
+      message: temp.isEmpty ? "再度の検索をお願いします。" : "コメントをしてHELPに行こう!",
+      background: temp.isEmpty ? Colors.red : Colors.orange,
+      position: SnackPosition.TOP,
+    );
     return temp;
   } catch (e) {
     throw e;
