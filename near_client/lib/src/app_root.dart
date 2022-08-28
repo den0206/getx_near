@@ -10,6 +10,7 @@ import 'package:getx_near/src/screen/posts/post_add/add_post_screen.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/comments/comments_screen.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
+import 'package:getx_near/src/screen/users/protect_home/protect_home_screen.dart';
 import 'package:getx_near/src/screen/users/user_delete/user_delete_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_controller.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
@@ -44,6 +45,10 @@ final List<GetPage> _authPages = [
   GetPage(
     name: UserDeleteScreen.routeName,
     page: () => UserDeleteScreen(),
+  ),
+  GetPage(
+    name: ProtectHomeScreen.routeName,
+    page: () => ProtectHomeScreen(),
   ),
   GetPage(
     name: ResetPasswordAndEmailScreen.routeName,

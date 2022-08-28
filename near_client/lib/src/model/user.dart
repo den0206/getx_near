@@ -30,6 +30,10 @@ class User extends JsonModel {
     return id == AuthService.to.currentUser.value?.id;
   }
 
+  bool get hasHome {
+    return home != null;
+  }
+
   bool checkBlock(User user) {
     return this.blockedUsers.contains(user.id);
   }
@@ -48,6 +52,7 @@ class User extends JsonModel {
     required this.blockedUsers,
     required this.createdAt,
     required this.isFrozen,
+    this.home,
     this.avatarUrl,
     this.sessionToken,
   });
@@ -77,6 +82,7 @@ class User extends JsonModel {
       avatarUrl: map['avatarUrl'] ?? null,
       sessionToken: map["sessionToken"],
       blockedUsers: List<String>.from(map["blocked"] ?? []),
+      home: getHome(map),
       isFrozen: map["isFrozen"] ?? false,
       createdAt: map["createdAt"] != null
           ? DateTime.parse(map["createdAt"]).toLocal()
@@ -119,6 +125,15 @@ class User extends JsonModel {
       sessionToken: sessionToken ?? this.sessionToken,
     );
   }
+}
+
+LatLng? getHome(Map<String, dynamic> map) {
+  if (map["home"]?["coordinates"] == null) return null;
+  final cood = List<double>.from(map["home"]["coordinates"]);
+
+  /// CAUTION mongoose lat: [1], lng[0]
+  final latLng = LatLng(cood[1], cood[0]);
+  return latLng;
 }
 
 ImageProvider getUserImage(User user) {
