@@ -35,7 +35,9 @@ class ProtectHomeScreen extends StatelessWidget {
                 shrinkWrap: true,
               ),
               Text(
-                !controller.currentUser.hasHome ? "未登録です" : "登録済みです",
+                controller.currentUser.hasHome && controller.address != null
+                    ? "${controller.address} 周辺"
+                    : "未登録です",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
