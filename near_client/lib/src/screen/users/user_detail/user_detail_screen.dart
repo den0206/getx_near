@@ -83,7 +83,9 @@ class UserDetailScreen extends StatelessWidget {
                                     Icons.home,
                                     size: 35.sp,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    controller.showProtectHomeScreen();
+                                  },
                                 ),
                                 NeumorphicIconButton(
                                     icon: Icon(

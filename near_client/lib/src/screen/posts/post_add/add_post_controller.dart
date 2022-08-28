@@ -42,8 +42,8 @@ class AddPostController extends LoadingGetController {
   Future<void> sendPost() async {
     isLoading.call(true);
 
-    final maxDistance =
-        getMaxDistance(await StorageKey.searchDistance.loadInt());
+    final maxDistance = getNotificationDistance(
+        await StorageKey.notificationDistance.loadInt());
     print("通知距離: ${maxDistance}");
 
     try {

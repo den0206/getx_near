@@ -3,6 +3,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/report_api.dart';
 import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/screen/users/protect_home/protect_home_screen.dart';
 import 'package:getx_near/src/screen/users/user_delete/user_delete_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
@@ -57,8 +58,8 @@ class UserDetailController extends GetxController {
     currentSize = localLoc;
 
     // search Radius
-    final int localDistance =
-        getMaxDistance(await StorageKey.searchDistance.loadInt());
+    final int localDistance = getNotificationDistance(
+        await StorageKey.notificationDistance.loadInt());
 
     currentDistance.call(localDistance.roundToDouble());
   }
@@ -72,7 +73,7 @@ class UserDetailController extends GetxController {
   }
 
   Future<void> setLocalDistance() async {
-    await StorageKey.searchDistance.saveInt(searchDistance);
+    await StorageKey.notificationDistance.saveInt(searchDistance);
   }
 
   Future<void> pushEditPage() async {
@@ -124,7 +125,13 @@ class UserDetailController extends GetxController {
   }
 
   Future<void> showDeleteScreen() async {
+    if (!user.isCurrent) return;
     final _ = await Get.toNamed(UserDeleteScreen.routeName);
+  }
+
+  Future<void> showProtectHomeScreen() async {
+    if (!user.isCurrent) return;
+    final _ = await Get.toNamed(ProtectHomeScreen.routeName);
   }
 
   Future<void> blockUser() async {
