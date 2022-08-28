@@ -31,7 +31,7 @@ class ProtectHomeController extends GetxController {
       context: context,
       builder: (context) {
         return CustomDialog(
-          title: "居住地の登録",
+          title: !currentUser.hasHome ? "居住地の登録" : "居住地の更新",
           descripon: "現在地を居住地に登録しますか?",
           icon: Icons.home,
           mainColor: ConstsColor.mainGreenColor!,

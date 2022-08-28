@@ -5,6 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
@@ -48,6 +49,10 @@ class AddPostController extends LoadingGetController {
 
     try {
       final Position current = await _locationService.getCurrentPosition();
+
+      // check Protect Home
+      final isProtect = await _checkProtecthome(postPosition: current);
+      if (!isProtect) throw Exception("居住地からの距離が近いため送信できません.");
 
       final expire = expireTime.value.time;
       final AlertLevel alert = getAlert(emergencyValue.value);
@@ -97,9 +102,33 @@ class AddPostController extends LoadingGetController {
         position: SnackPosition.TOP,
       );
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       isLoading.call(false);
+    }
+  }
+
+  Future<bool> _checkProtecthome({required Position postPosition}) async {
+    final currentUser = AuthService.to.currentUser.value!;
+    // 未登録の場合,飛ばす
+    if (!currentUser.hasHome) return true;
+
+    final int homeDistance =
+        await getHomeDistance(await StorageKey.homeDistance.loadInt());
+
+    // 2点間の距離の計算(m)
+    int distanceBetween = Geolocator.distanceBetween(
+      currentUser.home!.latitude,
+      currentUser.home!.longitude,
+      postPosition.latitude,
+      postPosition.longitude,
+    ).round();
+
+    print("離れている距離は${distanceBetween} m");
+    if (homeDistance > distanceBetween) {
+      return false;
+    } else {
+      return true;
     }
   }
 }
