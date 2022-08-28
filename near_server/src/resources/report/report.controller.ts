@@ -25,6 +25,18 @@ async function reportUser(req: Request, res: Response) {
       post,
     });
     await report.save();
+
+    const count: number = await ReportModel.countDocuments({
+      reported: reported,
+    });
+    if (count > 5) {
+      // User を凍結する
+      console.log('凍結');
+      await UserModel.findByIdAndUpdate(reported, {
+        isFrozen: true,
+      });
+    }
+
     new ResponseAPI(res, {data: report}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);

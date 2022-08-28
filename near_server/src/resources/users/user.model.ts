@@ -8,6 +8,7 @@ import {
   RecentModel,
 } from '../../utils/database/models';
 import {Location} from '../../utils/interface/location';
+import {UserModel} from '../../utils/database/models';
 
 @pre<User>('save', async function (next) {
   if (this.isModified('password') || this.isNew) {
@@ -44,6 +45,12 @@ import {Location} from '../../utils/interface/location';
     await awsClient.deleteImage(this.avatarUrl);
   }
 
+  // blocksの削除
+  await UserModel.updateMany(
+    {blocked: {$in: [this._id]}},
+    {$pull: {blocked: this._id}}
+  );
+
   next();
 })
 @index({location: '2dsphere'})
@@ -64,6 +71,8 @@ export class User {
   fcmToken: string;
   @prop({_id: false})
   location: Location;
+  @prop({default: false})
+  isFrozen: boolean;
   @prop()
   createdAt: Date;
 
