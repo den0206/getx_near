@@ -18,6 +18,7 @@ class AuthService extends GetxService {
     final value = await StorageKey.user.loadString();
     if (value == null) return;
 
+    // set home
     this.currentUser.call(User.fromMap(value!));
     _registerMustControllers();
     print(currentUser.value.toString());
@@ -26,6 +27,8 @@ class AuthService extends GetxService {
   Future<void> updateUser(User newUser) async {
     if (newUser.sessionToken == null)
       newUser.sessionToken = currentUser.value!.sessionToken;
+
+    // set home
     await StorageKey.user.saveString(newUser.toMap());
     this.currentUser.call(newUser);
 

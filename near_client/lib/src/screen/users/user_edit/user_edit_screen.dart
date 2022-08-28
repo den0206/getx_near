@@ -82,17 +82,6 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                 SizedBox(
                   height: 40,
                 ),
-                Builder(builder: (context) {
-                  return CustomButton(
-                    title: "Delete",
-                    width: 50.w,
-                    background: Colors.red,
-                    onPressed: () {},
-                  );
-                }),
-                SizedBox(
-                  height: 40,
-                ),
               ],
             ),
           ),
