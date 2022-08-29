@@ -4,6 +4,8 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/sos/sos_screen.dart';
+import 'package:getx_near/src/screen/tutorial/tutorial_screen.dart';
+import 'package:getx_near/src/service/storage_service.dart';
 import '../../service/auth_service.dart';
 import '../map/map_screen.dart';
 import '../posts/posts_tab/my_post_tab_screen.dart';
@@ -14,6 +16,11 @@ class MainTabController extends GetxController {
   static MainTabController get to => Get.find();
   var currentIndex = 0;
   var oldIndex = 0;
+
+  // 過去に閲覧済みかの変数
+  bool readTutolial = false;
+  // viewが表示されているかの変数
+  bool _isTutorial = false;
 
   late final int postsIndex;
   late final int mapIndex;
@@ -45,6 +52,21 @@ class MainTabController extends GetxController {
 
     stackPages.addAll(fixPages);
     _setSpecificIndex();
+  }
+
+  Future<void> showTutorial(BuildContext context) async {
+    readTutolial = await StorageKey.loginTutolial.loadBool() ?? false;
+    print(readTutolial);
+    if (!_isTutorial && !readTutolial) {
+      _isTutorial = true;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TutorialPage(),
+          fullscreenDialog: true,
+        ),
+      ).then((value) => _isTutorial = false);
+    }
   }
 
   void _setSpecificIndex() {
