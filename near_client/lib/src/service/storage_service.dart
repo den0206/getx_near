@@ -8,6 +8,7 @@ enum StorageKey {
   notificationDistance,
   homeDistance,
   checkTerms,
+  loginTutolial,
 }
 
 extension StorageKeyEXT on StorageKey {
@@ -23,6 +24,8 @@ extension StorageKeyEXT on StorageKey {
         return "notificationDistance";
       case StorageKey.homeDistance:
         return "homeDistance";
+      case StorageKey.loginTutolial:
+        return "loginTutolial";
     }
   }
 
@@ -81,6 +84,7 @@ Future<void> deleteStorageLogout() async {
   await pref.remove(StorageKey.locationSize.keyString);
   await pref.remove(StorageKey.notificationDistance.keyString);
   await pref.remove(StorageKey.user.keyString);
+  await pref.remove(StorageKey.loginTutolial.keyString);
 }
 
 Future<void> deleteAllStorage() async {

@@ -27,7 +27,6 @@ class NotificationService extends GetxService {
   @override
   void onInit() async {
     super.onInit();
-    await requestPermission();
     listenForeground();
   }
 
