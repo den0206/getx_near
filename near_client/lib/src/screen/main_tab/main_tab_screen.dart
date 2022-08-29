@@ -23,6 +23,11 @@ class MainTabScreen extends StatelessWidget {
       init: MainTabController(),
       autoRemove: false,
       builder: (controller) {
+        // チュートリアルの表示
+        if (!controller.readTutolial)
+          WidgetsBinding.instance.addPostFrameCallback(
+              (_) async => await controller.showTutorial(context));
+
         return Scaffold(
           body: !controller.isExistMap
               ? controller.currentPages[controller.currentIndex]

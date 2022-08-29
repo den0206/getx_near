@@ -64,7 +64,7 @@ class ProtectHomeController extends GetxController {
       address = await _getAddressFromCoords(latLng: home);
       _updatelocalUser(home: home);
     } catch (e) {
-      showError(e.toString());
+      showError("居住地の更新に失敗しました。");
     }
   }
 
@@ -91,6 +91,7 @@ class ProtectHomeController extends GetxController {
     await AuthService.to.updateUser(copyUser);
 
     if (home == null) address = null;
+    print("update");
     update();
   }
 
