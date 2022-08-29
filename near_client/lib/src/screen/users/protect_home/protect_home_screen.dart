@@ -20,9 +20,13 @@ class ProtectHomeScreen extends StatelessWidget {
       "当ページから迅速に削除・更新が可能です。",
     ].map((x) => "- $x\n").reduce((x, y) => "$x$y");
 
+    bool isTutorial = !Navigator.canPop(context);
+
     return Scaffold(
+      backgroundColor: !isTutorial ? Colors.transparent : null,
       appBar: AppBar(
         title: const Text('家周辺の登録'),
+        automaticallyImplyLeading: isTutorial,
       ),
       body: GetBuilder<ProtectHomeController>(
         init: ProtectHomeController(),
