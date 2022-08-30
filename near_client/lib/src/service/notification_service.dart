@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:getx_near/src/api/notification_api.dart';
 
-enum NotificationType { message, post }
+enum NotificationType {
+  message,
+  post,
+  comment,
+}
 
 extension NotificationTypeEXT on NotificationType {
   String get title {
@@ -12,6 +18,19 @@ extension NotificationTypeEXT on NotificationType {
         return "New Message";
       case NotificationType.post:
         return "Help!";
+      case NotificationType.comment:
+        return "New Comment";
+    }
+  }
+
+  String get content {
+    switch (this) {
+      case NotificationType.message:
+        return "新しいメッセージが届きました";
+      case NotificationType.post:
+        return "近くでポストが投稿されました。";
+      case NotificationType.comment:
+        return "新しいコメントが届きました";
     }
   }
 }
@@ -33,6 +52,12 @@ class NotificationService extends GetxService {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  String get soundPath {
+    // iOS only accepts .wav, .aiff, and .caf extensions
+    // Android only accepts .wav, .mp3 and .ogg extensions
+    return Platform.isIOS ? "help.caf" : "help.wav";
   }
 
   Future<void> initService() async {
@@ -69,7 +94,7 @@ class NotificationService extends GetxService {
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) {
         print("FOREGROUND");
-        showNotification(message);
+        // showNotification(message);
       },
     );
   }
@@ -90,13 +115,13 @@ class NotificationService extends GetxService {
             channelDescription: channel.description,
             icon: 'launch_background',
             playSound: true,
-            sound: RawResourceAndroidNotificationSound("HELP!.wav"),
+            sound: RawResourceAndroidNotificationSound(soundPath),
           ),
           iOS: IOSNotificationDetails(
             presentSound: true,
             presentBadge: true,
             presentAlert: true,
-            sound: 'help.wav', //←Xcodeにドロップしたファイル名
+            sound: soundPath,
           ),
         ),
       );
@@ -107,23 +132,29 @@ class NotificationService extends GetxService {
   Future<void> pushPostNotification({
     required List<String> tokens,
     required NotificationType type,
-    required String content,
   }) async {
     final Map<String, dynamic> data = {
       "registration_ids": tokens,
       "notification": {
         "Title": type.title,
-        "body": content,
+        "body": type.content,
         "content_available": true,
         "priority": "high",
+        "sound": soundPath,
         "click_action": "FLUTTER_NOTIFICATION_CLICK",
+      },
+      "apns": {
+        "payload": {
+          "aps": {
+            "sound": soundPath,
+          }
+        }
       },
       "data": {
         "priority": "high",
-        "sound": "help.wav",
-        // "sound": "app_sound.wav",
+        "sound": soundPath,
         "content_available": true,
-        "bodyText": content,
+        "bodyText": type.content,
       }
     };
 

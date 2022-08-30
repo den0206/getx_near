@@ -107,88 +107,91 @@ Future<void> showTermsDialog(BuildContext context) {
     barrierColor: Colors.black45,
     transitionDuration: const Duration(milliseconds: 200),
     pageBuilder: (context, animation, secondaryAnimation) {
-      return GetBuilder<LoginController>(
-        builder: (current) {
-          return FadeinWidget(
-            child: Center(
-              child: Container(
-                width: 85.w,
-                height: MediaQuery.of(context).size.height - 80,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: ConstsColor.mainBackColor,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 7,
-                      child: FutureBuilder(
-                        future: rootBundle.loadString(
-                          "assets/markdown/privacy_jpn.md",
-                        ),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<String> snapshot) {
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+      return WillPopScope(
+        onWillPop: () async => false,
+        child: GetBuilder<LoginController>(
+          builder: (current) {
+            return FadeinWidget(
+              child: Center(
+                child: Container(
+                  width: 85.w,
+                  height: MediaQuery.of(context).size.height - 80,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: ConstsColor.mainBackColor,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 7,
+                        child: FutureBuilder(
+                          future: rootBundle.loadString(
+                            "assets/markdown/privacy_jpn.md",
+                          ),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
 
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: Colors.black),
-                            ),
-                            child: Markdown(
-                              data: snapshot.data!,
-                              shrinkWrap: true,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Material(
-                        color: ConstsColor.mainBackColor,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Checkbox(
-                              value: current.acceptTerms,
-                              onChanged: (value) {
-                                if (value == null) return;
-                                current.acceptTerms = value;
-                                current.update();
-                              },
-                            ),
-                            Text(
-                              '利用規約に同意します',
-                              style: TextStyle(fontSize: 12),
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: true,
-                              maxLines: 2,
-                            ),
-                          ],
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: Markdown(
+                                data: snapshot.data!,
+                                shrinkWrap: true,
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    ),
-                    CustomButton(
-                      title: "OK",
-                      background: Colors.green,
-                      onPressed: !current.acceptTerms
-                          ? null
-                          : () {
-                              current.setTerms(context);
-                            },
-                    )
-                  ],
+                      Expanded(
+                        flex: 1,
+                        child: Material(
+                          color: ConstsColor.mainBackColor,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Checkbox(
+                                value: current.acceptTerms,
+                                onChanged: (value) {
+                                  if (value == null) return;
+                                  current.acceptTerms = value;
+                                  current.update();
+                                },
+                              ),
+                              Text(
+                                '利用規約に同意します',
+                                style: TextStyle(fontSize: 12),
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                                maxLines: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      CustomButton(
+                        title: "OK",
+                        background: Colors.green,
+                        onPressed: !current.acceptTerms
+                            ? null
+                            : () {
+                                current.setTerms(context);
+                              },
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       );
     },
   );
