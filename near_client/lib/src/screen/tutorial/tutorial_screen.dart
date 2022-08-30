@@ -11,76 +11,79 @@ class TutorialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<TutorialController>(
-        init: TutorialController(_pageController, _notifier),
-        builder: (controller) {
-          return Stack(children: [
-            AnimatedBackgroundColor(
-              colors: controller.backColors,
-              pageController: controller.pageController,
-              pageCount: controller.pages.length,
-              child: Container(
-                child: PageView(
-                  controller: controller.pageController,
-                  physics: controller.isLast
-                      ? NeverScrollableScrollPhysics()
-                      : AlwaysScrollableScrollPhysics(),
-                  children: controller.pages
-                      .asMap()
-                      .entries
-                      .map(
-                        (entry) => _generateTutorialPage(
-                          entry.key,
-                          controller,
-                          entry.value,
-                        ),
-                      )
-                      .toList(),
+      body: WillPopScope(
+        onWillPop: () async => false,
+        child: GetBuilder<TutorialController>(
+          init: TutorialController(_pageController, _notifier),
+          builder: (controller) {
+            return Stack(children: [
+              AnimatedBackgroundColor(
+                colors: controller.backColors,
+                pageController: controller.pageController,
+                pageCount: controller.pages.length,
+                child: Container(
+                  child: PageView(
+                    controller: controller.pageController,
+                    physics: controller.isLast
+                        ? NeverScrollableScrollPhysics()
+                        : AlwaysScrollableScrollPhysics(),
+                    children: controller.pages
+                        .asMap()
+                        .entries
+                        .map(
+                          (entry) => _generateTutorialPage(
+                            entry.key,
+                            controller,
+                            entry.value,
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
-            ),
-            if (!controller.isFirst)
+              if (!controller.isFirst)
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios_rounded,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      controller.changePage(context, isBack: true);
+                    },
+                  ),
+                ),
               Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios_rounded,
-                    color: Colors.white,
+                alignment: Alignment.topRight,
+                child: TextButton(
+                  child: Text(
+                    !controller.isLast ? "スキップ" : "終了",
+                    style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    controller.changePage(context, isBack: true);
+                    controller.changePage(context);
                   },
                 ),
               ),
-            Align(
-              alignment: Alignment.topRight,
-              child: TextButton(
-                child: Text(
-                  !controller.isLast ? "スキップ" : "終了",
-                  style: TextStyle(color: Colors.white),
+              Align(
+                alignment: Alignment(0, 0.94),
+                child: SlidingIndicator(
+                  indicatorCount: controller.pages.length,
+                  notifier: controller.notifier,
+                  activeIndicator: Icon(
+                    Icons.check_circle,
+                    color: controller.currentCollor,
+                  ),
+                  inActiveIndicator: Icon(Icons.circle, color: Colors.white),
+                  margin: 8,
+                  inactiveIndicatorSize: 30,
+                  activeIndicatorSize: 35,
                 ),
-                onPressed: () {
-                  controller.changePage(context);
-                },
               ),
-            ),
-            Align(
-              alignment: Alignment(0, 0.94),
-              child: SlidingIndicator(
-                indicatorCount: controller.pages.length,
-                notifier: controller.notifier,
-                activeIndicator: Icon(
-                  Icons.check_circle,
-                  color: controller.currentCollor,
-                ),
-                inActiveIndicator: Icon(Icons.circle, color: Colors.white),
-                margin: 8,
-                inactiveIndicatorSize: 30,
-                activeIndicatorSize: 35,
-              ),
-            ),
-          ]);
-        },
+            ]);
+          },
+        ),
       ),
     );
   }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/tutorial/pages/reqire_permission.screen.dart';
 import 'package:getx_near/src/screen/tutorial/pages/welcome_screen.dart';
 import 'package:getx_near/src/screen/users/protect_home/protect_home_screen.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
+import 'package:getx_near/src/utils/global_functions.dart';
 
 import '../../service/notification_service.dart';
 import '../../service/permission_service.dart';
@@ -41,7 +43,9 @@ class TutorialController extends GetxController {
           );
         },
       ),
-      ProtectHomeScreen(),
+      ProtectHomeScreen(
+        isTutorial: true,
+      ),
     ];
   }
 
@@ -49,7 +53,7 @@ class TutorialController extends GetxController {
     return [
       ConstsColor.mainBackColor,
       ConstsColor.mainGreenColor!,
-      Color.fromARGB(255, 249, 154, 38),
+      ConstsColor.mainOrangeColor,
       ConstsColor.mainBackColor,
     ];
   }
@@ -81,6 +85,13 @@ class TutorialController extends GetxController {
     if (isLast && !isBack) {
       await StorageKey.loginTutolial.saveBool(true);
       Navigator.of(context).pop();
+
+      showSnackBar(
+        title: "Welcome",
+        message: "チュートリアルが完了しました",
+        background: ConstsColor.mainOrangeColor,
+      );
+
       return;
     }
     ;
