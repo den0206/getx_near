@@ -9,6 +9,8 @@ class ConstsColor {
   static final cautionColor = Colors.yellow;
   static final mianPinkColor = hexToColor("#ffccd6");
   static final mainGreenColor = Colors.green[300];
+  static final locationColor = hexToColor("ff05d56");
+  static final mainOrangeColor = Color.fromARGB(255, 249, 154, 38);
 }
 
 // static final commonBackground = Colors.grey[200];
