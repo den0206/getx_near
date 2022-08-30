@@ -80,7 +80,9 @@ class AddPostController extends LoadingGetController {
       // notification　を送る
       if (tokens.isNotEmpty)
         await NotificationService.to.pushPostNotification(
-            tokens: tokens, type: NotificationType.post, content: "Help!");
+          tokens: tokens,
+          type: NotificationType.post,
+        );
 
       if (Get.isRegistered<MyPostsController>())
         MyPostsController.to.insertPost(post);

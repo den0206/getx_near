@@ -24,6 +24,7 @@ import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 import '../../../../main.dart';
+import '../../../service/notification_service.dart';
 import '../../widget/animation_widget.dart';
 
 class PostDetailController extends LoadingGetController {
@@ -152,6 +153,14 @@ class PostDetailController extends LoadingGetController {
 
       final newComment = Comment.fromMapWithPost(res.data, post);
       _postIO.sendNewComment(newComment);
+
+      if (!post.isCurrent && post.user.fcmToken.isNotEmpty) {
+        // post user に通知を飛ばす
+        await NotificationService.to.pushPostNotification(
+          tokens: [post.user.fcmToken],
+          type: NotificationType.comment,
+        );
+      }
 
       commentContoller.clear();
     } catch (e) {

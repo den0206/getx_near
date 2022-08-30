@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_near/src/api/post_api.dart';
+import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../main.dart';
@@ -84,8 +85,8 @@ Future<List<Post>> getTempNearPosts(
     showSnackBar(
       title: temp.isEmpty ? " 投稿が見つかりませんでした" : "${temp.length} 個の投稿が見つかりました",
       message: temp.isEmpty ? "再度の検索をお願いします。" : "コメントをしてHELPに行こう!",
-      background: temp.isEmpty ? Colors.red : Colors.orange,
-      position: SnackPosition.TOP,
+      background: temp.isEmpty ? Colors.red : ConstsColor.mainOrangeColor,
+      position: SnackPosition.BOTTOM,
     );
     return temp;
   } catch (e) {

@@ -9,7 +9,9 @@ import '../../../service/location_service.dart';
 
 class ProtectHomeScreen extends StatelessWidget {
   static const routeName = '/ProtectHome';
-  const ProtectHomeScreen({super.key});
+  const ProtectHomeScreen({super.key, this.isTutorial = false});
+
+  final bool isTutorial;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +22,11 @@ class ProtectHomeScreen extends StatelessWidget {
       "当ページから迅速に削除・更新が可能です。",
     ].map((x) => "- $x\n").reduce((x, y) => "$x$y");
 
-    bool isTutorial = !Navigator.canPop(context);
-
     return Scaffold(
-      backgroundColor: !isTutorial ? Colors.transparent : null,
+      backgroundColor: isTutorial ? Colors.transparent : null,
       appBar: AppBar(
         title: const Text('家周辺の登録'),
-        automaticallyImplyLeading: isTutorial,
+        automaticallyImplyLeading: !isTutorial,
       ),
       body: GetBuilder<ProtectHomeController>(
         init: ProtectHomeController(),
@@ -48,8 +48,13 @@ class ProtectHomeScreen extends StatelessWidget {
               ),
               NeumorphicIconButton(
                 depth: !controller.currentUser.hasHome ? 1 : -1,
-                icon: Icon(Icons.home,
-                    size: 100.sp, color: ConstsColor.mainGreenColor),
+                icon: Icon(
+                  Icons.home,
+                  size: 100.sp,
+                  color: !controller.currentUser.hasHome
+                      ? ConstsColor.locationColor
+                      : ConstsColor.mainGreenColor,
+                ),
                 onPressed: () async {
                   await controller.tryRegisterHome(context);
                 },
@@ -61,7 +66,7 @@ class ProtectHomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: NeumorphicTextButton(
                       title: "居住地の削除",
-                      titleColor: Colors.redAccent,
+                      titleColor: ConstsColor.locationColor,
                       onPressed: () async {
                         await controller.tryDeleteHome(context);
                       },

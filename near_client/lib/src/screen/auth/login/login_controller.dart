@@ -8,6 +8,7 @@ import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/auth/reset_password/reset_password_screen.dart';
 import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
@@ -40,19 +41,19 @@ class LoginController extends GetxController {
   Future<void> login() async {
     if (!buttonEnale.value) return;
 
-    final fcm = await NotificationService.to.getFCMToken();
-
-    if (fcm == null) throw Exception("Can't get FCM");
-
-    final authData = {
-      "email": emailController.text,
-      "password": passwordController.text,
-      "fcmToken": fcm,
-    };
-
     topLoading.call(true);
 
     try {
+      final fcm = await NotificationService.to.getFCMToken();
+
+      if (fcm == null) throw Exception("Can't get FCM");
+
+      final authData = {
+        "email": emailController.text,
+        "password": passwordController.text,
+        "fcmToken": fcm,
+      };
+
       final res = await _userAPI.login(authData);
       if (!res.status) return;
 
@@ -65,7 +66,7 @@ class LoginController extends GetxController {
 
       await AuthService.to.updateUser(user);
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       topLoading.call(false);
     }

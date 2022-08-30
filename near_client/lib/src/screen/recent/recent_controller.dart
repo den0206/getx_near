@@ -4,6 +4,7 @@ import 'package:getx_near/src/api/recent_api.dart';
 import 'package:getx_near/src/model/recent.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/screen/message/message_screen.dart';
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/message_extention.dart';
 import 'package:getx_near/src/socket/recent_io.dart';
@@ -76,7 +77,7 @@ class RecentController extends LoadingGetController {
       recents.remove(recent);
       update();
     } else {
-      print("Delete Fail, ${res.message}");
+      showError("Delete Fail, ${res.message}");
     }
   }
 
@@ -102,21 +103,23 @@ class RecentController extends LoadingGetController {
     final ext = MessageExtention(recent.chatRoomId, recent.withUser);
     final _ = await Get.toNamed(MessageScreen.routeName, arguments: ext);
 
-    resetCounter(recent);
+    await resetCounter(recent);
+    update();
   }
 
-  void resetCounter(Recent tempRecent) {
-    if (tempRecent.counter != 0) {
+  Future<void> resetCounter(Recent tempRecent) async {
+    int index = recents.indexWhere((recent) => recent.id == tempRecent.id);
+    final isUpdate = recents[index].counter != 0;
+    if (isUpdate) {
       print("Reset Counter");
       tempRecent.counter = 0;
 
-      update();
       final value = {
         "recentId": tempRecent.id,
         "counter": 0,
       };
 
-      _recentAPI.updateRecent(value);
+      await _recentAPI.updateRecent(value);
     }
   }
 }

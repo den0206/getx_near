@@ -91,7 +91,6 @@ class ProtectHomeController extends GetxController {
     await AuthService.to.updateUser(copyUser);
 
     if (home == null) address = null;
-    print("update");
     update();
   }
 

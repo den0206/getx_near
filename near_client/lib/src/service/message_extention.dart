@@ -78,7 +78,6 @@ class MessageExtention {
       await NotificationService.to.pushPostNotification(
         tokens: [withUser.fcmToken],
         type: NotificationType.message,
-        content: newMessage.text,
       );
   }
 
