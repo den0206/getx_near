@@ -56,7 +56,7 @@ class MainTabController extends GetxController {
 
   Future<void> showTutorial(BuildContext context) async {
     readTutolial = await StorageKey.loginTutolial.loadBool() ?? false;
-    print(readTutolial);
+
     if (!_isTutorial && !readTutolial) {
       _isTutorial = true;
       Navigator.push(

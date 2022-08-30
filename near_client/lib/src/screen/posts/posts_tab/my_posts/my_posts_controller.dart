@@ -26,7 +26,7 @@ class MyPostsController extends LoadingGetController {
 
   final List<Comment> relationComments = [];
   final CommentAPI _commentAPI = CommentAPI();
-  final int commentLimit = 2;
+  final int commentLimit = 5;
 
   @override
   void onInit() async {
