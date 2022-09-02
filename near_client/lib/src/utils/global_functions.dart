@@ -34,7 +34,7 @@ void showSnackBar({
     borderRadius: 20,
     margin: EdgeInsets.all(15),
     colorText: Colors.white,
-    duration: Duration(seconds: 4),
+    duration: Duration(seconds: 2),
     isDismissible: true,
     dismissDirection: DismissDirection.down,
     forwardAnimationCurve: Curves.easeOutBack,

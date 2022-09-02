@@ -16,4 +16,6 @@ recentRoute.post('/create', checkAuth, recentController.createChatRecent);
 recentRoute.put('/', checkAuth, recentController.updateRecent);
 recentRoute.delete('/delete', checkAuth, recentController.deleteRecent);
 
+recentRoute.get('/badgeCount', checkAuth, recentController.getBadgCount);
+
 export default recentRoute;

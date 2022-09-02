@@ -1,3 +1,5 @@
+import 'package:getx_near/src/screen/widget/detect_life_cycle_widget.dart';
+import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -28,43 +30,62 @@ class MainTabScreen extends StatelessWidget {
           WidgetsBinding.instance.addPostFrameCallback(
               (_) async => await controller.showTutorial(context));
 
-        return Scaffold(
-          body: !controller.isExistMap
-              ? controller.currentPages[controller.currentIndex]
-              : IndexedStack(
-                  index: controller.currentIndex,
-                  children: controller.currentPages,
-                ),
-          bottomNavigationBar: controller.currentIndex != 2
-              ? Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  height: kBottomNavigationBarHeight,
-                  decoration: BoxDecoration(color: ConstsColor.mainBackColor),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: bottomIcons
-                        .asMap()
-                        .entries
-                        .map(
-                          (entry) => NeumorphicRadio(
-                            padding: EdgeInsets.all(10),
-                            style: commonRatioStyle(),
-                            child: Icon(
-                              entry.value,
-                              size: 25.sp,
-                            ),
-                            value: entry.key,
-                            groupValue: controller.currentIndex,
-                            onChanged: (int? index) {
-                              if (index == null) return;
-                              controller.setIndex(index);
-                            },
-                          ),
-                        )
-                        .toList(),
+        return DetectLifeCycleWidget(
+          onChangeState: (state) {
+            switch (state) {
+              case AppLifecycleState.inactive:
+                print('非アクティブになったときの処理');
+                NotificationService.to.updateBadges();
+                break;
+              case AppLifecycleState.paused:
+                print("Paused");
+                break;
+              case AppLifecycleState.resumed:
+                print("ForeGround");
+                break;
+              case AppLifecycleState.detached:
+                print('破棄されたときの処理');
+                break;
+            }
+          },
+          child: Scaffold(
+            body: !controller.isExistMap
+                ? controller.currentPages[controller.currentIndex]
+                : IndexedStack(
+                    index: controller.currentIndex,
+                    children: controller.currentPages,
                   ),
-                )
-              : null,
+            bottomNavigationBar: controller.currentIndex != 2
+                ? Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    height: kBottomNavigationBarHeight,
+                    decoration: BoxDecoration(color: ConstsColor.mainBackColor),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: bottomIcons
+                          .asMap()
+                          .entries
+                          .map(
+                            (entry) => NeumorphicRadio(
+                              padding: EdgeInsets.all(10),
+                              style: commonRatioStyle(),
+                              child: Icon(
+                                entry.value,
+                                size: 25.sp,
+                              ),
+                              value: entry.key,
+                              groupValue: controller.currentIndex,
+                              onChanged: (int? index) {
+                                if (index == null) return;
+                                controller.setIndex(index);
+                              },
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  )
+                : null,
+          ),
         );
       },
     );

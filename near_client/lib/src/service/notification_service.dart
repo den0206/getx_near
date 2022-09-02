@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:getx_near/main.dart';
 import 'package:getx_near/src/api/notification_api.dart';
+import 'package:getx_near/src/api/recent_api.dart';
 
 enum NotificationType {
   message,
@@ -42,6 +45,7 @@ class NotificationService extends GetxService {
       FlutterLocalNotificationsPlugin();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final NotificationAPI _notificationAPI = NotificationAPI();
+  final RecentAPI _recentAPI = RecentAPI();
 
   @override
   void onInit() async {
@@ -87,6 +91,7 @@ class NotificationService extends GetxService {
   }
 
   Future<String?> getFCMToken() async {
+    if (isRealDevice) print(await _firebaseMessaging.getAPNSToken());
     return await _firebaseMessaging.getToken();
   }
 
@@ -161,6 +166,37 @@ class NotificationService extends GetxService {
     final res = await _notificationAPI.sendNotification(data);
 
     print("Push Notification! ${tokens.length}");
+
     print(res.toString());
+  }
+
+  Future<int> _getBadges() async {
+    // if (!canBadge) return 0;
+    final res = await _recentAPI.getBadgeCount();
+    if (!res.status) {
+      print("バッジの獲得不可");
+      return 0;
+    }
+
+    int badgeCount = res.data;
+    return badgeCount;
+  }
+
+  Future<void> updateBadges() async {
+    print('Background');
+
+    try {
+      int badgeCount = await _getBadges();
+      print(badgeCount);
+      if (badgeCount > 0) {
+        if (badgeCount > 99) badgeCount = 99;
+
+        FlutterAppBadger.updateBadgeCount(badgeCount);
+      } else {
+        FlutterAppBadger.removeBadge();
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

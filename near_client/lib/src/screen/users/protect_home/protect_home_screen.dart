@@ -17,7 +17,8 @@ class ProtectHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final _markDownData = [
       "家周辺にいる場合,投稿を禁止にできます ",
-      "居住地の情報は外部サーバーに送信されず,暗号化して保持します。",
+      "当情報は外部サーバーに送信されません。",
+      "暗号化して端末に保持されます。",
       "位置情報の正確度は設定より変更できます。",
       "当ページから迅速に削除・更新が可能です。",
     ].map((x) => "- $x\n").reduce((x, y) => "$x$y");

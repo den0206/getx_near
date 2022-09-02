@@ -3,6 +3,7 @@ import {RecentModel} from '../../utils/database/models';
 import ResponseAPI from '../../utils/interface/response.api';
 import {checkMongoId} from '../../utils/database/database';
 import {usePagenation} from '../../utils/database/pagenation';
+import mongoose from 'mongoose';
 
 async function createChatRecent(req: Request, res: Response) {
   const {userId, chatRoomId, withUserId} = req.body;
@@ -104,6 +105,24 @@ async function findByUserAndRoomid(req: Request, res: Response) {
   }
 }
 
+async function getBadgCount(req: Request, res: Response) {
+  const userId = res.locals.user.userId;
+
+  try {
+    const count = await RecentModel.aggregate([
+      {$match: {userId: new mongoose.Types.ObjectId(userId)}},
+      {$group: {_id: null, counter: {$sum: '$counter'}}},
+    ]);
+
+    if (count.length < 1) return new ResponseAPI(res, {data: 0}).excute(200);
+    const total = count[0].counter as number;
+
+    return res.status(200).json({status: true, data: total});
+  } catch (e: any) {
+    new ResponseAPI(res, {message: e.message}).excute(500);
+  }
+}
+
 export default {
   createChatRecent,
   updateRecent,
@@ -111,4 +130,5 @@ export default {
   findByUserId,
   findByRoomId,
   findByUserAndRoomid,
+  getBadgCount,
 };
