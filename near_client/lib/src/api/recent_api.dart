@@ -63,4 +63,13 @@ class RecentAPI extends APIBase {
       return catchAPIError(e.toString());
     }
   }
+
+  Future<ResponseAPI> getBadgeCount() async {
+    try {
+      final Uri uri = setUri("/badgeCount");
+      return await getRequest(uri: uri, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
 }
