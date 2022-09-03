@@ -106,7 +106,7 @@ async function findByUserAndRoomid(req: Request, res: Response) {
 }
 
 async function getBadgCount(req: Request, res: Response) {
-  const userId = res.locals.user.userId;
+  const userId = req.query.userId as string;
 
   try {
     const count = await RecentModel.aggregate([
