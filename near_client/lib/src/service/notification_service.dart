@@ -6,7 +6,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:getx_near/main.dart';
 import 'package:getx_near/src/api/notification_api.dart';
-import 'package:getx_near/src/api/recent_api.dart';
 
 enum NotificationType {
   message,
@@ -45,12 +44,27 @@ class NotificationService extends GetxService {
       FlutterLocalNotificationsPlugin();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final NotificationAPI _notificationAPI = NotificationAPI();
-  final RecentAPI _recentAPI = RecentAPI();
+
+  late bool canBadge;
+  int _currentBadge = 0;
+  int get currentBadge => _currentBadge;
+  set currentBadge(int value) {
+    if (value < 0) {
+      // 最低 0
+      _currentBadge = 0;
+    } else if (value > 99) {
+      // 最高 99
+      _currentBadge = 99;
+    } else {
+      _currentBadge = value;
+    }
+  }
 
   @override
   void onInit() async {
     super.onInit();
     listenForeground();
+    canBadge = await FlutterAppBadger.isAppBadgeSupported();
   }
 
   @override
@@ -99,15 +113,25 @@ class NotificationService extends GetxService {
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) {
         print("FOREGROUND");
-        // showNotification(message);
+        _extractBadgeFromNotification(message);
       },
     );
+
+    // FirebaseMessaging.onMessageOpenedApp.listen(
+    //   (RemoteMessage message) {
+    //     print("OPEN APP");
+    //     print(message.toMap());
+    //   },
+    // );
   }
 
   void showNotification(RemoteMessage message) {
     RemoteNotification? notification = message.notification;
 
     if (notification != null) {
+      final int? badge = _extractBadgeFromNotification(message);
+
+      print("badge is ${badge}");
       // android/app/src/main/res/raw
       flutterLocalNotificationsPlugin.show(
         notification.hashCode,
@@ -127,6 +151,7 @@ class NotificationService extends GetxService {
             presentBadge: true,
             presentAlert: true,
             sound: soundPath,
+            badgeNumber: badge,
           ),
         ),
       );
@@ -137,15 +162,17 @@ class NotificationService extends GetxService {
   Future<void> pushPostNotification({
     required List<String> tokens,
     required NotificationType type,
+    int? badgeNumber,
   }) async {
     final Map<String, dynamic> data = {
       "registration_ids": tokens,
       "notification": {
-        "Title": type.title,
+        "title": type.title,
         "body": type.content,
         "content_available": true,
         "priority": "high",
         "sound": soundPath,
+        "badge": badgeNumber,
         "click_action": "FLUTTER_NOTIFICATION_CLICK",
       },
       "apns": {
@@ -153,13 +180,15 @@ class NotificationService extends GetxService {
           "aps": {
             "sound": soundPath,
           }
-        }
+        },
       },
       "data": {
+        // Passできる値
         "priority": "high",
         "sound": soundPath,
         "content_available": true,
         "bodyText": type.content,
+        "badge": badgeNumber,
       }
     };
 
@@ -170,33 +199,25 @@ class NotificationService extends GetxService {
     print(res.toString());
   }
 
-  Future<int> _getBadges() async {
-    // if (!canBadge) return 0;
-    final res = await _recentAPI.getBadgeCount();
-    if (!res.status) {
-      print("バッジの獲得不可");
-      return 0;
-    }
+  int? _extractBadgeFromNotification(RemoteMessage message) {
+    // notificaton から badge の抽出
+    if (message.data["badge"] != null) {
+      final int badge = int.parse(message.data["badge"]);
 
-    int badgeCount = res.data;
-    return badgeCount;
+      currentBadge = badge;
+      return badge;
+    } else {
+      return null;
+    }
   }
 
-  Future<void> updateBadges() async {
-    print('Background');
+  void updateBadges() {
+    if (!canBadge) return;
 
-    try {
-      int badgeCount = await _getBadges();
-      print(badgeCount);
-      if (badgeCount > 0) {
-        if (badgeCount > 99) badgeCount = 99;
+    currentBadge > 0
+        ? FlutterAppBadger.updateBadgeCount(currentBadge)
+        : FlutterAppBadger.removeBadge();
 
-        FlutterAppBadger.updateBadgeCount(badgeCount);
-      } else {
-        FlutterAppBadger.removeBadge();
-      }
-    } catch (e) {
-      print(e.toString());
-    }
+    print("バッチは ${currentBadge}");
   }
 }

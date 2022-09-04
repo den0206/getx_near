@@ -74,11 +74,15 @@ class MessageExtention {
   }
 
   Future<void> sendNotification({required Message newMessage}) async {
-    if (withUser.fcmToken != "")
+    if (withUser.fcmToken != "") {
+      final int? badge = await re.getUserBadges(userId: withUser.id);
+
       await NotificationService.to.pushPostNotification(
         tokens: [withUser.fcmToken],
         type: NotificationType.message,
+        badgeNumber: badge,
       );
+    }
   }
 
   Future<void> updateDeleteRecent() async {

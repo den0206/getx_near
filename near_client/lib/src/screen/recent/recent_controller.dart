@@ -7,6 +7,7 @@ import 'package:getx_near/src/screen/message/message_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/message_extention.dart';
+import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/socket/recent_io.dart';
 
 class RecentController extends LoadingGetController {
@@ -109,9 +110,11 @@ class RecentController extends LoadingGetController {
 
   Future<void> resetCounter(Recent tempRecent) async {
     int index = recents.indexWhere((recent) => recent.id == tempRecent.id);
-    final isUpdate = recents[index].counter != 0;
+    final current = recents[index];
+    final isUpdate = current.counter != 0;
     if (isUpdate) {
       print("Reset Counter");
+      NotificationService.to.currentBadge -= current.counter;
       tempRecent.counter = 0;
 
       final value = {

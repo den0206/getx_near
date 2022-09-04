@@ -113,4 +113,15 @@ class RecentExtension {
 
     await _recentAPI.updateRecent(value);
   }
+
+  Future<int?> getUserBadges({required String userId}) async {
+    final res = await _recentAPI.getBadgeCount(userId: userId);
+    if (!res.status) {
+      print("バッジの獲得不可");
+      return null;
+    }
+
+    int badgeCount = res.data;
+    return badgeCount;
+  }
 }
