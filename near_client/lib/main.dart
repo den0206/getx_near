@@ -17,7 +17,8 @@ import 'package:sizer/sizer.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("BackGround");
+  print("Notification BackGround");
+  NotificationService.to.extractBadgeFromNotification(message);
 }
 
 void main() async {
