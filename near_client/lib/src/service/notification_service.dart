@@ -165,33 +165,12 @@ class NotificationService extends GetxService {
     int? badgeNumber,
   }) async {
     final Map<String, dynamic> data = {
-      "registration_ids": tokens,
-      "notification": {
-        "title": type.title,
-        "body": type.content,
-        "content_available": true,
-        "priority": "high",
-        "sound": soundPath,
-        "badge": badgeNumber,
-        "click_action": "FLUTTER_NOTIFICATION_CLICK",
-      },
-      "apns": {
-        "payload": {
-          "aps": {
-            "sound": soundPath,
-          }
-        },
-      },
-      "data": {
-        // Passできる値
-        "priority": "high",
-        "sound": soundPath,
-        "content_available": true,
-        "bodyText": type.content,
-        "badge": badgeNumber,
-      }
+      "fcmToken": tokens,
+      "title": type.title,
+      "body": type.content,
+      "badge": badgeNumber,
+      "sound": soundPath,
     };
-
     final res = await _notificationAPI.sendNotification(data);
 
     print("Push Notification! ${tokens.length}");
@@ -221,3 +200,32 @@ class NotificationService extends GetxService {
     print("バッチは ${currentBadge}");
   }
 }
+
+
+    // final Map<String, dynamic> data = {
+    //   "registration_ids": tokens,
+    //   "notification": {
+    //     "title": type.title,
+    //     "body": type.content,
+    //     "content_available": true,
+    //     "priority": "high",
+    //     "sound": soundPath,
+    //     "badge": badgeNumber,
+    //     "click_action": "FLUTTER_NOTIFICATION_CLICK",
+    //   },
+    //   "apns": {
+    //     "payload": {
+    //       "aps": {
+    //         "sound": soundPath,
+    //       }
+    //     },
+    //   },
+    //   "data": {
+    //     // Passできる値
+    //     "priority": "high",
+    //     "sound": soundPath,
+    //     "content_available": true,
+    //     "bodyText": type.content,
+    //     "badge": badgeNumber,
+    //   }
+    // };
