@@ -1,4 +1,5 @@
 import 'package:get/instance_manager.dart';
+import 'package:getx_near/src/api/notification_api.dart';
 import 'package:getx_near/src/api/recent_api.dart';
 import 'package:getx_near/src/model/recent.dart';
 import 'package:getx_near/src/model/user.dart';
@@ -7,6 +8,7 @@ import 'package:getx_near/src/service/auth_service.dart';
 
 class RecentExtension {
   final RecentAPI _recentAPI = RecentAPI();
+  final NotificationAPI _notificationAPI = NotificationAPI();
   User get currentUser {
     final current = AuthService.to.currentUser.value;
     assert(current != null);
@@ -115,7 +117,7 @@ class RecentExtension {
   }
 
   Future<int?> getUserBadges({required String userId}) async {
-    final res = await _recentAPI.getBadgeCount(userId: userId);
+    final res = await _notificationAPI.getBadgesCount(userId: userId);
     if (!res.status) {
       print("バッジの獲得不可");
       return null;

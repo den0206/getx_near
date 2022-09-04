@@ -12,6 +12,9 @@ import http from 'http';
 import {connectIO} from './utils/socket/socket';
 import nodeSchedule from 'node-schedule';
 import reportRoute from './resources/report/report.route';
+import * as serviceAccount from './serviceAccountCredentials.json';
+import * as admin from 'firebase-admin';
+import notificationRoute from './resources/notification/notification.route';
 const get = require('simple-get');
 
 class App {
@@ -26,6 +29,7 @@ class App {
 
     this.initialiseMiddleware();
     this.initialiseRoutes();
+    this.initFirebaseAdmin();
 
     connectIO(this.server);
 
@@ -56,8 +60,20 @@ class App {
     this.app.use(`${apiVer}/recent`, recentRoute);
     this.app.use(`${apiVer}/temptoken`, tokenRoute);
     this.app.use(`${apiVer}/report`, reportRoute);
+    this.app.use(`${apiVer}/notification`, notificationRoute);
   }
 
+  private initFirebaseAdmin(): void {
+    const adminConfig: admin.ServiceAccount = {
+      projectId: serviceAccount.project_id,
+      privateKey: serviceAccount.private_key,
+      clientEmail: serviceAccount.client_email,
+    };
+    admin.initializeApp({
+      credential: admin.credential.cert(adminConfig),
+    });
+    console.log(adminConfig);
+  }
   public listen(): void {
     this.server.listen(this.port, async () => {
       await this.initialiseDB();

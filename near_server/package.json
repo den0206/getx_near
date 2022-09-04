@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm-run-all clean tsc copy:handlebars",
+    "build": "npm-run-all clean credential tsc copy:handlebars",
     "start": "node .",
     "clean": "rimraf dist",
     "clean all": "rimraf dist node_modules",
@@ -13,7 +13,8 @@
     "start:dev": "ts-node-dev --respawn src/index.ts",
     "lc": "lt -s yuuki0206 --port 3000",
     "try:loca": "npm-run-all -p start:dev lc",
-    "copy:handlebars": "cpx \"./src/utils/email/template/**/*\" ./dist/utils/email/template --clean"
+    "copy:handlebars": "cpx \"./src/utils/email/template/**/*\" ./dist/utils/email/template --clean",
+    "credential": "ts-node-dev src/utils/create_credential"
   },
   "keywords": [],
   "author": "",

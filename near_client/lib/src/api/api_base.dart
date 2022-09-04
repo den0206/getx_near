@@ -60,10 +60,10 @@ abstract class APIBase {
     ResponseAPI responseAPI;
     switch (endPoint) {
       // 外部API(自サーバー以外)を処理
-      case EndPoint.notification:
-        responseAPI = ResponseAPI(
-            status: true, statusCode: response.statusCode, data: resJson);
-        break;
+      // case EndPoint.notification:
+      //   responseAPI = ResponseAPI(
+      //       status: true, statusCode: response.statusCode, data: resJson);
+      //   break;
       default:
         responseAPI = ResponseAPI.fromMapWithCode(resJson, response.statusCode);
     }
@@ -283,7 +283,8 @@ enum EndPoint {
       case EndPoint.message:
         return "$APIVer/message";
       case EndPoint.notification:
-        return "fcm";
+        return "$APIVer/notification";
+      // return "fcm";
       case EndPoint.temptoken:
         return "$APIVer/temptoken";
       case EndPoint.report:
