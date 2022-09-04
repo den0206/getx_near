@@ -9,16 +9,19 @@ import {RecentModel} from '../../utils/database/models';
 import mongoose from 'mongoose';
 
 async function sendNotification(req: Request, res: Response) {
-  const {title, body, badge, fcmToken} = req.body;
-
+  const {title, body, badge, sound, fcmToken} = req.body;
+  console.log(fcmToken);
   try {
     const payload: MessagingPayload = {
       data: {
-        badge: badge,
+        badge: badge.toString(),
+        sound: sound,
       },
       notification: {
         title: title,
         body: body,
+        sound: sound,
+        clickAction: 'FLUTTER_NOTIFICATION_CLICK',
       },
     };
 

@@ -72,7 +72,8 @@ class App {
     admin.initializeApp({
       credential: admin.credential.cert(adminConfig),
     });
-    console.log(adminConfig);
+
+    if (process.env.NODE_ENV == 'production') console.log(adminConfig);
   }
   public listen(): void {
     this.server.listen(this.port, async () => {
