@@ -58,6 +58,9 @@ class NotificationService extends GetxService {
     } else {
       _currentBadge = value;
     }
+
+    // badge の更新は下記のみ
+    _updateBadges();
   }
 
   @override
@@ -113,7 +116,7 @@ class NotificationService extends GetxService {
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) {
         print("FOREGROUND");
-        _extractBadgeFromNotification(message);
+        extractBadgeFromNotification(message);
       },
     );
 
@@ -129,7 +132,7 @@ class NotificationService extends GetxService {
     RemoteNotification? notification = message.notification;
 
     if (notification != null) {
-      final int? badge = _extractBadgeFromNotification(message);
+      final int? badge = extractBadgeFromNotification(message);
 
       print("badge is ${badge}");
       // android/app/src/main/res/raw
@@ -178,7 +181,7 @@ class NotificationService extends GetxService {
     print(res.toString());
   }
 
-  int? _extractBadgeFromNotification(RemoteMessage message) {
+  int? extractBadgeFromNotification(RemoteMessage message) {
     // notificaton から badge の抽出
     if (message.data["badge"] != null) {
       final int badge = int.parse(message.data["badge"]);
@@ -190,7 +193,7 @@ class NotificationService extends GetxService {
     }
   }
 
-  void updateBadges() {
+  void _updateBadges() {
     if (!canBadge) return;
 
     currentBadge > 0
