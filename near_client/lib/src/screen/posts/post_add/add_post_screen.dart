@@ -11,6 +11,7 @@ import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../utils/neumorphic_style.dart';
@@ -25,91 +26,109 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
 
   @override
   Widget get child {
-    return Builder(builder: (context) {
-      return Scaffold(
-        backgroundColor: ConstsColor.mainBackColor,
-        appBar: AppBar(
-          title: Text("投稿"),
-          actions: [
-            Obx(
-              () => NeumorphicIconButton(
-                icon: Icon(
-                  Icons.send,
-                  color: Colors.white,
-                ),
-                onPressed: controller.canSend.value
-                    ? () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return CustomDialog(
-                              title: "Need Address",
-                              descripon: "Contain Your Address this Post",
-                              icon: Icons.home,
-                              mainColor: Colors.pink,
-                              onPress: () {
-                                controller.sendPost();
+    return ShowCaseWidget(
+      builder: Builder(builder: (context) {
+        return Scaffold(
+          backgroundColor: ConstsColor.mainBackColor,
+          appBar: AppBar(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("投稿"),
+                NeumorphicIconButton(
+                  icon: Icon(Icons.description),
+                  onPressed: () {
+                    controller.showTutorial(context);
+                  },
+                )
+              ],
+            ),
+            actions: [
+              Obx(
+                () => CommonShowcaseWidget(
+                  key: controller.tutorialKey3,
+                  description: "このボタンで投稿します。",
+                  child: NeumorphicIconButton(
+                    icon: Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
+                    onPressed: controller.canSend.value
+                        ? () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomDialog(
+                                  title: "Need Address",
+                                  descripon: "Contain Your Address this Post",
+                                  icon: Icons.home,
+                                  mainColor: Colors.pink,
+                                  onPress: () {
+                                    controller.sendPost();
+                                  },
+                                );
                               },
                             );
-                          },
-                        );
-                      }
-                    : null,
+                          }
+                        : null,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(
-              width: 20,
-            )
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
               SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: CircleImageButton(
-                      imageProvider:
-                          getUserImage(AuthService.to.currentUser.value!),
-                      size: 40.sp,
-                      border: Border.all(color: Colors.white, width: 2),
-                    ),
-                  ),
-                  Container(
-                    constraints: BoxConstraints(maxWidth: 80.w),
-                    child: AutoSizeTextField(
-                      controller: controller.tX,
-                      autofocus: true,
-                      cursorColor: Colors.black,
-                      maxLines: 10,
-                      // maxLength: 200,
-                      style: TextStyle(fontSize: 17),
-                      decoration: InputDecoration(
-                        hintText: "You Doing",
-                        focusColor: Colors.black,
-                        border: null,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent)),
-                        contentPadding: const EdgeInsets.all(10),
-                      ),
-                      onChanged: controller.streamText,
-                    ),
-                  ),
-                ],
-              ),
+                width: 20,
+              )
             ],
           ),
-        ),
-        bottomSheet: AbovePostField(),
-      );
-    });
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: CircleImageButton(
+                        imageProvider:
+                            getUserImage(AuthService.to.currentUser.value!),
+                        size: 40.sp,
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                    ),
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 80.w),
+                      child: AutoSizeTextField(
+                        controller: controller.tX,
+                        autofocus: true,
+                        cursorColor: Colors.black,
+                        maxLines: 10,
+                        // maxLength: 200,
+                        style: TextStyle(fontSize: 17),
+                        decoration: InputDecoration(
+                          hintText: "You Doing",
+                          focusColor: Colors.black,
+                          border: null,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.transparent)),
+                          contentPadding: const EdgeInsets.all(10),
+                        ),
+                        onChanged: controller.streamText,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          bottomSheet: AbovePostField(),
+        );
+      }),
+    );
   }
 }
 
@@ -123,61 +142,71 @@ class AbovePostField extends GetView<AddPostController> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            height: 10.h,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: ExpireTime.values.length,
-              itemBuilder: (context, index) {
-                final expire = ExpireTime.values[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Obx(
-                        () => NeumorphicRadio(
-                          style: commonRatioStyle(
-                              selectedColor: ConstsColor.mainGreenColor),
-                          padding: EdgeInsets.all(12),
-                          value: expire,
-                          groupValue: controller.expireTime.value,
-                          onChanged: (ExpireTime? expire) {
-                            if (expire != null)
-                              controller.expireTime.call(expire);
-                          },
+          CommonShowcaseWidget(
+            key: controller.tutorialKey2,
+            description: "投稿が自動で削除される時間を設定できます。",
+            child: Container(
+              height: 10.h,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: ExpireTime.values.length,
+                itemBuilder: (context, index) {
+                  final expire = ExpireTime.values[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Obx(
+                          () => NeumorphicRadio(
+                            style: commonRatioStyle(
+                                selectedColor: ConstsColor.mainGreenColor),
+                            padding: EdgeInsets.all(12),
+                            value: expire,
+                            groupValue: controller.expireTime.value,
+                            onChanged: (ExpireTime? expire) {
+                              if (expire != null)
+                                controller.expireTime.call(expire);
+                            },
+                          ),
                         ),
-                      ),
-                      Text(
-                        "${expire.title} に削除",
-                        style: TextStyle(fontSize: 7.sp),
-                      )
-                    ],
-                  ),
-                );
-              },
+                        Text(
+                          "${expire.title} に削除",
+                          style: TextStyle(fontSize: 7.sp),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              CustomSlider(
-                rxValue: controller.emergencyValue,
-              ),
-              IgnorePointer(
-                child: Obx(
-                  () => Text(
-                    "緊急度 ${controller.emergency.value} %",
-                    style: TextStyle(
-                      color: Colors.white,
+          CommonShowcaseWidget(
+            key: controller.tutorialKey1,
+            description: "緊急度をスライダー形式で設定できます。",
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CustomSlider(
+                  rxValue: controller.emergencyValue,
+                ),
+                IgnorePointer(
+                  child: Obx(
+                    () => Text(
+                      "緊急度 ${controller.emergency.value} %",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+
+                // showcase のpositionを変更するため
+              ],
+            ),
           ),
           SizedBox(
             height: 10,
@@ -186,4 +215,29 @@ class AbovePostField extends GetView<AddPostController> {
       ),
     );
   }
+}
+
+Showcase CommonShowcaseWidget({
+  required GlobalKey key,
+  required String description,
+  required Widget child,
+}) {
+  return Showcase.withWidget(
+    key: key,
+    container: Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+          color: Colors.black, borderRadius: BorderRadius.circular(10)),
+      child: Text(
+        description,
+        style: TextStyle(color: Colors.white),
+      ),
+    ),
+    height: 50.h,
+    width: 70.w,
+    overlayColor: ConstsColor.mainGreenColor!.withOpacity(0.4),
+    radius: BorderRadius.all(Radius.circular(40)),
+    tipBorderRadius: BorderRadius.all(Radius.circular(8)),
+    child: child,
+  );
 }
