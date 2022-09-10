@@ -13,6 +13,7 @@ import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../../main_tab/main_tab_controller.dart';
 import '../posts_tab/my_posts/my_posts_controller.dart';
@@ -31,9 +32,19 @@ class AddPostController extends LoadingGetController {
     return emergencyValue.round().obs;
   }
 
+  // tutorilal keys
+  final tutorialKey1 = GlobalKey();
+  final tutorialKey2 = GlobalKey();
+  final tutorialKey3 = GlobalKey();
+
   @override
   void onInit() {
     super.onInit();
+  }
+
+  void showTutorial(BuildContext context) {
+    ShowCaseWidget.of(context)
+        .startShowCase([tutorialKey1, tutorialKey2, tutorialKey3]);
   }
 
   void streamText(String? value) {
