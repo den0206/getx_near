@@ -5,13 +5,12 @@ class CustomException implements Exception {
   CustomException(this._message, this._prefix);
 
   String toString() {
-    // return "$_prefix$_message";
-    var str = "$_prefix";
-    if (_message != null) {
-      str += _message;
-    }
+    // var str = "$_prefix";
+    // if (_message != null) {
+    //   str += _message;
+    // }
 
-    return str;
+    return _message ?? _prefix;
   }
 }
 
