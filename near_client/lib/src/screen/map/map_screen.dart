@@ -22,6 +22,11 @@ class MapScreen extends LoadingGetView<MapController> {
   MapController get ctr => MapController();
 
   @override
+  void Function()? get onCancel => () {
+        controller.cancelLoading();
+      };
+
+  @override
   Widget get child {
     return GetBuilder<MapController>(
       builder: (_) {
