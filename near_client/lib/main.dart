@@ -30,11 +30,13 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
+  isJailBroken = await SafeDevice.isJailBroken;
   isRealDevice = await SafeDevice.isRealDevice;
 
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
 
+bool isJailBroken = false;
 bool isRealDevice = false;
 final bool useMain = true;
 final bool useMap = true;

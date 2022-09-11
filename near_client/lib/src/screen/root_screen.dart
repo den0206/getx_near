@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
+import 'package:getx_near/main.dart';
 import 'package:getx_near/src/screen/auth/auth_tab_screen.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
@@ -14,6 +15,9 @@ class RootScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (isJailBroken)
+      return Scaffold(body: Center(child: Text("JailBrokenが検出されました")));
+
     return GetX<AuthService>(
       init: AuthService(),
       builder: (service) {
