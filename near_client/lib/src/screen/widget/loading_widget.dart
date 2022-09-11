@@ -84,6 +84,8 @@ class PlainLoadingWidget extends StatelessWidget {
 
   final void Function()? onCancel;
 
+  final double padding = 24;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -95,7 +97,7 @@ class PlainLoadingWidget extends StatelessWidget {
           // ),
           WaveLoading(),
           SizedBox(
-            height: 24,
+            height: padding,
           ),
           Text(
             "Loading...",
@@ -108,7 +110,7 @@ class PlainLoadingWidget extends StatelessWidget {
 
           if (onCancel != null) ...[
             SizedBox(
-              height: 24,
+              height: padding,
             ),
             NeumorphicIconButton(
               icon: Icon(
@@ -119,7 +121,10 @@ class PlainLoadingWidget extends StatelessWidget {
                 onCancel!();
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();
               },
-            )
+            ),
+            SizedBox(
+              height: padding * 1.5,
+            ),
           ]
         ],
       ),
