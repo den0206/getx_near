@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
@@ -13,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../../main.dart';
 import '../posts/posts_tab/near_posts/near_posts_controller.dart';
+import '../widget/common_showcase.dart';
 
 class MapController extends LoadingGetController {
   static MapController get to => Get.find();
@@ -33,10 +35,22 @@ class MapController extends LoadingGetController {
     return currentZoom > 10;
   }
 
+  // tutorilal keys
+
+  final tutorialKey1 = GlobalKey();
+  final tutorialKey2 = GlobalKey();
+  final tutorialKey3 = GlobalKey();
+
   @override
   void onInit() {
     super.onInit();
     initNearPosts();
+  }
+
+  void showTutorial(BuildContext context) {
+    if (!showSearch.value) showSearch.call(true);
+    CommonShowCase([tutorialKey1, tutorialKey2, tutorialKey3])
+      ..showTutorial(context);
   }
 
   Future<void> onMapCreate(GoogleMapController controller) async {
