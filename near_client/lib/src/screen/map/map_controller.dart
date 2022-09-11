@@ -40,6 +40,7 @@ class MapController extends LoadingGetController {
   final tutorialKey1 = GlobalKey();
   final tutorialKey2 = GlobalKey();
   final tutorialKey3 = GlobalKey();
+  final tutorialKey4 = GlobalKey();
 
   @override
   void onInit() {
@@ -47,9 +48,10 @@ class MapController extends LoadingGetController {
     initNearPosts();
   }
 
-  void showTutorial(BuildContext context) {
+  Future<void> showTutorial(BuildContext context) async {
     if (!showSearch.value) showSearch.call(true);
-    CommonShowCase([tutorialKey1, tutorialKey2, tutorialKey3])
+    if (panelController.isPanelClosed) await panelController.open();
+    CommonShowCase([tutorialKey1, tutorialKey2, tutorialKey3, tutorialKey4])
       ..showTutorial(context);
   }
 
@@ -176,7 +178,11 @@ class MapController extends LoadingGetController {
     }
   }
 
-  Future<void> backScreen() async {
+  void backScreen() {
     MainTabController.to.backOldIndex();
+  }
+
+  void cancelLoading() {
+    backScreen();
   }
 }

@@ -37,6 +37,12 @@ class _HelpAnimatedWidetState extends State<HelpAnimatedWidet>
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.black.withOpacity(opacityAnimation.value),
@@ -91,8 +97,9 @@ class _FadeinWidgetState extends State<FadeinWidget>
 
   @override
   void dispose() {
-    controller.dispose();
     animation.removeStatusListener((status) {});
+    controller.dispose();
+
     super.dispose();
   }
 
