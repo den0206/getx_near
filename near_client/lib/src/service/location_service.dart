@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:getx_near/main.dart';
 import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/model/utils/visibleRegion.dart';
 import 'package:getx_near/src/service/permission_service.dart';
@@ -82,6 +83,9 @@ class LocationService {
       final current = await Geolocator.getCurrentPosition(
           desiredAccuracy: localLoc.accuracy,
           forceAndroidLocationManager: true);
+
+      if (isRealDevice && current.isMocked) throw Exception("不正な位置情報が検出されました。");
+
       final cood = {
         "lng": current.longitude,
         "lat": current.latitude,
