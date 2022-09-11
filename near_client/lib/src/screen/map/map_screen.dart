@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_screen.dart';
+import 'package:getx_near/src/screen/widget/common_showcase.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../main.dart';
@@ -21,41 +25,44 @@ class MapScreen extends LoadingGetView<MapController> {
   Widget get child {
     return GetBuilder<MapController>(
       builder: (_) {
-        return Scaffold(
-          body: Stack(
-            children: [
-              if (useMap)
-                Builder(builder: (context) {
-                  return GoogleMap(
-                    key: controller.mapService.mapKey,
-                    initialCameraPosition: initialCameraPosition,
-                    padding: EdgeInsets.only(
-                      top: kToolbarHeight,
-                      bottom: logoHeifht,
-                    ),
-                    mapType: MapType.normal,
-                    myLocationButtonEnabled: false,
-                    myLocationEnabled: true,
-                    scrollGesturesEnabled: true,
-                    zoomGesturesEnabled: false,
-                    markers: controller.mapService.markers,
-                    circles: controller.mapService.circles,
-                    polylines: controller.mapService.polylines,
-                    polygons: controller.mapService.polygons,
-                    onCameraMove: controller.onCmareMove,
-                    onCameraIdle: controller.onCameraIdle,
-                    onTap: (argument) {},
-                    onMapCreated: (mapCtr) async {
-                      await controller.onMapCreate(mapCtr);
-                    },
-                  );
-                }),
-              _searchButton(),
-              _leftSide(),
-              _rightSide(),
-              MainSlideUpPanel(controller),
-            ],
-          ),
+        return ShowCaseWidget(
+          builder: Builder(builder: (context) {
+            return Scaffold(
+              body: Stack(
+                children: [
+                  if (useMap) ...[
+                    GoogleMap(
+                      key: controller.mapService.mapKey,
+                      initialCameraPosition: initialCameraPosition,
+                      padding: EdgeInsets.only(
+                        top: kToolbarHeight,
+                        bottom: logoHeifht,
+                      ),
+                      mapType: MapType.normal,
+                      myLocationButtonEnabled: false,
+                      myLocationEnabled: true,
+                      scrollGesturesEnabled: true,
+                      zoomGesturesEnabled: false,
+                      markers: controller.mapService.markers,
+                      circles: controller.mapService.circles,
+                      polylines: controller.mapService.polylines,
+                      polygons: controller.mapService.polygons,
+                      onCameraMove: controller.onCmareMove,
+                      onCameraIdle: controller.onCameraIdle,
+                      onTap: (argument) {},
+                      onMapCreated: (mapCtr) async {
+                        await controller.onMapCreate(mapCtr);
+                      },
+                    )
+                  ],
+                  _searchButton(),
+                  _leftSide(),
+                  _rightSide(),
+                  MainSlideUpPanel(controller),
+                ],
+              ),
+            );
+          }),
         );
       },
     );
@@ -84,30 +91,34 @@ class MapScreen extends LoadingGetView<MapController> {
             Obx(
               () => controller.showSearch.value
                   ? Center(
-                      child: FloatingActionButton.extended(
-                        heroTag: "btn1",
-                        backgroundColor: Colors.white.withOpacity(0.7),
-                        label: Text.rich(
-                          TextSpan(
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: Colors.black,
+                      child: CommonShowcaseWidget(
+                        key: controller.tutorialKey1,
+                        description: "画面内の検索を行います",
+                        child: FloatingActionButton.extended(
+                          heroTag: "btn1",
+                          backgroundColor: Colors.white.withOpacity(0.7),
+                          label: Text.rich(
+                            TextSpan(
+                              style: TextStyle(
+                                fontSize: 10.sp,
+                                color: Colors.black,
+                              ),
+                              children: [
+                                WidgetSpan(
+                                  child: Icon(Icons.pin_drop_outlined,
+                                      size: 16.sp,
+                                      color: ConstsColor.mainGreenColor),
+                                ),
+                                TextSpan(
+                                  text: "このエリアを検索",
+                                ),
+                              ],
                             ),
-                            children: [
-                              WidgetSpan(
-                                child: Icon(Icons.pin_drop_outlined,
-                                    size: 16.sp,
-                                    color: ConstsColor.mainGreenColor),
-                              ),
-                              TextSpan(
-                                text: "このエリアを検索",
-                              ),
-                            ],
                           ),
+                          onPressed: () {
+                            controller.startSearch();
+                          },
                         ),
-                        onPressed: () {
-                          controller.startSearch();
-                        },
                       ),
                     )
                   : Container(),
@@ -171,60 +182,73 @@ class MapScreen extends LoadingGetView<MapController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  // if (kDebugMode) ...[
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.purple,
-                    ),
-                    child: Builder(builder: (context) {
-                      return IconButton(
-                        color: Colors.white,
-                        icon: Icon(Icons.group),
-                        onPressed: () {
-                          controller.startSearch(useDummy: true);
-                        },
-                      );
-                    }),
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  // ],
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: ConstsColor.mainGreenColor,
-                    ),
-                    child: Builder(builder: (context) {
-                      return IconButton(
-                        color: Colors.white,
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                          controller.showAddPost();
-                        },
-                      );
-                    }),
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  FloatingActionButton.extended(
-                    heroTag: "btn2",
-                    backgroundColor: ConstsColor.mainGreenColor,
-                    label: Text(
-                      'Default Position',
-                      style: TextStyle(
+                  Builder(builder: (context) {
+                    return NeumorphicIconButton(
+                      icon: Icon(
+                        Icons.description,
                         color: Colors.white,
                       ),
+                      color: Colors.black,
+                      onPressed: () {
+                        controller.showTutorial(context);
+                      },
+                    );
+                  }),
+                  if (kDebugMode || kProfileMode) ...[
+                    SizedBox(
+                      height: 1.h,
                     ),
-                    icon: Icon(
-                      Icons.location_on,
-                      color: Colors.red,
+                    NeumorphicIconButton(
+                      icon: Icon(
+                        Icons.group,
+                        color: Colors.white,
+                      ),
+                      color: Colors.purple,
+                      onPressed: () {
+                        controller.startSearch(useDummy: true);
+                      },
                     ),
-                    onPressed: () {
-                      controller.setCenterPosition(zoom: 15);
-                    },
+                  ],
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  CommonShowcaseWidget(
+                    key: controller.tutorialKey2,
+                    description: "あなたの投稿を作成します。",
+                    child: NeumorphicIconButton(
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      color: ConstsColor.mainGreenColor,
+                      onPressed: () {
+                        controller.showAddPost();
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  CommonShowcaseWidget(
+                    key: controller.tutorialKey3,
+                    description: "現在地に戻ります。",
+                    child: FloatingActionButton.extended(
+                      heroTag: "btn2",
+                      backgroundColor: ConstsColor.mainGreenColor,
+                      label: Text(
+                        'Default Position',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      icon: Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        controller.setCenterPosition(zoom: 15);
+                      },
+                    ),
                   )
                 ],
               ),

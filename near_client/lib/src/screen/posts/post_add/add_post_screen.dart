@@ -15,6 +15,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../utils/neumorphic_style.dart';
+import '../../widget/common_showcase.dart';
 
 class AddPostScreen extends LoadingGetView<AddPostController> {
   static const routeName = '/AddPost';
@@ -48,6 +49,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                 () => CommonShowcaseWidget(
                   key: controller.tutorialKey3,
                   description: "このボタンで投稿します。",
+                  color: ConstsColor.mainGreenColor!.withOpacity(0.4),
                   child: NeumorphicIconButton(
                     icon: Icon(
                       Icons.send,
@@ -145,6 +147,7 @@ class AbovePostField extends GetView<AddPostController> {
           CommonShowcaseWidget(
             key: controller.tutorialKey2,
             description: "投稿が自動で削除される時間を設定できます。",
+            color: ConstsColor.mainGreenColor!.withOpacity(0.4),
             child: Container(
               height: 10.h,
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -187,6 +190,7 @@ class AbovePostField extends GetView<AddPostController> {
           CommonShowcaseWidget(
             key: controller.tutorialKey1,
             description: "緊急度をスライダー形式で設定できます。",
+            color: ConstsColor.mainGreenColor!.withOpacity(0.4),
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -215,29 +219,4 @@ class AbovePostField extends GetView<AddPostController> {
       ),
     );
   }
-}
-
-Showcase CommonShowcaseWidget({
-  required GlobalKey key,
-  required String description,
-  required Widget child,
-}) {
-  return Showcase.withWidget(
-    key: key,
-    container: Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-          color: Colors.black, borderRadius: BorderRadius.circular(10)),
-      child: Text(
-        description,
-        style: TextStyle(color: Colors.white),
-      ),
-    ),
-    height: 50.h,
-    width: 70.w,
-    overlayColor: ConstsColor.mainGreenColor!.withOpacity(0.4),
-    radius: BorderRadius.all(Radius.circular(40)),
-    tipBorderRadius: BorderRadius.all(Radius.circular(8)),
-    child: child,
-  );
 }

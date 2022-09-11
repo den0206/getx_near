@@ -6,6 +6,7 @@ import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
+import 'package:getx_near/src/screen/widget/common_showcase.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
@@ -13,7 +14,6 @@ import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
-import 'package:showcaseview/showcaseview.dart';
 
 import '../../main_tab/main_tab_controller.dart';
 import '../posts_tab/my_posts/my_posts_controller.dart';
@@ -33,6 +33,7 @@ class AddPostController extends LoadingGetController {
   }
 
   // tutorilal keys
+
   final tutorialKey1 = GlobalKey();
   final tutorialKey2 = GlobalKey();
   final tutorialKey3 = GlobalKey();
@@ -43,8 +44,8 @@ class AddPostController extends LoadingGetController {
   }
 
   void showTutorial(BuildContext context) {
-    ShowCaseWidget.of(context)
-        .startShowCase([tutorialKey1, tutorialKey2, tutorialKey3]);
+    CommonShowCase([tutorialKey1, tutorialKey2, tutorialKey3])
+      ..showTutorial(context);
   }
 
   void streamText(String? value) {
