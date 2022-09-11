@@ -8,6 +8,7 @@ import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_controller.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_screen.dart';
+import 'package:getx_near/src/screen/widget/Common_showcase.dart';
 import 'package:getx_near/src/screen/widget/blinking_widget.dart';
 import 'package:getx_near/src/screen/widget/countdown_timer.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
@@ -22,6 +23,7 @@ import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 import '../../report/report_screen.dart';
 
@@ -33,222 +35,250 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
   @override
   Widget get child {
     final post = controller.post;
-    return Scaffold(
-      backgroundColor: ConstsColor.mainBackColor,
-      body: GetBuilder<PostDetailController>(
-        builder: (controller) {
-          return CustomScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            controller: controller.sc,
-            slivers: [
-              SliverAppBar(
-                pinned: true,
-                backgroundColor: ConstsColor.mainBackColor,
-                title: Text(post.user.name),
-                foregroundColor: Colors.black,
-                elevation: 0,
-                actions: [
-                  PoptPopMenu(post),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: CircleImageButton(
-                      imageProvider: getUserImage(post.user),
-                      size: 30.sp,
-                      addShadow: false,
-                      onTap: () {
-                        Get.to(() => UserDetailScreen(user: post.user));
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              if (post.expireAt != null)
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (post.isCurrent) ...[
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(text: "※ "),
-                                TextSpan(
-                                  text: "Your Post",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 8.sp,
-                                  ),
-                                )
-                              ],
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            textAlign: TextAlign.end,
-                          ),
-                        ] else ...[
-                          Spacer()
-                        ],
-                        CustomCountdownTimer(
-                          endTime: post.expireAt!,
-                          onEnd: () async {
-                            await controller.expirePost();
-                          },
+    return ShowCaseWidget(
+      builder: Builder(builder: (context) {
+        return Scaffold(
+          backgroundColor: ConstsColor.mainBackColor,
+          body: GetBuilder<PostDetailController>(
+            builder: (controller) {
+              return CustomScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                controller: controller.sc,
+                slivers: [
+                  SliverAppBar(
+                    pinned: true,
+                    backgroundColor: ConstsColor.mainBackColor,
+                    title: Text(post.user.name),
+                    foregroundColor: Colors.black,
+                    elevation: 0,
+                    actions: [
+                      NeumorphicIconButton(
+                        icon: Icon(
+                          Icons.description,
+                          size: 13.sp,
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-              SliverPersistentHeader(
-                pinned: true,
-                floating: false,
-                delegate: ContentArea(controller),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Builder(builder: (context) {
-                        return NeumorphicIconButton(
-                          icon: Icon(
-                            Icons.location_on,
-                            color: Colors.redAccent,
-                          ),
-                          color: Colors.yellow.withOpacity(0.3),
-                          onPressed: () async {
-                            final availableMaps =
-                                await MapLauncher.installedMaps;
-
-                            await showModalBottomSheet(
-                              backgroundColor: ConstsColor.mainBackColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              context: context,
-                              builder: (_) {
-                                return ListView.separated(
-                                  shrinkWrap: true,
-                                  itemCount: availableMaps.length + 1,
-                                  reverse: true,
-                                  separatorBuilder: (_, __) {
-                                    return Divider();
-                                  },
-                                  itemBuilder: (context, index) {
-                                    if (index != 0) {
-                                      final current = availableMaps[index - 1];
-                                      return ListTile(
-                                        leading: SvgPicture.asset(
-                                          current.icon,
-                                          width: 30,
-                                          height: 30,
-                                        ),
-                                        title: Text(current.mapName),
-                                        onTap: () {
-                                          controller.tryMapLauncher(
-                                              context, current);
-                                        },
-                                      );
-                                    } else {
-                                      return ListTile(
-                                        leading: Icon(Icons.close),
-                                        title: Text("キャンセル"),
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      );
-                                    }
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        );
-                      }),
-                      Container(
-                        constraints: BoxConstraints(maxWidth: 55.w),
-                        height: 30,
-                        child: LiquidLinearProgressIndicator(
-                          value: post.emergency / 100,
-                          valueColor:
-                              AlwaysStoppedAnimation(post.level.mainColor),
-                          backgroundColor: Color(0xffD6D6D6),
-                          borderColor: Colors.grey,
-                          borderWidth: 2.0,
-                          borderRadius: 12.0,
-                          direction: Axis.horizontal,
-                          center: Text(
-                            "${post.emergency} %",
-                            style: TextStyle(color: Colors.white),
+                        onPressed: () {
+                          controller.showTutorial(context);
+                        },
+                      ),
+                      PoptPopMenu(post),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: CommonShowcaseWidget(
+                          key: controller.tutorialKey4,
+                          description: "ユーザーのプロフィール画面を表示します。",
+                          child: CircleImageButton(
+                            imageProvider: getUserImage(post.user),
+                            size: 30.sp,
+                            addShadow: false,
+                            onTap: () {
+                              Get.to(() => UserDetailScreen(user: post.user));
+                            },
                           ),
                         ),
                       ),
-                      Builder(builder: (context) {
-                        return HelpButton(
-                          post: post,
-                          size: 20.sp,
-                          onTap: () {
-                            controller.addAndRemoveLike(context);
-                          },
-                        );
-                      }),
                     ],
                   ),
-                ),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                floating: false,
-                delegate: NewCommentArea(controller),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.grey))),
-                  height: 20,
-                ),
-              ),
-              SliverFixedExtentList(
-                itemExtent: 80,
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    if (index == 0) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                  if (post.expireAt != null)
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Comment",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20.sp),
+                            if (post.isCurrent) ...[
+                              Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(text: "※ "),
+                                    TextSpan(
+                                      text: "Your Post",
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        fontSize: 8.sp,
+                                      ),
+                                    )
+                                  ],
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ] else ...[
+                              Spacer()
+                            ],
+                            CommonShowcaseWidget(
+                              key: controller.tutorialKey5,
+                              description: "投稿が削除される残り時間です。",
+                              child: CustomCountdownTimer(
+                                endTime: post.expireAt!,
+                                onEnd: () async {
+                                  await controller.expirePost();
+                                },
+                              ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text("${controller.comments.length}"),
                           ],
                         ),
-                      );
-                    }
+                      ),
+                    ),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    floating: false,
+                    delegate: ContentArea(controller),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CommonShowcaseWidget(
+                            key: controller.tutorialKey1,
+                            description: "外部地図アプリでルート検索を行います。",
+                            child: NeumorphicIconButton(
+                              icon: Icon(
+                                Icons.location_on,
+                                color: Colors.redAccent,
+                              ),
+                              color: Colors.yellow.withOpacity(0.3),
+                              onPressed: () async {
+                                final availableMaps =
+                                    await MapLauncher.installedMaps;
 
-                    if (index == controller.sorted.length &&
-                        controller.cellLoading) return LoadingCellWidget();
+                                await showModalBottomSheet(
+                                  backgroundColor: ConstsColor.mainBackColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  context: context,
+                                  builder: (_) {
+                                    return ListView.separated(
+                                      shrinkWrap: true,
+                                      itemCount: availableMaps.length + 1,
+                                      reverse: true,
+                                      separatorBuilder: (_, __) {
+                                        return Divider();
+                                      },
+                                      itemBuilder: (context, index) {
+                                        if (index != 0) {
+                                          final current =
+                                              availableMaps[index - 1];
+                                          return ListTile(
+                                            leading: SvgPicture.asset(
+                                              current.icon,
+                                              width: 30,
+                                              height: 30,
+                                            ),
+                                            title: Text(current.mapName),
+                                            onTap: () {
+                                              controller.tryMapLauncher(
+                                                  context, current);
+                                            },
+                                          );
+                                        } else {
+                                          return ListTile(
+                                            leading: Icon(Icons.close),
+                                            title: Text("キャンセル"),
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          );
+                                        }
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          CommonShowcaseWidget(
+                            key: controller.tutorialKey2,
+                            description: "当投稿の緊急度を表しています。",
+                            child: Container(
+                              constraints: BoxConstraints(maxWidth: 55.w),
+                              height: 30,
+                              child: LiquidLinearProgressIndicator(
+                                value: post.emergency / 100,
+                                valueColor: AlwaysStoppedAnimation(
+                                    post.level.mainColor),
+                                backgroundColor: Color(0xffD6D6D6),
+                                borderColor: Colors.grey,
+                                borderWidth: 2.0,
+                                borderRadius: 12.0,
+                                direction: Axis.horizontal,
+                                center: Text(
+                                  "${post.emergency} %",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                          HelpButton(
+                            post: post,
+                            size: 20.sp,
+                            onTap: () {
+                              controller.addAndRemoveLike(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    floating: false,
+                    delegate: NewCommentArea(controller),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border:
+                              Border(bottom: BorderSide(color: Colors.grey))),
+                      height: 20,
+                    ),
+                  ),
+                  SliverFixedExtentList(
+                    itemExtent: 80,
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        if (index == 0) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Comment",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.sp),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text("${controller.comments.length}"),
+                              ],
+                            ),
+                          );
+                        }
 
-                    final comment = controller.sorted[index - 1];
-                    return CommentCell(comment: comment);
-                  },
-                  childCount: controller.sorted.length + 1,
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+                        if (index == controller.sorted.length &&
+                            controller.cellLoading) return LoadingCellWidget();
+
+                        final comment = controller.sorted[index - 1];
+                        return CommentCell(comment: comment);
+                      },
+                      childCount: controller.sorted.length + 1,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      }),
     );
   }
 }
@@ -405,35 +435,39 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      constraints: BoxConstraints(maxHeight: maxExtent),
-      decoration: BoxDecoration(
-          color: ConstsColor.mainBackColor,
-          border: Border(top: BorderSide(color: Colors.grey))),
-      child: ListTile(
-        title: BlinkingWidet(
-          duration: Duration(seconds: 2),
-          child: Text("Add Comment"),
-        ),
-        leading: CircleImageButton(
-          imageProvider: getUserImage(AuthService.to.currentUser.value!),
-          size: 30.sp,
-          border: Border.all(
-            color: Colors.white,
-            width: 2,
+    return CommonShowcaseWidget(
+      key: controller.tutorialKey3,
+      description: "コメントをして助ける意思を伝えましょう!",
+      child: Container(
+        constraints: BoxConstraints(maxHeight: maxExtent),
+        decoration: BoxDecoration(
+            color: ConstsColor.mainBackColor,
+            border: Border(top: BorderSide(color: Colors.grey))),
+        child: ListTile(
+          title: BlinkingWidet(
+            duration: Duration(seconds: 2),
+            child: Text("Add Comment"),
           ),
+          leading: CircleImageButton(
+            imageProvider: getUserImage(AuthService.to.currentUser.value!),
+            size: 30.sp,
+            border: Border.all(
+              color: Colors.white,
+              width: 2,
+            ),
+          ),
+          trailing: Icon(
+            Icons.expand_less,
+          ),
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return AboveCommentField();
+              },
+            );
+          },
         ),
-        trailing: Icon(
-          Icons.expand_less,
-        ),
-        onTap: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return AboveCommentField();
-            },
-          );
-        },
       ),
     );
   }

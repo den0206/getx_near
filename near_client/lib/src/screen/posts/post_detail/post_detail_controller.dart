@@ -14,6 +14,7 @@ import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/my_posts/my_posts_controller.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/near_posts/near_posts_controller.dart';
+import 'package:getx_near/src/screen/widget/Common_showcase.dart';
 
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
@@ -48,6 +49,13 @@ class PostDetailController extends LoadingGetController {
     return (commentContoller.text != "").obs;
   }
 
+  // tutorial
+  final GlobalKey tutorialKey1 = GlobalKey();
+  final GlobalKey tutorialKey2 = GlobalKey();
+  final GlobalKey tutorialKey3 = GlobalKey();
+  final GlobalKey tutorialKey4 = GlobalKey();
+  final GlobalKey tutorialKey5 = GlobalKey();
+
   @override
   void onInit() async {
     super.onInit();
@@ -62,6 +70,12 @@ class PostDetailController extends LoadingGetController {
     sc.dispose();
     _postIO.destroySocket();
     super.onClose();
+  }
+
+  void showTutorial(BuildContext context) {
+    final temp = [tutorialKey1, tutorialKey2, tutorialKey3, tutorialKey4];
+    if (post.expireAt != null) temp.add(tutorialKey5);
+    CommonShowCase(temp)..showTutorial(context);
   }
 
   void listenScroll() {
