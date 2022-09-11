@@ -22,6 +22,11 @@ class MessageScreen extends LoadingGetView<MessageController> {
   MessageController get ctr => MessageController();
 
   @override
+  void Function()? get onCancel => () {
+        print("Dismiss Message");
+      };
+
+  @override
   Widget get child {
     return Scaffold(
       appBar: AppBar(
