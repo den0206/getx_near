@@ -1,5 +1,8 @@
 import {Request, Response} from 'express';
-import {UserModel, ReportModel} from '../../utils/database/models';
+import {commonErrorHandler} from '../../error/custom_error';
+import AlreadyReportedError from '../../error/errors/already_reported';
+import NotFoundUserError from '../../error/errors/not_find_user';
+import {ReportModel, UserModel} from '../../utils/database/models';
 import ResponseAPI from '../../utils/interface/response.api';
 
 async function reportUser(req: Request, res: Response) {
@@ -8,14 +11,11 @@ async function reportUser(req: Request, res: Response) {
   const {reported, reportedContent, message, post} = req.body;
   try {
     const isFind = await UserModel.findById(reported);
-    if (!isFind)
-      return new ResponseAPI(res, {message: 'No Exist User'}).excute(400);
+    if (!isFind) throw new NotFoundUserError();
 
     const isPast = await ReportModel.findOne({informer, reported});
-    if (isPast)
-      return new ResponseAPI(res, {
-        message: '過去に通報済みのユーザーです',
-      }).excute(400);
+
+    if (isPast) throw new AlreadyReportedError();
 
     const report = new ReportModel({
       informer,
@@ -38,8 +38,8 @@ async function reportUser(req: Request, res: Response) {
     }
 
     new ResponseAPI(res, {data: report}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -50,8 +50,8 @@ async function getReportedCount(req: Request, res: Response) {
     const count = await ReportModel.countDocuments({reported: userId});
 
     new ResponseAPI(res, {data: count.toString()}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 

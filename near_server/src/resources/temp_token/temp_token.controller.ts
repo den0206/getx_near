@@ -1,4 +1,9 @@
 import {Request, Response} from 'express';
+import {commonErrorHandler} from '../../error/custom_error';
+import AlreadyUseEmailError from '../../error/errors/already_email';
+import ExpireResetTokenError from '../../error/errors/expire_reset_token';
+import NotFoundEmailError from '../../error/errors/not_find_email';
+import NotFoundUserError from '../../error/errors/not_find_user';
 import {TempTokenModel, UserModel} from '../../utils/database/models';
 import sendEmail from '../../utils/email/send_email';
 import ResponseAPI from '../../utils/interface/response.api';
@@ -10,10 +15,7 @@ async function requestNewEmail(req: Request, res: Response) {
 
   try {
     const isFind = await UserModel.findOne({email});
-    if (isFind)
-      return new ResponseAPI(res, {message: 'Already Use Thie Email'}).excute(
-        400
-      );
+    if (isFind) throw new AlreadyUseEmailError();
 
     const genetateNumber = await generateNumberAndToken(email);
     const payload = {id: email, otp: genetateNumber};
@@ -25,8 +27,8 @@ async function requestNewEmail(req: Request, res: Response) {
       template: '../email/template/sendOTP.handlebars',
     });
     new ResponseAPI(res, {data: 'Send Change Email'}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -43,8 +45,8 @@ async function verifyEmail(req: Request, res: Response) {
 
     await newEmailToken.deleteOne();
     new ResponseAPI(res, {data: 'Success Valid Email'}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -55,8 +57,7 @@ async function requestPassword(req: Request, res: Response) {
 
   try {
     const isFind = await UserModel.findOne({email});
-    if (!isFind)
-      return new ResponseAPI(res, {message: 'Not find this Email'}).excute(400);
+    if (!isFind) throw new NotFoundEmailError();
 
     const genetateNumber = await generateNumberAndToken(isFind._id);
     const payload = {id: isFind.name, otp: genetateNumber};
@@ -67,8 +68,8 @@ async function requestPassword(req: Request, res: Response) {
       template: '../email/template/sendOTP.handlebars',
     });
     new ResponseAPI(res, {data: isFind._id}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -83,8 +84,7 @@ async function verifyPassword(req: Request, res: Response) {
       {password: hash},
       {new: true, useFindAndModify: true}
     );
-    if (!newUser)
-      return new ResponseAPI(res, {message: 'Not find the User'}).excute(400);
+    if (!newUser) throw new NotFoundUserError();
 
     await sendEmail({
       email: newUser.email,
@@ -94,8 +94,8 @@ async function verifyPassword(req: Request, res: Response) {
     });
     await passwordResetToken.delete();
     new ResponseAPI(res, {data: newUser}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -113,12 +113,11 @@ async function generateNumberAndToken(tempId: string) {
 async function checkValid(tempId: string, verify: string) {
   try {
     const currentToken = await TempTokenModel.findOne({tempId});
-    if (!currentToken)
-      throw new Error('Invalid or expired password reset token');
+    if (!currentToken) throw new ExpireResetTokenError();
     const isValid = await currentToken.compareToken(verify);
-    if (!isValid) throw new Error('Invalid or expired password reset token');
+    if (!isValid) throw new ExpireResetTokenError();
     return currentToken;
-  } catch (e: any) {
+  } catch (e) {
     throw e;
   }
 }

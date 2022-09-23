@@ -1,7 +1,9 @@
-import randomGenerator from './random.generator';
 import {Request, Response} from 'express';
+import {commonErrorHandler} from '../../error/custom_error';
+import NotFoundUserError from '../../error/errors/not_find_user';
+import {CommentModel, PostModel, UserModel} from '../../utils/database/models';
 import ResponseAPI from '../../utils/interface/response.api';
-import {UserModel, PostModel, CommentModel} from '../../utils/database/models';
+import randomGenerator from './random.generator';
 
 async function makeDummyPosts(req: Request, res: Response) {
   const lng = parseFloat(req.query.lng as string);
@@ -29,8 +31,8 @@ async function makeDummyPosts(req: Request, res: Response) {
       return newPost;
     });
     new ResponseAPI(res, {data: result}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -61,8 +63,8 @@ async function makeDummyComments(req: Request, res: Response) {
       return newComment;
     });
     new ResponseAPI(res, {data: result}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -76,8 +78,7 @@ async function makeDummyMyPosts(req: Request, res: Response) {
   try {
     const findUser = await UserModel.findById(userId).select('-password');
 
-    if (!findUser)
-      return new ResponseAPI(res, {message: 'No Find User'}).excute(400);
+    if (!findUser) throw new NotFoundUserError();
 
     const userLength = randomGenerator.intR(20) + 1;
 
@@ -135,8 +136,8 @@ async function makeDummyMyPosts(req: Request, res: Response) {
     });
 
     new ResponseAPI(res, {data: posts}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 

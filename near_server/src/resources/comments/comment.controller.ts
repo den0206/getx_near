@@ -1,15 +1,15 @@
 import {Request, Response} from 'express';
+import {commonErrorHandler} from '../../error/custom_error';
+import InvalidMongoIDError from '../../error/errors/invalid_mongo_id';
 import {checkMongoId} from '../../utils/database/database';
-import ResponseAPI from '../../utils/interface/response.api';
 import {CommentModel} from '../../utils/database/models';
 import {usePagenation} from '../../utils/database/pagenation';
+import ResponseAPI from '../../utils/interface/response.api';
 
 async function addComment(req: Request, res: Response) {
   const userId = res.locals.user.userId;
   const {postId, text, postUserId, longitude, latitude} = req.body;
-  if (!checkMongoId(postId))
-    return new ResponseAPI(res, {message: 'Invalid PotId'}).excute(400);
-
+  if (!checkMongoId(postId)) throw new InvalidMongoIDError();
   try {
     const newComment = new CommentModel({
       text,
@@ -22,8 +22,8 @@ async function addComment(req: Request, res: Response) {
     await newComment.save();
     await newComment.populate('userId', '-password');
     return new ResponseAPI(res, {data: newComment}).excute(200);
-  } catch (e: any) {
-    return new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -41,8 +41,8 @@ async function getComment(req: Request, res: Response) {
       specific: {postId},
     });
     new ResponseAPI(res, {data: data}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -60,8 +60,8 @@ async function getUserRelationComments(req: Request, res: Response) {
       specific: {postUserId: userId},
     });
     new ResponseAPI(res, {data: data}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 

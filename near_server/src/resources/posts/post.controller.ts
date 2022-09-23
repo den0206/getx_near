@@ -1,8 +1,12 @@
 import {Request, Response} from 'express';
-import ResponseAPI from '../../utils/interface/response.api';
+import {commonErrorHandler} from '../../error/custom_error';
+import InvalidMongoIDError from '../../error/errors/invalid_mongo_id';
+import NotDeletePostError from '../../error/errors/not_delete_post';
+import NotFoundUserError from '../../error/errors/not_find_user';
+import {checkMongoId} from '../../utils/database/database';
 import {PostModel, UserModel} from '../../utils/database/models';
 import {usePagenation} from '../../utils/database/pagenation';
-import {checkMongoId} from '../../utils/database/database';
+import ResponseAPI from '../../utils/interface/response.api';
 
 async function createPost(req: Request, res: Response) {
   const {title, content, emergency, expireAt, longitude, latitude} = req.body;
@@ -20,8 +24,8 @@ async function createPost(req: Request, res: Response) {
     await newPost.populate('userId', '-password');
     await newPost.save();
     new ResponseAPI(res, {data: newPost}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -69,8 +73,8 @@ async function createPostWithNearUser(req: Request, res: Response) {
     const data = {newPost, tokens};
 
     new ResponseAPI(res, {data}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -94,8 +98,8 @@ async function getNearPost(req: Request, res: Response) {
       .populate('userId', '-password');
 
     new ResponseAPI(res, {data: posts}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -114,8 +118,8 @@ async function getMyPosts(req: Request, res: Response) {
       specific: {userId},
     });
     new ResponseAPI(res, {data: data}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -127,10 +131,8 @@ async function addLike(req: Request, res: Response) {
 
   try {
     const getLikes = await PostModel.findById(postId).select('likes');
-    if (!getLikes)
-      return new ResponseAPI(res, {message: 'Can not fint The Post'}).excute(
-        404
-      );
+
+    if (!getLikes) throw new NotFoundUserError();
 
     var {likes} = getLikes;
     console.log(likes);
@@ -144,8 +146,8 @@ async function addLike(req: Request, res: Response) {
     await PostModel.findByIdAndUpdate(postId, {likes}, {new: true});
 
     new ResponseAPI(res, {data: likes}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -155,13 +157,11 @@ async function deletePost(req: Request, res: Response) {
 
   console.log(postId);
 
-  if (!checkMongoId(postId))
-    new ResponseAPI(res, {message: 'Invalid id'}).excute(400);
+  if (!checkMongoId(postId)) throw new InvalidMongoIDError();
 
   const findPost = await PostModel.findById(postId);
 
-  if (!findPost || findPost.userId != userId)
-    return new ResponseAPI(res, {message: 'Cant delete this post'}).excute(400);
+  if (!findPost || findPost.userId != userId) throw new NotDeletePostError();
 
   try {
     /// delete with pre reletaion
@@ -169,8 +169,8 @@ async function deletePost(req: Request, res: Response) {
 
     console.log('=== Complete DELETE');
     new ResponseAPI(res, {data: findPost}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 

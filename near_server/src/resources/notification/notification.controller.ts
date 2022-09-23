@@ -1,12 +1,14 @@
-import {
-  MessagingPayload,
-  MessagingOptions,
-} from './../../../node_modules/firebase-admin/lib/messaging/messaging-api.d';
 import {Request, Response} from 'express';
 import * as admin from 'firebase-admin';
-import ResponseAPI from '../../utils/interface/response.api';
-import {RecentModel} from '../../utils/database/models';
 import mongoose from 'mongoose';
+import {commonErrorHandler} from '../../error/custom_error';
+import FailSendNotificationError from '../../error/errors/fail_send_notification';
+import {RecentModel} from '../../utils/database/models';
+import ResponseAPI from '../../utils/interface/response.api';
+import {
+  MessagingOptions,
+  MessagingPayload,
+} from './../../../node_modules/firebase-admin/lib/messaging/messaging-api.d';
 
 async function sendNotification(req: Request, res: Response) {
   const {title, body, badge, sound, fcmToken} = req.body;
@@ -35,15 +37,10 @@ async function sendNotification(req: Request, res: Response) {
       .messaging()
       .sendToDevice(fcmToken, payload, option);
 
-    console.log(sendRequest);
-    if (sendRequest.failureCount)
-      return new ResponseAPI(res, {message: '通知を送れませんでした'}).excute(
-        400
-      );
-
+    if (sendRequest.failureCount) throw new FailSendNotificationError();
     new ResponseAPI(res, {data: sendRequest}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -60,8 +57,8 @@ async function getBadgeCount(req: Request, res: Response) {
     const total = count[0].counter as number;
 
     new ResponseAPI(res, {data: total}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
