@@ -39,7 +39,7 @@ async function reportUser(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: report}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -51,7 +51,7 @@ async function getReportedCount(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: count.toString()}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 

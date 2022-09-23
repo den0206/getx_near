@@ -23,7 +23,7 @@ async function addComment(req: Request, res: Response) {
     await newComment.populate('userId', '-password');
     return new ResponseAPI(res, {data: newComment}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -42,7 +42,7 @@ async function getComment(req: Request, res: Response) {
     });
     new ResponseAPI(res, {data: data}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -61,7 +61,7 @@ async function getUserRelationComments(req: Request, res: Response) {
     });
     new ResponseAPI(res, {data: data}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 

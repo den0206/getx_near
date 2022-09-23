@@ -23,7 +23,7 @@ async function loadMessage(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: data}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -36,7 +36,7 @@ async function sendTextMessage(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: newMessage}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -50,7 +50,7 @@ async function updateMessage(req: Request, res: Response) {
     await MessageModel.findByIdAndUpdate(messageId, value);
     new ResponseAPI(res, {data: 'Update Successs'}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -63,7 +63,7 @@ async function deleteMessage(req: Request, res: Response) {
     const deleteMessage = await MessageModel.findByIdAndDelete(messageId);
     new ResponseAPI(res, {data: deleteMessage}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 

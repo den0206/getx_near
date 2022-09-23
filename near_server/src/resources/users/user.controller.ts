@@ -32,7 +32,7 @@ async function signUp(req: Request<{}, {}, SignUpBody>, res: Response) {
     await user.save();
     new ResponseAPI(res, {data: user}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -61,7 +61,7 @@ async function login(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: data}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -89,7 +89,7 @@ async function updateUser(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: newUser}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -105,7 +105,7 @@ async function updateLocation(req: Request, res: Response) {
     const newUser = await findUser.updateOne({location: location}, {new: true});
     new ResponseAPI(res, {data: newUser}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -126,7 +126,7 @@ async function updateBlock(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: newUser}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -141,7 +141,7 @@ async function deleteUser(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: isFind}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 export default {

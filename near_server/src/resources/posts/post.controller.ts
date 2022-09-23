@@ -25,7 +25,7 @@ async function createPost(req: Request, res: Response) {
     await newPost.save();
     new ResponseAPI(res, {data: newPost}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -74,7 +74,7 @@ async function createPostWithNearUser(req: Request, res: Response) {
 
     new ResponseAPI(res, {data}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -99,7 +99,7 @@ async function getNearPost(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: posts}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -119,7 +119,7 @@ async function getMyPosts(req: Request, res: Response) {
     });
     new ResponseAPI(res, {data: data}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -147,7 +147,7 @@ async function addLike(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: likes}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -170,7 +170,7 @@ async function deletePost(req: Request, res: Response) {
     console.log('=== Complete DELETE');
     new ResponseAPI(res, {data: findPost}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 

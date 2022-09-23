@@ -28,7 +28,7 @@ async function requestNewEmail(req: Request, res: Response) {
     });
     new ResponseAPI(res, {data: 'Send Change Email'}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -46,7 +46,7 @@ async function verifyEmail(req: Request, res: Response) {
     await newEmailToken.deleteOne();
     new ResponseAPI(res, {data: 'Success Valid Email'}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -69,7 +69,7 @@ async function requestPassword(req: Request, res: Response) {
     });
     new ResponseAPI(res, {data: isFind._id}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -95,7 +95,7 @@ async function verifyPassword(req: Request, res: Response) {
     await passwordResetToken.delete();
     new ResponseAPI(res, {data: newUser}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 

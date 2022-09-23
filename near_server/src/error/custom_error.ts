@@ -8,12 +8,6 @@ export abstract class CustomError extends Error {
     super(message);
     Object.setPrototypeOf(this, CustomError.prototype);
   }
-
-  get toJson() {
-    return {
-      message: this.message,
-    };
-  }
 }
 
 // 共通のエラーハンドリングを行う
