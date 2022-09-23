@@ -1,9 +1,12 @@
 import {Request, Response} from 'express';
-import {RecentModel} from '../../utils/database/models';
-import ResponseAPI from '../../utils/interface/response.api';
-import {checkMongoId} from '../../utils/database/database';
-import {usePagenation} from '../../utils/database/pagenation';
 import mongoose from 'mongoose';
+import {commonErrorHandler} from '../../error/custom_error';
+import InvalidMongoIDError from '../../error/errors/invalid_mongo_id';
+import NotFoundRecentError from '../../error/errors/not_find_recent';
+import {checkMongoId} from '../../utils/database/database';
+import {RecentModel} from '../../utils/database/models';
+import {usePagenation} from '../../utils/database/pagenation';
+import ResponseAPI from '../../utils/interface/response.api';
 
 async function createChatRecent(req: Request, res: Response) {
   const {userId, chatRoomId, withUserId} = req.body;
@@ -12,16 +15,15 @@ async function createChatRecent(req: Request, res: Response) {
   try {
     await newRecent.save();
     new ResponseAPI(res, {data: newRecent}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
 async function updateRecent(req: Request, res: Response) {
   const {recentId, lastMessage, counter} = req.body;
 
-  if (!checkMongoId(recentId))
-    return new ResponseAPI(res, {message: 'Invalid Id'}).excute(400);
+  if (!checkMongoId(recentId)) throw new InvalidMongoIDError();
 
   const value = {lastMessage, counter};
   try {
@@ -30,22 +32,21 @@ async function updateRecent(req: Request, res: Response) {
     });
 
     new ResponseAPI(res, {data: updateRecent}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
 async function deleteRecent(req: Request, res: Response) {
   const {recentId} = req.body;
-  if (!checkMongoId(recentId))
-    return new ResponseAPI(res, {message: 'Invalid Id'}).excute(400);
+  if (!checkMongoId(recentId)) throw new InvalidMongoIDError();
 
   try {
     const del = await RecentModel.findByIdAndDelete(recentId);
     console.log('Success Delete');
     new ResponseAPI(res, {data: del}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -66,8 +67,8 @@ async function findByUserId(req: Request, res: Response) {
     });
 
     new ResponseAPI(res, {data: data}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -81,8 +82,8 @@ async function findByRoomId(req: Request, res: Response) {
     ]);
 
     new ResponseAPI(res, {data: recents}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -96,12 +97,11 @@ async function findByUserAndRoomid(req: Request, res: Response) {
       chatRoomId: chatRoomId,
     }).populate('userId withUserId');
 
-    if (!findRecent)
-      return new ResponseAPI(res, {message: 'Cant find'}).excute(400);
+    if (!findRecent) throw new NotFoundRecentError();
 
     new ResponseAPI(res, {data: findRecent}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -118,8 +118,8 @@ async function getBadgCount(req: Request, res: Response) {
     const total = count[0].counter as number;
 
     return res.status(200).json({status: true, data: total});
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 

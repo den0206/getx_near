@@ -1,18 +1,21 @@
-import {Date} from 'mongoose';
 import {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
-import {SignUpBody} from './user.validation';
-import ResponseAPI from '../../utils/interface/response.api';
-import {UserModel} from '../../utils/database/models';
+import {commonErrorHandler} from '../../error/custom_error';
+import AlreadyUseEmailError from '../../error/errors/already_email';
+import NotFoundEmailError from '../../error/errors/not_find_email';
+import NotFoundUserError from '../../error/errors/not_find_user';
+import PasswordNotMatchError from '../../error/errors/password_not_match';
 import AWSClient from '../../utils/aws/aws_client';
+import {UserModel} from '../../utils/database/models';
+import ResponseAPI from '../../utils/interface/response.api';
+import {SignUpBody} from './user.validation';
 
 async function signUp(req: Request<{}, {}, SignUpBody>, res: Response) {
   const {name, email, sex, password, createdAt} = req.body;
   const file = req.file;
   const isFind = await UserModel.findOne({email});
 
-  if (isFind)
-    return new ResponseAPI(res, {message: 'Email Alreadty Exist'}).excute(400);
+  if (isFind) throw new AlreadyUseEmailError();
 
   try {
     let user = new UserModel({name, email, sex, password, createdAt});
@@ -28,8 +31,8 @@ async function signUp(req: Request<{}, {}, SignUpBody>, res: Response) {
     }
     await user.save();
     new ResponseAPI(res, {data: user}).excute(200);
-  } catch (e: any) {
-    return new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -43,12 +46,10 @@ async function login(req: Request, res: Response) {
       {new: true}
     );
     // const isFind = await UserModel.findOne({email});
-    if (!isFind)
-      return new ResponseAPI(res, {message: 'No Exist Email'}).excute(400);
-
+    if (!isFind) throw new NotFoundEmailError();
     const isVerify = await isFind.comparePasswrd(password);
-    if (!isVerify)
-      return new ResponseAPI(res, {message: 'Password not match'}).excute(400);
+
+    if (!isVerify) throw new PasswordNotMatchError();
 
     const secret = process.env.JWT_SECRET_KEY || 'mysecretkey';
     const expiresIn = process.env.JWT_EXPIRES_IN;
@@ -59,8 +60,8 @@ async function login(req: Request, res: Response) {
     const data = {user: isFind, token};
 
     new ResponseAPI(res, {data: data}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -84,14 +85,11 @@ async function updateUser(req: Request, res: Response) {
     const newUser = await UserModel.findByIdAndUpdate(userId, value, {
       new: true,
     });
-    if (!newUser)
-      return new ResponseAPI(res, {
-        message: 'Can not find edited user',
-      }).excute(400);
+    if (!newUser) throw new NotFoundUserError();
 
     new ResponseAPI(res, {data: newUser}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -101,17 +99,13 @@ async function updateLocation(req: Request, res: Response) {
 
   try {
     const findUser = await UserModel.findById(userId);
-    if (!findUser)
-      return new ResponseAPI(res, {message: 'Can not fint The User'}).excute(
-        404
-      );
-
+    if (!findUser) throw new NotFoundUserError();
     const location = {type: 'Point', coordinates: [lng, lat]};
 
     const newUser = await findUser.updateOne({location: location}, {new: true});
     new ResponseAPI(res, {data: newUser}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -128,14 +122,11 @@ async function updateBlock(req: Request, res: Response) {
     const newUser = await UserModel.findByIdAndUpdate(userId, value, {
       new: true,
     });
-    if (!newUser)
-      return new ResponseAPI(res, {
-        message: 'Can not find edited user',
-      }).excute(400);
+    if (!newUser) throw new NotFoundUserError();
 
     new ResponseAPI(res, {data: newUser}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -143,17 +134,14 @@ async function deleteUser(req: Request, res: Response) {
   const userId = res.locals.user.userId;
   try {
     const isFind = await UserModel.findById(userId);
-    if (!isFind)
-      return new ResponseAPI(res, {
-        message: 'Can not find Delete user',
-      }).excute(400);
+    if (!isFind) throw new NotFoundUserError();
 
     await isFind.delete();
     console.log('=== Complete DELETE');
 
     new ResponseAPI(res, {data: isFind}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 export default {

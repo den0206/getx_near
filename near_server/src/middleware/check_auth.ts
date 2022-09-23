@@ -1,5 +1,7 @@
-import {Request, Response, NextFunction} from 'express';
+import {NextFunction, Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
+import TokenExpireError from '../error/errors/token_expire';
+import TokenNotFoundError from '../error/errors/token_not_found';
 import ResponseAPI from '../utils/interface/response.api';
 
 export default function checkAuth(
@@ -18,9 +20,11 @@ export default function checkAuth(
 
       next();
     } catch (e) {
-      return new ResponseAPI(res, {message: 'Token Expire'}).excute(401);
+      const expire = new TokenExpireError();
+      return new ResponseAPI(res, {error: expire}).excute(expire.statusCode);
     }
   } else {
-    return new ResponseAPI(res, {message: 'No Token'}).excute(403);
+    const notFound = new TokenNotFoundError();
+    return new ResponseAPI(res, {error: notFound}).excute(notFound.statusCode);
   }
 }

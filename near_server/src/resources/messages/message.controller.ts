@@ -1,8 +1,10 @@
 import {Request, Response} from 'express';
+import {commonErrorHandler} from '../../error/custom_error';
+import InvalidMongoIDError from '../../error/errors/invalid_mongo_id';
+import {checkMongoId} from '../../utils/database/database';
 import {MessageModel} from '../../utils/database/models';
 import {usePagenation} from '../../utils/database/pagenation';
 import ResponseAPI from '../../utils/interface/response.api';
-import {checkMongoId} from '../../utils/database/database';
 
 async function loadMessage(req: Request, res: Response) {
   const chatRoomId = req.query.chatRoomId;
@@ -20,8 +22,8 @@ async function loadMessage(req: Request, res: Response) {
     });
 
     new ResponseAPI(res, {data: data}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
@@ -33,37 +35,35 @@ async function sendTextMessage(req: Request, res: Response) {
     await newMessage.save();
 
     new ResponseAPI(res, {data: newMessage}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
 async function updateMessage(req: Request, res: Response) {
   const {messageId, readBy} = req.body;
 
-  if (!checkMongoId(messageId))
-    return new ResponseAPI(res, {message: 'Invalid Id'}).excute(400);
+  if (!checkMongoId(messageId)) throw new InvalidMongoIDError();
 
   const value = {readBy};
   try {
     await MessageModel.findByIdAndUpdate(messageId, value);
     new ResponseAPI(res, {data: 'Update Successs'}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 
 async function deleteMessage(req: Request, res: Response) {
   const {messageId} = req.body;
 
-  if (!checkMongoId(messageId))
-    return new ResponseAPI(res, {message: 'Invalid Id'}).excute(400);
+  if (!checkMongoId(messageId)) throw new InvalidMongoIDError();
 
   try {
     const deleteMessage = await MessageModel.findByIdAndDelete(messageId);
     new ResponseAPI(res, {data: deleteMessage}).excute(200);
-  } catch (e: any) {
-    new ResponseAPI(res, {message: e.message}).excute(500);
+  } catch (e) {
+    commonErrorHandler(res, {error: e});
   }
 }
 

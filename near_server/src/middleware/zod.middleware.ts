@@ -1,5 +1,6 @@
-import {Request, Response, NextFunction} from 'express';
-import {AnyZodObject} from 'zod';
+import {NextFunction, Request, Response} from 'express';
+import {AnyZodObject, ZodError} from 'zod';
+import RequestValidationError from '../error/errors/request_validation';
 import ResponseAPI from '../utils/interface/response.api';
 
 function zodValidate(schema: AnyZodObject) {
@@ -16,7 +17,13 @@ function zodValidate(schema: AnyZodObject) {
       });
       return next();
     } catch (e: any) {
-      return new ResponseAPI(res, {message: e.message}).excute(400);
+      if (e instanceof ZodError) {
+        const invalidError = new RequestValidationError(e.issues);
+        return new ResponseAPI(res, {error: invalidError}).excute(
+          invalidError.statusCode
+        );
+      }
+      new ResponseAPI(res, {error: e}).excute(500);
     }
   };
 }
