@@ -16,7 +16,7 @@ async function createChatRecent(req: Request, res: Response) {
     await newRecent.save();
     new ResponseAPI(res, {data: newRecent}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -33,7 +33,7 @@ async function updateRecent(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: updateRecent}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -46,7 +46,7 @@ async function deleteRecent(req: Request, res: Response) {
     console.log('Success Delete');
     new ResponseAPI(res, {data: del}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -68,7 +68,7 @@ async function findByUserId(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: data}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -83,7 +83,7 @@ async function findByRoomId(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: recents}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -101,7 +101,7 @@ async function findByUserAndRoomid(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: findRecent}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -119,7 +119,7 @@ async function getBadgCount(req: Request, res: Response) {
 
     return res.status(200).json({status: true, data: total});
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 

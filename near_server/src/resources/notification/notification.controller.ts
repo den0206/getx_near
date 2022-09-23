@@ -40,7 +40,7 @@ async function sendNotification(req: Request, res: Response) {
     if (sendRequest.failureCount) throw new FailSendNotificationError();
     new ResponseAPI(res, {data: sendRequest}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -58,7 +58,7 @@ async function getBadgeCount(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: total}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 

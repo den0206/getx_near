@@ -32,7 +32,7 @@ async function makeDummyPosts(req: Request, res: Response) {
     });
     new ResponseAPI(res, {data: result}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -64,7 +64,7 @@ async function makeDummyComments(req: Request, res: Response) {
     });
     new ResponseAPI(res, {data: result}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
@@ -137,7 +137,7 @@ async function makeDummyMyPosts(req: Request, res: Response) {
 
     new ResponseAPI(res, {data: posts}).excute(200);
   } catch (e) {
-    commonErrorHandler(res, {error: e});
+    commonErrorHandler(res, e);
   }
 }
 
