@@ -21,7 +21,7 @@ async function addComment(req: Request, res: Response) {
 
     await newComment.save();
     await newComment.populate('userId', '-password');
-    return new ResponseAPI(res, {data: newComment}).excute(200);
+    new ResponseAPI(res, {data: newComment}).excute(200);
   } catch (e) {
     commonErrorHandler(res, e);
   }
@@ -40,7 +40,13 @@ async function getComment(req: Request, res: Response) {
       exclued: '-password',
       specific: {postId},
     });
-    new ResponseAPI(res, {data: data}).excute(200);
+
+    // コメント数の取得
+    const count = await CommentModel.countDocuments({postId});
+
+    const result = {count, pages: data};
+
+    new ResponseAPI(res, {data: result}).excute(200);
   } catch (e) {
     commonErrorHandler(res, e);
   }

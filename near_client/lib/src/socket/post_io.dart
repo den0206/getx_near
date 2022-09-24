@@ -15,8 +15,8 @@ class PostIO extends SocketBase {
   // 受信
   void addNewCommentListner() {
     socket.on("new_comment", (com) {
-      print(com);
       final newComment = Comment.fromMapWithPost(com, controller.post);
+      controller.commentCount += 1;
       controller.comments.add(newComment);
       controller.update();
     });
