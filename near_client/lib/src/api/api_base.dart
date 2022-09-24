@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:io' as io;
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:getx_near/main.dart';
@@ -108,12 +109,21 @@ abstract class APIBase {
         throw BadRequestException(responseAPI.message);
     }
   }
+
+  Future<void> _checkNetwork() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+
+    if (connectivityResult != ConnectivityResult.mobile &&
+        connectivityResult != ConnectivityResult.wifi)
+      throw SocketException("No Internet");
+  }
 }
 
 extension APIBaseExtention on APIBase {
   Future<ResponseAPI> getRequest({required Uri uri, useToken = false}) async {
     try {
       _setToken(useToken);
+      await _checkNetwork();
       final res =
           await http.get(uri, headers: headers).timeout(timeoutDuration);
       return _filterResponse(res);
@@ -134,6 +144,9 @@ extension APIBaseExtention on APIBase {
     try {
       _setToken(useToken);
       final String bodyparams = json.encode(body);
+
+      await _checkNetwork();
+
       final res = await http
           .post(uri, headers: headers, body: bodyparams)
           .timeout(timeoutDuration);
@@ -156,6 +169,8 @@ extension APIBaseExtention on APIBase {
       _setToken(useToken);
 
       final String bodyParams = json.encode(body);
+
+      await _checkNetwork();
       final res = await http
           .put(uri, headers: headers, body: bodyParams)
           .timeout(timeoutDuration);
@@ -177,6 +192,8 @@ extension APIBaseExtention on APIBase {
     try {
       _setToken(useToken);
       final String bodyParams = json.encode(body);
+
+      await _checkNetwork();
       final res = await http
           .delete(uri, headers: headers, body: bodyParams)
           .timeout(timeoutDuration);
@@ -218,6 +235,8 @@ extension APIBaseExtention on APIBase {
       request.headers.addAll(headers);
       request.fields.addAll(stringParameters);
       request.files.addAll(multipartFiles);
+
+      await _checkNetwork();
 
       final res = await request.send();
 
