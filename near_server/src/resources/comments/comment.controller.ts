@@ -44,7 +44,7 @@ async function getComment(req: Request, res: Response) {
     // コメント数の取得
     const count = await CommentModel.countDocuments({postId});
 
-    const result = {count, pages: data};
+    const result = {count: count, pages: data};
 
     new ResponseAPI(res, {data: result}).excute(200);
   } catch (e) {

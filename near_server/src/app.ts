@@ -1,20 +1,20 @@
 import cors from 'cors';
 import express, {Application} from 'express';
+import * as admin from 'firebase-admin';
 import helmet from 'helmet';
-import {connectDB} from './utils/database/database';
-import usersRoute from './resources/users/user.route';
-import postRoute from './resources/posts/post.route';
+import http from 'http';
+import nodeSchedule from 'node-schedule';
 import commentRoute from './resources/comments/comment.route';
 import messageRoute from './resources/messages/message.route';
-import recentRoute from './resources/recents/recent.route';
-import tokenRoute from './resources/temp_token/temp_token.route';
-import http from 'http';
-import {connectIO} from './utils/socket/socket';
-import nodeSchedule from 'node-schedule';
-import reportRoute from './resources/report/report.route';
-import * as serviceAccount from './serviceAccountCredentials.json';
-import * as admin from 'firebase-admin';
 import notificationRoute from './resources/notification/notification.route';
+import postRoute from './resources/posts/post.route';
+import recentRoute from './resources/recents/recent.route';
+import reportRoute from './resources/report/report.route';
+import tokenRoute from './resources/temp_token/temp_token.route';
+import usersRoute from './resources/users/user.route';
+import * as serviceAccount from './serviceAccountCredentials.json';
+import {connectDB} from './utils/database/database';
+import {connectIO} from './utils/socket/socket';
 const get = require('simple-get');
 
 class App {
@@ -73,7 +73,7 @@ class App {
       credential: admin.credential.cert(adminConfig),
     });
 
-    if (process.env.NODE_ENV == 'production') console.log(adminConfig);
+    // if (process.env.NODE_ENV == 'production') console.log(adminConfig);
   }
   public listen(): void {
     this.server.listen(this.port, async () => {
