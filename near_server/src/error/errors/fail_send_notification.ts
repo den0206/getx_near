@@ -1,7 +1,7 @@
 import {CustomError} from '../custom_error';
 
 export default class FailSendNotificationError extends CustomError {
-  statusCode = 400;
+  statusCode = 415;
 
   constructor() {
     super('Fail Send Notification');
