@@ -50,3 +50,8 @@ class BadRequestException extends CustomException {
 class UnauthorisedException extends CustomException {
   UnauthorisedException(message) : super(message, "Unauthorised: ");
 }
+
+// 415
+class FailNotificationException extends CustomException {
+  FailNotificationException(message) : super(message, "Fail notification: ");
+}

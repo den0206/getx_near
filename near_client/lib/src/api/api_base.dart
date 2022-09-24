@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:io' as io;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,9 +10,7 @@ import 'package:getx_near/src/model/utils/custom_exception.dart';
 import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io' as io;
 import 'package:http_parser/http_parser.dart';
-
 import 'package:mime/mime.dart';
 
 abstract class APIBase {
@@ -95,6 +94,8 @@ abstract class APIBase {
         throw ExceedLimitException(responseAPI.message);
       case 414:
         throw URLTooLongException(responseAPI.message);
+      case 415:
+        throw FailNotificationException(responseAPI.message);
       case 429:
       case 529:
         throw TooManyRequestException(responseAPI.message);
