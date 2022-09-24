@@ -8,18 +8,16 @@ import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/comment_api.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/comment.dart';
-import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/my_posts/my_posts_controller.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/near_posts/near_posts_controller.dart';
 import 'package:getx_near/src/screen/widget/Common_showcase.dart';
-
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/location_service.dart';
-
 import 'package:getx_near/src/socket/post_io.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:map_launcher/map_launcher.dart';
@@ -39,6 +37,7 @@ class PostDetailController extends LoadingGetController {
   late PostIO _postIO;
 
   final List<Comment> comments = [];
+  int commentCount = 0;
   List<Comment> get sorted {
     final current = comments;
     current.sort((a, b) => a.distance!.compareTo(b.distance!));
@@ -137,8 +136,11 @@ class PostDetailController extends LoadingGetController {
       final res = await _commentAPI.getComment(post.id, nextCursor);
       if (!res.status) return;
 
+      commentCount = res.data["count"];
+
       final Pages<Comment> pages =
-          Pages.fromMap(res.data, Comment.fromJsonModelWithPost, post);
+          Pages.fromMap(res.data["pages"], Comment.fromJsonModelWithPost, post);
+
       reachLast = !pages.pageInfo.hasNextPage;
       nextCursor = pages.pageInfo.nextPageCursor;
       final temp = pages.pageFeeds;

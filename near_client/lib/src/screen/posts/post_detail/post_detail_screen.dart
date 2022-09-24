@@ -25,6 +25,7 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../report/report_screen.dart';
 
 class PostDetailScreen extends LoadingGetView<PostDetailController> {
@@ -258,7 +259,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text("${controller.comments.length}"),
+                                Text("${controller.commentCount}"),
                               ],
                             ),
                           );
