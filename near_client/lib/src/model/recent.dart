@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/utils/date_formate.dart';
 
 class Recent {
   final String id;
@@ -20,6 +21,8 @@ class Recent {
     required this.counter,
     required this.date,
   });
+
+  String get formattedTime => DateFormatter.getVerBoseDateString(this.date);
 
   Map<String, dynamic> toMap() {
     return {
