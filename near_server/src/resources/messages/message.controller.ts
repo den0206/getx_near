@@ -1,15 +1,19 @@
 import {Request, Response} from 'express';
 import {commonErrorHandler} from '../../error/custom_error';
 import InvalidMongoIDError from '../../error/errors/invalid_mongo_id';
+import {PagingWithChatIdQuery} from '../../middleware/validations/pagination';
 import {checkMongoId} from '../../utils/database/database';
 import {MessageModel} from '../../utils/database/models';
 import {usePagenation} from '../../utils/database/pagenation';
 import ResponseAPI from '../../utils/interface/response.api';
 
-async function loadMessage(req: Request, res: Response) {
+async function loadMessage(
+  req: Request<{}, {}, {}, PagingWithChatIdQuery>,
+  res: Response
+) {
   const chatRoomId = req.query.chatRoomId;
-  const cursor = req.query.cursor as string;
-  const limit: number = parseInt(req.query.limit as string) || 10;
+  const cursor = req.query.cursor;
+  const limit: number = parseInt(req.query.limit ?? '10');
 
   try {
     const data = await usePagenation({

@@ -3,6 +3,7 @@ import {commonErrorHandler} from '../../error/custom_error';
 import InvalidMongoIDError from '../../error/errors/invalid_mongo_id';
 import NotDeletePostError from '../../error/errors/not_delete_post';
 import NotFoundUserError from '../../error/errors/not_find_user';
+import {PagingQuery} from '../../middleware/validations/pagination';
 import {checkMongoId} from '../../utils/database/database';
 import {PostModel, UserModel} from '../../utils/database/models';
 import {usePagenation} from '../../utils/database/pagenation';
@@ -103,10 +104,13 @@ async function getNearPost(req: Request, res: Response) {
   }
 }
 
-async function getMyPosts(req: Request, res: Response) {
+async function getMyPosts(
+  req: Request<{}, {}, {}, PagingQuery>,
+  res: Response
+) {
   const userId = res.locals.user.userId;
-  const cursor = req.query.cursor as string;
-  const limit: number = parseInt(req.query.limit as string) || 10;
+  const cursor = req.query.cursor;
+  const limit: number = parseInt(req.query.limit ?? '10');
 
   try {
     const data = await usePagenation({

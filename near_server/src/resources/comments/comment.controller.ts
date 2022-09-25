@@ -1,6 +1,10 @@
 import {Request, Response} from 'express';
 import {commonErrorHandler} from '../../error/custom_error';
 import InvalidMongoIDError from '../../error/errors/invalid_mongo_id';
+import {
+  PagingQuery,
+  PagingWithPostIdQuery,
+} from '../../middleware/validations/pagination';
 import {checkMongoId} from '../../utils/database/database';
 import {CommentModel} from '../../utils/database/models';
 import {usePagenation} from '../../utils/database/pagenation';
@@ -27,10 +31,13 @@ async function addComment(req: Request, res: Response) {
   }
 }
 
-async function getComment(req: Request, res: Response) {
-  const postId = req.query.postId as string;
-  const cursor = req.query.cursor as string;
-  const limit: number = parseInt(req.query.limit as string) || 10;
+async function getComment(
+  req: Request<{}, {}, {}, PagingWithPostIdQuery>,
+  res: Response
+) {
+  const postId = req.query.postId;
+  const cursor = req.query.cursor;
+  const limit: number = parseInt(req.query.limit ?? '10');
   try {
     const data = await usePagenation({
       model: CommentModel,
@@ -52,10 +59,14 @@ async function getComment(req: Request, res: Response) {
   }
 }
 
-async function getUserRelationComments(req: Request, res: Response) {
+async function getUserRelationComments(
+  req: Request<{}, {}, {}, PagingQuery>,
+  res: Response
+) {
   const userId = res.locals.user.userId;
-  const cursor = req.query.cursor as string;
-  const limit: number = parseInt(req.query.limit as string) || 10;
+  const cursor = req.query.cursor;
+  const limit: number = parseInt(req.query.limit ?? '10');
+
   try {
     const data = await usePagenation({
       model: CommentModel,
