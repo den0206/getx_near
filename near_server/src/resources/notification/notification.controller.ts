@@ -12,11 +12,9 @@ import {
 
 async function sendNotification(req: Request, res: Response) {
   const {title, body, badge, sound, fcmToken} = req.body;
-  console.log(fcmToken);
   try {
     const payload: MessagingPayload = {
       data: {
-        badge: badge.toString(),
         sound: sound,
       },
       notification: {
@@ -26,6 +24,7 @@ async function sendNotification(req: Request, res: Response) {
         clickAction: 'FLUTTER_NOTIFICATION_CLICK',
       },
     };
+    if (badge !== null) payload.data!.badge = badge.toString();
 
     const option: MessagingOptions = {
       // Required for background/terminated app state messages on iOS
