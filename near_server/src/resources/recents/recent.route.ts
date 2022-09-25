@@ -1,10 +1,19 @@
 import {Router} from 'express';
+import {z} from 'zod';
 import checkAuth from '../../middleware/check_auth';
+import zodValidate from '../../middleware/zod.middleware';
+import {pagingQuery} from './../../middleware/validations/pagination';
 import recentController from './recent.controller';
 
 const recentRoute = Router();
 
-recentRoute.get('/userid', checkAuth, recentController.findByUserId);
+recentRoute.get(
+  '/userid',
+  checkAuth,
+  zodValidate(z.object(pagingQuery)),
+  recentController.findByUserId
+);
+
 recentRoute.get('/roomId', checkAuth, recentController.findByRoomId);
 recentRoute.get(
   '/userid/roomid',

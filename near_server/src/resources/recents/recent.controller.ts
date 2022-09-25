@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import {commonErrorHandler} from '../../error/custom_error';
 import InvalidMongoIDError from '../../error/errors/invalid_mongo_id';
 import NotFoundRecentError from '../../error/errors/not_find_recent';
+import {PagingQuery} from '../../middleware/validations/pagination';
 import {checkMongoId} from '../../utils/database/database';
 import {RecentModel} from '../../utils/database/models';
 import {usePagenation} from '../../utils/database/pagenation';
@@ -50,10 +51,13 @@ async function deleteRecent(req: Request, res: Response) {
   }
 }
 
-async function findByUserId(req: Request, res: Response) {
+async function findByUserId(
+  req: Request<{}, {}, {}, PagingQuery>,
+  res: Response
+) {
   const userId = res.locals.user.userId as string;
-  const cursor = req.query.cursor as string;
-  const limit: number = parseInt(req.query.limit as string) || 10;
+  const cursor = req.query.cursor;
+  const limit: number = parseInt(req.query.limit ?? '10');
 
   console.log(userId, cursor, limit);
 
