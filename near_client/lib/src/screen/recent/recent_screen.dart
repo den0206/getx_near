@@ -8,6 +8,7 @@ import 'package:getx_near/src/screen/recent/recent_controller.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../utils/consts_color.dart';
 import '../../utils/neumorphic_style.dart';
 import '../users/user_detail/user_detail_screen.dart';
@@ -84,10 +85,8 @@ class RecentCell extends GetView<RecentController> {
             padding: EdgeInsets.all(10),
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: 5,
-                ),
                 UserAvatarButton(
                   user: recent.withUser,
                   size: 30.sp,
@@ -130,25 +129,40 @@ class RecentCell extends GetView<RecentController> {
                     ),
                   ],
                 ),
-                if (recent.counter != 0) ...[
-                  Spacer(),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: ConstsColor.mainGreenColor,
+                Spacer(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      recent.formattedTime,
+                      style: TextStyle(fontSize: 8.sp),
                     ),
-                    child: Center(
-                        child: Text(
-                      "${recent.counter}",
-                      style: TextStyle(
-                        color: Colors.white,
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    if (recent.counter != 0) ...[
+                      SizedBox(
+                        height: 1.h,
                       ),
-                    )),
-                  )
-                ]
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ConstsColor.mainGreenColor,
+                        ),
+                        child: Center(
+                            child: Text(
+                          "${recent.counter}",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )),
+                      )
+                    ],
+                  ],
+                ),
               ],
             ),
           ),
