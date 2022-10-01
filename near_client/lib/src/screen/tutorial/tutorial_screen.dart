@@ -42,28 +42,32 @@ class TutorialPage extends StatelessWidget {
                 ),
               ),
               if (!controller.isFirst)
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: Colors.white,
+                SafeArea(
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios_rounded,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        controller.changePage(context, isBack: true);
+                      },
                     ),
-                    onPressed: () {
-                      controller.changePage(context, isBack: true);
-                    },
                   ),
                 ),
-              Align(
-                alignment: Alignment.topRight,
-                child: TextButton(
-                  child: Text(
-                    !controller.isLast ? "スキップ" : "終了",
-                    style: TextStyle(color: Colors.white),
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: TextButton(
+                    child: Text(
+                      !controller.isLast ? "スキップ" : "終了",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      controller.changePage(context);
+                    },
                   ),
-                  onPressed: () {
-                    controller.changePage(context);
-                  },
                 ),
               ),
               Align(
