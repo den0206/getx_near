@@ -149,7 +149,7 @@ class NotificationService extends GetxService {
             playSound: true,
             sound: RawResourceAndroidNotificationSound(soundPath),
           ),
-          iOS: IOSNotificationDetails(
+          iOS: DarwinNotificationDetails(
             presentSound: true,
             presentBadge: true,
             presentAlert: true,
