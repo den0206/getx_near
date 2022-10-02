@@ -110,6 +110,20 @@ async function updateLocation(req: Request, res: Response) {
 }
 
 // MARK Block User
+
+async function blockUsers(req: Request, res: Response) {
+  const userId = res.locals.user.userId;
+  try {
+    const isFind = await UserModel.findById(userId)
+      .select('blocked')
+      .populate('blocked', '-password');
+
+    if (!isFind) throw new NotFoundUserError();
+    new ResponseAPI(res, {data: isFind.blocked}).excute(200);
+  } catch (e) {
+    commonErrorHandler(res, e);
+  }
+}
 async function updateBlock(req: Request, res: Response) {
   const userId = res.locals.user.userId;
   const {blocked} = req.body;
@@ -150,5 +164,6 @@ export default {
   updateUser,
   updateLocation,
   updateBlock,
+  blockUsers,
   deleteUser,
 };

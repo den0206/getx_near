@@ -59,6 +59,15 @@ class UserAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> fetchBlocks() async {
+    try {
+      final Uri uri = setUri("/blocks");
+      return await getRequest(uri: uri, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
   Future<ResponseAPI> updateBlock({
     required Map<String, dynamic> userData,
   }) async {
@@ -66,7 +75,7 @@ class UserAPI extends APIBase {
       final Uri uri = setUri("/updateBlock");
       return await putRequest(uri: uri, body: userData, useToken: true);
     } catch (e) {
-      throw e;
+      return catchAPIError(e.toString());
     }
   }
 
@@ -75,7 +84,7 @@ class UserAPI extends APIBase {
       final Uri uri = setUri("/delete");
       return await deleteRequest(uri: uri, body: {}, useToken: true);
     } catch (e) {
-      throw e;
+      return catchAPIError(e.toString());
     }
   }
 }

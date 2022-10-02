@@ -99,6 +99,13 @@ class SettingsScreen extends StatelessWidget {
                               Text(controller.currentVersion ?? "Unknown"),
                         ),
                         ListTile(
+                          title: Text("ブロック一覧"),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () async {
+                            await controller.pushBlockListPage();
+                          },
+                        ),
+                        ListTile(
                           title: Text("クリアキャッシュ"),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onTap: () async {

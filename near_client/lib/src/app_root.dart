@@ -11,6 +11,7 @@ import 'package:getx_near/src/screen/posts/posts_tab/comments/comments_screen.da
 import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:getx_near/src/screen/users/protect_home/protect_home_screen.dart';
 import 'package:getx_near/src/screen/users/user_delete/user_delete_screen.dart';
+import 'package:getx_near/src/screen/users/user_detail/settings/blocks/block_list_screen.dart';
 import 'package:getx_near/src/screen/users/user_detail/settings/contacts/contact_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_controller.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
@@ -53,6 +54,11 @@ final List<GetPage> _authPages = [
   GetPage(
     name: ResetPasswordAndEmailScreen.routeName,
     page: () => ResetPasswordAndEmailScreen(),
+  ),
+  GetPage(
+    name: BlockListScreen.routeName,
+    page: () => BlockListScreen(),
+    fullscreenDialog: true,
   ),
   GetPage(
     name: ContactScreen.routeName,

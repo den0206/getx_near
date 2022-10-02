@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../../../widget/custom_dialog.dart';
-import '../../../widget/loading_widget.dart';
+import '../../../../widget/custom_dialog.dart';
+import '../../../../widget/loading_widget.dart';
 
 class ContactController extends LoadingGetController {
   bool connectionStatus = false;
