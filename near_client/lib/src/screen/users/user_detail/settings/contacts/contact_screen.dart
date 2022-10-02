@@ -3,7 +3,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../widget/loading_widget.dart';
-import '../contact_controller.dart';
+import 'contact_controller.dart';
 
 class ContactScreen extends LoadingGetView<ContactController> {
   final key = UniqueKey();
