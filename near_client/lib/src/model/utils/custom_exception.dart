@@ -51,6 +51,10 @@ class UnauthorisedException extends CustomException {
   UnauthorisedException(message) : super(message, "Unauthorised: ");
 }
 
+class BlockException extends CustomException {
+  BlockException(message) : super(message, "Error: ");
+}
+
 // 415
 class FailNotificationException extends CustomException {
   FailNotificationException(message) : super(message, "Fail notification: ");
