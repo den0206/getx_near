@@ -5,13 +5,13 @@ import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_screen.dart';
 import 'package:getx_near/src/screen/map/map_screen.dart';
 import 'package:getx_near/src/screen/message/message_screen.dart';
-
 import 'package:getx_near/src/screen/posts/post_add/add_post_screen.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_screen.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/comments/comments_screen.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:getx_near/src/screen/users/protect_home/protect_home_screen.dart';
 import 'package:getx_near/src/screen/users/user_delete/user_delete_screen.dart';
+import 'package:getx_near/src/screen/users/user_detail/settings/contacts/contact_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_controller.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
 
@@ -53,6 +53,10 @@ final List<GetPage> _authPages = [
   GetPage(
     name: ResetPasswordAndEmailScreen.routeName,
     page: () => ResetPasswordAndEmailScreen(),
+  ),
+  GetPage(
+    name: ContactScreen.routeName,
+    page: () => ContactScreen(),
   )
 ];
 
