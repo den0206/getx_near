@@ -1,7 +1,7 @@
 import {Router} from 'express';
-import userController from './user.controller';
 import checkAuth from '../../middleware/check_auth';
 import upload from '../../utils/aws/upload_option';
+import userController from './user.controller';
 
 const usersRoute = Router();
 
@@ -14,7 +14,7 @@ usersRoute.put(
   upload.single('image'),
   userController.updateUser
 );
-
+usersRoute.get('/blocks', checkAuth, userController.blockUsers);
 usersRoute.put('/updateBlock', checkAuth, userController.updateBlock);
 usersRoute.delete('/delete', checkAuth, userController.deleteUser);
 usersRoute.put('/location', checkAuth, userController.updateLocation);
