@@ -59,6 +59,9 @@ dependencies:
   flutter_app_badger: ^1.5.0
   showcaseview: ^1.1.8
   connectivity_plus: ^2.3.7
+  package_info_plus: ^1.4.2
+  flutter_cache_manager: ^3.3.0
+  webview_flutter: ^3.0.4
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
 # multiple_image_picker を使用
