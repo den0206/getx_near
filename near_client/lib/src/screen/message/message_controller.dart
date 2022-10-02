@@ -3,6 +3,8 @@ import 'package:get/get_utils/src/extensions/num_extensions.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/model/message.dart';
+import 'package:getx_near/src/model/utils/custom_exception.dart';
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/message_extention.dart';
 import 'package:getx_near/src/socket/message_io.dart';
@@ -89,6 +91,8 @@ class MessageController extends LoadingGetController {
       _messageIO.sendUpdateRecent(extention.userIds);
       await extention.sendNotification(newMessage: newMessage);
       _scrollToBottom();
+    } on BlockException catch (e) {
+      showError(e.toString());
     } catch (e) {
       print(e.toString());
     }

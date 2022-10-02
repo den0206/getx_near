@@ -2,6 +2,7 @@ import 'package:getx_near/src/api/messae_api.dart';
 import 'package:getx_near/src/model/message.dart';
 import 'package:getx_near/src/model/recent.dart';
 import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/model/utils/custom_exception.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/notification_service.dart';
@@ -24,6 +25,10 @@ class MessageExtention {
     return current!;
   }
 
+  bool get isBlocked {
+    return withUser.canContact(currentUser);
+  }
+
   List<String> get userIds => [currentUser.id, withUser.id].toSet().toList();
 
   Future<List<Message>> loadMessge() async {
@@ -42,13 +47,15 @@ class MessageExtention {
     final Map<String, dynamic> body = {"text": text, "chatRoomId": chatRoomId};
 
     try {
+      if (isBlocked) throw BlockException("Can't send This Message");
+
       final res = await _messageApi.sendMessage(body);
       if (!res.status) throw Exception("Not Message API");
       final newMessage = Message.fromMapWithUser(res.data, currentUser);
 
       return newMessage;
     } catch (e) {
-      throw Exception(e.toString());
+      throw e;
     }
   }
 

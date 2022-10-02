@@ -9,6 +9,7 @@ import 'package:getx_near/src/api/comment_api.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/comment.dart';
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/model/utils/custom_exception.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
@@ -17,6 +18,7 @@ import 'package:getx_near/src/screen/posts/posts_tab/near_posts/near_posts_contr
 import 'package:getx_near/src/screen/widget/Common_showcase.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
+import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/socket/post_io.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
@@ -46,6 +48,12 @@ class PostDetailController extends LoadingGetController {
 
   RxBool get buttonEnable {
     return (commentContoller.text != "").obs;
+  }
+
+  bool get isBlocked {
+    final currentUser = AuthService.to.currentUser.value;
+    assert(currentUser != null);
+    return post.user.canContact(currentUser!);
   }
 
   // tutorial
@@ -155,6 +163,7 @@ class PostDetailController extends LoadingGetController {
   Future<void> addComment() async {
     if (commentContoller.text == "") return;
     try {
+      if (isBlocked) throw BlockException("Can't send This Comment");
       final Position current = await _locationService.getCurrentPosition();
       final Map<String, dynamic> body = {
         "text": commentContoller.text,
@@ -179,6 +188,8 @@ class PostDetailController extends LoadingGetController {
       }
 
       commentContoller.clear();
+    } on BlockException catch (e) {
+      showError(e.toString());
     } catch (e) {
       print(e.toString());
     }
