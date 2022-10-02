@@ -5,6 +5,7 @@ import 'package:getx_near/src/api/report_api.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/users/protect_home/protect_home_screen.dart';
 import 'package:getx_near/src/screen/users/user_delete/user_delete_screen.dart';
+import 'package:getx_near/src/screen/users/user_detail/settings/blocks/block_list_screen.dart';
 import 'package:getx_near/src/screen/users/user_detail/settings/contacts/contact_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
@@ -87,6 +88,10 @@ class UserDetailController extends GetxController {
 
   Future<void> pushContactPage() async {
     await Get.toNamed(ContactScreen.routeName);
+  }
+
+  Future<void> pushBlockListPage() async {
+    await Get.toNamed(BlockListScreen.routeName);
   }
 
   Future<void> pushEditPage() async {
