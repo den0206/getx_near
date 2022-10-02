@@ -1,8 +1,8 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:getx_near/src/model/user.dart';
+import 'package:getx_near/src/screen/users/user_detail/settings/user_settings_screen.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_controller.dart';
-import 'package:getx_near/src/screen/users/user_detail/user_settings_screen.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
 

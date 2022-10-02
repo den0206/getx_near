@@ -5,12 +5,14 @@ import 'package:getx_near/src/api/report_api.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/users/protect_home/protect_home_screen.dart';
 import 'package:getx_near/src/screen/users/user_delete/user_delete_screen.dart';
+import 'package:getx_near/src/screen/users/user_detail/settings/contacts/contact_screen.dart';
 import 'package:getx_near/src/screen/users/user_edit/user_edit_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 import 'package:getx_near/src/utils/date_formate.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../api/user_api.dart';
 import '../../main_tab/main_tab_controller.dart';
@@ -24,6 +26,7 @@ class UserDetailController extends GetxController {
 
   bool isBlocked = false;
   int reportedCount = 0;
+  String? currentVersion;
   UserDetailController(this.user);
 
   LocationDetail currentSize = LocationDetail.high;
@@ -46,9 +49,15 @@ class UserDetailController extends GetxController {
     isBlocked = currentUser.checkBlock(user);
     await _getReportedCount();
     await _getLocalStorage();
+    await _getInfo();
 
     // 更新
     update();
+  }
+
+  Future<void> _getInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    currentVersion = packageInfo.version;
   }
 
   Future<void> _getLocalStorage() async {
@@ -74,6 +83,10 @@ class UserDetailController extends GetxController {
 
   Future<void> setLocalDistance() async {
     await StorageKey.notificationDistance.saveInt(searchDistance);
+  }
+
+  Future<void> pushContactPage() async {
+    await Get.toNamed(ContactScreen.routeName);
   }
 
   Future<void> pushEditPage() async {

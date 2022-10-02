@@ -1,11 +1,12 @@
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../service/location_service.dart';
-import '../../../utils/consts_color.dart';
+import '../../../../service/location_service.dart';
+import '../../../../utils/consts_color.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
@@ -79,7 +80,7 @@ class SettingsScreen extends StatelessWidget {
                   height: 10,
                 ),
                 Container(
-                  height: 35.h,
+                  height: 40.h,
                   child: ListView(
                     shrinkWrap: true,
                     children: ListTile.divideTiles(
@@ -93,9 +94,23 @@ class SettingsScreen extends StatelessWidget {
                           },
                         ),
                         ListTile(
-                          title: Text("レビュー"),
+                          title: Text("Version"),
+                          trailing:
+                              Text(controller.currentVersion ?? "Unknown"),
+                        ),
+                        ListTile(
+                          title: Text("クリアキャッシュ"),
                           trailing: Icon(Icons.arrow_forward_ios),
-                          onTap: () {},
+                          onTap: () async {
+                            await DefaultCacheManager().emptyCache();
+                          },
+                        ),
+                        ListTile(
+                          title: Text("お問い合わせ"),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () async {
+                            await controller.pushContactPage();
+                          },
                         ),
                         ListTile(
                           title: Text("ログアウト"),
@@ -104,11 +119,6 @@ class SettingsScreen extends StatelessWidget {
                             Navigator.of(context).pop();
                             controller.tryLogout(context);
                           },
-                        ),
-                        ListTile(
-                          title: Text("お問い合わせ"),
-                          trailing: Icon(Icons.arrow_forward_ios),
-                          onTap: () {},
                         ),
                         ListTile(
                           title: Text(
