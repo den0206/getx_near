@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -11,6 +13,7 @@ import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../../../utils/date_formate.dart';
 import '../../../../utils/neumorphic_style.dart';
 import '../../../users/user_detail/user_detail_screen.dart';
@@ -23,45 +26,53 @@ class MyPostsScreen extends GetView<MyPostsController> {
       init: MyPostsController(),
       autoRemove: false,
       builder: (controller) {
-        return CustomScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          slivers: [
-            // SliverAppBar(
-            //   pinned: true,
-            //   backgroundColor: ConstsColor.mainBackColor,
-            //   title: Text("TOP"),
-            //   foregroundColor: Colors.black,
-            //   elevation: 0,
-            // ),
-            CupertinoSliverRefreshControl(
-              onRefresh: () async {
-                await controller.refreshPosts();
-              },
-            ),
-            SliverPersistentHeader(
-              delegate: LengthArea(MyPostsType.mine),
-              pinned: true,
-              floating: false,
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  if (index == controller.posts.length - 1) {
-                    controller.loadContents();
-                    if (controller.cellLoading) return LoadingCellWidget();
-                  }
-                  final post = controller.posts[index];
-                  return PostCell(
-                    post: post,
-                    onTap: () async {
-                      await controller.tapCell(post);
-                    },
-                  );
-                },
-                childCount: controller.posts.length,
+        return RefreshIndicator(
+          color: Colors.black,
+          notificationPredicate: (notification) => Platform.isAndroid,
+          onRefresh: () async {
+            await controller.refreshPosts();
+          },
+          child: CustomScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            slivers: [
+              // SliverAppBar(
+              //   pinned: true,
+              //   backgroundColor: ConstsColor.mainBackColor,
+              //   title: Text("TOP"),
+              //   foregroundColor: Colors.black,
+              //   elevation: 0,
+              // ),
+              if (Platform.isIOS)
+                CupertinoSliverRefreshControl(
+                  onRefresh: () async {
+                    await controller.refreshPosts();
+                  },
+                ),
+              SliverPersistentHeader(
+                delegate: LengthArea(MyPostsType.mine),
+                pinned: true,
+                floating: false,
               ),
-            ),
-          ],
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    if (index == controller.posts.length - 1) {
+                      controller.loadContents();
+                      if (controller.cellLoading) return LoadingCellWidget();
+                    }
+                    final post = controller.posts[index];
+                    return PostCell(
+                      post: post,
+                      onTap: () async {
+                        await controller.tapCell(post);
+                      },
+                    );
+                  },
+                  childCount: controller.posts.length,
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
