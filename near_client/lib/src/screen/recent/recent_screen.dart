@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -24,28 +26,36 @@ class RecentScreen extends LoadingGetView<RecentController> {
   Widget get child {
     return GetBuilder<RecentController>(
       builder: (_) {
-        return CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              title: Text("Recents"),
-              elevation: 0,
-            ),
-            CupertinoSliverRefreshControl(
-              onRefresh: () async {
-                controller.reloadRecents();
-              },
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  final recent = controller.recents[index];
-                  return RecentCell(recent: recent);
-                },
-                childCount: controller.recents.length,
+        return RefreshIndicator(
+          color: Colors.black,
+          notificationPredicate: (notification) => Platform.isAndroid,
+          onRefresh: () async {
+            await controller.reloadRecents();
+          },
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                pinned: true,
+                title: Text("Recents"),
+                elevation: 0,
               ),
-            )
-          ],
+              if (Platform.isIOS)
+                CupertinoSliverRefreshControl(
+                  onRefresh: () async {
+                    controller.reloadRecents();
+                  },
+                ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    final recent = controller.recents[index];
+                    return RecentCell(recent: recent);
+                  },
+                  childCount: controller.recents.length,
+                ),
+              )
+            ],
+          ),
         );
       },
     );
