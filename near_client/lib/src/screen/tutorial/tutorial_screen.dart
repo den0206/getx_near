@@ -62,11 +62,16 @@ class TutorialPage extends StatelessWidget {
                   child: TextButton(
                     child: Text(
                       !controller.isLast ? "スキップ" : "終了",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: controller.skipEnable
+                              ? Colors.white
+                              : Colors.black38),
                     ),
-                    onPressed: () {
-                      controller.changePage(context);
-                    },
+                    onPressed: controller.skipEnable
+                        ? () {
+                            controller.changePage(context);
+                          }
+                        : null,
                   ),
                 ),
               ),

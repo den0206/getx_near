@@ -32,13 +32,13 @@ class TutorialController extends GetxController {
       PermissionTutorialScreen(
         type: PermissionType.notification,
         onPress: () async {
-          await checkPermission(PermissionType.notification);
+          await _checkPermission(PermissionType.notification);
         },
       ),
       PermissionTutorialScreen(
         type: PermissionType.location,
         onPress: () async {
-          await checkPermission(
+          await _checkPermission(
             PermissionType.location,
           );
         },
@@ -58,6 +58,8 @@ class TutorialController extends GetxController {
     ];
   }
 
+  bool skipEnable = true;
+
   @override
   void onInit() {
     pageController..addListener(_onScroll);
@@ -66,10 +68,14 @@ class TutorialController extends GetxController {
 
   _onScroll() {
     notifier.value = pageController.page ?? 0;
+
+    // PermissionTutorialScreen の場合 false
+    skipEnable = !(currentIndex == 1 || currentIndex == 2);
+
     update();
   }
 
-  Future<void> checkPermission(PermissionType type) async {
+  Future<void> _checkPermission(PermissionType type) async {
     switch (type) {
       case PermissionType.notification:
         await NotificationService.to.requestPermission();
@@ -79,30 +85,30 @@ class TutorialController extends GetxController {
         await service.checkLocation();
         break;
     }
+
+    skipEnable = true;
+    update();
   }
 
   Future<void> changePage(BuildContext context, {bool isBack = false}) async {
     if (isLast && !isBack) {
       await StorageKey.loginTutolial.saveBool(true);
       Navigator.of(context).pop();
-
       showSnackBar(
         title: "Welcome",
         message: "チュートリアルが完了しました",
         background: ConstsColor.mainOrangeColor,
       );
-
-      return;
+    } else if (!isBack) {
+      await pageController.nextPage(
+        duration: Duration(milliseconds: 400),
+        curve: Curves.linear,
+      );
+    } else {
+      await pageController.previousPage(
+        duration: Duration(milliseconds: 400),
+        curve: Curves.linear,
+      );
     }
-    ;
-    !isBack
-        ? await pageController.nextPage(
-            duration: Duration(milliseconds: 400),
-            curve: Curves.linear,
-          )
-        : await pageController.previousPage(
-            duration: Duration(milliseconds: 400),
-            curve: Curves.linear,
-          );
   }
 }
