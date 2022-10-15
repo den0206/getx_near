@@ -24,9 +24,7 @@ class TutorialPage extends StatelessWidget {
                 child: Container(
                   child: PageView(
                     controller: controller.pageController,
-                    physics: controller.isLast
-                        ? NeverScrollableScrollPhysics()
-                        : AlwaysScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     children: controller.pages
                         .asMap()
                         .entries
