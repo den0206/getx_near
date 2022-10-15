@@ -67,7 +67,6 @@ class NotificationService extends GetxService {
   void onInit() async {
     super.onInit();
     listenForeground();
-    canBadge = await FlutterAppBadger.isAppBadgeSupported();
   }
 
   @override
@@ -81,7 +80,8 @@ class NotificationService extends GetxService {
     return Platform.isIOS ? "help.caf" : "help.wav";
   }
 
-  Future<void> initService() async {
+  Future<void> requestPermission() async {
+    canBadge = await FlutterAppBadger.isAppBadgeSupported();
     channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
@@ -95,15 +95,12 @@ class NotificationService extends GetxService {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
+    await _firebaseMessaging.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
     );
-  }
 
-  Future<void> requestPermission() async {
     await _firebaseMessaging.requestPermission();
   }
 
