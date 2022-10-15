@@ -55,29 +55,38 @@ abstract class APIBase {
   }
 
   ResponseAPI _filterResponse(http.Response response) {
-    final resJson = json.decode(response.body);
+    try {
+      final resJson = json.decode(response.body);
 
-    ResponseAPI responseAPI;
-    switch (endPoint) {
-      // 外部API(自サーバー以外)を処理
-      // case EndPoint.notification:
-      //   responseAPI = ResponseAPI(
-      //       status: true, statusCode: response.statusCode, data: resJson);
-      //   break;
-      default:
-        responseAPI = ResponseAPI.fromMapWithCode(resJson, response.statusCode);
+      ResponseAPI responseAPI;
+      switch (endPoint) {
+        // 外部API(自サーバー以外)を処理
+        // case EndPoint.notification:
+        //   responseAPI = ResponseAPI(
+        //       status: true, statusCode: response.statusCode, data: resJson);
+        //   break;
+        default:
+          responseAPI =
+              ResponseAPI.fromMapWithCode(resJson, response.statusCode);
+      }
+
+      return _checkStatusCode(responseAPI);
+    } catch (e) {
+      throw e;
     }
-
-    return _checkStatusCode(responseAPI);
   }
 
   Future<ResponseAPI> _filterStream(http.StreamedResponse response) async {
-    final resStr = await response.stream.bytesToString();
-    final resJson = json.decode(resStr);
-    final responseAPI =
-        ResponseAPI.fromMapWithCode(resJson, response.statusCode);
+    try {
+      final resStr = await response.stream.bytesToString();
+      final resJson = json.decode(resStr);
+      final responseAPI =
+          ResponseAPI.fromMapWithCode(resJson, response.statusCode);
 
-    return _checkStatusCode(responseAPI);
+      return _checkStatusCode(responseAPI);
+    } catch (e) {
+      throw e;
+    }
   }
 
   ResponseAPI _checkStatusCode(ResponseAPI responseAPI) {
