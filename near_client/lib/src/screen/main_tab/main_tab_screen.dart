@@ -1,9 +1,9 @@
-import 'package:getx_near/src/utils/neumorphic_style.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
+import 'package:getx_near/src/utils/neumorphic_style.dart';
+import 'package:sizer/sizer.dart';
 
 class MainTabScreen extends StatelessWidget {
   const MainTabScreen({Key? key}) : super(key: key);
@@ -24,9 +24,10 @@ class MainTabScreen extends StatelessWidget {
       autoRemove: false,
       builder: (controller) {
         // チュートリアルの表示
-        if (!controller.readTutolial)
+        if (!controller.readTutolial) {
           WidgetsBinding.instance.addPostFrameCallback(
               (_) async => await controller.showTutorial(context));
+        }
 
         return Scaffold(
           body: !controller.isExistMap
@@ -37,7 +38,7 @@ class MainTabScreen extends StatelessWidget {
                 ),
           bottomNavigationBar: controller.currentIndex != 2
               ? Container(
-                  margin: EdgeInsets.only(bottom: 20),
+                  margin: const EdgeInsets.only(bottom: 20),
                   height: kBottomNavigationBarHeight,
                   decoration: BoxDecoration(color: ConstsColor.mainBackColor),
                   child: Row(
@@ -47,18 +48,18 @@ class MainTabScreen extends StatelessWidget {
                         .entries
                         .map(
                           (entry) => NeumorphicRadio(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             style: commonRatioStyle(),
-                            child: Icon(
-                              entry.value,
-                              size: 25.sp,
-                            ),
                             value: entry.key,
                             groupValue: controller.currentIndex,
                             onChanged: (int? index) {
                               if (index == null) return;
                               controller.setIndex(index);
                             },
+                            child: Icon(
+                              entry.value,
+                              size: 25.sp,
+                            ),
                           ),
                         )
                         .toList(),

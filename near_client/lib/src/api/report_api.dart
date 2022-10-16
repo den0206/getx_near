@@ -11,16 +11,16 @@ class ReportAPI extends APIBase {
 
       return await postRequest(uri: uri, body: reportData, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
   Future<ResponseAPI> getReportedCount({required String userId}) async {
     try {
-      final Uri uri = setUri("/getReportedCount/${userId}");
+      final Uri uri = setUri("/getReportedCount/$userId");
       return await getRequest(uri: uri);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

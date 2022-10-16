@@ -4,7 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:getx_near/main.dart';
 import 'package:getx_near/src/api/user_api.dart';
-import 'package:getx_near/src/model/utils/visibleRegion.dart';
+import 'package:getx_near/src/model/utils/visible_region.dart';
 import 'package:getx_near/src/service/permission_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -52,9 +52,9 @@ LocationDetail getLocationDetail(String? value) {
   return l;
 }
 
-final kMinDistance = 500;
-final kMaxDistance = 5000;
-final kDefaultDistance = 2500;
+const kMinDistance = 500;
+const kMaxDistance = 5000;
+const kDefaultDistance = 2500;
 
 int getNotificationDistance(int? value) {
   // default value
@@ -78,7 +78,7 @@ class LocationService {
 
       final UserAPI _userAPI = UserAPI();
       final LocationDetail localLoc =
-          await getLocationDetail(await StorageKey.locationSize.loadString());
+          getLocationDetail(await StorageKey.locationSize.loadString());
       print("精度は${localLoc.title}");
       final current = await Geolocator.getCurrentPosition(
           desiredAccuracy: localLoc.accuracy,
@@ -96,7 +96,7 @@ class LocationService {
       print("Update Location");
       return current;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

@@ -62,7 +62,7 @@ class MessageController extends LoadingGetController {
   Future<void> loadMessages() async {
     if (extention.reachLast || isLoading.value) return;
     isLoading.call(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final temp = await extention.loadMessge();

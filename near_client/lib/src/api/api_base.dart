@@ -16,13 +16,13 @@ import 'package:mime/mime.dart';
 
 abstract class APIBase {
   String host = Enviroment.getHost();
-  final JsonCodec json = JsonCodec();
+  final JsonCodec json = const JsonCodec();
   final Map<String, String> headers = {
     "Content-type": "application/json",
     "x-api-key": dotenv.env["API_KEY"] ?? "NO API"
   };
 
-  final Duration timeoutDuration = Duration(seconds: 10);
+  final Duration timeoutDuration = const Duration(seconds: 10);
   final String timeoutMessage = "時間を置いて、再度お試し下さい。";
 
   final EndPoint endPoint;
@@ -47,7 +47,7 @@ abstract class APIBase {
   }
 
   Uri setUri(String path, [Map<String, dynamic>? query]) {
-    final String withPath = "${endPoint.name}${path}";
+    final String withPath = "${endPoint.name}$path";
     if (useMain) return Uri.https(host, withPath, query);
     return kDebugMode && !isRealDevice
         ? Uri.http(host, withPath, query)
@@ -72,7 +72,7 @@ abstract class APIBase {
 
       return _checkStatusCode(responseAPI);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -85,7 +85,7 @@ abstract class APIBase {
 
       return _checkStatusCode(responseAPI);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -123,8 +123,9 @@ abstract class APIBase {
     final connectivityResult = await (Connectivity().checkConnectivity());
 
     if (connectivityResult != ConnectivityResult.mobile &&
-        connectivityResult != ConnectivityResult.wifi)
-      throw SocketException("No Internet");
+        connectivityResult != ConnectivityResult.wifi) {
+      throw const SocketException("No Internet");
+    }
   }
 }
 
@@ -136,9 +137,9 @@ extension APIBaseExtention on APIBase {
       final res =
           await http.get(uri, headers: headers).timeout(timeoutDuration);
       return _filterResponse(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on TimeoutException {
       throw Exception(timeoutMessage);
     } on SocketException {
@@ -160,9 +161,9 @@ extension APIBaseExtention on APIBase {
           .post(uri, headers: headers, body: bodyparams)
           .timeout(timeoutDuration);
       return _filterResponse(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on TimeoutException {
       throw Exception(timeoutMessage);
     } on SocketException {
@@ -184,9 +185,9 @@ extension APIBaseExtention on APIBase {
           .put(uri, headers: headers, body: bodyParams)
           .timeout(timeoutDuration);
       return _filterResponse(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on TimeoutException {
       throw Exception(timeoutMessage);
     } on SocketException {
@@ -207,9 +208,9 @@ extension APIBaseExtention on APIBase {
           .delete(uri, headers: headers, body: bodyParams)
           .timeout(timeoutDuration);
       return _filterResponse(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on TimeoutException {
       throw Exception(timeoutMessage);
     } on SocketException {
@@ -250,9 +251,9 @@ extension APIBaseExtention on APIBase {
       final res = await request.send();
 
       return await _filterStream(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on TimeoutException {
       throw Exception(timeoutMessage);
     } on SocketException {
@@ -298,7 +299,7 @@ enum EndPoint {
   report;
 
   String get name {
-    final String APIVer = "/api/v1";
+    const String APIVer = "/api/v1";
 
     switch (this) {
       case EndPoint.user:

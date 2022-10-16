@@ -32,8 +32,9 @@ class ResetPasswordAndEmailScreen
               onPressed: !controller.buttonEnable
                   ? null
                   : () {
-                      if (_formKey.currentState?.validate() ?? false)
+                      if (_formKey.currentState?.validate() ?? false) {
                         controller.sendRequest();
+                      }
                     },
             ),
           ),

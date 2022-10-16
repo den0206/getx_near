@@ -131,8 +131,9 @@ class UserDetailController extends GetxController {
               MainTabController.to.setIndex(0);
             }
             // root に戻す
-            if (Navigator.canPop(context))
+            if (Navigator.canPop(context)) {
               Navigator.popUntil(context, (route) => route.isFirst);
+            }
 
             // ログアウト
             AuthService.to.logout();

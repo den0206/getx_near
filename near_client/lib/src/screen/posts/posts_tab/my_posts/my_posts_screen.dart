@@ -33,7 +33,7 @@ class MyPostsScreen extends GetView<MyPostsController> {
             await controller.refreshPosts();
           },
           child: CustomScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               // SliverAppBar(
               //   pinned: true,
@@ -58,7 +58,9 @@ class MyPostsScreen extends GetView<MyPostsController> {
                   (BuildContext context, int index) {
                     if (index == controller.posts.length - 1) {
                       controller.loadContents();
-                      if (controller.cellLoading) return LoadingCellWidget();
+                      if (controller.cellLoading) {
+                        return const LoadingCellWidget();
+                      }
                     }
                     final post = controller.posts[index];
                     return PostCell(
@@ -100,18 +102,18 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
       height: 10.h,
       decoration: BoxDecoration(
           color: ConstsColor.mainBackColor,
-          border: Border(bottom: BorderSide(color: Colors.grey))),
+          border: const Border(bottom: BorderSide(color: Colors.grey))),
       child: ListView.builder(
         itemCount: currentIndex != controller.commentLimit
             ? currentIndex
             : currentIndex + 1,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         itemBuilder: (context, index) {
           if (index == currentIndex) {
             return IconButton(
-              icon: Icon(Icons.more_vert),
+              icon: const Icon(Icons.more_vert),
               onPressed: () {
                 controller.showRelationComments();
               },
@@ -170,8 +172,8 @@ class PostCell extends StatelessWidget {
       onTap: onTap,
       child: Neumorphic(
         style: commonNeumorphic(depth: 0.4),
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -189,7 +191,7 @@ class PostCell extends StatelessWidget {
                   height: 3.sp,
                 ),
                 if (post.isCurrent) ...[
-                  Text(
+                  const Text(
                     "Yours",
                     style: TextStyle(color: Colors.red, fontSize: 10),
                   )
@@ -204,7 +206,7 @@ class PostCell extends StatelessWidget {
                 ]
               ],
             ),
-            Container(
+            SizedBox(
               width: 60.w,
               child: AutoSizeText(
                 post.content,

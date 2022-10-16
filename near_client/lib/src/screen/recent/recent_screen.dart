@@ -34,7 +34,7 @@ class RecentScreen extends LoadingGetView<RecentController> {
           },
           child: CustomScrollView(
             slivers: [
-              SliverAppBar(
+              const SliverAppBar(
                 pinned: true,
                 title: Text("Recents"),
                 elevation: 0,
@@ -72,7 +72,7 @@ class RecentCell extends GetView<RecentController> {
     return Slidable(
       key: Key(recent.id),
       endActionPane: ActionPane(
-        motion: ScrollMotion(),
+        motion: const ScrollMotion(),
         extentRatio: 0.25,
         children: [
           SlidableAction(
@@ -89,92 +89,90 @@ class RecentCell extends GetView<RecentController> {
         onTap: () {
           controller.pushMessageScreen(recent);
         },
-        child: Container(
-          child: Neumorphic(
-            style: commonNeumorphic(depth: 0.4),
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                UserAvatarButton(
-                  user: recent.withUser,
-                  size: 30.sp,
-                  useNeumorphic: false,
-                  onTap: () {
-                    Get.to(() => UserDetailScreen(user: recent.withUser));
-                  },
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      recent.withUser.name,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.5,
+        child: Neumorphic(
+          style: commonNeumorphic(depth: 0.4),
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              UserAvatarButton(
+                user: recent.withUser,
+                size: 30.sp,
+                useNeumorphic: false,
+                onTap: () {
+                  Get.to(() => UserDetailScreen(user: recent.withUser));
+                },
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    recent.withUser.name,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 60.w),
+                    child: Text(
+                      recent.lastMessage,
+                      maxLines: 2,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      constraints: BoxConstraints(maxWidth: 60.w),
-                      child: Text(
-                        recent.lastMessage,
-                        maxLines: 2,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          letterSpacing: 1.2,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Spacer(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      recent.formattedTime,
-                      style: TextStyle(fontSize: 8.sp),
-                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    recent.formattedTime,
+                    style: TextStyle(fontSize: 8.sp),
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  if (recent.counter != 0) ...[
                     SizedBox(
                       height: 1.h,
                     ),
-                    if (recent.counter != 0) ...[
-                      SizedBox(
-                        height: 1.h,
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ConstsColor.mainGreenColor,
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: ConstsColor.mainGreenColor,
+                      child: Center(
+                          child: Text(
+                        "${recent.counter}",
+                        style: const TextStyle(
+                          color: Colors.white,
                         ),
-                        child: Center(
-                            child: Text(
-                          "${recent.counter}",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        )),
-                      )
-                    ],
+                      )),
+                    )
                   ],
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

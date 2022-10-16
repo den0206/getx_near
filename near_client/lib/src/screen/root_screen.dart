@@ -15,8 +15,13 @@ class RootScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (isJailBroken)
-      return Scaffold(body: Center(child: Text("JailBrokenが検出されました")));
+    if (isJailBroken) {
+      return const Scaffold(
+        body: Center(
+          child: Text("JailBrokenが検出されました"),
+        ),
+      );
+    }
 
     return GetX<AuthService>(
       init: AuthService(),
@@ -25,16 +30,16 @@ class RootScreen extends StatelessWidget {
           children: [
             ...[
               if (service.currentUser.value != null)
-                MainTabScreen()
+                const MainTabScreen()
               else
-                AuthTabScreen(),
+                const AuthTabScreen(),
             ],
             if (topLoading.value)
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromRGBO(0, 0, 0, 0.6),
                 ),
-                child: PlainLoadingWidget(),
+                child: const PlainLoadingWidget(),
               )
           ],
         );

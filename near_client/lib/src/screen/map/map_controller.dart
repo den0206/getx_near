@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/main_tab/main_tab_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
@@ -10,8 +11,8 @@ import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 import '../../../main.dart';
 import '../posts/posts_tab/near_posts/near_posts_controller.dart';
 import '../widget/common_showcase.dart';
@@ -52,7 +53,7 @@ class MapController extends LoadingGetController {
     if (!showSearch.value) showSearch.call(true);
     if (panelController.isPanelClosed) await panelController.open();
     CommonShowCase([tutorialKey1, tutorialKey2, tutorialKey3, tutorialKey4])
-      ..showTutorial(context);
+        .showTutorial(context);
   }
 
   Future<void> onMapCreate(GoogleMapController controller) async {
@@ -78,7 +79,7 @@ class MapController extends LoadingGetController {
   }
 
   void setMainBar(MainSlidePanelController controller) {
-    this.mainSlidePanelController = controller;
+    mainSlidePanelController = controller;
   }
 
   Future<void> startSearch({bool useDummy = false}) async {
@@ -87,13 +88,13 @@ class MapController extends LoadingGetController {
     mainSlidePanelController.currentPostIndex.call(null);
     isLoading.call(true);
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     await setCenterPosition(moveCamera: false);
     try {
       if (!canSearch) throw Exception("範囲が広すぎます");
       if (useMap) await mapService.setVisibleRegion();
       final currentCenter = useMap ? await mapService.getCenter() : shinjukuSta;
-      final double radius = useMap ? mapService.GetRadiusOnVisible() : 1000;
+      final double radius = useMap ? mapService.getRadiusOnVisible() : 1000;
 
       final tempPosts = await getTempNearPosts(
           from: useMap ? currentCenter : currentPosition,
@@ -142,7 +143,6 @@ class MapController extends LoadingGetController {
     } finally {
       isLoading.call(false);
     }
-    ;
   }
 
   void onCmareMove(CameraPosition cameraPosition) {

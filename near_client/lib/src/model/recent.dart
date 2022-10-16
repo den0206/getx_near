@@ -22,7 +22,7 @@ class Recent {
     required this.date,
   });
 
-  String get formattedTime => DateFormatter.getVerBoseDateString(this.date);
+  String get formattedTime => DateFormatter.getVerBoseDateString(date);
 
   Map<String, dynamic> toMap() {
     return {

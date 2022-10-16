@@ -58,10 +58,10 @@ class SignUpController extends LoadingGetController {
     print(userImage);
 
     isLoading.call(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     final String emailLower = emailController.text.toLowerCase();
     try {
-      switch (this.state) {
+      switch (state) {
         case VerifyState.checkEmail:
           final res = await _tempTokenAPI.requestNewEmail(emailLower);
           if (!res.status) break;

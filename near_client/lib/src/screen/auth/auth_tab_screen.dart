@@ -8,12 +8,12 @@ class AuthTabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _tabView = [SOSScreen(), LoginScreen()];
+    final List<Widget> _tabView = [const SOSScreen(), LoginScreen()];
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          bottom: PreferredSize(
+          bottom: const PreferredSize(
             preferredSize: Size.fromHeight(20),
             child: TabBar(
               indicatorColor: Colors.grey,

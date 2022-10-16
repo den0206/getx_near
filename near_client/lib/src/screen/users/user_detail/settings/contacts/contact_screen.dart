@@ -6,7 +6,8 @@ import '../../../../widget/loading_widget.dart';
 import 'contact_controller.dart';
 
 class ContactScreen extends LoadingGetView<ContactController> {
-  final key = UniqueKey();
+  @override
+  Key? get key => UniqueKey();
   static const routeName = '/Contact';
 
   @override
@@ -28,7 +29,7 @@ class ContactScreen extends LoadingGetView<ContactController> {
                   onPageFinished: (_) {},
                   onPageStarted: (_) {},
                 )
-              : Center(
+              : const Center(
                   child: Text("No Internet connection"),
                 );
         },

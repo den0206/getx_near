@@ -69,7 +69,7 @@ class PermissionTutorialScreen extends StatelessWidget {
         Text(
           type.description,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),

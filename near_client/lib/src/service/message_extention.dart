@@ -1,6 +1,5 @@
 import 'package:getx_near/src/api/messae_api.dart';
 import 'package:getx_near/src/model/message.dart';
-import 'package:getx_near/src/model/recent.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/model/utils/custom_exception.dart';
 import 'package:getx_near/src/model/utils/page_feeds.dart';
@@ -55,7 +54,7 @@ class MessageExtention {
 
       return newMessage;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -86,7 +85,7 @@ class MessageExtention {
       await NotificationService.to.pushPostNotification(
         tokens: [withUser.fcmToken],
         type: NotificationType.message,
-        badgeNumber: badge ?? null,
+        badgeNumber: badge,
       );
     }
   }
@@ -96,9 +95,9 @@ class MessageExtention {
         await re.updateRecentWithLastMessage(chatRoomId: chatRoomId);
 
     if (remainRecents.isNotEmpty) {
-      remainRecents.forEach((Recent recent) {
+      for (var recent in remainRecents) {
         re.updateRecentSocket(userId: recent.user.id, chatRoomId: chatRoomId);
-      });
+      }
     }
   }
 

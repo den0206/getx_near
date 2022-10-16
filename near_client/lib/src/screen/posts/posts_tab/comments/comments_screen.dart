@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/comments/comments_controller.dart';
+
 import '../my_post_tab_screen.dart';
 import '../my_posts/my_posts_screen.dart';
 
@@ -10,9 +11,9 @@ class CommentsScreen extends StatelessWidget {
 
   EdgeInsets caluculatePadding(int index) {
     if (index == 0 || index % 3 == 0) {
-      return EdgeInsets.only(left: 10);
+      return const EdgeInsets.only(left: 10);
     } else if (index % 2 == 0) {
-      return EdgeInsets.only(right: 10);
+      return const EdgeInsets.only(right: 10);
     } else {
       return EdgeInsets.zero;
     }
@@ -24,7 +25,7 @@ class CommentsScreen extends StatelessWidget {
       init: CommentsController(),
       builder: (controller) {
         return CustomScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
             SliverPersistentHeader(
               delegate: LengthArea(MyPostsType.comments),
@@ -48,7 +49,7 @@ class CommentsScreen extends StatelessWidget {
                 },
                 childCount: controller.comments.length,
               ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,

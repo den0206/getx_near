@@ -82,7 +82,7 @@ class PostDetailController extends LoadingGetController {
   void showTutorial(BuildContext context) {
     final temp = [tutorialKey1, tutorialKey2, tutorialKey3, tutorialKey4];
     if (post.expireAt != null) temp.add(tutorialKey5);
-    CommonShowCase(temp)..showTutorial(context);
+    CommonShowCase(temp).showTutorial(context);
   }
 
   void listenScroll() {
@@ -139,7 +139,7 @@ class PostDetailController extends LoadingGetController {
     if (reachLast) return;
 
     showCellLoading(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     try {
       final res = await _commentAPI.getComment(post.id, nextCursor);
       if (!res.status) return;
@@ -204,7 +204,7 @@ class PostDetailController extends LoadingGetController {
         },
       );
       Navigator.of(context).overlay?.insert(_overlayEntry);
-      Timer(Duration(seconds: 2), () => _overlayEntry.remove());
+      Timer(const Duration(seconds: 2), () => _overlayEntry.remove());
     }
 
     try {
@@ -234,7 +234,7 @@ class PostDetailController extends LoadingGetController {
   Future<void> getDummy() async {
     cellLoading = true;
     update();
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final res = await _commentAPI.generateDummy(post, 2000);
@@ -272,8 +272,9 @@ class PostDetailController extends LoadingGetController {
         NearPostsController.to.nearPosts.remove(post);
         NearPostsController.to.update();
 
-        if (Get.isRegistered<MainSlidePanelController>())
+        if (Get.isRegistered<MainSlidePanelController>()) {
           MainSlidePanelController.to.update();
+        }
       }
 
       // map の更新

@@ -6,7 +6,7 @@ class CommentAPI extends APIBase {
   CommentAPI() : super(EndPoint.comment);
 
   Future<ResponseAPI> getComment(String postId, String? nextCursor) async {
-    final limit = 10;
+    const limit = 10;
     final Map<String, dynamic> query = {
       "postId": postId,
       "limit": limit.toString()

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_near/src/model/post.dart';
-import 'package:getx_near/src/model/utils/visibleRegion.dart';
+import 'package:getx_near/src/model/utils/visible_region.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -36,7 +36,7 @@ class MapService {
 
   void init(GoogleMapController controller) async {
     controller.setMapStyle(mapStyle);
-    this.googleController = controller;
+    googleController = controller;
     final RenderBox? mapRenderBox =
         mapKey.currentContext!.findRenderObject()! as RenderBox?;
     if (mapRenderBox == null) throw Exception("Not initialize Map");
@@ -49,14 +49,15 @@ class MapService {
     );
   }
 
-  double GetRadiusOnVisible() {
+  double getRadiusOnVisible() {
     if (visibleRegion == null) return 0;
     return locationService.getRadiusOnVisible(visibleRegion!);
   }
 
   void changePanelPosition(double position) {
-    if (position == 1)
+    if (position == 1) {
       buttonSpaceHeight.value = (mapButtonHeight + (panelMaxHeight * 0.8));
+    }
     if (position >= 0.8) return;
     buttonSpaceHeight.value = (mapButtonHeight + (panelMaxHeight * position));
   }
@@ -69,7 +70,7 @@ class MapService {
           x: _mapSize.width.toInt(), y: _mapSize.height.toInt())),
       googleController
           .getLatLng(ScreenCoordinate(x: 0, y: _mapSize.height.toInt())),
-      googleController.getLatLng(ScreenCoordinate(x: 0, y: 0)),
+      googleController.getLatLng(const ScreenCoordinate(x: 0, y: 0)),
     ]);
 
     visibleRegion = VisibleRegion(
@@ -81,8 +82,7 @@ class MapService {
   }
 
   Future<void> updateCamera(LatLng latLng, {double? setZoom}) async {
-    var zoom =
-        setZoom == null ? await googleController.getZoomLevel() : setZoom;
+    var zoom = setZoom ?? await googleController.getZoomLevel();
 
     final cameraUpdate = CameraUpdate.newLatLngZoom(
         LatLng(latLng.latitude, latLng.longitude), zoom);
@@ -178,15 +178,17 @@ class MapService {
   void deletePostMarker({required Post obj}) {
     final markerId = MarkerId(obj.id);
     final polylineId = PolylineId(obj.id);
-    if (_markers.containsKey(markerId))
+    if (_markers.containsKey(markerId)) {
       _markers.removeWhere((key, value) => key == markerId);
+    }
 
-    if (_polyLines.containsKey(polylineId))
+    if (_polyLines.containsKey(polylineId)) {
       _polyLines.removeWhere((key, value) => key == polylineId);
+    }
   }
 
   void addCircle(LatLng latLng, double radius) {
-    final circleId = CircleId("center");
+    const circleId = CircleId("center");
     final circle = Circle(
       circleId: circleId,
       strokeColor: Colors.blue,
@@ -215,7 +217,7 @@ class MapService {
 
     polyline = Polyline(
       polylineId: polylineId,
-      color: color ?? Color.fromARGB(255, 95, 109, 237),
+      color: color ?? const Color.fromARGB(255, 95, 109, 237),
       points: points,
       jointType: JointType.round,
       consumeTapEvents: onTap != null,
@@ -230,8 +232,8 @@ class MapService {
   }
 
   void addPolygon(List<LatLng> points) {
-    final id = "polygonId";
-    final polygonId = PolygonId(id);
+    const id = "polygonId";
+    const polygonId = PolygonId(id);
 
     Polygon polygon;
 

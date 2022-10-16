@@ -16,7 +16,7 @@ class Message {
   bool get isCurrent {
     final currentUser = AuthService.to.currentUser.value;
     if (currentUser == null) return false;
-    return this.user.id == currentUser.id;
+    return user.id == currentUser.id;
   }
 
   bool get isRead {

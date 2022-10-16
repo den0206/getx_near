@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Comment extends JsonModel {
   final String id;
@@ -23,7 +22,7 @@ class Comment extends JsonModel {
   bool get isCurrent {
     final currentUser = AuthService.to.currentUser.value;
     if (currentUser == null) return false;
-    return this.user.id == currentUser.id;
+    return user.id == currentUser.id;
   }
 
   Comment({

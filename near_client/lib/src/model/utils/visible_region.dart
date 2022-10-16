@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'dart:math';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -55,8 +56,8 @@ class _Segment {
   final Point end;
 
   _Segment({required LatLng start, required LatLng end})
-      : this.start = Point(start.longitude, start.latitude),
-        this.end = Point(end.longitude, end.latitude);
+      : start = Point(start.longitude, start.latitude),
+        end = Point(end.longitude, end.latitude);
 
   bool onSegment(Point point) => (point.x <= max(start.x, end.x) &&
       point.x >= min(start.x, end.x) &&

@@ -49,7 +49,7 @@ final List<GetPage> _authPages = [
   ),
   GetPage(
     name: ProtectHomeScreen.routeName,
-    page: () => ProtectHomeScreen(),
+    page: () => const ProtectHomeScreen(),
   ),
   GetPage(
     name: ResetPasswordAndEmailScreen.routeName,
@@ -57,7 +57,7 @@ final List<GetPage> _authPages = [
   ),
   GetPage(
     name: BlockListScreen.routeName,
-    page: () => BlockListScreen(),
+    page: () => const BlockListScreen(),
     fullscreenDialog: true,
   ),
   GetPage(
@@ -69,11 +69,11 @@ final List<GetPage> _authPages = [
 final List<GetPage> _mainPages = [
   GetPage(
     name: RootScreen.routeName,
-    page: () => RootScreen(),
+    page: () => const RootScreen(),
   ),
   GetPage(
     name: MainTabScreen.routeName,
-    page: () => MainTabScreen(),
+    page: () => const MainTabScreen(),
   ),
   GetPage(
     name: MapScreen.routeName,
@@ -94,7 +94,7 @@ final List<GetPage> _postPages = [
   ),
   GetPage(
     name: CommentsScreen.routeName,
-    page: () => CommentsScreen(),
+    page: () => const CommentsScreen(),
     fullscreenDialog: true,
   ),
 ];

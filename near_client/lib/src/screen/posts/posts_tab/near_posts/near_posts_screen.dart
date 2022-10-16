@@ -25,7 +25,7 @@ class NearPostsScreen extends GetView<NearPostsController> {
             await controller.getNearPosts();
           },
           child: CustomScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               if (Platform.isIOS)
                 CupertinoSliverRefreshControl(
@@ -78,7 +78,7 @@ class NearPostsScreen extends GetView<NearPostsController> {
                       SizedBox(
                         height: 5.h,
                       ),
-                      Text(
+                      const Text(
                         "現在地から検索を行う",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,

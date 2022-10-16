@@ -17,7 +17,7 @@ class RecentExtension {
 
   Future<String?> createPrivateChatRoom(
       String withUserID, List<User> users) async {
-    var chatRoomId;
+    String chatRoomId;
     final currentUID = currentUser.id;
 
     final value = currentUID.compareTo(withUserID);
@@ -33,12 +33,12 @@ class RecentExtension {
     final recents = List<Recent>.from(item.map((e) => Recent.fromMap(e)));
 
     if (recents.isNotEmpty) {
-      recents.forEach((recent) {
+      for (var recent in recents) {
         final String chackId = recent.user.id;
         if (userIds.contains(chackId)) {
           tempMembers.remove(chackId);
         }
-      });
+      }
     }
 
     await Future.forEach(tempMembers, (String id) async {

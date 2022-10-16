@@ -13,7 +13,7 @@ class NotificationAPI extends APIBase {
       return await postRequest(uri: uri, useToken: true, body: body);
     } catch (e) {
       // 通知エラーの場合はアラートを出さない
-      if (e is FailNotificationException) throw e;
+      if (e is FailNotificationException) rethrow;
       return catchAPIError(e.toString());
     }
   }

@@ -16,7 +16,7 @@ class PostAPI extends APIBase {
   }
 
   Future<ResponseAPI> getPosts(String userId, String? nextCursor) async {
-    final int limit = 10;
+    const int limit = 10;
 
     final Map<String, dynamic> query = {
       "userId": userId,

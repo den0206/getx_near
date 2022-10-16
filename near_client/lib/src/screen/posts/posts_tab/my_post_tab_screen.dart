@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/comments/comments_controller.dart';
 import 'package:getx_near/src/screen/posts/posts_tab/comments/comments_screen.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../../utils/consts_color.dart';
 import 'my_posts/my_posts_controller.dart';
 import 'my_posts/my_posts_screen.dart';
@@ -31,7 +32,7 @@ enum MyPostsType {
       case MyPostsType.mine:
         return MyPostsScreen();
       case MyPostsType.comments:
-        return CommentsScreen();
+        return const CommentsScreen();
     }
   }
 }
@@ -46,10 +47,10 @@ class MyPostTabScreen extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(20),
+              preferredSize: const Size.fromHeight(20),
               child: TabBar(
                   indicatorColor: Colors.grey,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   indicatorWeight: 4,
                   indicatorSize: TabBarIndicatorSize.label,
                   tabs: MyPostsType.values
@@ -101,13 +102,13 @@ class LengthArea extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      padding: EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.only(right: 20),
       decoration: BoxDecoration(color: ConstsColor.mainBackColor),
       child: Align(
         alignment: Alignment.centerRight,
         child: Text(
-          "${postsLength} 件",
-          style: TextStyle(
+          "$postsLength 件",
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),

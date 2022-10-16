@@ -20,17 +20,17 @@ class BlockListScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('ブロック一覧'),
+            title: const Text('ブロック一覧'),
           ),
           body: ListView.separated(
-            separatorBuilder: (context, index) => Divider(),
+            separatorBuilder: (context, index) => const Divider(),
             itemCount: controller.blocks.length,
             itemBuilder: (context, index) {
               final user = controller.blocks[index];
               return Slidable(
                 key: Key(user.id),
                 endActionPane: ActionPane(
-                  motion: ScrollMotion(),
+                  motion: const ScrollMotion(),
                   extentRatio: 0.25,
                   children: [
                     SlidableAction(
@@ -76,8 +76,8 @@ class UserCell extends StatelessWidget {
       onTap: onTap,
       child: Neumorphic(
         style: commonNeumorphic(depth: selected ? -1.5 : 0.6),
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Row(
           children: [
             UserAvatarButton(
@@ -85,7 +85,7 @@ class UserCell extends StatelessWidget {
               size: 30.sp,
               useNeumorphic: false,
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Text(user.name)

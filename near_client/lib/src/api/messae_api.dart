@@ -5,7 +5,7 @@ class MessageApi extends APIBase {
   MessageApi() : super(EndPoint.message);
 
   Future<ResponseAPI> loadMessage(String chatRoomId, String? cursor) async {
-    final limit = 10;
+    const limit = 10;
     final Map<String, dynamic> query = {
       "chatRoomId": chatRoomId,
       "limit": limit.toString(),

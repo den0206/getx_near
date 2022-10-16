@@ -3,16 +3,13 @@ import 'package:getx_near/src/api/user_api.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/service/storage_service.dart';
+
 import '../../../service/auth_service.dart';
 import '../../main_tab/main_tab_controller.dart';
 import '../../widget/loading_widget.dart';
 
 class UserDeleteController extends LoadingGetController {
   final currentUser = AuthService.to.currentUser.value!;
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<void> tryDelete(BuildContext context) async {
     await showDialog(
@@ -35,14 +32,15 @@ class UserDeleteController extends LoadingGetController {
     if (MainTabController.to.currentIndex == MainTabController.to.mapIndex) {
       MainTabController.to.setIndex(0);
     }
-    if (Navigator.canPop(context))
+    if (Navigator.canPop(context)) {
       Navigator.popUntil(context, (route) => route.isFirst);
+    }
 
     topLoading.call(true);
 
     try {
       final _userAPI = UserAPI();
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       final res = await _userAPI.deleteUser();
       if (!res.status) return;

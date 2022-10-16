@@ -6,11 +6,11 @@ Color hexToColor(String code) {
 
 class ConstsColor {
   static final mainBackColor = Colors.grey[400]!;
-  static final cautionColor = Colors.yellow;
+  static const cautionColor = Colors.yellow;
   static final mianPinkColor = hexToColor("#ffccd6");
   static final mainGreenColor = Colors.green[300];
   static final locationColor = hexToColor("ff05d56");
-  static final mainOrangeColor = Color.fromARGB(255, 249, 154, 38);
+  static const mainOrangeColor = Color.fromARGB(255, 249, 154, 38);
 }
 
 // static final commonBackground = Colors.grey[200];

@@ -69,11 +69,6 @@ class NotificationService extends GetxService {
     listenForeground();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   String get soundPath {
     // iOS only accepts .wav, .aiff, and .caf extensions
     // Android only accepts .wav, .mp3 and .ogg extensions
@@ -131,7 +126,7 @@ class NotificationService extends GetxService {
     if (notification != null) {
       final int? badge = extractBadgeFromNotification(message);
 
-      print("badge is ${badge}");
+      print("badge is $badge");
       // android/app/src/main/res/raw
       flutterLocalNotificationsPlugin.show(
         notification.hashCode,
@@ -197,7 +192,7 @@ class NotificationService extends GetxService {
         ? FlutterAppBadger.updateBadgeCount(currentBadge)
         : FlutterAppBadger.removeBadge();
 
-    print("バッチは ${currentBadge}");
+    print("バッチは $currentBadge");
   }
 }
 

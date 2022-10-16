@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 const _mapStyle = [
@@ -232,12 +232,12 @@ const _mapStyle = [
 final mapStyle = jsonEncode(_mapStyle);
 
 // 新宿駅
-final initialCameraPosition = CameraPosition(
+const initialCameraPosition = CameraPosition(
   target: shinjukuSta,
   zoom: 10,
 );
 
-final shinjukuSta = LatLng(35.6875, 139.703056);
+const shinjukuSta = LatLng(35.6875, 139.703056);
 
 Future<BitmapDescriptor> iconFromAsset(
   String assetPath, {
@@ -255,7 +255,7 @@ Future<BitmapDescriptor> iconFromAsset(
   final Path clipPath = Path();
   clipPath.addRRect(RRect.fromRectAndRadius(
       Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
-      Radius.circular(100)));
+      const Radius.circular(100)));
 
   canvas.clipPath(clipPath);
 
@@ -273,9 +273,9 @@ Future<BitmapDescriptor> iconFromAsset(
 
   if (addBorder) {
     //draw Border
-    paint..color = borderColor;
-    paint..style = PaintingStyle.stroke;
-    paint..strokeWidth = borderSize;
+    paint.color = borderColor;
+    paint.style = PaintingStyle.stroke;
+    paint.strokeWidth = borderSize;
     canvas.drawCircle(Offset(radius, radius), radius, paint);
   }
 
