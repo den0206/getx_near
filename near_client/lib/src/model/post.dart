@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:getx_near/src/utils/global_functions.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/service/auth_service.dart';
+import 'package:getx_near/src/utils/global_functions.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 // abstract class MarkerIdentifer {
@@ -20,15 +19,15 @@ extension ExpireTimeEXT on ExpireTime {
   DateTime get time {
     switch (this) {
       case ExpireTime.one_hour:
-        return DateTime.now().add(Duration(hours: 1));
+        return DateTime.now().add(const Duration(hours: 1));
       case ExpireTime.five_hour:
-        return DateTime.now().add(Duration(hours: 3));
+        return DateTime.now().add(const Duration(hours: 3));
       case ExpireTime.one_day:
-        return DateTime.now().add(Duration(days: 1));
+        return DateTime.now().add(const Duration(days: 1));
       case ExpireTime.three_day:
-        return DateTime.now().add(Duration(days: 3));
+        return DateTime.now().add(const Duration(days: 3));
       case ExpireTime.one_week:
-        return DateTime.now().add(Duration(days: 7));
+        return DateTime.now().add(const Duration(days: 7));
     }
   }
 
@@ -83,7 +82,7 @@ class Post extends JsonModel {
   bool get isCurrent {
     final currentUser = AuthService.to.currentUser.value;
     if (currentUser == null) return false;
-    return this.user.id == currentUser.id;
+    return user.id == currentUser.id;
   }
 
   bool get isLiked {

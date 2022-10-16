@@ -6,6 +6,7 @@ import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/sos/sos_screen.dart';
 import 'package:getx_near/src/screen/tutorial/tutorial_screen.dart';
 import 'package:getx_near/src/service/storage_service.dart';
+
 import '../../service/auth_service.dart';
 import '../map/map_screen.dart';
 import '../posts/posts_tab/my_post_tab_screen.dart';
@@ -27,8 +28,8 @@ class MainTabController extends GetxController {
   late final int recentIndex;
 
   final List<Widget> fixPages = [
-    SOSScreen(),
-    MyPostTabScreen(),
+    const SOSScreen(),
+    const MyPostTabScreen(),
     MapScreen(),
     RecentScreen(),
     UserDetailScreen(
@@ -94,10 +95,10 @@ class MainTabController extends GetxController {
     indexes.removeWhere((element) =>
         element == index || element == mapIndex || element == recentIndex);
 
-    indexes.forEach((i) {
+    for (var i in indexes) {
       stackPages.removeAt(i);
       stackPages.insert(i, Container());
-    });
+    }
 
     stackPages[index] = fixPages[index];
     print(stackPages);

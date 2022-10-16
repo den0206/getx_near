@@ -21,22 +21,20 @@ class TutorialPage extends StatelessWidget {
                 colors: controller.backColors,
                 pageController: controller.pageController,
                 pageCount: controller.pages.length,
-                child: Container(
-                  child: PageView(
-                    controller: controller.pageController,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: controller.pages
-                        .asMap()
-                        .entries
-                        .map(
-                          (entry) => _generateTutorialPage(
-                            entry.key,
-                            controller,
-                            entry.value,
-                          ),
-                        )
-                        .toList(),
-                  ),
+                child: PageView(
+                  controller: controller.pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: controller.pages
+                      .asMap()
+                      .entries
+                      .map(
+                        (entry) => _generateTutorialPage(
+                          entry.key,
+                          controller,
+                          entry.value,
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
               if (!controller.isFirst)
@@ -44,7 +42,7 @@ class TutorialPage extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_back_ios_rounded,
                         color: Colors.white,
                       ),
@@ -58,6 +56,11 @@ class TutorialPage extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.topRight,
                   child: TextButton(
+                    onPressed: controller.skipEnable
+                        ? () {
+                            controller.changePage(context);
+                          }
+                        : null,
                     child: Text(
                       !controller.isLast ? "スキップ" : "終了",
                       style: TextStyle(
@@ -65,16 +68,11 @@ class TutorialPage extends StatelessWidget {
                               ? Colors.white
                               : Colors.black38),
                     ),
-                    onPressed: controller.skipEnable
-                        ? () {
-                            controller.changePage(context);
-                          }
-                        : null,
                   ),
                 ),
               ),
               Align(
-                alignment: Alignment(0, 0.94),
+                alignment: const Alignment(0, 0.94),
                 child: SlidingIndicator(
                   indicatorCount: controller.pages.length,
                   notifier: controller.notifier,
@@ -82,7 +80,8 @@ class TutorialPage extends StatelessWidget {
                     Icons.check_circle,
                     color: controller.currentCollor,
                   ),
-                  inActiveIndicator: Icon(Icons.circle, color: Colors.white),
+                  inActiveIndicator:
+                      const Icon(Icons.circle, color: Colors.white),
                   margin: 8,
                   inactiveIndicatorSize: 30,
                   activeIndicatorSize: 35,
@@ -98,9 +97,9 @@ class TutorialPage extends StatelessWidget {
   Widget _generateTutorialPage(
       int index, TutorialController controller, Widget child) {
     return SlidingPage(
-      child: child,
       page: index,
       notifier: controller.notifier,
+      child: child,
     );
   }
 }

@@ -28,13 +28,13 @@ void showSnackBar({
   Get.snackbar(
     title,
     message,
-    icon: Icon(Icons.person, color: Colors.white),
+    icon: const Icon(Icons.person, color: Colors.white),
     snackPosition: position,
     backgroundColor: background,
     borderRadius: 20,
-    margin: EdgeInsets.all(15),
+    margin: const EdgeInsets.all(15),
     colorText: Colors.white,
-    duration: Duration(seconds: 2),
+    duration: const Duration(seconds: 2),
     isDismissible: true,
     dismissDirection: DismissDirection.down,
     forwardAnimationCurve: Curves.easeOutBack,
@@ -90,7 +90,7 @@ Future<List<Post>> getTempNearPosts(
     );
     return temp;
   } catch (e) {
-    throw e;
+    rethrow;
   }
 }
 
@@ -138,6 +138,6 @@ Future<void> getToMessScreen({required User user}) async {
 
     Get.toNamed(MessageScreen.routeName, arguments: ext);
   } catch (e) {
-    throw e;
+    rethrow;
   }
 }

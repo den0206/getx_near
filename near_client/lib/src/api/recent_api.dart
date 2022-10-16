@@ -33,7 +33,7 @@ class RecentAPI extends APIBase {
   }
 
   Future<ResponseAPI> findByUserId(String? nextCursor) async {
-    final limit = 10;
+    const limit = 10;
     final query = {"limit": limit.toString()};
     if (nextCursor != null) query["cursor"] = nextCursor;
     try {

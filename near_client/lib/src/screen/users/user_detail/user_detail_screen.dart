@@ -23,7 +23,7 @@ class UserDetailScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(user.name),
-            actions: [],
+            actions: const [],
           ),
           body: SingleChildScrollView(
             child: Column(
@@ -32,8 +32,10 @@ class UserDetailScreen extends StatelessWidget {
                   height: 3.h,
                 ),
                 Neumorphic(
-                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   style: commonNeumorphic(depth: 1.6),
                   child: Column(
                     children: [
@@ -99,7 +101,7 @@ class UserDetailScreen extends StatelessWidget {
                                             ConstsColor.mainBackColor,
                                         isScrollControlled: true,
                                         builder: (context) {
-                                          return SettingsScreen();
+                                          return const SettingsScreen();
                                         },
                                       );
                                     }),
@@ -143,13 +145,15 @@ class UserDetailScreen extends StatelessWidget {
                   height: 1.h,
                 ),
                 Neumorphic(
-                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   style: commonNeumorphic(depth: 1.6),
                   child: DataTable(
                       columnSpacing: 83,
                       headingRowHeight: 0,
-                      border: TableBorder(top: BorderSide.none),
+                      border: const TableBorder(top: BorderSide.none),
                       // dataRowHeight: double.parse('20'),
                       columns: [
                         DataColumn(
@@ -170,14 +174,14 @@ class UserDetailScreen extends StatelessWidget {
                             ),
                           ),
                           DataCell(
-                            Container(
+                            SizedBox(
                               width: 100,
                               child: Text('${controller.reportedCount} 回'),
                             ),
                           ),
                         ]),
                         DataRow(cells: [
-                          DataCell(Text("開始日")),
+                          const DataCell(Text("開始日")),
                           DataCell(Text(controller.createdAtOnFormat)),
                         ]),
                       ]),

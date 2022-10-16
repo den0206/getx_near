@@ -28,7 +28,7 @@ class TutorialController extends GetxController {
 
   List<Widget> get pages {
     return [
-      WelcomeScreen(),
+      const WelcomeScreen(),
       PermissionTutorialScreen(
         type: PermissionType.notification,
         onPress: () async {
@@ -43,7 +43,7 @@ class TutorialController extends GetxController {
           );
         },
       ),
-      ProtectHomeScreen(
+      const ProtectHomeScreen(
         isTutorial: true,
       ),
     ];
@@ -62,7 +62,7 @@ class TutorialController extends GetxController {
 
   @override
   void onInit() {
-    pageController..addListener(_onScroll);
+    pageController.addListener(_onScroll);
     super.onInit();
   }
 
@@ -101,12 +101,12 @@ class TutorialController extends GetxController {
       );
     } else if (!isBack) {
       await pageController.nextPage(
-        duration: Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 400),
         curve: Curves.linear,
       );
     } else {
       await pageController.previousPage(
-        duration: Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 400),
         curve: Curves.linear,
       );
     }

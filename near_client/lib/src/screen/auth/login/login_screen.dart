@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
       init: LoginController(),
       builder: (controller) {
         return VisibilityDetector(
-          key: Key("Login"),
+          key: const Key("Login"),
           onVisibilityChanged: (visibilityInfo) {
             var visiblePercentage = visibilityInfo.visibleFraction * 100;
             if (visiblePercentage == 100) {
@@ -43,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                         labelText: "Email",
                         iconData: Icons.email,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       CustomTextField(
@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                         isSecure: true,
                         iconData: Icons.lock,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Align(
@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Obx(
@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                               : null,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       NeumorphicTextButton(
@@ -116,7 +116,7 @@ Future<void> showTermsDialog(BuildContext context) {
                 child: Container(
                   width: 85.w,
                   height: MediaQuery.of(context).size.height - 80,
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: ConstsColor.mainBackColor,
                     borderRadius: BorderRadius.circular(16),
@@ -132,7 +132,7 @@ Future<void> showTermsDialog(BuildContext context) {
                           builder: (BuildContext context,
                               AsyncSnapshot<String> snapshot) {
                             if (!snapshot.hasData) {
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
@@ -165,7 +165,7 @@ Future<void> showTermsDialog(BuildContext context) {
                                   current.update();
                                 },
                               ),
-                              Text(
+                              const Text(
                                 '利用規約に同意します',
                                 style: TextStyle(fontSize: 12),
                                 overflow: TextOverflow.ellipsis,

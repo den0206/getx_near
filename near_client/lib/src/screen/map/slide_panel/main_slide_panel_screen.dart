@@ -9,8 +9,8 @@ import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/screen/widget/origin_carousel.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:getx_near/src/utils/date_formate.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:sizer/sizer.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MainSlideUpPanel extends GetView<MainSlidePanelController> {
   const MainSlideUpPanel(this.mapController, {Key? key}) : super(key: key);
@@ -32,9 +32,9 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
           panelSnapping: false,
           isDraggable: !controller.selecting,
           color: ConstsColor.mainBackColor,
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          margin: EdgeInsets.symmetric(horizontal: 5),
-          borderRadius: BorderRadius.only(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 5),
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(18.0),
             topRight: Radius.circular(18.0),
           ),
@@ -49,7 +49,7 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                   Container(
                     width: 30,
                     height: 5,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.all(Radius.circular(12.0))),
                   ),
@@ -68,7 +68,7 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Spacer(),
+                                const Spacer(),
                                 Text(
                                   post.user.name,
                                   maxLines: 1,
@@ -80,7 +80,7 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                                     fontSize: 15.sp,
                                   ),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
                                   child: HelpButton(
@@ -102,7 +102,8 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                             if (post.distance != null)
                               Text(
                                 "約 ${distanceToString(post.distance!)} km",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
                               )
                           ],
                         ),

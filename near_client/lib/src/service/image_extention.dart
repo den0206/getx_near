@@ -6,7 +6,7 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class ImageExtention {
   static Future<File?> pickSingleImage(BuildContext context) async {
-    final config = AssetPickerConfig(
+    const config = AssetPickerConfig(
       maxAssets: 1,
       requestType: RequestType.image,
     );
@@ -23,7 +23,7 @@ class ImageExtention {
   static Future<File?> _compressImage(File? file) async {
     if (file == null) return null;
     final filePath = file.absolute.path;
-    final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+    final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
     final splitted = filePath.substring(0, (lastIndex));
     final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
 

@@ -46,7 +46,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                           },
                         );
                       }),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       CustomTextField(
@@ -55,7 +55,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                         iconData: Icons.person,
                         validator: valideName,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       CustomTextField(
@@ -64,7 +64,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                         iconData: Icons.email,
                         validator: validateEmail,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       CustomTextField(
@@ -74,7 +74,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                         validator: validPassword,
                         isSecure: true,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 25,
                       ),
                       NeumorphicToggle(
@@ -91,12 +91,13 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                                 background: Center(
                                     child: Text(
                                   sex.title,
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
                                 )),
                                 foreground: Center(
                                     child: Text(
                                   sex.title,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w700,
                                   ),
                                 )),

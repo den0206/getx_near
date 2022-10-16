@@ -19,18 +19,17 @@ class AuthService extends GetxService {
     if (value == null) return;
 
     // set home
-    this.currentUser.call(User.fromMap(value!));
+    currentUser.call(User.fromMap(value!));
     _registerMustControllers();
     print(currentUser.value.toString());
   }
 
   Future<void> updateUser(User newUser) async {
-    if (newUser.sessionToken == null)
-      newUser.sessionToken = currentUser.value!.sessionToken;
+    newUser.sessionToken ??= currentUser.value!.sessionToken;
 
     // set home
     await StorageKey.user.saveString(newUser.toMap());
-    this.currentUser.call(newUser);
+    currentUser.call(newUser);
 
     _registerMustControllers();
   }
@@ -38,7 +37,7 @@ class AuthService extends GetxService {
   Future<void> logout() async {
     await Get.deleteAll();
     await deleteStorageLogout();
-    this.currentUser.value = null;
+    currentUser.value = null;
     print("DELETE");
   }
 

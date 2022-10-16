@@ -3,6 +3,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:getx_near/src/api/report_api.dart';
 import 'package:getx_near/src/model/message.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
+
 import '../../model/post.dart';
 import '../../model/user.dart';
 import '../../utils/global_functions.dart';
@@ -59,7 +60,7 @@ class ReportController extends LoadingGetController {
     if (user.isCurrent) return;
 
     isLoading.call(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     try {
       Map<String, dynamic> reportData = {
         "reported": user.id,

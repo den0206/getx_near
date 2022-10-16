@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class JsonModel {
   JsonModel();
@@ -35,12 +34,11 @@ class User extends JsonModel {
   }
 
   bool checkBlock(User user) {
-    return this.blockedUsers.contains(user.id);
+    return blockedUsers.contains(user.id);
   }
 
   bool canContact(User user) {
-    return this.blockedUsers.contains(user.id) ||
-        user.blockedUsers.contains(this.id);
+    return blockedUsers.contains(user.id) || user.blockedUsers.contains(id);
   }
 
   User({
@@ -79,7 +77,7 @@ class User extends JsonModel {
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       sex: getSex(map["sex"]),
-      avatarUrl: map['avatarUrl'] ?? null,
+      avatarUrl: map['avatarUrl'],
       sessionToken: map["sessionToken"],
       blockedUsers: List<String>.from(map["blocked"] ?? []),
       home: getHome(map),
@@ -144,12 +142,12 @@ ImageProvider getUserImage(User user) {
       user.avatarUrl!,
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress != null) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
         return child;
       },
       errorBuilder: (context, error, stackTrace) {
-        return Text("Error");
+        return const Text("Error");
       },
     ).image;
   }

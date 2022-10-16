@@ -5,6 +5,7 @@ import 'package:getx_near/src/screen/users/protect_home/protect_home_controller.
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../../service/location_service.dart';
 
 class ProtectHomeScreen extends StatelessWidget {
@@ -43,7 +44,7 @@ class ProtectHomeScreen extends StatelessWidget {
                 controller.currentUser.hasHome && controller.address != null
                     ? "${controller.address} 周辺"
                     : "未登録です",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -75,13 +76,14 @@ class ProtectHomeScreen extends StatelessWidget {
                   ),
                 ),
               Obx(() => Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text("投稿禁止範囲"),
+                          const Text("投稿禁止範囲"),
                           Text(
                             "${controller.homeDistance} m",
                             style: TextStyle(

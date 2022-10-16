@@ -15,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 80.h,
       child: Scaffold(
         appBar: AppBar(
@@ -23,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
-              icon: Icon(Icons.close),
+              icon: const Icon(Icons.close),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -38,13 +38,14 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 _selectLocationArea(controller),
                 Obx(() => Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
                     child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text("通知範囲"),
+                            const Text("通知範囲"),
                             Text(
                               "${controller.searchDistance} m",
                               style: TextStyle(
@@ -76,10 +77,10 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ],
                     ))),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Container(
+                SizedBox(
                   height: 40.h,
                   child: ListView(
                     shrinkWrap: true,
@@ -87,52 +88,52 @@ class SettingsScreen extends StatelessWidget {
                       context: context,
                       tiles: [
                         ListTile(
-                          title: Text("通知"),
-                          trailing: Icon(Icons.arrow_forward_ios),
+                          title: const Text("通知"),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () {
                             openAppSettings();
                           },
                         ),
                         ListTile(
-                          title: Text("Version"),
+                          title: const Text("Version"),
                           trailing:
                               Text(controller.currentVersion ?? "Unknown"),
                         ),
                         ListTile(
-                          title: Text("ブロック一覧"),
-                          trailing: Icon(Icons.arrow_forward_ios),
+                          title: const Text("ブロック一覧"),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () async {
                             await controller.pushBlockListPage();
                           },
                         ),
                         ListTile(
-                          title: Text("クリアキャッシュ"),
-                          trailing: Icon(Icons.arrow_forward_ios),
+                          title: const Text("クリアキャッシュ"),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () async {
                             await DefaultCacheManager().emptyCache();
                           },
                         ),
                         ListTile(
-                          title: Text("お問い合わせ"),
-                          trailing: Icon(Icons.arrow_forward_ios),
+                          title: const Text("お問い合わせ"),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () async {
                             await controller.pushContactPage();
                           },
                         ),
                         ListTile(
-                          title: Text("ログアウト"),
-                          trailing: Icon(Icons.arrow_forward_ios),
+                          title: const Text("ログアウト"),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () {
                             Navigator.of(context).pop();
                             controller.tryLogout(context);
                           },
                         ),
                         ListTile(
-                          title: Text(
+                          title: const Text(
                             "ユーザー削除",
                             style: TextStyle(color: Colors.red),
                           ),
-                          trailing: Icon(Icons.arrow_forward_ios),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () {
                             Navigator.of(context).pop();
                             controller.showDeleteScreen();
@@ -152,11 +153,11 @@ class SettingsScreen extends StatelessWidget {
 
   Widget _selectLocationArea(UserDetailController controller) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Column(
         children: [
-          Text("位置情報の正確さ"),
-          SizedBox(
+          const Text("位置情報の正確さ"),
+          const SizedBox(
             height: 20,
           ),
           NeumorphicToggle(
@@ -169,12 +170,12 @@ class SettingsScreen extends StatelessWidget {
                 background: Center(
                     child: Text(
                   l.title,
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 )),
                 foreground: Center(
                     child: Text(
                   l.title,
-                  style: TextStyle(fontWeight: FontWeight.w700),
+                  style: const TextStyle(fontWeight: FontWeight.w700),
                 )),
               );
             }).toList(),
@@ -182,7 +183,7 @@ class SettingsScreen extends StatelessWidget {
               style: NeumorphicStyle(
                 color: ConstsColor.mainBackColor,
                 boxShape: NeumorphicBoxShape.roundRect(
-                  BorderRadius.all(
+                  const BorderRadius.all(
                     Radius.circular(12),
                   ),
                 ),

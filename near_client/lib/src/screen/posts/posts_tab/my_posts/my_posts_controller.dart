@@ -3,10 +3,9 @@ import 'package:get/route_manager.dart';
 import 'package:getx_near/src/api/comment_api.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/comment.dart';
-import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
-
+import 'package:getx_near/src/model/utils/page_feeds.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
@@ -34,11 +33,6 @@ class MyPostsController extends LoadingGetController {
 
     await loadRelationComments();
     await loadContents();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   Future<void> refreshPosts() async {
@@ -73,14 +67,13 @@ class MyPostsController extends LoadingGetController {
       posts.insert(0, post);
       update();
     }
-    ;
   }
 
   /// MARK  Posts
   Future<void> getPosts() async {
     if (reachLast || cellLoading) return;
     showCellLoading(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final res = await _postAPI.getPosts(currentUser.id, nextCursor);
@@ -103,7 +96,7 @@ class MyPostsController extends LoadingGetController {
   Future<void> getDummy() async {
     if (reachLast) return;
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final currentPostion = await _locationService.getCurrentPosition();

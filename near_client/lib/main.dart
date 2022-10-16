@@ -25,20 +25,20 @@ void main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
 
-  await Get.put(NotificationService());
+  Get.put(NotificationService());
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   isJailBroken = await SafeDevice.isJailBroken;
   isRealDevice = await SafeDevice.isRealDevice;
 
-  runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
+  runApp(DevicePreview(enabled: false, builder: (context) => const MyApp()));
 }
 
 bool isJailBroken = false;
 bool isRealDevice = false;
-final bool useMain = true;
-final bool useMap = true;
+const bool useMain = true;
+const bool useMap = true;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -50,13 +50,13 @@ class MyApp extends StatelessWidget {
         title: 'Help!!!',
         defaultTransition: Transition.fade,
         debugShowCheckedModeBanner: kDebugMode,
-        localizationsDelegates: [
+        localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: [Locale('English'), Locale('ja')],
-        locale: Locale('ja', 'JP'),
+        supportedLocales: const [Locale('English'), Locale('ja')],
+        locale: const Locale('ja', 'JP'),
         theme: ThemeData(
           scaffoldBackgroundColor: ConstsColor.mainBackColor,
           appBarTheme: AppBarTheme(

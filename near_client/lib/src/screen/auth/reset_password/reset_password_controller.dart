@@ -26,7 +26,7 @@ class ResetPasswordAndEmailController extends LoadingGetController {
   bool buttonEnable = false;
 
   TextEditingController get currentTx {
-    switch (this.state) {
+    switch (state) {
       case VerifyState.checkEmail:
         return emailTextField;
       case VerifyState.sendPassword:
@@ -42,19 +42,14 @@ class ResetPasswordAndEmailController extends LoadingGetController {
     print(isEditPassword);
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   Future<void> sendRequest() async {
     if (currentTx.text == "") return;
 
     isLoading.call(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
-      switch (this.state) {
+      switch (state) {
         case VerifyState.checkEmail:
           if (isEditPassword) {
             state = VerifyState.sendPassword;
@@ -131,7 +126,7 @@ class ResetPasswordAndEmailController extends LoadingGetController {
   }
 
   void checkField(String value) {
-    buttonEnable = value.length >= this.state.minLength;
+    buttonEnable = value.length >= state.minLength;
 
     update();
   }

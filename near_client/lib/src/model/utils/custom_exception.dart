@@ -4,6 +4,7 @@ class CustomException implements Exception {
 
   CustomException(this._message, this._prefix);
 
+  @override
   String toString() {
     // var str = "$_prefix";
     // if (_message != null) {

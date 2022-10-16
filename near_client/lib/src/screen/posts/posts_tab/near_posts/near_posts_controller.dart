@@ -48,7 +48,7 @@ class NearPostsController extends GetxController {
         await MainSlidePanelController.to.selectPost(post);
 
         topLoading.call(true);
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
       }
 
       // MapView への遷移

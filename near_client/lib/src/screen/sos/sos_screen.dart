@@ -33,17 +33,17 @@ class SOSScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: NeumorphicRadio(
                       style: commonRatioStyle(),
-                      child: Icon(
-                        alert.iconData,
-                        size: 25.sp,
-                      ),
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       value: alert,
                       groupValue: controller.currentAlert,
                       onChanged: (AlertVoice? value) {
                         if (value == null) return;
                         controller.selectAlert(value);
                       },
+                      child: Icon(
+                        alert.iconData,
+                        size: 25.sp,
+                      ),
                     ),
                   );
                 }).toList(),
@@ -56,14 +56,14 @@ class SOSScreen extends StatelessWidget {
                 onEnded: () => controller.pause(),
                 minDistance: -5,
                 style: commonNeumorphic(depth: 1.6),
-                child: Container(
+                child: SizedBox(
                   width: 70.w,
                   height: 55.h,
                   child: Center(
                     child: Obx(
                       () => BlinkingWidet(
                         use: !controller.isPlaying.value,
-                        duration: Duration(seconds: 3),
+                        duration: const Duration(seconds: 3),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

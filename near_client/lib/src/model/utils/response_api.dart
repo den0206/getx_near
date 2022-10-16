@@ -22,7 +22,7 @@ class ResponseAPI {
       status: map['status'],
       statusCode: code,
       data: map['data'],
-      message: map['message'] != null ? map['message'] : null,
+      message: map['message'],
     );
   }
 

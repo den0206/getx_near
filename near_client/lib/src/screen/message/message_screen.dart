@@ -70,7 +70,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
               ],
             ),
           ),
-          MessageInput(),
+          const MessageInput(),
         ],
       ),
     );
@@ -101,7 +101,7 @@ class MessageCell extends GetView<MessageController> {
                 actions: [
                   CupertinoContextMenuAction(
                     isDefaultAction: true,
-                    child: Text("Copy"),
+                    child: const Text("Copy"),
                     onPressed: () async {
                       final data = ClipboardData(text: message.text);
                       await Clipboard.setData(data);
@@ -111,7 +111,7 @@ class MessageCell extends GetView<MessageController> {
                   if (message.isCurrent) ...[
                     CupertinoContextMenuAction(
                       isDestructiveAction: true,
-                      child: Text("Delete"),
+                      child: const Text("Delete"),
                       onPressed: () {
                         Navigator.of(context).pop();
                         controller.deleteMessage(message);
@@ -121,7 +121,7 @@ class MessageCell extends GetView<MessageController> {
                   if (!message.isCurrent) ...[
                     CupertinoContextMenuAction(
                       isDestructiveAction: true,
-                      child: Text("通報"),
+                      child: const Text("通報"),
                       onPressed: () async {
                         Navigator.of(context).pop();
 
@@ -145,7 +145,7 @@ class MessageCell extends GetView<MessageController> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(top: 5),
+            padding: const EdgeInsets.only(top: 5),
             child: Row(
               mainAxisAlignment: message.isCurrent
                   ? MainAxisAlignment.end
@@ -160,10 +160,10 @@ class MessageCell extends GetView<MessageController> {
                     ),
                   ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
                     message.formattedTime,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1,
@@ -196,8 +196,8 @@ class TextBubble extends StatelessWidget {
           maxWidth: MediaQuery.of(context).size.width * 0.7,
         ),
         child: Neumorphic(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           style: commonNeumorphic(
             color: message.isCurrent
                 ? ConstsColor.mainGreenColor
@@ -206,8 +206,8 @@ class TextBubble extends StatelessWidget {
           ).copyWith(
             boxShape: NeumorphicBoxShape.roundRect(
               BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
+                topLeft: const Radius.circular(16),
+                topRight: const Radius.circular(16),
                 bottomLeft: Radius.circular(message.isCurrent ? 12 : 0),
                 bottomRight: Radius.circular(message.isCurrent ? 0 : 12),
               ),
@@ -239,7 +239,7 @@ class MessageInput extends GetView<MessageController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Row(
         children: [
           Expanded(
@@ -248,14 +248,14 @@ class MessageInput extends GetView<MessageController> {
               inputType: TextInputType.text,
               labelText: "Message",
               autoFocus: true,
-              padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 16,
           ),
           NeumorphicIconButton(
-            icon: Icon(Icons.send),
+            icon: const Icon(Icons.send),
             color: ConstsColor.mainGreenColor,
             onPressed: () {
               dismisskeyBord(context);

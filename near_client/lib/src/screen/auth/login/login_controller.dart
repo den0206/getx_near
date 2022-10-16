@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/user_api.dart';
-import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/model/user.dart';
-
+import 'package:getx_near/src/model/utils/response_api.dart';
 import 'package:getx_near/src/screen/auth/reset_password/reset_password_screen.dart';
 import 'package:getx_near/src/screen/auth/signup/signup_screen.dart';
 import 'package:getx_near/src/screen/root_screen.dart';
@@ -62,7 +61,7 @@ class LoginController extends GetxController {
 
       final user = User.fromMap(userData);
       user.sessionToken = token;
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       await AuthService.to.updateUser(user);
     } catch (e) {
@@ -87,7 +86,7 @@ class LoginController extends GetxController {
   }
 
   Future<void> showResetPassword() async {
-    final bool isEditPassword = true;
+    const bool isEditPassword = true;
     final _res = await Get.toNamed(ResetPasswordAndEmailScreen.routeName,
         arguments: isEditPassword);
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/service/auth_service.dart';
+
 import '../../../api/user_api.dart';
 import '../../../model/user.dart';
 import '../../../service/image_extention.dart';
@@ -55,7 +56,7 @@ class UserEditController extends LoadingGetController {
   Future<void> updateUser() async {
     if (!isChanged.value || isLoading.value) return;
     isLoading.call(true);
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
 
     try {
       final res = await _userAPI.updateUser(
@@ -67,8 +68,9 @@ class UserEditController extends LoadingGetController {
       await AuthService.to.updateUser(newUser);
 
       // Tips update same url image
-      if (newUser.avatarUrl != null)
+      if (newUser.avatarUrl != null) {
         newUser.avatarUrl = "${newUser.avatarUrl}?v=${Random().nextInt(1000)}";
+      }
 
       Get.back(result: newUser);
     } catch (e) {
@@ -79,7 +81,7 @@ class UserEditController extends LoadingGetController {
   }
 
   Future<void> showEditEmail() async {
-    final bool isEditPassword = false;
+    const bool isEditPassword = false;
     Get.toNamed(
       ResetPasswordAndEmailScreen.routeName,
       arguments: isEditPassword,

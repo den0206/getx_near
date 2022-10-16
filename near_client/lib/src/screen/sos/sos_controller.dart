@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:audio_session/audio_session.dart';
 import 'package:flutter/services.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/model/alert_voice.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:audio_session/audio_session.dart';
 
 class SOSController extends GetxController {
   late AudioPlayer _player;
@@ -35,7 +35,7 @@ class SOSController extends GetxController {
   Future<void> _setupSession() async {
     _player = AudioPlayer();
     final session = await AudioSession.instance;
-    await session.configure(AudioSessionConfiguration.speech());
+    await session.configure(const AudioSessionConfiguration.speech());
   }
 
   Future<void> _loadAsset() async {
@@ -55,7 +55,7 @@ class SOSController extends GetxController {
       if (playing) {
         // 一秒毎にバイブレーション
         _timer = Timer.periodic(
-          Duration(seconds: 1),
+          const Duration(seconds: 1),
           (timer) {
             HapticFeedback.vibrate();
           },

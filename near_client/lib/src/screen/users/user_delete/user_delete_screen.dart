@@ -16,7 +16,7 @@ class UserDeleteScreen extends LoadingGetView<UserDeleteController> {
         appBar: AppBar(
           title: const Text('Delete'),
         ),
-        body: Container(
+        body: SizedBox(
           height: double.infinity,
           width: double.infinity,
           child: Column(

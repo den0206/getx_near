@@ -83,9 +83,9 @@ class MapScreen extends LoadingGetView<MapController> {
           children: [
             Builder(builder: (context) {
               return AppBar(
-                leading: new IconButton(
+                leading: IconButton(
                     iconSize: 25.sp,
-                    icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                     onPressed: () {
                       controller.backScreen();
                     }),
@@ -114,7 +114,7 @@ class MapScreen extends LoadingGetView<MapController> {
                                       size: 16.sp,
                                       color: ConstsColor.mainGreenColor),
                                 ),
-                                TextSpan(
+                                const TextSpan(
                                   text: "このエリアを検索",
                                 ),
                               ],
@@ -189,7 +189,7 @@ class MapScreen extends LoadingGetView<MapController> {
                 children: [
                   Builder(builder: (context) {
                     return NeumorphicIconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.description,
                         color: Colors.white,
                       ),
@@ -204,7 +204,7 @@ class MapScreen extends LoadingGetView<MapController> {
                       height: 1.h,
                     ),
                     NeumorphicIconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.group,
                         color: Colors.white,
                       ),
@@ -221,7 +221,7 @@ class MapScreen extends LoadingGetView<MapController> {
                     key: controller.tutorialKey2,
                     description: "あなたの投稿を作成します。",
                     child: NeumorphicIconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add,
                         color: Colors.white,
                       ),
@@ -240,13 +240,13 @@ class MapScreen extends LoadingGetView<MapController> {
                     child: FloatingActionButton.extended(
                       heroTag: "btn2",
                       backgroundColor: ConstsColor.mainGreenColor,
-                      label: Text(
+                      label: const Text(
                         'Default Position',
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.location_on,
                         color: Colors.red,
                       ),
