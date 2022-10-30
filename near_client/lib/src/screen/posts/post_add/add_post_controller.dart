@@ -5,7 +5,6 @@ import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
-import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/common_showcase.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
@@ -38,14 +37,9 @@ class AddPostController extends LoadingGetController {
   final tutorialKey2 = GlobalKey();
   final tutorialKey3 = GlobalKey();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void showTutorial(BuildContext context) {
     CommonShowCase([tutorialKey1, tutorialKey2, tutorialKey3])
-      ..showTutorial(context);
+        .showTutorial(context);
   }
 
   void streamText(String? value) {
@@ -57,7 +51,7 @@ class AddPostController extends LoadingGetController {
 
     final maxDistance = getNotificationDistance(
         await StorageKey.notificationDistance.loadInt());
-    print("通知距離: ${maxDistance}");
+    print("通知距離: $maxDistance");
 
     try {
       final Position current = await _locationService.getCurrentPosition();
@@ -90,14 +84,16 @@ class AddPostController extends LoadingGetController {
       tokens.remove(myToken);
 
       // notification　を送る
-      if (tokens.isNotEmpty)
+      if (tokens.isNotEmpty) {
         await NotificationService.to.pushPostNotification(
           tokens: tokens,
           type: NotificationType.post,
         );
+      }
 
-      if (Get.isRegistered<MyPostsController>())
+      if (Get.isRegistered<MyPostsController>()) {
         MyPostsController.to.insertPost(post);
+      }
 
       if (MainTabController.to.currentIndex !=
           MainTabController.to.postsIndex) {
@@ -116,7 +112,7 @@ class AddPostController extends LoadingGetController {
         position: SnackPosition.TOP,
       );
     } catch (e) {
-      showError(e.toString());
+      print(e.toString());
     } finally {
       isLoading.call(false);
     }
@@ -128,7 +124,7 @@ class AddPostController extends LoadingGetController {
     if (!currentUser.hasHome) return true;
 
     final int homeDistance =
-        await getHomeDistance(await StorageKey.homeDistance.loadInt());
+        getHomeDistance(await StorageKey.homeDistance.loadInt());
 
     // 2点間の距離の計算(m)
     int distanceBetween = Geolocator.distanceBetween(
@@ -138,7 +134,7 @@ class AddPostController extends LoadingGetController {
       postPosition.longitude,
     ).round();
 
-    print("離れている距離は${distanceBetween} m");
+    print("離れている距離は$distanceBetween m");
     if (homeDistance > distanceBetween) {
       return false;
     } else {
