@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
 import '../../utils/validator.dart';
 import 'custom_textfield.dart';
 
@@ -107,7 +108,7 @@ class CustomPinCodeField extends StatelessWidget {
         selectedFillColor: Colors.white,
       ),
       cursorColor: Colors.black,
-      animationDuration: Duration(milliseconds: 300),
+      animationDuration: const Duration(milliseconds: 300),
       enableActiveFill: false,
       keyboardType: inputType,
       onChanged: onChange ?? (value) {},
@@ -142,7 +143,7 @@ class PinCodeArea extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (currentState == VerifyState.verify)
-            Text(
+            const Text(
               "Please Check Your Email",
               style: TextStyle(
                 fontWeight: FontWeight.bold,

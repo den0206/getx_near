@@ -1,7 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-
 import 'package:getx_near/src/utils/consts_color.dart';
 
 import '../../utils/neumorphic_style.dart';
@@ -35,13 +34,14 @@ class CustomTextField extends StatelessWidget {
     RxBool visiblity = isSecure.obs;
 
     return Neumorphic(
-      margin: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
+      margin: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
       style: commonNeumorphic(
         depth: -10,
         shadowLightColorEmboss: ConstsColor.mainBackColor,
-        boxShape: NeumorphicBoxShape.stadium(),
+        boxShape: const NeumorphicBoxShape.stadium(),
       ),
-      padding: padding ?? EdgeInsets.symmetric(vertical: 7, horizontal: 18),
+      padding:
+          padding ?? const EdgeInsets.symmetric(vertical: 7, horizontal: 18),
       child: Obx(
         () => TextFormField(
           controller: controller,

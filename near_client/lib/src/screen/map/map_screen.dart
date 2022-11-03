@@ -96,7 +96,7 @@ class MapScreen extends LoadingGetView<MapController> {
             Obx(
               () => controller.showSearch.value
                   ? Center(
-                      child: CommonShowcaseWidget(
+                      child: commonShowcaseWidget(
                         key: controller.tutorialKey1,
                         description: "画面内の検索を行います",
                         child: FloatingActionButton.extended(
@@ -217,7 +217,7 @@ class MapScreen extends LoadingGetView<MapController> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  CommonShowcaseWidget(
+                  commonShowcaseWidget(
                     key: controller.tutorialKey2,
                     description: "あなたの投稿を作成します。",
                     child: NeumorphicIconButton(
@@ -234,7 +234,7 @@ class MapScreen extends LoadingGetView<MapController> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  CommonShowcaseWidget(
+                  commonShowcaseWidget(
                     key: controller.tutorialKey3,
                     description: "現在地に戻ります。",
                     child: FloatingActionButton.extended(

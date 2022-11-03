@@ -3,7 +3,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_near/src/screen/map/map_controller.dart';
 import 'package:getx_near/src/screen/map/map_service.dart';
 import 'package:getx_near/src/screen/map/slide_panel/main_slide_panel_controller.dart';
-import 'package:getx_near/src/screen/widget/Common_showcase.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/screen/widget/origin_carousel.dart';
@@ -11,6 +10,8 @@ import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:getx_near/src/utils/date_formate.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+import '../../widget/common_showcase.dart';
 
 class MainSlideUpPanel extends GetView<MainSlidePanelController> {
   const MainSlideUpPanel(this.mapController, {Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
           ),
           onPanelSlide: controller.mapController.mapService.changePanelPosition,
           panelBuilder: (sc) {
-            return CommonShowcaseWidget(
+            return commonShowcaseWidget(
               key: mapController.tutorialKey4,
               description: "近隣の投稿が表示されます。",
               child: Column(

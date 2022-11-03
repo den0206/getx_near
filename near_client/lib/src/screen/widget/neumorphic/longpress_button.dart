@@ -21,7 +21,7 @@ class LongNeumorphicButton extends StatefulWidget {
   final bool provideHapticFeedback;
   final String? tooltip;
 
-  LongNeumorphicButton({
+  const LongNeumorphicButton({
     Key? key,
     this.padding,
     this.margin = EdgeInsets.zero,
@@ -56,7 +56,7 @@ class _NeumorphicButtonState extends State<LongNeumorphicButton> {
     final appBarPresent = NeumorphicAppBarTheme.of(context) != null;
 
     final theme = NeumorphicTheme.currentTheme(context);
-    this.initialStyle = widget.style ??
+    initialStyle = widget.style ??
         (appBarPresent
             ? theme.appBarTheme.buttonStyle
             : (theme.buttonStyle ?? const NeumorphicStyle()));
@@ -186,7 +186,7 @@ class _NeumorphicButtonState extends State<LongNeumorphicButton> {
 
   double _getDepth() {
     if (widget.isEnabled) {
-      return this.depth;
+      return depth;
     } else {
       return 0;
     }
@@ -199,7 +199,7 @@ class _NeumorphicButtonState extends State<LongNeumorphicButton> {
           ? NeumorphicButton.PRESSED_SCALE
           : NeumorphicButton.UNPRESSED_SCALE;
     } else {
-      return this.pressed
+      return pressed
           ? NeumorphicButton.PRESSED_SCALE
           : NeumorphicButton.UNPRESSED_SCALE;
     }

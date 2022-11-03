@@ -37,18 +37,18 @@ class CustomDialog extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(10, 70, 10, 10),
+            padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
@@ -57,7 +57,7 @@ class CustomDialog extends StatelessWidget {
                     fontSize: 13.sp,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -66,27 +66,27 @@ class CustomDialog extends StatelessWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey,
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             color: Colors.white,
                           )),
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         "Cancel",
                       ),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: mainColor,
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             color: Colors.white,
                           )),
                       onPressed: () {
                         Navigator.pop(context);
                         onPress();
                       },
-                      child: Text(
+                      child: const Text(
                         "OK",
                       ),
                     ),
@@ -139,7 +139,7 @@ class CommentDialog extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 color: ConstsColor.mainBackColor,
                 borderRadius: BorderRadius.circular(pad),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black,
                     offset: Offset(0, 10),
@@ -157,12 +157,12 @@ class CommentDialog extends StatelessWidget {
               children: [
                 Text(
                   comment.user.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -171,7 +171,7 @@ class CommentDialog extends StatelessWidget {
                       Text.rich(
                         TextSpan(
                           children: [
-                            TextSpan(text: "※ "),
+                            const TextSpan(text: "※ "),
                             TextSpan(
                               text: "Your Comment",
                               style: TextStyle(
@@ -180,7 +180,7 @@ class CommentDialog extends StatelessWidget {
                               ),
                             )
                           ],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.w500,
                           ),
@@ -188,7 +188,7 @@ class CommentDialog extends StatelessWidget {
                         textAlign: TextAlign.end,
                       ),
                     ],
-                    Spacer(),
+                    const Spacer(),
                     if (comment.expireAt != null) ...[
                       CustomCountdownTimer(
                         endTime: comment.expireAt!,
@@ -200,10 +200,10 @@ class CommentDialog extends StatelessWidget {
                     ],
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     comment.text,
@@ -211,11 +211,11 @@ class CommentDialog extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 if (comment.distance != null) ...[
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Text(
                       "${comment.distance} m",
@@ -224,16 +224,16 @@ class CommentDialog extends StatelessWidget {
                       textAlign: TextAlign.right,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 22,
                   ),
                 ],
                 Row(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     if (!comment.isCurrent) ...[
                       NeumorphicIconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.message,
                         ),
                         onPressed: () {
@@ -245,7 +245,7 @@ class CommentDialog extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: NeumorphicIconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.person,
                         ),
                         onPressed: () {
@@ -255,12 +255,12 @@ class CommentDialog extends StatelessWidget {
                       ),
                     ),
                     NeumorphicIconButton(
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
                     ),
-                    Spacer(),
+                    const Spacer(),
                   ],
                 )
               ],
@@ -323,13 +323,13 @@ void showCommonDialog({
             CupertinoDialogAction(
               onPressed: () {
                 Navigator.of(context).pop();
-                if (backRoot && Navigator.canPop(context))
-                  // root　に戻す
+                if (backRoot && Navigator.canPop(context)) {
                   Navigator.popUntil(context, (route) => route.isFirst);
+                }
               },
-              child: Text(okAction != null ? 'キャンセル' : "OK"),
               isDefaultAction: false,
               isDestructiveAction: false,
+              child: Text(okAction != null ? 'キャンセル' : "OK"),
             ),
             if (okAction != null)
               CupertinoDialogAction(
@@ -337,9 +337,9 @@ void showCommonDialog({
                   okAction();
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
                 isDefaultAction: true,
                 isDestructiveAction: true,
+                child: const Text('OK'),
               )
           ],
         );
@@ -363,9 +363,9 @@ void showCommonDialog({
               child: Text(okAction != null ? 'キャンセル' : "OK"),
               onPressed: () {
                 Navigator.of(context).pop();
-                if (backRoot && Navigator.canPop(context))
-                  // root　に戻す
+                if (backRoot && Navigator.canPop(context)) {
                   Navigator.popUntil(context, (route) => route.isFirst);
+                }
               },
             ),
             if (okAction != null)

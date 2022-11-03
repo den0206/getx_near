@@ -38,19 +38,18 @@ abstract class LoadingGetView<T extends LoadingGetController>
   @override
   Widget build(BuildContext context) {
     if (!Get.isRegistered<T>()) {
-      print(" fenix is ${isFenix}");
+      print(" fenix is $isFenix");
       Get.lazyPut(() => ctr, fenix: isFenix);
     }
 
     return VisibilityDetector(
-      key: Key("${ctr}"),
+      key: Key("$ctr"),
       onVisibilityChanged: isForceDelete
           ? (visibilityInfo) {
               var visiblePercentage = visibilityInfo.visibleFraction * 100;
-              if (visiblePercentage == 0 && Get.isRegistered<T>())
+              if (visiblePercentage == 0 && Get.isRegistered<T>()) {
                 Get.delete<T>();
-
-              ;
+              }
             }
           : null,
       child: GestureDetector(
@@ -64,7 +63,7 @@ abstract class LoadingGetView<T extends LoadingGetController>
               child,
               if (controller.isLoading.value)
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color.fromRGBO(0, 0, 0, 0.6),
                   ),
                   child: PlainLoadingWidget(
@@ -95,11 +94,11 @@ class PlainLoadingWidget extends StatelessWidget {
           // CircularProgressIndicator(
           //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           // ),
-          WaveLoading(),
+          const WaveLoading(),
           SizedBox(
             height: padding,
           ),
-          Text(
+          const Text(
             "Loading...",
             style: TextStyle(
               color: Colors.white,
@@ -113,7 +112,7 @@ class PlainLoadingWidget extends StatelessWidget {
               height: padding,
             ),
             NeumorphicIconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.close,
               ),
               color: Colors.white.withOpacity(0.4),
@@ -137,7 +136,7 @@ class WaveLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpinKitWave(
+    return const SpinKitWave(
       color: Color(0xffffffff),
       size: 30,
     );
@@ -151,8 +150,8 @@ class LoadingCellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
       child: Center(
           child: CupertinoActivityIndicator(
         radius: 12.0,

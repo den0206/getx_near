@@ -8,8 +8,8 @@ import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/user.dart';
 import 'package:getx_near/src/screen/posts/post_detail/post_detail_controller.dart';
 import 'package:getx_near/src/screen/users/user_detail/user_detail_screen.dart';
-import 'package:getx_near/src/screen/widget/Common_showcase.dart';
 import 'package:getx_near/src/screen/widget/blinking_widget.dart';
+import 'package:getx_near/src/screen/widget/common_showcase.dart';
 import 'package:getx_near/src/screen/widget/countdown_timer.dart';
 import 'package:getx_near/src/screen/widget/custom_button.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
@@ -65,7 +65,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                       PoptPopMenu(post),
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: CommonShowcaseWidget(
+                        child: commonShowcaseWidget(
                           key: controller.tutorialKey4,
                           description: "ユーザーのプロフィール画面を表示します。",
                           child: CircleImageButton(
@@ -111,7 +111,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                             ] else ...[
                               const Spacer()
                             ],
-                            CommonShowcaseWidget(
+                            commonShowcaseWidget(
                               key: controller.tutorialKey5,
                               description: "投稿が削除される残り時間です。",
                               child: CustomCountdownTimer(
@@ -136,7 +136,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          CommonShowcaseWidget(
+                          commonShowcaseWidget(
                             key: controller.tutorialKey1,
                             description: "外部地図アプリでルート検索を行います。",
                             child: NeumorphicIconButton(
@@ -195,7 +195,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                               },
                             ),
                           ),
-                          CommonShowcaseWidget(
+                          commonShowcaseWidget(
                             key: controller.tutorialKey2,
                             description: "当投稿の緊急度を表しています。",
                             child: Container(
@@ -438,7 +438,7 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return CommonShowcaseWidget(
+    return commonShowcaseWidget(
       key: controller.tutorialKey3,
       description: "コメントをして助ける意思を伝えましょう!",
       child: Container(
@@ -447,9 +447,9 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
             color: ConstsColor.mainBackColor,
             border: const Border(top: BorderSide(color: Colors.grey))),
         child: ListTile(
-          title: BlinkingWidet(
-            duration: const Duration(seconds: 2),
-            child: const Text("Add Comment"),
+          title: const BlinkingWidet(
+            duration: Duration(seconds: 2),
+            child: Text("Add Comment"),
           ),
           leading: CircleImageButton(
             imageProvider: getUserImage(AuthService.to.currentUser.value!),
