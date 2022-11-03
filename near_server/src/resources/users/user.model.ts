@@ -1,14 +1,14 @@
-import {CommentModel, ReportModel} from './../../utils/database/models';
-import {prop, pre, index, Ref} from '@typegoose/typegoose';
+import {index, pre, prop, Ref} from '@typegoose/typegoose';
 import argon2 from 'argon2';
 import AWSClient from '../../utils/aws/aws_client';
 import {
   MessageModel,
   PostModel,
   RecentModel,
+  UserModel,
 } from '../../utils/database/models';
 import {Location} from '../../utils/interface/location';
-import {UserModel} from '../../utils/database/models';
+import {CommentModel, ReportModel} from './../../utils/database/models';
 
 @pre<User>('save', async function (next) {
   if (this.isModified('password') || this.isNew) {

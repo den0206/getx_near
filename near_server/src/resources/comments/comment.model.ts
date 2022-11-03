@@ -1,8 +1,8 @@
-import {prop, pre, Ref, index} from '@typegoose/typegoose';
+import {index, pre, prop, Ref} from '@typegoose/typegoose';
+import {PostModel} from '../../utils/database/models';
+import {Location} from '../../utils/interface/location';
 import {Post} from '../posts/post.model';
 import {User} from '../users/user.model';
-import {Location} from '../../utils/interface/location';
-import {PostModel} from '../../utils/database/models';
 
 @pre<Comment>('save', async function (next) {
   console.log('===== Relation Save');

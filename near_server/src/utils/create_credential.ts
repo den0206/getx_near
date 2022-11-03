@@ -1,5 +1,5 @@
-import * as fs from 'fs';
 import 'dotenv/config';
+import * as fs from 'fs';
 
 const CREDENTIAL_PATH = 'src/serviceAccountCredentials.json';
 

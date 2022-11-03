@@ -1,5 +1,5 @@
-import randomCirclePoint from './random_loc';
 import {UserModel} from '../../utils/database/models';
+import randomCirclePoint from './random_loc';
 
 function intR(max: number): number {
   return Math.floor(Math.random() * max);

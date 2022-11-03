@@ -1,7 +1,7 @@
 import {index, pre, prop, Ref} from '@typegoose/typegoose';
-import {User} from '../users/user.model';
 import {Message} from '../messages/message.model';
 import {Post} from '../posts/post.model';
+import {User} from '../users/user.model';
 @pre<Report>('save', async function (next) {
   // 一ヶ月後に削除
   var expire = new Date();

@@ -1,5 +1,5 @@
+import {DocumentType} from '@typegoose/typegoose';
 import {IModelOptions} from '@typegoose/typegoose/lib/types';
-import {DocumentType, modelOptions} from '@typegoose/typegoose';
 
 export function commoneSchemaOption<T>({
   useTimestamp = false,

@@ -1,8 +1,8 @@
-import nodemailer, {SendMailOptions} from 'nodemailer';
 import handlebars from 'handlebars';
+import nodemailer, {SendMailOptions} from 'nodemailer';
 
-import * as path from 'path';
 import * as fs from 'fs';
+import * as path from 'path';
 
 export default async function sendEmail({
   email,
