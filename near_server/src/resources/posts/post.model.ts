@@ -1,8 +1,8 @@
-import {prop, pre, Ref, index} from '@typegoose/typegoose';
-import {User} from '../users/user.model';
+import {index, pre, prop, Ref} from '@typegoose/typegoose';
+import {CommentModel} from '../../utils/database/models';
 import {Location} from '../../utils/interface/location';
 import {Comment} from '../comments/comment.model';
-import {CommentModel} from '../../utils/database/models';
+import {User} from '../users/user.model';
 
 @pre<Post>('remove', async function (next) {
   await CommentModel.deleteMany({postId: this._id});

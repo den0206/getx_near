@@ -1,9 +1,9 @@
 import {
+  DeleteObjectCommand,
+  DeleteObjectCommandInput,
   PutObjectCommand,
   PutObjectCommandInput,
   S3Client,
-  DeleteObjectCommand,
-  DeleteObjectCommandInput,
 } from '@aws-sdk/client-s3';
 
 class AWSClient {

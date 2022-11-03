@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import {string} from 'zod';
 
 export async function connectDB() {
   const {MONGO_USER, MONGO_PATH, MONGO_PASSWORD} = process.env;

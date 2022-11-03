@@ -1,8 +1,8 @@
 import http from 'http';
 import socket from 'socket.io';
 import {messageSocket} from './message_io';
-import {recentSocket} from './recent_io';
 import {postSocket} from './post_io';
+import {recentSocket} from './recent_io';
 
 export function connectIO(server: http.Server) {
   const local = process.env.LOCAL as string;
