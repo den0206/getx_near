@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HelpAnimatedWidet extends StatefulWidget {
-  HelpAnimatedWidet({Key? key}) : super(key: key);
+  const HelpAnimatedWidet({Key? key}) : super(key: key);
 
   @override
   State<HelpAnimatedWidet> createState() => _HelpAnimatedWidetState();
@@ -20,17 +20,18 @@ class _HelpAnimatedWidetState extends State<HelpAnimatedWidet>
     super.initState();
 
     controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
     opacityAnimation = Tween<double>(begin: 0.0, end: 0.4).animate(
         CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn));
     scaleAnimatoin =
         CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
     controller.addListener(() {
-      if (scaleAnimatoin.value > 0.15)
+      if (scaleAnimatoin.value > 0.15) {
         setState(() {
           showImage = true;
         });
+      }
     });
 
     controller.forward();
@@ -60,7 +61,7 @@ class _HelpAnimatedWidetState extends State<HelpAnimatedWidet>
 }
 
 class FadeinWidget extends StatefulWidget {
-  FadeinWidget({Key? key, required this.child, this.duration})
+  const FadeinWidget({Key? key, required this.child, this.duration})
       : super(key: key);
 
   final Widget child;
@@ -80,9 +81,7 @@ class _FadeinWidgetState extends State<FadeinWidget>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: widget.duration == null
-          ? Duration(milliseconds: 1000)
-          : widget.duration,
+      duration: widget.duration ?? const Duration(milliseconds: 1000),
     );
 
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
@@ -113,7 +112,7 @@ class _FadeinWidgetState extends State<FadeinWidget>
 }
 
 class FadeinOutWidget extends StatefulWidget {
-  FadeinOutWidget({Key? key, required this.child, this.duration})
+  const FadeinOutWidget({Key? key, required this.child, this.duration})
       : super(key: key);
 
   final Widget child;
@@ -133,9 +132,7 @@ class _FadeinOutWidgetState extends State<FadeinOutWidget>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: widget.duration == null
-          ? Duration(milliseconds: 600)
-          : widget.duration,
+      duration: widget.duration ?? const Duration(milliseconds: 600),
     );
 
     animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut);

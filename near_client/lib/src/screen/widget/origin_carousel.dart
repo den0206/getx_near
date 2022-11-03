@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 import '../../utils/neumorphic_style.dart';
 
 class OriginCarousel extends StatefulWidget {
-  OriginCarousel({
+  const OriginCarousel({
     Key? key,
     required this.pageController,
     required this.itemCount,

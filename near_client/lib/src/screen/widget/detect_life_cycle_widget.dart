@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DetectLifeCycleWidget extends StatefulWidget {
-  DetectLifeCycleWidget({
+  const DetectLifeCycleWidget({
     Key? key,
     required this.child,
     required this.onChangeState,
@@ -11,10 +11,10 @@ class DetectLifeCycleWidget extends StatefulWidget {
   final Function(AppLifecycleState state) onChangeState;
 
   @override
-  _DetectLifeCycleWidgetState createState() => _DetectLifeCycleWidgetState();
+  DetectLifeCycleWidgetState createState() => DetectLifeCycleWidgetState();
 }
 
-class _DetectLifeCycleWidgetState extends State<DetectLifeCycleWidget>
+class DetectLifeCycleWidgetState extends State<DetectLifeCycleWidget>
     with WidgetsBindingObserver {
   @override
   void initState() {

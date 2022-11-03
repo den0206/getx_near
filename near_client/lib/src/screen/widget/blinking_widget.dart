@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BlinkingWidet extends StatefulWidget {
-  BlinkingWidet(
+  const BlinkingWidet(
       {Key? key, required this.child, required this.duration, this.use = true})
       : super(key: key);
   final Widget child;
@@ -18,8 +18,8 @@ class _BlinkingWidetState extends State<BlinkingWidet>
 
   @override
   void initState() {
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
 
     _animationController.repeat(reverse: true);
 

@@ -30,5 +30,8 @@ linter:
     use_build_context_synchronously: false
     prefer_collection_literals: false
     depend_on_referenced_packages: false
+    library_private_types_in_public_api: false
+    library_prefixes: false
+    prefer_typing_uninitialized_variables: false
     # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

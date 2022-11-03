@@ -26,15 +26,15 @@ class NeumorphicIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NeumorphicButton(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       style: NeumorphicStyle(
-        boxShape: boxShape ?? NeumorphicBoxShape.circle(),
+        boxShape: boxShape ?? const NeumorphicBoxShape.circle(),
         color: color ?? ConstsColor.mainBackColor,
         depth: depth ?? 1,
         intensity: 2,
       ),
-      child: icon,
       onPressed: onPressed,
+      child: icon,
     );
   }
 }
@@ -121,9 +121,9 @@ class NeumorphicAvatarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       style: NeumorphicStyle(
-          boxShape: NeumorphicBoxShape.circle(),
+          boxShape: const NeumorphicBoxShape.circle(),
           color: ConstsColor.mainBackColor,
           shadowLightColor: Colors.black45
           // depth: NeumorphicTheme.embossDepth(context),
@@ -152,6 +152,7 @@ class NeumorphicTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      onPressed: onPressed,
       child: NeumorphicText(
         title,
         style: NeumorphicStyle(
@@ -162,7 +163,6 @@ class NeumorphicTextButton extends StatelessWidget {
         ),
         textStyle: NeumorphicTextStyle(fontWeight: FontWeight.bold),
       ),
-      onPressed: onPressed ?? null,
     );
   }
 }

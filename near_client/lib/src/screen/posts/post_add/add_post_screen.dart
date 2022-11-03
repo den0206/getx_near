@@ -35,9 +35,9 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("投稿"),
+                const Text("投稿"),
                 NeumorphicIconButton(
-                  icon: Icon(Icons.description),
+                  icon: const Icon(Icons.description),
                   onPressed: () {
                     controller.showTutorial(context);
                   },
@@ -46,12 +46,12 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
             ),
             actions: [
               Obx(
-                () => CommonShowcaseWidget(
+                () => commonShowcaseWidget(
                   key: controller.tutorialKey3,
                   description: "このボタンで投稿します。",
                   color: ConstsColor.mainGreenColor!.withOpacity(0.4),
                   child: NeumorphicIconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.send,
                       color: Colors.white,
                     ),
@@ -76,7 +76,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               )
             ],
@@ -85,7 +85,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -109,15 +109,15 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                         cursorColor: Colors.black,
                         maxLines: 10,
                         // maxLength: 200,
-                        style: TextStyle(fontSize: 17),
-                        decoration: InputDecoration(
+                        style: const TextStyle(fontSize: 17),
+                        decoration: const InputDecoration(
                           hintText: "You Doing",
                           focusColor: Colors.black,
                           border: null,
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.transparent)),
-                          contentPadding: const EdgeInsets.all(10),
+                          contentPadding: EdgeInsets.all(10),
                         ),
                         onChanged: controller.streamText,
                       ),
@@ -127,7 +127,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
               ],
             ),
           ),
-          bottomSheet: AbovePostField(),
+          bottomSheet: const AbovePostField(),
         );
       }),
     );
@@ -144,13 +144,13 @@ class AbovePostField extends GetView<AddPostController> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CommonShowcaseWidget(
+          commonShowcaseWidget(
             key: controller.tutorialKey2,
             description: "投稿が自動で削除される時間を設定できます。",
             color: ConstsColor.mainGreenColor!.withOpacity(0.4),
             child: Container(
               height: 10.h,
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
@@ -167,12 +167,13 @@ class AbovePostField extends GetView<AddPostController> {
                           () => NeumorphicRadio(
                             style: commonRatioStyle(
                                 selectedColor: ConstsColor.mainGreenColor),
-                            padding: EdgeInsets.all(12),
+                            padding: const EdgeInsets.all(12),
                             value: expire,
                             groupValue: controller.expireTime.value,
                             onChanged: (ExpireTime? expire) {
-                              if (expire != null)
+                              if (expire != null) {
                                 controller.expireTime.call(expire);
+                              }
                             },
                           ),
                         ),
@@ -187,7 +188,7 @@ class AbovePostField extends GetView<AddPostController> {
               ),
             ),
           ),
-          CommonShowcaseWidget(
+          commonShowcaseWidget(
             key: controller.tutorialKey1,
             description: "緊急度をスライダー形式で設定できます。",
             color: ConstsColor.mainGreenColor!.withOpacity(0.4),
@@ -201,7 +202,7 @@ class AbovePostField extends GetView<AddPostController> {
                   child: Obx(
                     () => Text(
                       "緊急度 ${controller.emergency.value} %",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -212,7 +213,7 @@ class AbovePostField extends GetView<AddPostController> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           )
         ],

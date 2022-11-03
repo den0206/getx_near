@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/model/post.dart';
@@ -54,19 +55,19 @@ class AlertIndicator extends StatelessWidget {
       alignment: AlignmentDirectional.center,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           height: height,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
               value: intValue / 100,
               valueColor: AlwaysStoppedAnimation<Color>(level.mainColor),
-              backgroundColor: Color(0xffD6D6D6),
+              backgroundColor: const Color(0xffD6D6D6),
             ),
           ),
         ),
         Text(
-          "${intValue} %",
+          "$intValue %",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -104,13 +105,14 @@ class HelpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NeumorphicButton(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       style: NeumorphicStyle(
-          boxShape: NeumorphicBoxShape.circle(),
+          boxShape: const NeumorphicBoxShape.circle(),
           color: ConstsColor.mainBackColor,
           depth: post.isLiked ? -2 : 0.6),
+      onPressed: onTap,
       child: BlinkingWidet(
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         use: !post.isLiked,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -139,7 +141,6 @@ class HelpButton extends StatelessWidget {
           ],
         ),
       ),
-      onPressed: onTap,
     );
   }
 }
@@ -167,13 +168,13 @@ class CustomSlider extends StatelessWidget {
                 enabledThumbRadius: trackHeight / 2,
                 disabledThumbRadius: 5,
                 elevation: 0),
-            trackShape: RoundSliderTrackShape()),
+            trackShape: const RoundSliderTrackShape()),
         child: Obx(() => Slider(
               value: rxValue.value,
               min: 0,
               max: 100.0,
               activeColor: level.mainColor,
-              inactiveColor: Color(0xFF8D8E98),
+              inactiveColor: const Color(0xFF8D8E98),
               onChanged: (double newValue) {
                 level = getAlert(newValue);
                 rxValue.call(newValue);

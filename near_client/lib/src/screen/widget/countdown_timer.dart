@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class CustomCountdownTimer extends StatefulWidget {
-  CustomCountdownTimer(
+  const CustomCountdownTimer(
       {Key? key, required this.endTime, this.onEnd, this.fontSize})
       : super(key: key);
 
@@ -21,7 +21,7 @@ class _CustomCountdownTimerState extends State<CustomCountdownTimer> {
   late int timeDiff;
   int days = 0, hours = 0, minutes = 0, seconds = 0;
 
-  final ts = TextStyle(color: Colors.black, fontSize: 12);
+  final ts = const TextStyle(color: Colors.black, fontSize: 12);
 
   @override
   void initState() {
@@ -37,10 +37,10 @@ class _CustomCountdownTimerState extends State<CustomCountdownTimer> {
 
   void startTimer() async {
     // 9時間差
-    final int nineHourSecounds = 32400;
+    const int nineHourSecounds = 32400;
     int timeDiff = widget.endTime.difference(DateTime.now()).inSeconds;
     if (timeDiff > nineHourSecounds) timeDiff -= nineHourSecounds;
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       timeDiff -= 1;
       if (timeDiff <= 0) {
         timer.cancel();
@@ -100,12 +100,12 @@ class CountDownLabel extends StatelessWidget {
         style: TextStyle(fontSize: fontSize ?? 15, fontWeight: FontWeight.bold),
         children: [
           TextSpan(
-              text: '$value',
-              style: TextStyle(
+              text: value,
+              style: const TextStyle(
                 decoration: TextDecoration.underline,
               )),
           TextSpan(
-            text: '$label',
+            text: label,
           ),
         ]));
   }

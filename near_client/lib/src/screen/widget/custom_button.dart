@@ -28,10 +28,17 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: height,
       width: width,
       child: NeumorphicButton(
+        onPressed: onPressed,
+        style: commonNeumorphic(
+          color: onPressed != null ? background : ConstsColor.mainBackColor,
+          lightSource: LightSource.bottomRight,
+          depth: 1.2,
+          shadowColor: shadowColor,
+        ),
         child: Center(
           child: Text(
             title,
@@ -41,13 +48,6 @@ class CustomButton extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-        onPressed: onPressed,
-        style: commonNeumorphic(
-          color: onPressed != null ? background : ConstsColor.mainBackColor,
-          lightSource: LightSource.bottomRight,
-          depth: 1.2,
-          shadowColor: shadowColor,
         ),
       ),
     );
@@ -83,12 +83,10 @@ class CircleImageButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: Colors.grey,
           image: DecorationImage(image: imageProvider, fit: fit),
-          border: border == null
-              ? Border.all(color: Colors.grey, width: 1)
-              : border,
+          border: border ?? Border.all(color: Colors.grey, width: 1),
           boxShadow: addShadow
               ? [
-                  BoxShadow(
+                  const BoxShadow(
                     offset: Offset(0, 5),
                     blurRadius: 15.0,
                     color: Colors.black12,
