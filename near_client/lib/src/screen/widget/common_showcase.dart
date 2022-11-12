@@ -31,8 +31,7 @@ Showcase commonShowcaseWidget(
     height: 50.h,
     width: 70.w,
     overlayColor: color ?? Colors.black45,
-    radius: const BorderRadius.all(Radius.circular(40)),
-    tipBorderRadius: const BorderRadius.all(Radius.circular(8)),
+    targetBorderRadius: const BorderRadius.all(Radius.circular(40)),
     child: child,
   );
 }
