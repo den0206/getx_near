@@ -67,6 +67,8 @@ class NotificationService extends GetxService {
   void onInit() async {
     super.onInit();
     listenForeground();
+
+    canBadge = await FlutterAppBadger.isAppBadgeSupported();
   }
 
   String get soundPath {
@@ -76,7 +78,6 @@ class NotificationService extends GetxService {
   }
 
   Future<void> requestPermission() async {
-    canBadge = await FlutterAppBadger.isAppBadgeSupported();
     channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
