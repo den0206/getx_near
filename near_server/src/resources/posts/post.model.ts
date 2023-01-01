@@ -5,7 +5,7 @@ import {Comment} from '../comments/comment.model';
 import {User} from '../users/user.model';
 
 @pre<Post>('remove', async function (next) {
-  await CommentModel.deleteMany({postId: this._id});
+  await CommentModel.deleteMany({postId: (await this)._id});
 
   console.log('=== POST DELETE RELATION');
   next();
