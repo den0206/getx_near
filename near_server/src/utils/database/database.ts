@@ -6,6 +6,7 @@ export async function connectDB() {
   // const dbUrl = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@cluster0.wybhe.mongodb.net/${MONGO_PATH}?retryWrites=true&w=majority`;
 
   try {
+    mongoose.set('strictQuery', true);
     await mongoose.connect(dbUrl);
     console.log('Success connect DB');
   } catch (e) {

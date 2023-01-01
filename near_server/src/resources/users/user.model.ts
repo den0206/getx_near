@@ -20,35 +20,35 @@ import {CommentModel, ReportModel} from './../../utils/database/models';
 })
 @pre<User>('remove', async function (next) {
   console.log('=== Start USER DELETE');
-  console.log('DELETE RELATION', this._id);
+  console.log('DELETE RELATION', (await this)._id);
 
   // Messageの削除
-  await MessageModel.deleteMany({userId: this._id});
+  await MessageModel.deleteMany({userId: (await this)._id});
 
   // Postの削除
-  await PostModel.deleteMany({userId: this._id});
+  await PostModel.deleteMany({userId: (await this)._id});
 
   // Recentの削除
-  await RecentModel.deleteMany({userId: this._id});
-  await RecentModel.deleteMany({withUserId: this._id});
+  await RecentModel.deleteMany({userId: (await this)._id});
+  await RecentModel.deleteMany({withUserId: (await this)._id});
 
   // Commentの削除
-  await CommentModel.deleteMany({userId: this._id});
+  await CommentModel.deleteMany({userId: (await this)._id});
 
   // Reportの削除
-  await ReportModel.deleteMany({reported: this._id});
+  await ReportModel.deleteMany({reported: (await this)._id});
 
   /// アバターの削除
-  if (this.avatarUrl) {
+  if ((await this).avatarUrl) {
     const awsClient = new AWSClient();
-    console.log('DELETE AVATAR RELATION', this._id);
-    await awsClient.deleteImage(this.avatarUrl);
+    console.log('DELETE AVATAR RELATION', (await this)._id);
+    await awsClient.deleteImage((await this).avatarUrl);
   }
 
   // blocksの削除
   await UserModel.updateMany(
-    {blocked: {$in: [this._id]}},
-    {$pull: {blocked: this._id}}
+    {blocked: {$in: [(await this)._id]}},
+    {$pull: {blocked: (await this)._id}}
   );
 
   next();
