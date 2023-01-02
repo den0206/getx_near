@@ -61,7 +61,7 @@ dependencies:
   connectivity_plus: ^3.0.2
   package_info_plus: ^1.4.2
   flutter_cache_manager: ^3.3.0
-  webview_flutter: ^3.0.4
+  webview_flutter: ^4.0.1
   flutter_lints: ^2.0.1
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
