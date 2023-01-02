@@ -22,13 +22,7 @@ class ContactScreen extends LoadingGetView<ContactController> {
       body: GetBuilder<ContactController>(
         builder: (controller) {
           return controller.connectionStatus
-              ? WebView(
-                  initialUrl: controller.contactURL,
-                  key: key,
-                  javascriptMode: JavascriptMode.unrestricted,
-                  onPageFinished: (_) {},
-                  onPageStarted: (_) {},
-                )
+              ? WebViewWidget(controller: controller.webViewController)
               : const Center(
                   child: Text("No Internet connection"),
                 );
