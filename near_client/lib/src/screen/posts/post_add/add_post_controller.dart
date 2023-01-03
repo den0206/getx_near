@@ -6,6 +6,7 @@ import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/screen/widget/common_showcase.dart';
+import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
 import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/service/auth_service.dart';
@@ -112,7 +113,7 @@ class AddPostController extends LoadingGetController {
         position: SnackPosition.TOP,
       );
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       isLoading.call(false);
     }
