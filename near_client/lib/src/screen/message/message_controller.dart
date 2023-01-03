@@ -52,11 +52,13 @@ class MessageController extends LoadingGetController {
   }
 
   Future<void> _scrollToBottom() async {
-    await sc.animateTo(
-      sc.position.minScrollExtent,
-      duration: 100.milliseconds,
-      curve: Curves.easeIn,
-    );
+    if (sc.hasClients) {
+      await sc.animateTo(
+        sc.position.minScrollExtent,
+        duration: 100.milliseconds,
+        curve: Curves.easeIn,
+      );
+    }
   }
 
   Future<void> loadMessages() async {
