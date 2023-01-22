@@ -17,7 +17,7 @@ dependencies:
   geocoding: ^2.0.5
   get: ^4.6.5
   flutter_config: ^2.0.0
-  google_maps_flutter: ^2.2.2
+  google_maps_flutter: ^2.2.3
   http: ^0.13.5
   flutter_dotenv: ^5.0.2
   sliding_up_panel: ^2.0.0+1
@@ -43,8 +43,8 @@ dependencies:
   flutter_neumorphic: ^3.2.0
   just_audio: ^0.9.31
   safe_device: ^1.1.2
-  wechat_assets_picker: ^8.3.1
-  mime: ^1.0.3
+  wechat_assets_picker: ^8.3.1+1
+  mime: ^1.0.4
   map_launcher: ^2.4.0
   flutter_svg: ^0.22.0
   flutter_launcher_icons: ^0.11.0
@@ -55,13 +55,13 @@ dependencies:
   pin_code_fields: ^7.4.0
   flutter_markdown: ^0.6.13
   flutter_sliding_tutorial: ^2.0.0+1
-  lottie: ^2.1.0
+  lottie: ^2.2.0
   flutter_app_badger: ^1.5.0
   showcaseview: ^2.0.0+1
   connectivity_plus: ^3.0.2
   package_info_plus: ^1.4.2
   flutter_cache_manager: ^3.3.0
-  webview_flutter: ^4.0.1
+  webview_flutter: ^4.0.2
   flutter_lints: ^2.0.1
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
