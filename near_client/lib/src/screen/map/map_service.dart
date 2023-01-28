@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_near/src/model/post.dart';
 import 'package:getx_near/src/model/utils/visible_region.dart';
+import 'package:getx_near/src/screen/widget/marker_icon.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:marker_icon/marker_icon.dart';
 import 'package:sizer/sizer.dart';
 
 final double panelMinHeight = 10.h;
