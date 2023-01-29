@@ -1,0 +1,7 @@
+{
+  "FLAVOR": "stg",
+  "appId": "com.yuuki.help",
+  "appIdSuffix": "",
+  "appName": "stg-help",
+  "bundleIdentifier": "com.yuuki.help"
+}

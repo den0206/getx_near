@@ -5,19 +5,19 @@
       "name": "Run dev",
       "request": "launch",
       "type": "dart",
-      "args": ["--dart-define=FLAVOR=dev"]
+      "args": ["--dart-define-from-file=flavor/dev.json"]
     },
     {
       "name": "Run stg",
       "request": "launch",
       "type": "dart",
-      "args": ["--dart-define=FLAVOR=stg"]
+      "args": ["--dart-define-from-file=flavor/stg.json"]
     },
     {
       "name": "Run prod",
       "request": "launch",
       "type": "dart",
-      "args": ["--dart-define=FLAVOR=prod"]
+      "args": ["--dart-define-from-file=flavor/prod.json"]
     }
   ]
 }

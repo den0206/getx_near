@@ -1,0 +1,7 @@
+{
+  "FLAVOR": "dev",
+  "appId": "com.yuuki.help",
+  "appIdSuffix": "",
+  "appName": "dev-help",
+  "bundleIdentifier": "com.yuuki.help"
+}
