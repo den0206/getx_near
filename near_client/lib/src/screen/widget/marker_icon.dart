@@ -21,21 +21,22 @@ class MarkerIcon {
     String svgString =
         await DefaultAssetBundle.of(context).loadString(assetName);
     // Create DrawableRoot from SVG String
-    DrawableRoot svgDrawableRoot =
-        await svg.fromSvgString(svgString, svgString);
+
     // toPicture() and toImage() don't seem to be pixel ratio aware, so we calculate the actual sizes here
     double devicePixelRatio = mediaQuery.devicePixelRatio;
     double width =
         size * devicePixelRatio; // where 32 is your SVG's original width
     double height = size * devicePixelRatio; // same thing
-    // Convert to ui.Picture
-    ui.Picture picture = svgDrawableRoot.toPicture(size: Size(width, height));
-    // Convert to ui.Image. toImage() takes width and height as parameters
-    // you need to find the best size to suit your needs and take into account the
-    // screen DPI
-    ui.Image image = await picture.toImage(width.toInt(), height.toInt());
-    ByteData? bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-    return BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
+
+    final svgPicture = SvgPicture.string(
+      svgString,
+      width: width,
+      height: height,
+    );
+
+    final bytes = await svgPicture.bytesLoader.loadBytes(context);
+
+    return BitmapDescriptor.fromBytes(bytes.buffer.asUint8List());
   }
 
   static Future<BitmapDescriptor> pictureAsset({
