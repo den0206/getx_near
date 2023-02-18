@@ -10,9 +10,9 @@ export function connectIO(server: http.Server) {
 
   const io = new socket.Server(server, {cors: {origin: [local, lc]}});
 
-  var recentIO = io.of('/recents');
-  var messageIO = io.of('/message');
-  var postIO = io.of('/post');
+  const recentIO = io.of('/recents');
+  const messageIO = io.of('/message');
+  const postIO = io.of('/post');
 
   recentSocket(recentIO);
   messageSocket(messageIO, recentIO);

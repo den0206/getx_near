@@ -111,15 +111,11 @@ async function generateNumberAndToken(tempId: string) {
 }
 
 async function checkValid(tempId: string, verify: string) {
-  try {
-    const currentToken = await TempTokenModel.findOne({tempId});
-    if (!currentToken) throw new ExpireResetTokenError();
-    const isValid = await currentToken.compareToken(verify);
-    if (!isValid) throw new ExpireResetTokenError();
-    return currentToken;
-  } catch (e) {
-    throw e;
-  }
+  const currentToken = await TempTokenModel.findOne({tempId});
+  if (!currentToken) throw new ExpireResetTokenError();
+  const isValid = await currentToken.compareToken(verify);
+  if (!isValid) throw new ExpireResetTokenError();
+  return currentToken;
 }
 
 export default {

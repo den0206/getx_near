@@ -24,7 +24,7 @@ async function sendNotification(req: Request, res: Response) {
         clickAction: 'FLUTTER_NOTIFICATION_CLICK',
       },
     };
-    if (badge !== null) payload.data!.badge = badge.toString();
+    if (badge !== null && payload.data) payload.data.badge = badge.toString();
 
     const option: MessagingOptions = {
       // Required for background/terminated app state messages on iOS

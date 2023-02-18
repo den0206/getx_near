@@ -14,7 +14,7 @@ async function makeDummyPosts(req: Request, res: Response) {
   try {
     const result = [...Array(randomNum)].map((_, i) => {
       const dummyUser = randomGenerator.dummyUser(i);
-      var expireAt = new Date();
+      const expireAt = new Date();
       expireAt.setHours(expireAt.getHours() + 3);
 
       const loc = randomGenerator.locationR(lat, lng, radius);
@@ -87,10 +87,10 @@ async function makeDummyMyPosts(req: Request, res: Response) {
     });
 
     const postLength = randomGenerator.intR(30);
-    var expireAt = new Date();
+    const expireAt = new Date();
     expireAt.setHours(expireAt.getHours() + 3);
 
-    let posts = [...Array(postLength)].map((_, i) => {
+    const posts = [...Array(postLength)].map(() => {
       const loc = randomGenerator.locationR(lat, lng, radius);
       const {longitude, latitude} = loc;
       const newPost = new PostModel({
@@ -109,7 +109,7 @@ async function makeDummyMyPosts(req: Request, res: Response) {
 
       /// dummy Comment
       const commentLength = randomGenerator.intR(20);
-      const comments = [...Array(commentLength)].map((_, id) => {
+      const comments = [...Array(commentLength)].map(() => {
         const commentLoc = randomGenerator.locationR(
           latitude,
           longitude,

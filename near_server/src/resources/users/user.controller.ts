@@ -18,7 +18,7 @@ async function signUp(req: Request<{}, {}, SignUpBody>, res: Response) {
   if (isFind) throw new AlreadyUseEmailError();
 
   try {
-    let user = new UserModel({name, email, sex, password, createdAt});
+    const user = new UserModel({name, email, sex, password, createdAt});
 
     if (file) {
       const awsClient = new AWSClient();
