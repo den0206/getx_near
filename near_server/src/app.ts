@@ -15,6 +15,7 @@ import usersRoute from './resources/users/user.route';
 import * as serviceAccount from './serviceAccountCredentials.json';
 import {connectDB} from './utils/database/database';
 import {connectIO} from './utils/socket/socket';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const get = require('simple-get');
 
 class App {
@@ -88,7 +89,7 @@ class App {
     if (url) {
       console.log('Set Schedule');
       nodeSchedule.scheduleJob('01,16,25,41,50 * * * *', function () {
-        get.concat(url, function (err: any, res: {statusCode: any}, data: any) {
+        get.concat(url, function (err: any, res: {statusCode: any}) {
           if (err) throw err;
           console.log(res.statusCode);
         });

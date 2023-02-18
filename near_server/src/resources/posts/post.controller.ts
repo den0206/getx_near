@@ -138,11 +138,11 @@ async function addLike(req: Request, res: Response) {
 
     if (!getLikes) throw new NotFoundUserError();
 
-    var {likes} = getLikes;
+    let {likes} = getLikes;
     console.log(likes);
 
     if (likes.includes(userId)) {
-      likes = likes.filter((id) => id!.toString() !== userId);
+      likes = likes.filter((id) => id.toString() !== userId);
     } else {
       likes.push(userId);
     }

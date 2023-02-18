@@ -6,19 +6,19 @@ import {User} from '../users/user.model';
 
 @pre<Comment>('save', async function (next) {
   console.log('===== Relation Save');
-  var findPostArray = await PostModel.findById(
+  const findPostArray = await PostModel.findById(
     this.postId,
     'userId comments expireAt'
   );
 
   if (!findPostArray) {
-    var expire = new Date();
+    const expire = new Date();
     expire.setHours(expire.getHours() + 3);
     this.expireAt = expire;
     return next();
   }
 
-  var {comments, expireAt} = findPostArray;
+  const {comments, expireAt} = findPostArray;
 
   // // utc to iso
   // let isoString = expireAt.toISOString();

@@ -4,7 +4,7 @@ import {Post} from '../posts/post.model';
 import {User} from '../users/user.model';
 @pre<Report>('save', async function (next) {
   // 一ヶ月後に削除
-  var expire = new Date();
+  const expire = new Date();
   expire.setMonth(expire.getMonth() + 1);
   this.expireAt = expire;
 

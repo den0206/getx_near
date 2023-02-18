@@ -6,6 +6,7 @@ const CREDENTIAL_PATH = 'src/serviceAccountCredentials.json';
 // 暗号化 base64 serviceAccountCredentials.json > encode-credential.txt
 function createCredential() {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const credentialFile = fs.readFileSync(CREDENTIAL_PATH);
     console.log('Credential_fileは既にあります');
     return;
