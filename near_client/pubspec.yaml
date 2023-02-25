@@ -45,9 +45,9 @@ dependencies:
   wechat_assets_picker: ^8.4.0
   mime: ^1.0.4
   map_launcher: ^2.5.0+1
-  flutter_svg: ^2.0.1
-  flutter_launcher_icons: ^0.11.0
-  flutter_native_splash: ^2.2.0+1
+  flutter_svg: ^2.0.2
+  flutter_launcher_icons: ^0.12.0
+  flutter_native_splash: ^2.2.18
   visibility_detector: ^0.3.3
   flutter_localizations:
     sdk: flutter
