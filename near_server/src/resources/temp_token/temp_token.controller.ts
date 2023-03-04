@@ -59,7 +59,7 @@ async function requestPassword(req: Request, res: Response) {
     const isFind = await UserModel.findOne({email});
     if (!isFind) throw new NotFoundEmailError();
 
-    const genetateNumber = await generateNumberAndToken(isFind._id);
+    const genetateNumber = await generateNumberAndToken(isFind._id.toString());
     const payload = {id: isFind.name, otp: genetateNumber};
     await sendEmail({
       email: email,
