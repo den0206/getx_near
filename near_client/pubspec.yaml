@@ -40,7 +40,7 @@ dependencies:
   location: ^4.4.0
   permission_handler: ^10.2.0
   flutter_neumorphic: ^3.2.0
-  just_audio: ^0.9.31
+  just_audio: ^0.9.32
   safe_device: ^1.1.2
   wechat_assets_picker: ^8.4.0
   mime: ^1.0.4
@@ -60,7 +60,7 @@ dependencies:
   connectivity_plus: ^3.0.3
   package_info_plus: ^3.0.3
   flutter_cache_manager: ^3.3.0
-  webview_flutter: ^4.0.6
+  webview_flutter: ^4.0.7
   flutter_lints: ^2.0.1
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
