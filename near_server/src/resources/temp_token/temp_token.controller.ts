@@ -92,7 +92,7 @@ async function verifyPassword(req: Request, res: Response) {
       payload: {name: newUser.name},
       template: '../email/template/verifyPassword.handlebars',
     });
-    await passwordResetToken.delete();
+    await passwordResetToken.deleteOne();
     new ResponseAPI(res, {data: newUser}).excute(200);
   } catch (e) {
     commonErrorHandler(res, e);

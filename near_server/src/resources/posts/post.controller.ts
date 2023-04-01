@@ -168,8 +168,9 @@ async function deletePost(req: Request, res: Response) {
   if (!findPost || findPost.userId != userId) throw new NotDeletePostError();
 
   try {
+    console.log('CALLL');
     /// delete with pre reletaion
-    await findPost.delete();
+    await findPost.deleteOne();
 
     console.log('=== Complete DELETE');
     new ResponseAPI(res, {data: findPost}).excute(200);
