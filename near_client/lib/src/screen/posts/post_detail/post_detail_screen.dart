@@ -325,7 +325,10 @@ class PoptPopMenu extends GetView<PostDetailController> {
             return;
         }
       },
-      icon: const Icon(Icons.more_vert),
+      icon: const Icon(
+        Icons.more_vert,
+        color: Colors.black,
+      ),
       itemBuilder: (context) {
         return <PopupMenuEntry<String>>[
           if (post.isCurrent)
