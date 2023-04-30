@@ -4,12 +4,16 @@ import {Location} from '../../utils/interface/location';
 import {Comment} from '../comments/comment.model';
 import {User} from '../users/user.model';
 
-@pre<Post>('remove', async function (next) {
-  await CommentModel.deleteMany({postId: (await this)._id});
+@pre<Post>(
+  'deleteOne',
+  async function (next) {
+    await CommentModel.deleteMany({postId: (await this)._id});
 
-  console.log('=== POST DELETE RELATION');
-  next();
-})
+    console.log('=== POST DELETE RELATION');
+    next();
+  },
+  {document: true, query: true}
+)
 @index({location: '2dsphere'})
 @index({expireAt: 1}, {expireAfterSeconds: 0})
 export class Post {
