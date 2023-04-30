@@ -18,41 +18,45 @@ import {CommentModel, ReportModel} from './../../utils/database/models';
   }
   return next();
 })
-@pre<User>('remove', async function (next) {
-  console.log('=== Start USER DELETE');
-  console.log('DELETE RELATION', (await this)._id);
+@pre<User>(
+  'deleteOne',
+  async function (next) {
+    console.log('=== Start USER DELETE');
+    console.log('DELETE RELATION', (await this)._id);
 
-  // Messageの削除
-  await MessageModel.deleteMany({userId: (await this)._id});
+    // Messageの削除
+    await MessageModel.deleteMany({userId: (await this)._id});
 
-  // Postの削除
-  await PostModel.deleteMany({userId: (await this)._id});
+    // Postの削除
+    await PostModel.deleteMany({userId: (await this)._id});
 
-  // Recentの削除
-  await RecentModel.deleteMany({userId: (await this)._id});
-  await RecentModel.deleteMany({withUserId: (await this)._id});
+    // Recentの削除
+    await RecentModel.deleteMany({userId: (await this)._id});
+    await RecentModel.deleteMany({withUserId: (await this)._id});
 
-  // Commentの削除
-  await CommentModel.deleteMany({userId: (await this)._id});
+    // Commentの削除
+    await CommentModel.deleteMany({userId: (await this)._id});
 
-  // Reportの削除
-  await ReportModel.deleteMany({reported: (await this)._id});
+    // Reportの削除
+    await ReportModel.deleteMany({reported: (await this)._id});
 
-  /// アバターの削除
-  if ((await this).avatarUrl) {
-    const awsClient = new AWSClient();
-    console.log('DELETE AVATAR RELATION', (await this)._id);
-    await awsClient.deleteImage((await this).avatarUrl);
-  }
+    /// アバターの削除
+    if ((await this).avatarUrl) {
+      const awsClient = new AWSClient();
+      console.log('DELETE AVATAR RELATION', (await this)._id);
+      await awsClient.deleteImage((await this).avatarUrl);
+    }
 
-  // blocksの削除
-  await UserModel.updateMany(
-    {blocked: {$in: [(await this)._id]}},
-    {$pull: {blocked: (await this)._id}}
-  );
+    // blocksの削除
+    await UserModel.updateMany(
+      {blocked: {$in: [(await this)._id]}},
+      {$pull: {blocked: (await this)._id}}
+    );
 
-  next();
-})
+    next();
+  },
+  {document: true, query: true}
+)
 @index({location: '2dsphere'})
 export class User {
   @prop({required: true, maxlength: 20})
