@@ -17,10 +17,12 @@ class ImageExtention {
 
     final File? temp = await result.first.file;
     final compressed = await _compressImage(temp);
-    return compressed;
+    if (compressed == null) throw Exception("Can't Compress");
+    final convertFile = File(compressed.path);
+    return convertFile;
   }
 
-  static Future<File?> _compressImage(File? file) async {
+  static Future<XFile?> _compressImage(File? file) async {
     if (file == null) return null;
     final filePath = file.absolute.path;
     final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
