@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.0 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -24,24 +24,27 @@ dependencies:
   sizer: ^2.0.15
   flutter_spinkit: ^5.2.0
   auto_size_text_field: ^2.2.1
-  shared_preferences: ^2.1.0
+  shared_preferences: ^2.1.1
   auto_size_text: ^3.0.0
   liquid_progress_indicator: ^0.4.0
   socket_io_client: ^2.0.0-beta.3-nullsafety.0
   intl: any
   device_preview: ^1.1.0
   flutter_slidable: ^3.0.0
-  path_provider: ^2.0.14
-  flutter_image_compress: ^2.0.0
-  firebase_core: ^2.11.0
-  firebase_messaging: ^14.5.0
-  flutter_local_notifications: ^14.0.0+1
+  path_provider: ^2.0.15
+  flutter_image_compress: ^2.0.3
+  firebase_core: ^2.12.0
+  firebase_messaging: ^14.6.0
+  flutter_local_notifications: ^14.0.0+2
   location: ^4.4.0
   permission_handler: ^10.2.0
-  flutter_neumorphic: ^3.2.0
+  flutter_neumorphic: 
+    git:
+      url: https://github.com/den0206/Flutter-Neumorphic.git
+      ref: feature/remoce_accentcolor
   just_audio: ^0.9.32
   safe_device: ^1.1.2
-  wechat_assets_picker: ^8.4.2
+  wechat_assets_picker: ^8.5.0
   mime: ^1.0.4
   map_launcher: ^2.5.0+1
   flutter_svg: ^2.0.5
@@ -56,8 +59,8 @@ dependencies:
   lottie: ^2.3.2
   flutter_app_badger: ^1.5.0
   showcaseview: ^2.0.3
-  connectivity_plus: ^3.0.6
-  package_info_plus: ^3.1.2
+  connectivity_plus: ^4.0.0
+  package_info_plus: ^4.0.0
   flutter_cache_manager: ^3.3.0
   webview_flutter: ^4.2.0
   flutter_lints: ^2.0.1
