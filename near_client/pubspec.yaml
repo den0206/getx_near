@@ -33,23 +33,23 @@ dependencies:
   flutter_slidable: ^3.0.0
   path_provider: ^2.0.15
   flutter_image_compress: ^2.0.3
-  firebase_core: ^2.12.0
-  firebase_messaging: ^14.6.0
-  flutter_local_notifications: ^14.0.0+2
+  firebase_core: ^2.13.0
+  firebase_messaging: ^14.6.1
+  flutter_local_notifications: ^14.0.1
   location: ^4.4.0
   permission_handler: ^10.2.0
   flutter_neumorphic: 
     git:
       url: https://github.com/den0206/Flutter-Neumorphic.git
       ref: feature/remoce_accentcolor
-  just_audio: ^0.9.32
-  safe_device: ^1.1.2
+  just_audio: ^0.9.33
+  safe_device: ^1.1.4
   wechat_assets_picker: ^8.5.0
   mime: ^1.0.4
   map_launcher: ^2.5.0+1
-  flutter_svg: ^2.0.5
+  flutter_svg: ^2.0.6
   flutter_launcher_icons: ^0.13.1
-  flutter_native_splash: ^2.2.19
+  flutter_native_splash: ^2.3.0
   visibility_detector: ^0.4.0+2
   flutter_localizations:
     sdk: flutter
@@ -59,8 +59,8 @@ dependencies:
   lottie: ^2.3.2
   flutter_app_badger: ^1.5.0
   showcaseview: ^2.0.3
-  connectivity_plus: ^4.0.0
-  package_info_plus: ^4.0.0
+  connectivity_plus: ^4.0.1
+  package_info_plus: ^4.0.1
   flutter_cache_manager: ^3.3.0
   webview_flutter: ^4.2.0
   flutter_lints: ^2.0.1
