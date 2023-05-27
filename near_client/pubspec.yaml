@@ -17,7 +17,7 @@ dependencies:
   geocoding: ^2.1.0
   get: ^4.6.5
   flutter_config: ^2.0.0
-  google_maps_flutter: ^2.2.6
+  google_maps_flutter: ^2.2.8
   http: ^0.13.6
   flutter_dotenv: ^5.0.2
   sliding_up_panel: ^2.0.0+1
@@ -35,7 +35,7 @@ dependencies:
   flutter_image_compress: ^2.0.3
   firebase_core: ^2.13.0
   firebase_messaging: ^14.6.1
-  flutter_local_notifications: ^14.0.1
+  flutter_local_notifications: ^14.1.0
   location: ^4.4.0
   permission_handler: ^10.2.0
   flutter_neumorphic: 
@@ -62,7 +62,7 @@ dependencies:
   connectivity_plus: ^4.0.1
   package_info_plus: ^4.0.1
   flutter_cache_manager: ^3.3.0
-  webview_flutter: ^4.2.0
+  webview_flutter: ^4.2.1
   flutter_lints: ^2.0.1
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
