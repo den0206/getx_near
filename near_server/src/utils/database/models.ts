@@ -8,29 +8,23 @@ import {Report} from '../../resources/report/report.model';
 import {TempToken} from '../../resources/temp_token/temp_token.model';
 import {User} from '../../resources/users/user.model';
 
-export const UserModel = getModelForClass(User, commoneSchemaOption<User>({}));
+export const UserModel = getModelForClass(User, commoneSchemaOption({}));
 
-export const PostModel = getModelForClass(Post, commoneSchemaOption<Post>({}));
+export const PostModel = getModelForClass(Post, commoneSchemaOption({}));
 export const CommentModel = getModelForClass(
   Comment,
-  commoneSchemaOption<Comment>({useTimestamp: true})
+  commoneSchemaOption({useTimestamp: true})
 );
 
-export const MessageModel = getModelForClass(
-  Message,
-  commoneSchemaOption<Message>({})
-);
+export const MessageModel = getModelForClass(Message, commoneSchemaOption({}));
 
 export const RecentModel = getModelForClass(
   Recent,
-  commoneSchemaOption<Recent>({useTimestamp: true})
+  commoneSchemaOption({useTimestamp: true})
 );
 export const TempTokenModel = getModelForClass(
   TempToken,
-  commoneSchemaOption<TempToken>({})
+  commoneSchemaOption({})
 );
 
-export const ReportModel = getModelForClass(
-  Report,
-  commoneSchemaOption<Report>({})
-);
+export const ReportModel = getModelForClass(Report, commoneSchemaOption({}));
