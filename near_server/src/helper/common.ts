@@ -1,7 +1,6 @@
-import {DocumentType} from '@typegoose/typegoose';
 import {IModelOptions} from '@typegoose/typegoose/lib/types';
 
-export function commoneSchemaOption<T>({
+export function commoneSchemaOption({
   useTimestamp = false,
 }: {
   useTimestamp?: boolean;
@@ -9,12 +8,18 @@ export function commoneSchemaOption<T>({
   return {
     schemaOptions: {
       toJSON: {
-        transform: (doc: DocumentType<T>, ret) => {
-          delete ret.__v;
+        transform: function (_, ret) {
+          // replace _id to id
           ret.id = ret._id;
+
+          // remove _id & __v
           delete ret._id;
+          delete ret.__v;
         },
+        versionKey: false,
       },
+      // _vをつけない様にする
+      versionKey: false,
       timestamps: useTimestamp || false,
     },
   };
