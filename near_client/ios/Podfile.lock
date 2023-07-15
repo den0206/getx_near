@@ -5,30 +5,30 @@ PODS:
     - Flutter
     - ReachabilitySwift
   - DTTJailbreakDetection (0.4.0)
-  - Firebase/CoreOnly (10.10.0):
-    - FirebaseCore (= 10.10.0)
-  - Firebase/Messaging (10.10.0):
+  - Firebase/CoreOnly (10.12.0):
+    - FirebaseCore (= 10.12.0)
+  - Firebase/Messaging (10.12.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (~> 10.10.0)
-  - firebase_core (2.14.0):
-    - Firebase/CoreOnly (= 10.10.0)
+    - FirebaseMessaging (~> 10.12.0)
+  - firebase_core (2.15.0):
+    - Firebase/CoreOnly (= 10.12.0)
     - Flutter
-  - firebase_messaging (14.6.4):
-    - Firebase/Messaging (= 10.10.0)
+  - firebase_messaging (14.6.5):
+    - Firebase/Messaging (= 10.12.0)
     - firebase_core
     - Flutter
-  - FirebaseCore (10.10.0):
+  - FirebaseCore (10.12.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.11.0):
+  - FirebaseCoreInternal (10.12.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseInstallations (10.11.0):
+  - FirebaseInstallations (10.12.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseMessaging (10.10.0):
+  - FirebaseMessaging (10.12.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
     - GoogleDataTransport (~> 9.2)
@@ -125,12 +125,12 @@ PODS:
   - safe_device (1.0.0):
     - DTTJailbreakDetection
     - Flutter
-  - SDWebImage (5.16.0):
-    - SDWebImage/Core (= 5.16.0)
-  - SDWebImage/Core (5.16.0)
-  - SDWebImageWebPCoder (0.12.0):
+  - SDWebImage (5.17.0):
+    - SDWebImage/Core (= 5.17.0)
+  - SDWebImage/Core (5.17.0)
+  - SDWebImageWebPCoder (0.13.0):
     - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.16)
+    - SDWebImage/Core (~> 5.17)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -245,13 +245,13 @@ SPEC CHECKSUMS:
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
-  Firebase: facd334e557a979bd03a0b58d90fd56b52b8aba0
-  firebase_core: 85b6664038311940ad60584eaabc73103c61f5de
-  firebase_messaging: c55f70dd48a998dea00a29ccf94572e1e4d454b2
-  FirebaseCore: d027ff503d37edb78db98429b11f580a24a7df2a
-  FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
-  FirebaseInstallations: 2a2c6859354cbec0a228a863d4daf6de7c74ced4
-  FirebaseMessaging: 8a3b9a8b98ce72a42d22e69865cf662e38d2d6f5
+  Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
+  firebase_core: e477125798fc37cd4ab43ca6a8536bf7e0929c00
+  firebase_messaging: 334d68c3a36b6d4d5cd91e4f42509e0d4ae49828
+  FirebaseCore: f86a1394906b97ac445ae49c92552a9425831bed
+  FirebaseCoreInternal: 950500ad8a08963657f6d8c67b579740c06d6aa1
+  FirebaseInstallations: 7b99ef103f013624444c614397038219c45f8e63
+  FirebaseMessaging: bb2c4f6422a753038fe137d90ae7c1af57251316
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_app_badger: b87fc231847b03b92ce1412aa351842e7e97932f
   flutter_config: 2226c1df19c78fe34a05eb7f1363445f18e76fc1
@@ -278,8 +278,8 @@ SPEC CHECKSUMS:
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   safe_device: 4539eb6bdbeb4b61a763a51c4e73e6b37dea4e3d
-  SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
-  SDWebImageWebPCoder: f0f287cee4cd96a59937fbf3c77a8cfda9ba67b0
+  SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
+  SDWebImageWebPCoder: af09429398d99d524cae2fe00f6f0f6e491ed102
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
