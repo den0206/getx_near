@@ -36,7 +36,7 @@ class CustomTextField extends StatelessWidget {
     return Neumorphic(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
       style: commonNeumorphic(
-        depth: -10,
+        depth: 3,
         shadowLightColorEmboss: ConstsColor.mainBackColor,
         boxShape: const NeumorphicBoxShape.stadium(),
       ),
