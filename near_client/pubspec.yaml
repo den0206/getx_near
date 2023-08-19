@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.5
-  geolocator: ^9.0.2
+  geolocator: ^10.0.0
   geocoding: ^2.1.0
   get: ^4.6.5
   flutter_config: ^2.0.2
@@ -33,10 +33,10 @@ dependencies:
   flutter_slidable: ^3.0.0
   path_provider: ^2.1.0
   flutter_image_compress: ^2.0.4
-  firebase_core: ^2.15.0
-  firebase_messaging: ^14.6.5
+  firebase_core: ^2.15.1
+  firebase_messaging: ^14.6.6
   flutter_local_notifications: ^15.1.0+1
-  location: ^5.0.2+1
+  location: ^5.0.3
   permission_handler: ^10.4.3
   flutter_neumorphic: 
     git:
@@ -45,17 +45,17 @@ dependencies:
   flutter_cache_manager: ^3.3.1
   just_audio: ^0.9.34
   safe_device: ^1.1.4
-  wechat_assets_picker: ^8.6.2
+  wechat_assets_picker: ^8.7.0
   mime: ^1.0.4
   map_launcher: ^2.5.0+1
   flutter_svg: ^2.0.7
   flutter_launcher_icons: ^0.13.1
-  flutter_native_splash: ^2.3.1
+  flutter_native_splash: ^2.3.2
   visibility_detector: ^0.4.0+2
   flutter_localizations:
     sdk: flutter
   pin_code_fields: ^8.0.1
-  flutter_markdown: ^0.6.17
+  flutter_markdown: ^0.6.17+1
   flutter_sliding_tutorial: ^2.0.0+1
   lottie: ^2.6.0
   flutter_app_badger: ^1.5.0
