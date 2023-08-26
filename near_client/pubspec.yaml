@@ -34,8 +34,8 @@ dependencies:
   path_provider: ^2.1.0
   flutter_image_compress: ^2.0.4
   firebase_core: ^2.15.1
-  firebase_messaging: ^14.6.6
-  flutter_local_notifications: ^15.1.0+1
+  firebase_messaging: ^14.6.7
+  flutter_local_notifications: ^15.1.1
   location: ^5.0.3
   permission_handler: ^10.4.3
   flutter_neumorphic: 
@@ -62,7 +62,7 @@ dependencies:
   showcaseview: ^2.0.3
   connectivity_plus: ^4.0.2
   package_info_plus: ^4.1.0
-  webview_flutter: ^4.2.2
+  webview_flutter: ^4.2.3
   flutter_lints: ^2.0.2
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
