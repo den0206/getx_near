@@ -21,7 +21,7 @@ import 'package:getx_near/src/utils/consts_color.dart';
 import 'package:getx_near/src/utils/date_formate.dart';
 import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:getx_near/src/utils/neumorphic_style.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
