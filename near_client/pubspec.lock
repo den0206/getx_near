@@ -53,10 +53,10 @@ packages:
     dependency: "direct main"
     description:
       name: auto_size_text_field
-      sha256: "8967129167193fefbb7a8707ade1bb71f9e52b9a5cf6da0132b7f6b7946c5a3f"
+      sha256: d47c81ffa9b61d219f6c50492dc03ea28fa9346561b2ec33b46ccdc000ddb0aa
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.1"
+    version: "2.2.2"
   boolean_selector:
     dependency: transitive
     description:
