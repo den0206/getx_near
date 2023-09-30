@@ -9,35 +9,17 @@ enum StorageKey {
   homeDistance,
   checkTerms,
   loginTutolial,
-}
-
-extension StorageKeyEXT on StorageKey {
-  String get keyString {
-    switch (this) {
-      case StorageKey.user:
-        return "user";
-      case StorageKey.locationSize:
-        return "locationSize";
-      case StorageKey.checkTerms:
-        return "checkTerms";
-      case StorageKey.notificationDistance:
-        return "notificationDistance";
-      case StorageKey.homeDistance:
-        return "homeDistance";
-      case StorageKey.loginTutolial:
-        return "loginTutolial";
-    }
-  }
+  loginEmail;
 
   Future<bool> saveString(dynamic value) async {
     final pref = await SharedPreferences.getInstance();
     final encoded = json.encode(value);
-    return pref.setString(keyString, encoded);
+    return pref.setString(name, encoded);
   }
 
   Future<dynamic> loadString() async {
     final pref = await SharedPreferences.getInstance();
-    final value = pref.getString(keyString);
+    final value = pref.getString(name);
     if (value == null) {
       print("No Local Storage");
       return null;
@@ -48,12 +30,12 @@ extension StorageKeyEXT on StorageKey {
 
   Future<bool> saveInt(int value) async {
     final pref = await SharedPreferences.getInstance();
-    return pref.setInt(keyString, value);
+    return pref.setInt(name, value);
   }
 
   Future<dynamic> loadInt() async {
     final pref = await SharedPreferences.getInstance();
-    final value = pref.getInt(keyString);
+    final value = pref.getInt(name);
     if (value == null) {
       print("No Local Storage");
       return null;
@@ -63,28 +45,28 @@ extension StorageKeyEXT on StorageKey {
 
   Future<bool> saveBool(bool value) async {
     final pref = await SharedPreferences.getInstance();
-    return await pref.setBool(keyString, value);
+    return await pref.setBool(name, value);
   }
 
   Future<bool?> loadBool() async {
     final pref = await SharedPreferences.getInstance();
-    final value = pref.getBool(keyString);
+    final value = pref.getBool(name);
     return value;
   }
 
   Future<bool> deleteLocal() async {
     final pref = await SharedPreferences.getInstance();
-    return await pref.remove(keyString);
+    return await pref.remove(name);
   }
 }
 
 Future<void> deleteStorageLogout() async {
   final pref = await SharedPreferences.getInstance();
 
-  await pref.remove(StorageKey.locationSize.keyString);
-  await pref.remove(StorageKey.notificationDistance.keyString);
-  await pref.remove(StorageKey.user.keyString);
-  await pref.remove(StorageKey.loginTutolial.keyString);
+  await pref.remove(StorageKey.locationSize.name);
+  await pref.remove(StorageKey.notificationDistance.name);
+  await pref.remove(StorageKey.user.name);
+  await pref.remove(StorageKey.loginTutolial.name);
 }
 
 Future<void> deleteAllStorage() async {
