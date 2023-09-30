@@ -29,6 +29,8 @@ class LoginController extends GetxController {
     super.onInit();
 
     acceptTerms = await StorageKey.checkTerms.loadBool() ?? false;
+
+    emailController.text = await StorageKey.loginEmail.loadString() ?? "";
   }
 
   Future<void> setTerms(BuildContext context) async {

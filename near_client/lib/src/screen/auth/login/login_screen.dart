@@ -72,8 +72,8 @@ class LoginScreen extends StatelessWidget {
                           title: "Login",
                           background: ConstsColor.mainGreenColor,
                           onPressed: controller.buttonEnale.value
-                              ? () {
-                                  controller.login();
+                              ? () async {
+                                  await controller.login();
                                 }
                               : null,
                         ),

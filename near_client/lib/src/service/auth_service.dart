@@ -29,6 +29,8 @@ class AuthService extends GetxService {
 
     // set home
     await StorageKey.user.saveString(newUser.toMap());
+    // set login email(String)
+    await StorageKey.loginEmail.saveString(newUser.email);
     currentUser.call(newUser);
 
     _registerMustControllers();
