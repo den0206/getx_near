@@ -60,11 +60,11 @@ class BlockListScreen extends StatelessWidget {
 
 class UserCell extends StatelessWidget {
   const UserCell({
-    Key? key,
+    super.key,
     required this.user,
     this.selected = false,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final User user;
   final bool selected;

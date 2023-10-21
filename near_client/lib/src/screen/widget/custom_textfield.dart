@@ -7,7 +7,7 @@ import '../../utils/neumorphic_style.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.labelText,
     this.inputType,
@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.padding,
     this.iconData,
     this.onChange,
-  }) : super(key: key);
+  });
 
   final TextEditingController controller;
   final String labelText;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HelpAnimatedWidet extends StatefulWidget {
-  const HelpAnimatedWidet({Key? key}) : super(key: key);
+  const HelpAnimatedWidet({super.key});
 
   @override
   State<HelpAnimatedWidet> createState() => _HelpAnimatedWidetState();
@@ -61,8 +61,7 @@ class _HelpAnimatedWidetState extends State<HelpAnimatedWidet>
 }
 
 class FadeinWidget extends StatefulWidget {
-  const FadeinWidget({Key? key, required this.child, this.duration})
-      : super(key: key);
+  const FadeinWidget({super.key, required this.child, this.duration});
 
   final Widget child;
   final Duration? duration;
@@ -112,8 +111,7 @@ class _FadeinWidgetState extends State<FadeinWidget>
 }
 
 class FadeinOutWidget extends StatefulWidget {
-  const FadeinOutWidget({Key? key, required this.child, this.duration})
-      : super(key: key);
+  const FadeinOutWidget({super.key, required this.child, this.duration});
 
   final Widget child;
   final Duration? duration;

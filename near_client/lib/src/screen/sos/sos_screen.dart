@@ -9,7 +9,7 @@ import '../../model/alert_voice.dart';
 import '../../utils/neumorphic_style.dart';
 
 class SOSScreen extends StatelessWidget {
-  const SOSScreen({Key? key}) : super(key: key);
+  const SOSScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

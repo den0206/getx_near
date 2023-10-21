@@ -287,7 +287,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
 }
 
 class PoptPopMenu extends GetView<PostDetailController> {
-  const PoptPopMenu(this.post, {Key? key}) : super(key: key);
+  const PoptPopMenu(this.post, {super.key});
 
   final Post post;
 
@@ -480,7 +480,7 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
 }
 
 class AboveCommentField extends GetView<PostDetailController> {
-  const AboveCommentField({Key? key}) : super(key: key);
+  const AboveCommentField({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -530,9 +530,9 @@ class AboveCommentField extends GetView<PostDetailController> {
 
 class CommentCell extends GetView<PostDetailController> {
   const CommentCell({
-    Key? key,
+    super.key,
     required this.comment,
-  }) : super(key: key);
+  });
 
   final Comment comment;
 

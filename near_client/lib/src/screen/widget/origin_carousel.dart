@@ -8,12 +8,12 @@ import '../../utils/neumorphic_style.dart';
 
 class OriginCarousel extends StatefulWidget {
   const OriginCarousel({
-    Key? key,
+    super.key,
     required this.pageController,
     required this.itemCount,
     required this.onChange,
     required this.itemBuilder,
-  }) : super(key: key);
+  });
 
   final PageController pageController;
   final int itemCount;
@@ -53,14 +53,14 @@ class _OriginCarouselState extends State<OriginCarousel> {
 }
 
 class OriginCarouselCell extends StatelessWidget {
-  const OriginCarouselCell(
-      {Key? key,
-      required this.child,
-      required this.onTap,
-      required this.currentIndex,
-      required this.index,
-      this.backGroundImage})
-      : super(key: key);
+  const OriginCarouselCell({
+    super.key,
+    required this.child,
+    required this.onTap,
+    required this.currentIndex,
+    required this.index,
+    this.backGroundImage,
+  });
 
   final Widget child;
   final RxnInt? currentIndex;

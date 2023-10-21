@@ -78,7 +78,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
 }
 
 class MessageCell extends GetView<MessageController> {
-  const MessageCell({Key? key, required this.message}) : super(key: key);
+  const MessageCell({super.key, required this.message});
 
   final Message message;
 
@@ -181,9 +181,9 @@ class MessageCell extends GetView<MessageController> {
 
 class TextBubble extends StatelessWidget {
   const TextBubble({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   final Message message;
 
@@ -234,7 +234,7 @@ class TextBubble extends StatelessWidget {
 }
 
 class MessageInput extends GetView<MessageController> {
-  const MessageInput({Key? key}) : super(key: key);
+  const MessageInput({super.key});
 
   @override
   Widget build(BuildContext context) {

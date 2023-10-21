@@ -6,14 +6,14 @@ import '../../../utils/consts_color.dart';
 
 class NeumorphicIconButton extends StatelessWidget {
   const NeumorphicIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     this.color,
     this.size,
     this.depth,
     this.onPressed,
     this.boxShape,
-  }) : super(key: key);
+  });
 
   final Widget icon;
 
@@ -83,10 +83,10 @@ class UserAvatarButton extends StatelessWidget {
 
 class SexButton extends StatelessWidget {
   const SexButton({
-    Key? key,
+    super.key,
     required this.user,
     required this.size,
-  }) : super(key: key);
+  });
 
   final User user;
   final double size;
@@ -108,11 +108,11 @@ class SexButton extends StatelessWidget {
 
 class NeumorphicAvatarButton extends StatelessWidget {
   const NeumorphicAvatarButton({
-    Key? key,
+    super.key,
     required this.imageProvider,
     required this.size,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final ImageProvider<Object> imageProvider;
   final double size;
@@ -139,11 +139,11 @@ class NeumorphicAvatarButton extends StatelessWidget {
 
 class NeumorphicTextButton extends StatelessWidget {
   const NeumorphicTextButton({
-    Key? key,
+    super.key,
     required this.title,
     this.titleColor = Colors.green,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String title;
   final Color titleColor;

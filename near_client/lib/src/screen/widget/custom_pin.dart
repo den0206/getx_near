@@ -71,12 +71,12 @@ enum VerifyState {
 
 class CustomPinCodeField extends StatelessWidget {
   const CustomPinCodeField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.inputType,
     required this.isSecure,
     this.onChange,
-  }) : super(key: key);
+  });
 
   final TextEditingController controller;
   final TextInputType inputType;
@@ -123,12 +123,12 @@ class CustomPinCodeField extends StatelessWidget {
 
 class PinCodeArea extends StatelessWidget {
   const PinCodeArea({
-    Key? key,
+    super.key,
     required this.currentState,
     required this.currentTX,
     this.onChange,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final VerifyState currentState;
   final TextEditingController currentTX;

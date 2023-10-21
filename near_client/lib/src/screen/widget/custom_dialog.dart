@@ -13,13 +13,13 @@ import 'neumorphic/nicon_button.dart';
 
 class CustomDialog extends StatelessWidget {
   const CustomDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.descripon,
     required this.onPress,
     required this.icon,
     required this.mainColor,
-  }) : super(key: key);
+  });
 
   final String title;
   final String descripon;
@@ -115,10 +115,10 @@ class CustomDialog extends StatelessWidget {
 
 class CommentDialog extends StatelessWidget {
   const CommentDialog({
-    Key? key,
+    super.key,
     required this.comment,
     this.onMessage,
-  }) : super(key: key);
+  });
 
   final Comment comment;
   final double pad = 30;

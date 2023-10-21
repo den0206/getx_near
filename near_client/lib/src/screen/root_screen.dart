@@ -10,7 +10,7 @@ import 'package:getx_near/src/service/auth_service.dart';
 RxBool topLoading = false.obs;
 
 class RootScreen extends StatelessWidget {
-  const RootScreen({Key? key}) : super(key: key);
+  const RootScreen({super.key});
   static const routeName = '/Root';
 
   @override

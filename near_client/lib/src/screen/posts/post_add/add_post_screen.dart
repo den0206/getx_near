@@ -135,7 +135,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
 }
 
 class AbovePostField extends GetView<AddPostController> {
-  const AbovePostField({Key? key}) : super(key: key);
+  const AbovePostField({super.key});
 
   @override
   Widget build(BuildContext context) {

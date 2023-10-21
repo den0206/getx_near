@@ -38,7 +38,7 @@ enum MyPostsType {
 }
 
 class MyPostTabScreen extends StatelessWidget {
-  const MyPostTabScreen({Key? key}) : super(key: key);
+  const MyPostTabScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
