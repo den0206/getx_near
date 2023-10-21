@@ -42,8 +42,10 @@ AlertLevel getAlert(double current) {
 
 class AlertIndicator extends StatelessWidget {
   const AlertIndicator(
-      {Key? key, required this.intValue, required this.level, this.height = 25})
-      : super(key: key);
+      {super.key,
+      required this.intValue,
+      required this.level,
+      this.height = 25});
 
   final int intValue;
   final AlertLevel level;
@@ -82,12 +84,12 @@ class AlertIndicator extends StatelessWidget {
 
 class HelpButton extends StatelessWidget {
   const HelpButton({
-    Key? key,
+    super.key,
     required this.post,
     required this.size,
     this.uselabel = false,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final Post post;
   final double size;
@@ -147,10 +149,10 @@ class HelpButton extends StatelessWidget {
 
 class CustomSlider extends StatelessWidget {
   const CustomSlider({
-    Key? key,
+    super.key,
     required this.rxValue,
     this.trackHeight = 30,
-  }) : super(key: key);
+  });
 
   final RxDouble rxValue;
   final double trackHeight;

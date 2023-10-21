@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class BlinkingWidet extends StatefulWidget {
   const BlinkingWidet(
-      {Key? key, required this.child, required this.duration, this.use = true})
-      : super(key: key);
+      {super.key,
+      required this.child,
+      required this.duration,
+      this.use = true});
   final Widget child;
   final Duration duration;
   final bool use;

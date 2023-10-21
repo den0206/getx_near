@@ -6,7 +6,7 @@ import '../../utils/neumorphic_style.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
-    Key? key,
+    super.key,
     required this.title,
     this.titleColor = Colors.black,
     this.width = 250,
@@ -15,7 +15,7 @@ class CustomButton extends StatelessWidget {
     this.background,
     this.shadowColor = Colors.white,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String title;
   final Color titleColor;
@@ -56,14 +56,14 @@ class CustomButton extends StatelessWidget {
 
 class CircleImageButton extends StatelessWidget {
   const CircleImageButton({
-    Key? key,
+    super.key,
     required this.imageProvider,
     required this.size,
     this.addShadow = true,
     this.fit = BoxFit.fill,
     this.border,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final ImageProvider imageProvider;
   final double size;

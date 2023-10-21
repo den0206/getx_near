@@ -6,7 +6,7 @@ import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:sizer/sizer.dart';
 
 class MainTabScreen extends StatelessWidget {
-  const MainTabScreen({Key? key}) : super(key: key);
+  const MainTabScreen({super.key});
   static const routeName = '/Maintab';
 
   @override

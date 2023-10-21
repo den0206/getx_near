@@ -11,7 +11,7 @@ import '../../report/report_screen.dart';
 import '../../widget/neumorphic/nicon_button.dart';
 
 class UserDetailScreen extends StatelessWidget {
-  const UserDetailScreen({Key? key, required this.user}) : super(key: key);
+  const UserDetailScreen({super.key, required this.user});
 
   final User user;
 

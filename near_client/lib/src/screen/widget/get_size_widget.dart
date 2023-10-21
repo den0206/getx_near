@@ -6,10 +6,10 @@ class GetSizeWidget extends StatefulWidget {
   final Function onChange;
 
   const GetSizeWidget({
-    Key? key,
+    super.key,
     required this.onChange,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   _GetSizeWidgetState createState() => _GetSizeWidgetState();

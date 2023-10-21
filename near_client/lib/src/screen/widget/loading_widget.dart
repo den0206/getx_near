@@ -79,7 +79,7 @@ abstract class LoadingGetView<T extends LoadingGetController>
 }
 
 class PlainLoadingWidget extends StatelessWidget {
-  const PlainLoadingWidget({Key? key, this.onCancel}) : super(key: key);
+  const PlainLoadingWidget({super.key, this.onCancel});
 
   final void Function()? onCancel;
 
@@ -132,7 +132,7 @@ class PlainLoadingWidget extends StatelessWidget {
 }
 
 class WaveLoading extends StatelessWidget {
-  const WaveLoading({Key? key}) : super(key: key);
+  const WaveLoading({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -145,8 +145,8 @@ class WaveLoading extends StatelessWidget {
 
 class LoadingCellWidget extends StatelessWidget {
   const LoadingCellWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

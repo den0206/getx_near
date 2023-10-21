@@ -63,7 +63,7 @@ class RecentScreen extends LoadingGetView<RecentController> {
 }
 
 class RecentCell extends GetView<RecentController> {
-  const RecentCell({Key? key, required this.recent}) : super(key: key);
+  const RecentCell({super.key, required this.recent});
 
   final Recent recent;
 

@@ -3,7 +3,7 @@ import 'package:getx_near/src/screen/auth/login/login_screen.dart';
 import 'package:getx_near/src/screen/sos/sos_screen.dart';
 
 class AuthTabScreen extends StatelessWidget {
-  const AuthTabScreen({Key? key}) : super(key: key);
+  const AuthTabScreen({super.key});
   static const routeName = '/AuthTabScreen';
 
   @override

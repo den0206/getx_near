@@ -7,7 +7,7 @@ import '../my_posts/my_posts_screen.dart';
 
 class CommentsScreen extends StatelessWidget {
   static const routeName = '/RelationComments';
-  const CommentsScreen({Key? key}) : super(key: key);
+  const CommentsScreen({super.key});
 
   EdgeInsets caluculatePadding(int index) {
     if (index == 0 || index % 3 == 0) {

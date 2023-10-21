@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomCountdownTimer extends StatefulWidget {
   const CustomCountdownTimer(
-      {Key? key, required this.endTime, this.onEnd, this.fontSize})
-      : super(key: key);
+      {super.key, required this.endTime, this.onEnd, this.fontSize});
 
   final DateTime endTime;
   final VoidCallback? onEnd;
@@ -88,8 +87,7 @@ class _CustomCountdownTimerState extends State<CustomCountdownTimer> {
 
 class CountDownLabel extends StatelessWidget {
   const CountDownLabel(
-      {Key? key, required this.label, required this.value, this.fontSize})
-      : super(key: key);
+      {super.key, required this.label, required this.value, this.fontSize});
   final String label;
   final String value;
   final double? fontSize;

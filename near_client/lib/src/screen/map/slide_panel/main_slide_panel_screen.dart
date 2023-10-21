@@ -14,7 +14,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../widget/common_showcase.dart';
 
 class MainSlideUpPanel extends GetView<MainSlidePanelController> {
-  const MainSlideUpPanel(this.mapController, {Key? key}) : super(key: key);
+  const MainSlideUpPanel(this.mapController, {super.key});
 
   final MapController mapController;
 

@@ -129,10 +129,10 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
 
 class CommentAvatar extends StatelessWidget {
   const CommentAvatar({
-    Key? key,
+    super.key,
     required this.comment,
     this.onMessage,
-  }) : super(key: key);
+  });
 
   final Comment comment;
   final VoidCallback? onMessage;
@@ -158,10 +158,10 @@ class CommentAvatar extends StatelessWidget {
 
 class PostCell extends StatelessWidget {
   const PostCell({
-    Key? key,
+    super.key,
     required this.post,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final Post post;
   final VoidCallback? onTap;

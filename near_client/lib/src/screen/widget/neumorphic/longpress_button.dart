@@ -23,7 +23,7 @@ class LongNeumorphicButton extends StatefulWidget {
   final String? tooltip;
 
   const LongNeumorphicButton({
-    Key? key,
+    super.key,
     this.padding,
     this.margin = EdgeInsets.zero,
     this.child,
@@ -39,7 +39,7 @@ class LongNeumorphicButton extends StatefulWidget {
     this.minDistance = 0,
     this.style,
     this.provideHapticFeedback = true,
-  }) : super(key: key);
+  });
 
   bool get isEnabled => onPressed != null && onEnded != null;
 
