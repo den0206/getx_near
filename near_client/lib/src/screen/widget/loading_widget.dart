@@ -95,7 +95,7 @@ class PlainLoadingWidget extends StatelessWidget {
           //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           // ),
           const WaveLoading(),
-          SizedBox(
+          const SizedBox(
             height: padding,
           ),
           const Text(
@@ -108,7 +108,7 @@ class PlainLoadingWidget extends StatelessWidget {
           ),
 
           if (onCancel != null) ...[
-            SizedBox(
+            const SizedBox(
               height: padding,
             ),
             NeumorphicIconButton(
@@ -121,7 +121,7 @@ class PlainLoadingWidget extends StatelessWidget {
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: padding * 1.5,
             ),
           ]
