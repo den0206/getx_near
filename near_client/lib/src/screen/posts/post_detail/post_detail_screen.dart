@@ -395,7 +395,7 @@ class ContentArea extends SliverPersistentHeaderDelegate {
               alignment: Alignment.centerLeft,
               child: Text(
                 "Content",
-                textScaleFactor: controller.textScale.value,
+                textScaler: TextScaler.linear(controller.textScale.value),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20.sp,
@@ -414,7 +414,7 @@ class ContentArea extends SliverPersistentHeaderDelegate {
                   fontSize: 12.sp,
                 ),
                 // maxLines: 6,
-                textScaleFactor: controller.textScale.value,
+                textScaler: TextScaler.linear(controller.textScale.value),
                 // overflow: TextOverflow.ellipsis
               ),
             ),

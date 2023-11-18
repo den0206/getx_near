@@ -74,6 +74,7 @@ class CustomDialog extends StatelessWidget {
                       },
                       child: const Text(
                         "Cancel",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     ElevatedButton(
@@ -88,6 +89,7 @@ class CustomDialog extends StatelessWidget {
                       },
                       child: const Text(
                         "OK",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
