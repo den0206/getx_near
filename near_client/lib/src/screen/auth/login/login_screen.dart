@@ -107,8 +107,8 @@ Future<void> showTermsDialog(BuildContext context) {
     barrierColor: Colors.black45,
     transitionDuration: const Duration(milliseconds: 200),
     pageBuilder: (context, animation, secondaryAnimation) {
-      return WillPopScope(
-        onWillPop: () async => false,
+      return PopScope(
+        canPop: false,
         child: GetBuilder<LoginController>(
           builder: (current) {
             return FadeinWidget(

@@ -11,8 +11,8 @@ class TutorialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async => false,
+      body: PopScope(
+        canPop: false,
         child: GetBuilder<TutorialController>(
           init: TutorialController(_pageController, _notifier),
           builder: (controller) {
