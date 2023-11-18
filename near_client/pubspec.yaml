@@ -38,7 +38,7 @@ dependencies:
   flutter_local_notifications: ^16.1.0
   location: ^5.0.3
   permission_handler: ^11.0.1
-  flutter_neumorphic: 
+  flutter_neumorphic:
     git:
       url: https://github.com/den0206/Flutter-Neumorphic.git
       ref: feature/remoce_accentcolor
@@ -65,9 +65,8 @@ dependencies:
   webview_flutter: ^4.4.2
   flutter_lints: ^3.0.1
 
-dependency_overrides: 
+dependency_overrides:
   photo_manager: ^3.0.0-dev.2
-  
 
 # 現在google_mapとimage_pickerの併用は不可(ロゼッタ使用している為) m1sim
 # multiple_image_picker を使用

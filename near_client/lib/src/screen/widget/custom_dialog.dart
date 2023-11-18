@@ -136,7 +136,7 @@ class CommentDialog extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(top: avatarPad),
+            margin: const EdgeInsets.only(top: avatarPad),
             decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: ConstsColor.mainBackColor,
@@ -148,7 +148,7 @@ class CommentDialog extends StatelessWidget {
                     blurRadius: 10,
                   )
                 ]),
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               left: pad,
               top: pad + avatarPad,
               right: pad,
