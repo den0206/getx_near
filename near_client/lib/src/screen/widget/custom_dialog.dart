@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -136,7 +138,7 @@ class CommentDialog extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(top: avatarPad),
+            margin: EdgeInsets.only(top: avatarPad),
             decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: ConstsColor.mainBackColor,
@@ -148,7 +150,7 @@ class CommentDialog extends StatelessWidget {
                     blurRadius: 10,
                   )
                 ]),
-            padding: const EdgeInsets.only(
+            padding: EdgeInsets.only(
               left: pad,
               top: pad + avatarPad,
               right: pad,

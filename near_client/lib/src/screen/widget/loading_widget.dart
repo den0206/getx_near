@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -95,7 +97,7 @@ class PlainLoadingWidget extends StatelessWidget {
           //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           // ),
           const WaveLoading(),
-          const SizedBox(
+          SizedBox(
             height: padding,
           ),
           const Text(
@@ -108,7 +110,7 @@ class PlainLoadingWidget extends StatelessWidget {
           ),
 
           if (onCancel != null) ...[
-            const SizedBox(
+            SizedBox(
               height: padding,
             ),
             NeumorphicIconButton(
@@ -121,7 +123,7 @@ class PlainLoadingWidget extends StatelessWidget {
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();
               },
             ),
-            const SizedBox(
+            SizedBox(
               height: padding * 1.5,
             ),
           ]
