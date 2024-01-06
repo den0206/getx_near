@@ -261,10 +261,10 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_messaging
-      sha256: "199fe8186a5370d1cf5ce0819191079afc305914e8f38715f5e23943940dfe2d"
+      sha256: "980259425fa5e2afc03e533f33723335731d21a56fd255611083bceebf4373a8"
       url: "https://pub.dev"
     source: hosted
-    version: "14.7.9"
+    version: "14.7.10"
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
@@ -407,18 +407,18 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_markdown
-      sha256: "35108526a233cc0755664d445f8a6b4b61e6f8fe993b3658b80b4a26827fc196"
+      sha256: "30088ce826b5b9cfbf9e8bece34c716c8a59fa54461dcae1e4ac01a94639e762"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.18+2"
+    version: "0.6.18+3"
   flutter_native_splash:
     dependency: "direct main"
     description:
       name: flutter_native_splash
-      sha256: "141b20f15a2c4fe6e33c49257ca1bc114fc5c500b04fcbc8d75016bb86af672f"
+      sha256: "9cdb5d9665dab5d098dc50feab74301c2c228cd02ca25c9b546ab572cebcd6af"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.8"
+    version: "2.3.9"
   flutter_neumorphic:
     dependency: "direct main"
     description:
@@ -586,10 +586,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_maps_flutter
-      sha256: d4914cb38b3dcb62c39c085d968d434de0f8050f00f4d9f5ba4a7c7e004934cb
+      sha256: c98817e21fcdc8e02db0c77e2411374293641d41f5b4d056dd28ee1ef6982f68
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.1"
   google_maps_flutter_android:
     dependency: transitive
     description:
@@ -1375,10 +1375,10 @@ packages:
     dependency: "direct main"
     description:
       name: webview_flutter
-      sha256: "42393b4492e629aa3a88618530a4a00de8bb46e50e7b3993fedbfdc5352f0dbf"
+      sha256: "60e23976834e995c404c0b21d3b9db37ecd77d3303ef74f8b8d7a7b19947fc04"
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.2"
+    version: "4.4.3"
   webview_flutter_android:
     dependency: transitive
     description:

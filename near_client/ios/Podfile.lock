@@ -13,7 +13,7 @@ PODS:
   - firebase_core (2.24.2):
     - Firebase/CoreOnly (= 10.18.0)
     - Flutter
-  - firebase_messaging (14.7.9):
+  - firebase_messaging (14.7.10):
     - Firebase/Messaging (= 10.18.0)
     - firebase_core
     - Flutter
@@ -250,14 +250,14 @@ SPEC CHECKSUMS:
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
   Firebase: 414ad272f8d02dfbf12662a9d43f4bba9bec2a06
   firebase_core: 0af4a2b24f62071f9bf283691c0ee41556dcb3f5
-  firebase_messaging: 875385354f623750aa03204a028d640108bc3412
+  firebase_messaging: 90e8a6db84b6e1e876cebce4f30f01dc495e7014
   FirebaseCore: 2322423314d92f946219c8791674d2f3345b598f
   FirebaseCoreInternal: 8eb002e564b533bdcf1ba011f33f2b5c10e2ed4a
   FirebaseInstallations: e842042ec6ac1fd2e37d7706363ebe7f662afea4
   FirebaseMessaging: 9bc34a98d2e0237e1b121915120d4d48ddcf301e
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_app_badger: b87fc231847b03b92ce1412aa351842e7e97932f
-  flutter_config: 2226c1df19c78fe34a05eb7f1363445f18e76fc1
+  flutter_config: f48f0d47a284f1791aacce2687eabb3309ba7a41
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
@@ -290,4 +290,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d04427157c8fb1b1c19c48303eab90187c1b9479
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.14.3
