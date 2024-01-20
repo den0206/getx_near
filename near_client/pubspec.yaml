@@ -18,7 +18,7 @@ dependencies:
   get: ^4.6.6
   flutter_config: ^2.0.2
   google_maps_flutter: ^2.5.3
-  http: ^1.1.2
+  http: ^1.2.0
   flutter_dotenv: ^5.1.0
   sliding_up_panel: ^2.0.0+1
   sizer: ^2.0.15
@@ -35,9 +35,9 @@ dependencies:
   flutter_image_compress: ^2.1.0
   firebase_core: ^2.24.2
   firebase_messaging: ^14.7.10
-  flutter_local_notifications: ^16.3.0
+  flutter_local_notifications: ^16.3.1
   location: ^5.0.3
-  permission_handler: ^11.1.0
+  permission_handler: ^11.2.0
   flutter_neumorphic:
     git:
       url: https://github.com/den0206/Flutter-Neumorphic.git
