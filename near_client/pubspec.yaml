@@ -35,7 +35,7 @@ dependencies:
   flutter_image_compress: ^2.1.0
   firebase_core: ^2.24.2
   firebase_messaging: ^14.7.10
-  flutter_local_notifications: ^16.3.1
+  flutter_local_notifications: ^16.3.2
   location: ^5.0.3
   permission_handler: ^11.2.0
   flutter_neumorphic:
@@ -46,7 +46,7 @@ dependencies:
   just_audio: ^0.9.36
   safe_device: ^1.1.4
   wechat_assets_picker: ^8.9.0-dev.1
-  mime: ^1.0.4
+  mime: ^1.0.5
   map_launcher: ^3.1.0
   flutter_svg: ^2.0.9
   flutter_launcher_icons: ^0.13.1
