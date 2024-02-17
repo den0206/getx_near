@@ -37,6 +37,7 @@
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		24D54B56282FA8B800FFF6F6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		24EFD1262B8038B50049778E /* extract_dart_defines.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = extract_dart_defines.sh; sourceTree = "<group>"; };
 		24F4681A283A06F80011D4B9 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -81,6 +82,14 @@
 			path = Resouces;
 			sourceTree = "<group>";
 		};
+		24EFD1252B80387C0049778E /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				24EFD1262B8038B50049778E /* extract_dart_defines.sh */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
 		5B71DB4CF95A6A8A93A1E79F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +114,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				24EFD1252B80387C0049778E /* scripts */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
@@ -172,7 +182,7 @@
 		97C146E61CF9000F007C117D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					97C146ED1CF9000F007C117D = {
@@ -404,7 +414,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuuki.help;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(appId)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Help Develop";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Help Develop";
@@ -540,7 +550,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuuki.help;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(appId)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Help Develop";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Help Develop";
@@ -572,7 +582,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuuki.help;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(appId)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Help Production";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Help Production";
