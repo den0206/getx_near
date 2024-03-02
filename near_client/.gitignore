@@ -52,5 +52,7 @@ app.*.map.json
 /lib/src/utils/bitmap_generator.dart
 /lib/src/utils/dummy_generator.dart
 
+.vscode/settings.json
+
 # FVM Version Cache
 .fvm/
