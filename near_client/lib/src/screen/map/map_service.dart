@@ -35,7 +35,6 @@ class MapService {
   final RxDouble buttonSpaceHeight = mapButtonHeight.obs;
 
   void init(GoogleMapController controller) async {
-    controller.setMapStyle(mapStyle);
     googleController = controller;
     final RenderBox? mapRenderBox =
         mapKey.currentContext!.findRenderObject()! as RenderBox?;
