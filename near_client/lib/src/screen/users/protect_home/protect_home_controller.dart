@@ -104,7 +104,6 @@ class ProtectHomeController extends GetxController {
     final placemarks = await placemarkFromCoordinates(
       latLng.latitude,
       latLng.longitude,
-      localeIdentifier: "ja",
     );
 
     Placemark place = placemarks[0];

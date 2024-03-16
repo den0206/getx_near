@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +57,7 @@ class MapScreen extends LoadingGetView<MapController> {
                       onCameraMove: controller.onCmareMove,
                       onCameraIdle: controller.onCameraIdle,
                       onTap: (argument) {},
+                      style: jsonEncode(mapStyle),
                       onMapCreated: (mapCtr) async {
                         await controller.onMapCreate(mapCtr);
                       },
