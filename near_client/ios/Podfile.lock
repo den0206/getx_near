@@ -10,10 +10,10 @@ PODS:
   - Firebase/Messaging (10.22.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.22.0)
-  - firebase_core (2.27.0):
+  - firebase_core (2.27.1):
     - Firebase/CoreOnly (= 10.22.0)
     - Flutter
-  - firebase_messaging (14.7.19):
+  - firebase_messaging (14.7.20):
     - Firebase/Messaging (= 10.22.0)
     - firebase_core
     - Flutter
@@ -121,8 +121,6 @@ PODS:
     - nanopb/encode (= 2.30910.0)
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
-  - package_info_plus (0.4.5):
-    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -170,7 +168,6 @@ DEPENDENCIES:
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - map_launcher (from `.symlinks/plugins/map_launcher/ios`)
-  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
@@ -233,8 +230,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/location/ios"
   map_launcher:
     :path: ".symlinks/plugins/map_launcher/ios"
-  package_info_plus:
-    :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
@@ -257,8 +252,8 @@ SPEC CHECKSUMS:
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
-  firebase_core: 100945864b4aedce3cfef0c62ab864858bf013cf
-  firebase_messaging: e65050bf9b187511d80ea3a4de7cf5573d2c7543
+  firebase_core: d6dfb4cb86a9ebd92464bb8736075fe967211c97
+  firebase_messaging: f97062a3a7644703ba4892859183c0a59e08d25f
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
   FirebaseCoreInternal: bca337352024b18424a61e478460547d46c4c753
   FirebaseInstallations: 763814908793c0da14c18b3dcffdec71e29ed55e
@@ -282,7 +277,6 @@ SPEC CHECKSUMS:
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   map_launcher: e325db1261d029ff33e08e03baccffe09593ffea
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   permission_handler_apple: 036b856153a2b1f61f21030ff725f3e6fece2b78
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
