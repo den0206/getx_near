@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/report_api.dart';
@@ -13,7 +14,6 @@ import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/service/location_service.dart';
 import 'package:getx_near/src/service/storage_service.dart';
 import 'package:getx_near/src/utils/date_formate.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../api/user_api.dart';
 import '../../main_tab/main_tab_controller.dart';
@@ -57,8 +57,20 @@ class UserDetailController extends GetxController {
   }
 
   Future<void> _getInfo() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    currentVersion = packageInfo.version;
+    currentVersion = await _getReleaseVersion();
+  }
+
+  Future<String> _getReleaseVersion() async {
+    final contents = await rootBundle.loadString('pubspec.yaml');
+    final lines = contents.split('\n');
+
+    for (var line in lines) {
+      if (line.startsWith('version:')) {
+        final version = line.split(':')[1].trim();
+        return version;
+      }
+    }
+    return 'Error: Version not found';
   }
 
   Future<void> _getLocalStorage() async {
