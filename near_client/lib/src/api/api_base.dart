@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:io' as io;
+import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -120,10 +120,13 @@ abstract class APIBase {
   }
 
   Future<void> _checkNetwork() async {
-    final connectivityResult = await (Connectivity().checkConnectivity());
+    final connectivityResult = await Connectivity().checkConnectivity();
 
-    if (connectivityResult != ConnectivityResult.mobile &&
-        connectivityResult != ConnectivityResult.wifi) {
+    final hasInternet =
+        connectivityResult.contains(ConnectivityResult.mobile) ||
+            connectivityResult.contains(ConnectivityResult.wifi);
+
+    if (!hasInternet) {
       throw const SocketException("No Internet");
     }
   }
