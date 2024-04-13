@@ -77,7 +77,7 @@ async function findByUserId(
 }
 
 async function findByRoomId(req: Request, res: Response) {
-  const chatRoomId = req.query.chatRoomId;
+  const chatRoomId = req.query.chatRoomId as string;
 
   try {
     const recents = await RecentModel.find({chatRoomId}).populate([
@@ -93,7 +93,7 @@ async function findByRoomId(req: Request, res: Response) {
 
 async function findByUserAndRoomid(req: Request, res: Response) {
   const userId = res.locals.user.userId;
-  const chatRoomId = req.query.chatRoomId;
+  const chatRoomId = req.query.chatRoomId as string;
 
   try {
     const findRecent = await RecentModel.findOne({
