@@ -33,9 +33,9 @@ dependencies:
   flutter_slidable: ^3.1.0
   path_provider: ^2.1.3
   flutter_image_compress: ^2.2.0
-  firebase_core: ^2.30.1
-  firebase_messaging: ^14.9.1
-  flutter_local_notifications: ^17.1.1
+  firebase_core: ^2.31.0
+  firebase_messaging: ^14.9.2
+  flutter_local_notifications: ^17.1.2
   location: ^6.0.1
   permission_handler: ^11.3.1
   flutter_neumorphic:
@@ -62,7 +62,7 @@ dependencies:
   showcaseview: ^2.1.1
   connectivity_plus: ^6.0.3
   webview_flutter: ^4.7.0
-  flutter_lints: ^3.0.2
+  flutter_lints: ^4.0.0
   photo_manager: ^3.1.0
 
 # dependency_overrides:
