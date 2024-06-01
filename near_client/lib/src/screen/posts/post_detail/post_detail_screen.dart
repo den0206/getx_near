@@ -37,7 +37,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
   Widget get child {
     final post = controller.post;
     return ShowCaseWidget(
-      builder: Builder(builder: (context) {
+      builder: (context) {
         return Scaffold(
           backgroundColor: ConstsColor.mainBackColor,
           body: GetBuilder<PostDetailController>(
@@ -281,7 +281,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
             },
           ),
         );
-      }),
+      },
     );
   }
 }

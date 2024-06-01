@@ -28,7 +28,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
   @override
   Widget get child {
     return ShowCaseWidget(
-      builder: Builder(builder: (context) {
+      builder: (context) {
         return Scaffold(
           backgroundColor: ConstsColor.mainBackColor,
           appBar: AppBar(
@@ -129,7 +129,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
           ),
           bottomSheet: const AbovePostField(),
         );
-      }),
+      },
     );
   }
 }
