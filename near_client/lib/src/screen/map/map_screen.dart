@@ -33,7 +33,7 @@ class MapScreen extends LoadingGetView<MapController> {
     return GetBuilder<MapController>(
       builder: (_) {
         return ShowCaseWidget(
-          builder: Builder(builder: (context) {
+          builder: (context) {
             return Scaffold(
               body: Stack(
                 children: [
@@ -70,7 +70,7 @@ class MapScreen extends LoadingGetView<MapController> {
                 ],
               ),
             );
-          }),
+          },
         );
       },
     );
