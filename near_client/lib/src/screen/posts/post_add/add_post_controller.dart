@@ -5,6 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_near/src/api/post_api.dart';
 import 'package:getx_near/src/model/post.dart';
+import 'package:getx_near/src/model/utils/custom_exception.dart';
 import 'package:getx_near/src/screen/widget/common_showcase.dart';
 import 'package:getx_near/src/screen/widget/custom_dialog.dart';
 import 'package:getx_near/src/screen/widget/custom_slider.dart';
@@ -80,18 +81,6 @@ class AddPostController extends LoadingGetController {
       // notificaton を送るユーザーを集める
       final tokens = List<String>.from(res.data["tokens"]);
 
-      // 自身のFCMを除く
-      final myToken = AuthService.to.currentUser.value!.fcmToken;
-      tokens.remove(myToken);
-
-      // notification　を送る
-      if (tokens.isNotEmpty) {
-        await NotificationService.to.pushPostNotification(
-          tokens: tokens,
-          type: NotificationType.post,
-        );
-      }
-
       if (Get.isRegistered<MyPostsController>()) {
         MyPostsController.to.insertPost(post);
       }
@@ -112,6 +101,20 @@ class AddPostController extends LoadingGetController {
         background: alert.mainColor,
         position: SnackPosition.TOP,
       );
+
+      // 自身のFCMを除く
+      final myToken = AuthService.to.currentUser.value!.fcmToken;
+      tokens.remove(myToken);
+
+      // notification　を送る
+      if (tokens.isNotEmpty) {
+        await NotificationService.to.pushPostNotification(
+          tokens: tokens,
+          type: NotificationType.post,
+        );
+      }
+    } on FailNotificationException {
+      print("通知に失敗しました");
     } catch (e) {
       showError(e.toString());
     } finally {
