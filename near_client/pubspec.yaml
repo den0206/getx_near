@@ -43,7 +43,7 @@ dependencies:
       url: https://github.com/den0206/Flutter-Neumorphic.git
       ref: feature/remoce_accentcolor
   showcaseview: ^3.0.0
-  flutter_cache_manager: ^3.3.2
+  flutter_cache_manager: ^3.3.3
   just_audio: ^0.9.39
   safe_device: ^1.1.7
   wechat_assets_picker: ^9.1.0
