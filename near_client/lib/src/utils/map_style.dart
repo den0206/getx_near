@@ -282,5 +282,5 @@ Future<BitmapDescriptor> iconFromAsset(
   final _image =
       await pictureRecorder.endRecording().toImage(size, (size * 1.1).toInt());
   final temp = await _image.toByteData(format: ui.ImageByteFormat.png);
-  return BitmapDescriptor.fromBytes(temp!.buffer.asUint8List());
+  return BitmapDescriptor.bytes(temp!.buffer.asUint8List());
 }

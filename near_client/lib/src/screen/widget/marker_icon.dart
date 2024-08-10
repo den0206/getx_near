@@ -36,7 +36,7 @@ class MarkerIcon {
 
     final bytes = await svgPicture.bytesLoader.loadBytes(context);
 
-    return BitmapDescriptor.fromBytes(bytes.buffer.asUint8List());
+    return BitmapDescriptor.bytes(bytes.buffer.asUint8List());
   }
 
   static Future<BitmapDescriptor> pictureAsset({
@@ -60,7 +60,7 @@ class MarkerIcon {
         .endRecording()
         .toImage(width.toInt(), (height).toInt());
     final data = await _image.toByteData(format: ui.ImageByteFormat.png);
-    return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
+    return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
 
   static Future<BitmapDescriptor> pictureAssetWithCenterText(
@@ -113,7 +113,7 @@ class MarkerIcon {
         .endRecording()
         .toImage(size.width.toInt(), (size.height).toInt());
     final data = await _image.toByteData(format: ui.ImageByteFormat.png);
-    return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
+    return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
 
   static Future<BitmapDescriptor> circleCanvasWithText({
@@ -158,7 +158,7 @@ class MarkerIcon {
         .toImage(size.width.toInt(), size.height.toInt());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-    return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
+    return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
 
   static Future<BitmapDescriptor> downloadResizePicture(
@@ -177,7 +177,7 @@ class MarkerIcon {
         .endRecording()
         .toImage(imageSize, (imageSize * 1.1).toInt());
     final data = await _image.toByteData(format: ui.ImageByteFormat.png);
-    return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
+    return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
 
   static Future<BitmapDescriptor> downloadResizePictureCircle(
@@ -231,7 +231,7 @@ class MarkerIcon {
     final data = await _image.toByteData(format: ui.ImageByteFormat.png);
 
     //convert PNG bytes as BitmapDescriptor
-    return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
+    return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
 
   static Future<BitmapDescriptor> widgetToIcon(GlobalKey globalKey) async {
@@ -239,7 +239,7 @@ class MarkerIcon {
         globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
     ui.Image image = await boundary.toImage();
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    return BitmapDescriptor.fromBytes(byteData!.buffer.asUint8List());
+    return BitmapDescriptor.bytes(byteData!.buffer.asUint8List());
   }
 
   static Future<BitmapDescriptor> markerFromIcon(
@@ -264,6 +264,6 @@ class MarkerIcon {
     final image = await picture.toImage(size.round(), size.round());
     final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
 
-    return BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
+    return BitmapDescriptor.bytes(bytes!.buffer.asUint8List());
   }
 }
