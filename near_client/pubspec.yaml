@@ -63,7 +63,7 @@ dependencies:
   connectivity_plus: ^6.0.5
   webview_flutter: ^4.9.0
   flutter_lints: ^4.0.0
-  photo_manager: ^3.2.3
+  photo_manager: ^3.3.0
 
 # dependency_overrides:
   
