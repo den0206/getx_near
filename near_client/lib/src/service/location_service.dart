@@ -80,9 +80,14 @@ class LocationService {
       final LocationDetail localLoc =
           getLocationDetail(await StorageKey.locationSize.loadString());
       print("精度は${localLoc.title}");
-      final current = await Geolocator.getCurrentPosition(
-          desiredAccuracy: localLoc.accuracy,
-          forceAndroidLocationManager: true);
+
+      const LocationSettings locationSettings = LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 100,
+      );
+
+      final Position current = await Geolocator.getCurrentPosition(
+          locationSettings: locationSettings);
 
       if (isRealDevice && current.isMocked) throw Exception("不正な位置情報が検出されました。");
 
