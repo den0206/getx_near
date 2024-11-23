@@ -5,38 +5,41 @@ import {commonErrorHandler} from '../../error/custom_error';
 import FailSendNotificationError from '../../error/errors/fail_send_notification';
 import {RecentModel} from '../../utils/database/models';
 import ResponseAPI from '../../utils/interface/response.api';
-import {
-  MessagingOptions,
-  MessagingPayload,
-} from './../../../node_modules/firebase-admin/lib/messaging/messaging-api.d';
 
 async function sendNotification(req: Request, res: Response) {
   const {title, body, badge, sound, fcmToken} = req.body;
   try {
-    const payload: MessagingPayload = {
+    const message: admin.messaging.Message = {
       data: {
         sound: sound,
       },
       notification: {
         title: title,
         body: body,
-        sound: sound,
-        clickAction: 'FLUTTER_NOTIFICATION_CLICK',
       },
+      android: {
+        notification: {
+          sound: sound,
+          priority: 'high',
+          clickAction: 'FLUTTER_NOTIFICATION_CLICK',
+        },
+      },
+      apns: {
+        payload: {
+          aps: {
+            sound: sound,
+            contentAvailable: true,
+          },
+        },
+      },
+      token: fcmToken,
     };
-    if (badge !== null && payload.data) payload.data.badge = badge.toString();
 
-    const option: MessagingOptions = {
-      // Required for background/terminated app state messages on iOS
-      contentAvailable: true,
-      // Required for background/terminated app state messages on Android
-      priority: 'high',
-    };
-    const sendRequest = await admin
-      .messaging()
-      .sendToDevice(fcmToken, payload, option);
+    if (badge !== null && message.data) message.data.badge = badge.toString();
 
-    if (sendRequest.failureCount) throw new FailSendNotificationError();
+    const sendRequest = await admin.messaging().send(message);
+
+    if (sendRequest) throw new FailSendNotificationError();
     new ResponseAPI(res, {data: sendRequest}).excute(200);
   } catch (e) {
     commonErrorHandler(res, e);
