@@ -46,7 +46,7 @@ class _HelpAnimatedWidetState extends State<HelpAnimatedWidet>
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.black.withOpacity(opacityAnimation.value),
+      color: Colors.black.withValues(alpha: opacityAnimation.value),
       child: Center(
           child: ScaleTransition(
         scale: scaleAnimatoin,

@@ -49,7 +49,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                 () => commonShowcaseWidget(
                   key: controller.tutorialKey3,
                   description: "このボタンで投稿します。",
-                  color: ConstsColor.mainGreenColor!.withOpacity(0.4),
+                  color: ConstsColor.mainGreenColor!.withValues(alpha: 0.4),
                   child: NeumorphicIconButton(
                     icon: const Icon(
                       Icons.send,
@@ -147,7 +147,7 @@ class AbovePostField extends GetView<AddPostController> {
           commonShowcaseWidget(
             key: controller.tutorialKey2,
             description: "投稿が自動で削除される時間を設定できます。",
-            color: ConstsColor.mainGreenColor!.withOpacity(0.4),
+            color: ConstsColor.mainGreenColor!.withValues(alpha: 0.4),
             child: Container(
               height: 10.h,
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -191,7 +191,7 @@ class AbovePostField extends GetView<AddPostController> {
           commonShowcaseWidget(
             key: controller.tutorialKey1,
             description: "緊急度をスライダー形式で設定できます。",
-            color: ConstsColor.mainGreenColor!.withOpacity(0.4),
+            color: ConstsColor.mainGreenColor!.withValues(alpha: 0.4),
             child: Stack(
               alignment: Alignment.center,
               children: [
