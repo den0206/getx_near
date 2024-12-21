@@ -104,7 +104,7 @@ class MapScreen extends LoadingGetView<MapController> {
                         description: "画面内の検索を行います",
                         child: FloatingActionButton.extended(
                           heroTag: "btn1",
-                          backgroundColor: Colors.white.withOpacity(0.7),
+                          backgroundColor: Colors.white.withValues(alpha: 0.7),
                           label: Text.rich(
                             TextSpan(
                               style: TextStyle(

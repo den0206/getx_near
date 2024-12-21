@@ -178,9 +178,9 @@ enum Sex {
   Color get mainColor {
     switch (this) {
       case Sex.man:
-        return Colors.blue.withOpacity(0.5);
+        return Colors.blue.withValues(alpha: 0.5);
       case Sex.woman:
-        return Colors.pink.withOpacity(0.8);
+        return Colors.pink.withValues(alpha: 0.8);
     }
   }
 }

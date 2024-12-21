@@ -117,7 +117,7 @@ class PlainLoadingWidget extends StatelessWidget {
               icon: const Icon(
                 Icons.close,
               ),
-              color: Colors.white.withOpacity(0.4),
+              color: Colors.white.withValues(alpha: 0.4),
               onPressed: () {
                 onCancel!();
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();

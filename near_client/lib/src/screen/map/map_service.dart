@@ -194,7 +194,7 @@ class MapService {
       strokeWidth: 3,
       radius: radius,
       center: latLng,
-      fillColor: Colors.blue.withOpacity(0.3),
+      fillColor: Colors.blue.withValues(alpha: 0.3),
     );
 
     _circles[circleId] = circle;
@@ -239,7 +239,7 @@ class MapService {
     polygon = Polygon(
       polygonId: polygonId,
       points: points,
-      fillColor: Colors.black.withOpacity(0.4),
+      fillColor: Colors.black.withValues(alpha: 0.4),
     );
 
     _polygons[polygonId] = polygon;

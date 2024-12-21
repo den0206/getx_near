@@ -43,7 +43,6 @@ class NearPostsScreen extends GetView<NearPostsController> {
                   (BuildContext context, int index) {
                     if (index == controller.nearPosts.length - 1) {
                       // controller.loadContents();
-
                     }
                     final post = controller.nearPosts[index];
                     return PostCell(
@@ -70,7 +69,7 @@ class NearPostsScreen extends GetView<NearPostsController> {
                           size: 120.sp,
                           color: Colors.redAccent,
                         ),
-                        color: Colors.yellow.withOpacity(0.3),
+                        color: Colors.yellow.withValues(alpha: 0.3),
                         onPressed: () async {
                           await controller.getNearPosts();
                         },

@@ -144,7 +144,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                                 Icons.location_on,
                                 color: Colors.redAccent,
                               ),
-                              color: Colors.yellow.withOpacity(0.3),
+                              color: Colors.yellow.withValues(alpha: 0.3),
                               onPressed: () async {
                                 final availableMaps =
                                     await MapLauncher.installedMaps;
