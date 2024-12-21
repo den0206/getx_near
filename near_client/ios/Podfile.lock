@@ -10,7 +10,7 @@ PODS:
   - Firebase/Messaging (11.4.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 11.4.0)
-  - firebase_core (3.8.1):
+  - firebase_core (3.9.0):
     - Firebase/CoreOnly (= 11.4.0)
     - Flutter
   - firebase_messaging (15.1.6):
@@ -242,10 +242,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
-  connectivity_plus: 4c41c08fc6d7c91f63bc7aec70ffe3730b04f563
+  connectivity_plus: 18382e7311ba19efcaee94442b23b32507b20695
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
   Firebase: cf1b19f21410b029b6786a54e9764a0cacad3c99
-  firebase_core: 418aed674e9a0b8b6088aec16cde82a811f6261f
+  firebase_core: b62a5080210edad3f2934314a8b2c6f5124e8e10
   firebase_messaging: 98619a0572d82cfb3668e78859ba9f1110e268c9
   FirebaseCore: e0510f1523bc0eb21653cac00792e1e2bd6f1771
   FirebaseCoreInternal: 35731192cab10797b88411be84940d2beb33a238
