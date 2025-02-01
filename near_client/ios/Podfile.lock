@@ -95,6 +95,7 @@ PODS:
     - GoogleUtilities/Privacy
   - just_audio (0.0.1):
     - Flutter
+    - FlutterMacOS
   - libwebp (1.3.2):
     - libwebp/demux (= 1.3.2)
     - libwebp/mux (= 1.3.2)
@@ -162,7 +163,7 @@ DEPENDENCIES:
   - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
-  - just_audio (from `.symlinks/plugins/just_audio/ios`)
+  - just_audio (from `.symlinks/plugins/just_audio/darwin`)
   - map_launcher (from `.symlinks/plugins/map_launcher/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -220,7 +221,7 @@ EXTERNAL SOURCES:
   google_maps_flutter_ios:
     :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
   just_audio:
-    :path: ".symlinks/plugins/just_audio/ios"
+    :path: ".symlinks/plugins/just_audio/darwin"
   map_launcher:
     :path: ".symlinks/plugins/map_launcher/ios"
   path_provider_foundation:
@@ -241,7 +242,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
-  audio_session: f08db0697111ac84ba46191b55488c0563bb29c6
+  audio_session: 94075f61f538dbe8f90f0cee58af3f1837ba7d2b
   connectivity_plus: 2256d3e20624a7749ed21653aafe291a46446fee
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
   Firebase: 374a441a91ead896215703a674d58cdb3e9d772b
@@ -264,7 +265,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMaps: 8939898920281c649150e0af74aa291c60f2e77d
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
-  just_audio: 6c031bb61297cf218b4462be616638e81c058e97
+  just_audio: 4e391f57b79cad2b0674030a00453ca5ce817eed
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   map_launcher: fe43bda6720bb73c12fcc1bdd86123ff49a4d4d6
