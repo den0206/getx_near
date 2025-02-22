@@ -51,8 +51,8 @@ async function login(req: Request, res: Response) {
 
     if (!isVerify) throw new PasswordNotMatchError();
 
-    const secret = process.env.JWT_SECRET_KEY || 'mysecretkey';
-    const expiresIn = process.env.JWT_EXPIRES_IN;
+    const secret = process.env.JWT_SECRET_KEY ?? 'mysecretkey';
+    const expiresIn = '48h';
 
     const payload = {userId: isFind.id, email: isFind.email};
     const token = jwt.sign(payload, secret, {expiresIn: expiresIn});
