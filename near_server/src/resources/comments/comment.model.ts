@@ -39,16 +39,16 @@ import {User} from '../users/user.model';
 @index({location: '2dsphere'})
 @index({expireAt: 1}, {expireAfterSeconds: 0})
 export class Comment {
-  @prop({required: true, maxlength: 50})
+  @prop({type: () => String, required: true, maxlength: 50})
   text: string;
   @prop({required: true, ref: () => Post})
   postId: Ref<Post>;
-  @prop()
+  @prop({type: () => String})
   postUserId: string;
   @prop({required: true, ref: () => User})
   userId: Ref<User>;
-  @prop({required: true, _id: false})
+  @prop({type: () => Location, required: true, _id: false})
   location: Location;
-  @prop({default: null})
+  @prop({type: () => Date, default: null})
   expireAt: Date;
 }
