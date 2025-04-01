@@ -59,25 +59,25 @@ import {CommentModel, ReportModel} from './../../utils/database/models';
 )
 @index({location: '2dsphere'})
 export class User {
-  @prop({required: true, maxlength: 20})
+  @prop({type: () => String, required: true, maxlength: 20})
   name: string;
-  @prop({required: true, unique: true})
+  @prop({type: () => String, required: true, unique: true})
   email: string;
-  @prop({required: true, enum: ['man', 'woman']})
+  @prop({type: () => String, required: true, enum: ['man', 'woman']})
   sex: string;
-  @prop()
+  @prop({type: () => String})
   avatarUrl: string;
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   password: string;
   @prop({default: [], ref: () => User})
   blocked: Ref<User>[];
-  @prop()
+  @prop({type: () => String})
   fcmToken: string;
-  @prop({_id: false})
+  @prop({type: () => Location, _id: false})
   location: Location;
-  @prop({default: false})
+  @prop({type: () => Boolean, default: false})
   isFrozen: boolean;
-  @prop()
+  @prop({type: () => Date})
   createdAt: Date;
 
   async comparePasswrd(password: string): Promise<boolean> {

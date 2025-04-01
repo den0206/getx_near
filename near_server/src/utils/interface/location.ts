@@ -2,9 +2,9 @@ import {modelOptions, prop, Severity} from '@typegoose/typegoose';
 
 @modelOptions({options: {allowMixed: Severity.ALLOW}})
 export class Location {
-  @prop({enum: ['Point'], required: true})
+  @prop({type: () => String, enum: ['Point'], required: true})
   type: string;
 
-  @prop({required: true})
+  @prop({type: () => [Number], required: true})
   coordinates: number[];
 }

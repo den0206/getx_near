@@ -20,8 +20,8 @@ export class Report {
   message: Ref<Message>;
   @prop({ref: () => Post})
   post: Ref<Post>;
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   reportedContent: string;
-  @prop({default: null})
+  @prop({type: () => Date, default: null})
   expireAt: Date;
 }

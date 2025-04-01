@@ -17,19 +17,19 @@ import {User} from '../users/user.model';
 @index({location: '2dsphere'})
 @index({expireAt: 1}, {expireAfterSeconds: 0})
 export class Post {
-  @prop()
+  @prop({type: () => String})
   title: string;
-  @prop({required: true, maxlength: 160})
+  @prop({type: () => String, required: true, maxlength: 160})
   content: string;
   @prop({required: true, ref: () => User})
   userId: Ref<User>;
-  @prop({required: true})
+  @prop({type: () => Number, required: true})
   emergency: number;
-  @prop({default: null})
+  @prop({type: () => Date, default: null})
   expireAt: Date;
-  @prop({default: Date.now})
+  @prop({type: () => Date, default: Date.now})
   createdAt: Date;
-  @prop({required: true, _id: false})
+  @prop({type: () => Location, required: true, _id: false})
   location: Location;
   @prop({default: [], ref: () => User})
   likes: Ref<User>[];
