@@ -27,7 +27,7 @@ dependencies:
   shared_preferences: ^2.5.3
   auto_size_text: ^3.0.0
   liquid_progress_indicator_v2: ^0.5.0
-  socket_io_client: ^3.1.1
+  socket_io_client: ^3.1.2
   intl: any
   # device_preview: ^1.1.0
   flutter_slidable: ^4.0.0
@@ -43,7 +43,7 @@ dependencies:
       ref: feature/remoce_accentcolor
   showcaseview: ^4.0.1
   flutter_cache_manager: ^3.4.1
-  just_audio: ^0.10.0
+  just_audio: ^0.10.2
   safe_device: ^1.2.1
   wechat_assets_picker: ^9.5.0
   mime: ^2.0.0
