@@ -19,9 +19,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
   @override
   Widget get child {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("編集"),
-      ),
+      appBar: AppBar(title: const Text("編集")),
       body: Neumorphic(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -31,11 +29,11 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
             width: double.infinity,
             child: Column(
               children: [
-                SizedBox(
-                  height: 8.h,
-                ),
-                Builder(builder: (context) {
-                  return Obx(() => NeumorphicAvatarButton(
+                SizedBox(height: 8.h),
+                Builder(
+                  builder: (context) {
+                    return Obx(
+                      () => NeumorphicAvatarButton(
                         imageProvider: controller.userImage.value == null
                             ? getUserImage(controller.currentUser)
                             : FileImage(controller.userImage.value!),
@@ -43,11 +41,11 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                         onTap: () {
                           controller.selectImage(context);
                         },
-                      ));
-                }),
-                SizedBox(
-                  height: 8.h,
+                      ),
+                    );
+                  },
                 ),
+                SizedBox(height: 8.h),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
@@ -80,9 +78,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                         : null,
                   ),
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
+                const SizedBox(height: 40),
               ],
             ),
           ),

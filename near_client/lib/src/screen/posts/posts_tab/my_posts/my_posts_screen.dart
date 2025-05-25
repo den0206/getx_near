@@ -54,24 +54,24 @@ class MyPostsScreen extends GetView<MyPostsController> {
                 floating: false,
               ),
               SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    if (index == controller.posts.length - 1) {
-                      controller.loadContents();
-                      if (controller.cellLoading) {
-                        return const LoadingCellWidget();
-                      }
+                delegate: SliverChildBuilderDelegate((
+                  BuildContext context,
+                  int index,
+                ) {
+                  if (index == controller.posts.length - 1) {
+                    controller.loadContents();
+                    if (controller.cellLoading) {
+                      return const LoadingCellWidget();
                     }
-                    final post = controller.posts[index];
-                    return PostCell(
-                      post: post,
-                      onTap: () async {
-                        await controller.tapCell(post);
-                      },
-                    );
-                  },
-                  childCount: controller.posts.length,
-                ),
+                  }
+                  final post = controller.posts[index];
+                  return PostCell(
+                    post: post,
+                    onTap: () async {
+                      await controller.tapCell(post);
+                    },
+                  );
+                }, childCount: controller.posts.length),
               ),
             ],
           ),
@@ -96,13 +96,17 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     final int currentIndex = controller.relationComments.length;
     return Container(
       height: 10.h,
       decoration: BoxDecoration(
-          color: ConstsColor.mainBackColor,
-          border: const Border(bottom: BorderSide(color: Colors.grey))),
+        color: ConstsColor.mainBackColor,
+        border: const Border(bottom: BorderSide(color: Colors.grey)),
+      ),
       child: ListView.builder(
         itemCount: currentIndex != controller.commentLimit
             ? currentIndex
@@ -128,11 +132,7 @@ class AvatarsArea extends SliverPersistentHeaderDelegate {
 }
 
 class CommentAvatar extends StatelessWidget {
-  const CommentAvatar({
-    super.key,
-    required this.comment,
-    this.onMessage,
-  });
+  const CommentAvatar({super.key, required this.comment, this.onMessage});
 
   final Comment comment;
   final VoidCallback? onMessage;
@@ -145,10 +145,7 @@ class CommentAvatar extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) {
-            return CommentDialog(
-              comment: comment,
-              onMessage: onMessage,
-            );
+            return CommentDialog(comment: comment, onMessage: onMessage);
           },
         );
       },
@@ -157,11 +154,7 @@ class CommentAvatar extends StatelessWidget {
 }
 
 class PostCell extends StatelessWidget {
-  const PostCell({
-    super.key,
-    required this.post,
-    this.onTap,
-  });
+  const PostCell({super.key, required this.post, this.onTap});
 
   final Post post;
   final VoidCallback? onTap;
@@ -187,14 +180,12 @@ class PostCell extends StatelessWidget {
                     Get.to(() => UserDetailScreen(user: post.user));
                   },
                 ),
-                SizedBox(
-                  height: 3.sp,
-                ),
+                SizedBox(height: 3.sp),
                 if (post.isCurrent) ...[
                   const Text(
                     "Yours",
                     style: TextStyle(color: Colors.red, fontSize: 10),
-                  )
+                  ),
                 ] else if (post.distance != null) ...[
                   Text(
                     "約 ${distanceToString(post.distance!)} km",
@@ -202,29 +193,22 @@ class PostCell extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 6.sp,
                     ),
-                  )
-                ]
+                  ),
+                ],
               ],
             ),
             SizedBox(
               width: 60.w,
               child: AutoSizeText(
                 post.content,
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  height: 1.5,
-                ),
+                style: TextStyle(fontSize: 13.sp, height: 1.5),
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
                 minFontSize: 10,
                 maxLines: 4,
               ),
             ),
-            _postIcon(
-              Icons.comment,
-              "${post.comments.length}",
-              Colors.brown,
-            ),
+            _postIcon(Icons.comment, "${post.comments.length}", Colors.brown),
             _postIcon(
               Icons.warning_amber,
               "${post.likes.length}",
@@ -239,15 +223,8 @@ class PostCell extends StatelessWidget {
   Column _postIcon(IconData icon, String title, Color mainColor) {
     return Column(
       children: [
-        Icon(
-          icon,
-          color: mainColor,
-          size: 13.sp,
-        ),
-        Text(
-          title,
-          style: TextStyle(color: mainColor),
-        )
+        Icon(icon, color: mainColor, size: 13.sp),
+        Text(title, style: TextStyle(color: mainColor)),
       ],
     );
   }

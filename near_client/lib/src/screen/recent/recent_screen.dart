@@ -46,14 +46,14 @@ class RecentScreen extends LoadingGetView<RecentController> {
                   },
                 ),
               SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    final recent = controller.recents[index];
-                    return RecentCell(recent: recent);
-                  },
-                  childCount: controller.recents.length,
-                ),
-              )
+                delegate: SliverChildBuilderDelegate((
+                  BuildContext context,
+                  int index,
+                ) {
+                  final recent = controller.recents[index];
+                  return RecentCell(recent: recent);
+                }, childCount: controller.recents.length),
+              ),
             ],
           ),
         );
@@ -82,7 +82,7 @@ class RecentCell extends GetView<RecentController> {
             onPressed: (context) {
               controller.deleteRecent(recent);
             },
-          )
+          ),
         ],
       ),
       child: InkWell(
@@ -104,9 +104,7 @@ class RecentCell extends GetView<RecentController> {
                   Get.to(() => UserDetailScreen(user: recent.withUser));
                 },
               ),
-              const SizedBox(
-                width: 20,
-              ),
+              const SizedBox(width: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,9 +118,7 @@ class RecentCell extends GetView<RecentController> {
                       letterSpacing: 1.5,
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   Container(
                     constraints: BoxConstraints(maxWidth: 60.w),
                     child: Text(
@@ -142,17 +138,10 @@ class RecentCell extends GetView<RecentController> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    recent.formattedTime,
-                    style: TextStyle(fontSize: 8.sp),
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
+                  Text(recent.formattedTime, style: TextStyle(fontSize: 8.sp)),
+                  SizedBox(height: 1.h),
                   if (recent.counter != 0) ...[
-                    SizedBox(
-                      height: 1.h,
-                    ),
+                    SizedBox(height: 1.h),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       height: 30,
@@ -162,13 +151,12 @@ class RecentCell extends GetView<RecentController> {
                         color: ConstsColor.mainGreenColor,
                       ),
                       child: Center(
-                          child: Text(
-                        "${recent.counter}",
-                        style: const TextStyle(
-                          color: Colors.white,
+                        child: Text(
+                          "${recent.counter}",
+                          style: const TextStyle(color: Colors.white),
                         ),
-                      )),
-                    )
+                      ),
+                    ),
                   ],
                 ],
               ),

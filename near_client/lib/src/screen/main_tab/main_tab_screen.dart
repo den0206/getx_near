@@ -26,7 +26,8 @@ class MainTabScreen extends StatelessWidget {
         // チュートリアルの表示
         if (!controller.readTutolial) {
           WidgetsBinding.instance.addPostFrameCallback(
-              (_) async => await controller.showTutorial(context));
+            (_) async => await controller.showTutorial(context),
+          );
         }
 
         return Scaffold(
@@ -56,10 +57,7 @@ class MainTabScreen extends StatelessWidget {
                               if (index == null) return;
                               controller.setIndex(index);
                             },
-                            child: Icon(
-                              entry.value,
-                              size: 25.sp,
-                            ),
+                            child: Icon(entry.value, size: 25.sp),
                           ),
                         )
                         .toList(),
@@ -72,46 +70,45 @@ class MainTabScreen extends StatelessWidget {
   }
 }
 
+// final bottomItems = [
+//   BottomNavigationBarItem(
+//     label: "SOS",
+//     icon: Icon(
+//       Icons.speaker_phone,
+//     ),
+//   ),
+//   BottomNavigationBarItem(
+//     label: "List",
+//     icon: Icon(
+//       Icons.list,
+//     ),
+//   ),
+//   BottomNavigationBarItem(
+//     label: "Map",
+//     icon: Icon(Icons.map),
+//   ),
+//   BottomNavigationBarItem(
+//     label: "Message",
+//     icon: Icon(
+//       Icons.message,
+//     ),
+//   ),
+//   BottomNavigationBarItem(
+//     label: "Profile",
+//     icon: Icon(
+//       Icons.person,
+//     ),
+//   ),
+// ];
 
- // final bottomItems = [
-    //   BottomNavigationBarItem(
-    //     label: "SOS",
-    //     icon: Icon(
-    //       Icons.speaker_phone,
-    //     ),
-    //   ),
-    //   BottomNavigationBarItem(
-    //     label: "List",
-    //     icon: Icon(
-    //       Icons.list,
-    //     ),
-    //   ),
-    //   BottomNavigationBarItem(
-    //     label: "Map",
-    //     icon: Icon(Icons.map),
-    //   ),
-    //   BottomNavigationBarItem(
-    //     label: "Message",
-    //     icon: Icon(
-    //       Icons.message,
-    //     ),
-    //   ),
-    //   BottomNavigationBarItem(
-    //     label: "Profile",
-    //     icon: Icon(
-    //       Icons.person,
-    //     ),
-    //   ),
-    // ];
-
-        // bottomNavigationBar: controller.currentIndex != 2
-        //       ? BottomNavigationBar(
-        //           backgroundColor: Colors.grey,
-        //           selectedItemColor: Colors.black,
-        //           elevation: 0,
-        //           onTap: controller.setIndex,
-        //           type: BottomNavigationBarType.fixed,
-        //           currentIndex: controller.currentIndex,
-        //           items: bottomItems,
-        //         )
-        //       : null,
+// bottomNavigationBar: controller.currentIndex != 2
+//       ? BottomNavigationBar(
+//           backgroundColor: Colors.grey,
+//           selectedItemColor: Colors.black,
+//           elevation: 0,
+//           onTap: controller.setIndex,
+//           type: BottomNavigationBarType.fixed,
+//           currentIndex: controller.currentIndex,
+//           items: bottomItems,
+//         )
+//       : null,

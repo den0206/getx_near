@@ -40,17 +40,12 @@ class SOSScreen extends StatelessWidget {
                         if (value == null) return;
                         controller.selectAlert(value);
                       },
-                      child: Icon(
-                        alert.iconData,
-                        size: 25.sp,
-                      ),
+                      child: Icon(alert.iconData, size: 25.sp),
                     ),
                   );
                 }).toList(),
               ),
-              SizedBox(
-                height: 5.h,
-              ),
+              SizedBox(height: 5.h),
               LongNeumorphicButton(
                 onPressed: () => controller.play(),
                 onEnded: () => controller.pause(),
@@ -70,21 +65,15 @@ class SOSScreen extends StatelessWidget {
                             NeumorphicText(
                               "SOS",
                               style: commonNeumorphic(color: Colors.yellow),
-                              textStyle: NeumorphicTextStyle(
-                                fontSize: 25.sp,
-                              ),
+                              textStyle: NeumorphicTextStyle(fontSize: 25.sp),
                             ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
+                            SizedBox(height: 10.h),
                             Image.asset(
                               controller.currentAlert.imagePath,
                               width: 120.sp,
                               height: 120.sp,
                             ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
+                            SizedBox(height: 5.h),
                             NeumorphicText(
                               controller.currentAlert.description,
                               style: commonNeumorphic(

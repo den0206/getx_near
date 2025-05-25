@@ -14,4 +14,3 @@ class ConstsColor {
 }
 
 // static final commonBackground = Colors.grey[200];
-

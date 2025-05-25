@@ -101,8 +101,10 @@ class MyPostsController extends LoadingGetController {
     try {
       final currentPostion = await _locationService.getCurrentPosition();
 
-      final centerPosition =
-          LatLng(currentPostion.latitude, currentPostion.latitude);
+      final centerPosition = LatLng(
+        currentPostion.latitude,
+        currentPostion.latitude,
+      );
       final res = await _postAPI.generateDummyMy(centerPosition, 1000);
 
       if (!res.status) return;
@@ -123,8 +125,10 @@ class MyPostsController extends LoadingGetController {
     try {
       final res = await _commentAPI.getRelationComment(limit: commentLimit);
       if (!res.status) return;
-      final Pages<Comment> pages =
-          Pages.fromMap(res.data, Comment.fromJsonModel);
+      final Pages<Comment> pages = Pages.fromMap(
+        res.data,
+        Comment.fromJsonModel,
+      );
 
       relationComments.addAll(pages.pageFeeds);
     } catch (e) {

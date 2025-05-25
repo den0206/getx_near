@@ -75,13 +75,15 @@ class UserDetailController extends GetxController {
 
   Future<void> _getLocalStorage() async {
     // Location
-    final localLoc =
-        getLocationDetail(await StorageKey.locationSize.loadString());
+    final localLoc = getLocationDetail(
+      await StorageKey.locationSize.loadString(),
+    );
     currentSize = localLoc;
 
     // search Radius
     final int localDistance = getNotificationDistance(
-        await StorageKey.notificationDistance.loadInt());
+      await StorageKey.notificationDistance.loadInt(),
+    );
 
     currentDistance.call(localDistance.roundToDouble());
   }
@@ -176,7 +178,7 @@ class UserDetailController extends GetxController {
       }
 
       final Map<String, dynamic> data = {
-        "blocked": currentUser.blockedUsers.toSet().toList()
+        "blocked": currentUser.blockedUsers.toSet().toList(),
       };
 
       final res = await _userAPI.updateBlock(userData: data);

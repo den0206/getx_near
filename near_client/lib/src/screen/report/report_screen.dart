@@ -11,26 +11,27 @@ import '../../model/user.dart';
 import '../widget/loading_widget.dart';
 
 // common show report screen
-Future<void> showReportScreen(
-    {required BuildContext context,
-    required User user,
-    Message? message,
-    Post? post}) async {
+Future<void> showReportScreen({
+  required BuildContext context,
+  required User user,
+  Message? message,
+  Post? post,
+}) async {
   await Navigator.of(context)
-      .push(MaterialPageRoute(
-    builder: (context) {
-      return ReportScreen(user, message, post);
-    },
-    fullscreenDialog: true,
-    maintainState: false,
-  ))
-      .then(
-    (value) async {
-      if (Get.isRegistered<ReportController>()) {
-        await Get.delete<ReportController>();
-      }
-    },
-  );
+      .push(
+        MaterialPageRoute(
+          builder: (context) {
+            return ReportScreen(user, message, post);
+          },
+          fullscreenDialog: true,
+          maintainState: false,
+        ),
+      )
+      .then((value) async {
+        if (Get.isRegistered<ReportController>()) {
+          await Get.delete<ReportController>();
+        }
+      });
 }
 
 class ReportScreen extends LoadingGetView<ReportController> {
@@ -70,7 +71,8 @@ class ReportScreen extends LoadingGetView<ReportController> {
                     fillColor: Colors.white,
                     filled: true,
                     border: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                     ),
@@ -79,17 +81,19 @@ class ReportScreen extends LoadingGetView<ReportController> {
                   // onChanged: controller.streamText,
                 ),
               ),
-              Builder(builder: (context) {
-                return CustomButton(
-                  title: "Send",
-                  background: Colors.green,
-                  onPressed: !controller.enableReport.value
-                      ? null
-                      : () {
-                          controller.sendReport(context);
-                        },
-                );
-              })
+              Builder(
+                builder: (context) {
+                  return CustomButton(
+                    title: "Send",
+                    background: Colors.green,
+                    onPressed: !controller.enableReport.value
+                        ? null
+                        : () {
+                            controller.sendReport(context);
+                          },
+                  );
+                },
+              ),
             ],
           ),
         ),

@@ -39,21 +39,21 @@ class NearPostsScreen extends GetView<NearPostsController> {
                 floating: false,
               ),
               SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    if (index == controller.nearPosts.length - 1) {
-                      // controller.loadContents();
-                    }
-                    final post = controller.nearPosts[index];
-                    return PostCell(
-                      post: post,
-                      onTap: () async {
-                        await controller.tapCell(post);
-                      },
-                    );
-                  },
-                  childCount: controller.nearPosts.length,
-                ),
+                delegate: SliverChildBuilderDelegate((
+                  BuildContext context,
+                  int index,
+                ) {
+                  if (index == controller.nearPosts.length - 1) {
+                    // controller.loadContents();
+                  }
+                  final post = controller.nearPosts[index];
+                  return PostCell(
+                    post: post,
+                    onTap: () async {
+                      await controller.tapCell(post);
+                    },
+                  );
+                }, childCount: controller.nearPosts.length),
               ),
               if (controller.isCompEmpty) ...[
                 SliverFillRemaining(
@@ -74,19 +74,15 @@ class NearPostsScreen extends GetView<NearPostsController> {
                           await controller.getNearPosts();
                         },
                       ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
+                      SizedBox(height: 5.h),
                       const Text(
                         "現在地から検索を行う",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
-                )
-              ]
+                ),
+              ],
             ],
           ),
         );

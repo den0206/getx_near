@@ -146,8 +146,11 @@ class PostDetailController extends LoadingGetController {
 
       commentCount = res.data["count"];
 
-      final Pages<Comment> pages =
-          Pages.fromMap(res.data["pages"], Comment.fromJsonModelWithPost, post);
+      final Pages<Comment> pages = Pages.fromMap(
+        res.data["pages"],
+        Comment.fromJsonModelWithPost,
+        post,
+      );
 
       reachLast = !pages.pageInfo.hasNextPage;
       nextCursor = pages.pageInfo.nextPageCursor;
@@ -242,7 +245,8 @@ class PostDetailController extends LoadingGetController {
       if (!res.status) return;
       final items = List<Map<String, dynamic>>.from(res.data);
       final temp = List<Comment>.from(
-          items.map((m) => Comment.fromMapWithPost(m, post)));
+        items.map((m) => Comment.fromMapWithPost(m, post)),
+      );
 
       comments.addAll(temp);
       commentContoller.clear();
@@ -300,7 +304,9 @@ class PostDetailController extends LoadingGetController {
   }
 
   Future<void> tryMapLauncher(
-      BuildContext context, AvailableMap current) async {
+    BuildContext context,
+    AvailableMap current,
+  ) async {
     showCommonDialog(
       context: context,
       title: "外部アプリへ遷移します",

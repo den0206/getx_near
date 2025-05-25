@@ -68,10 +68,8 @@ abstract class LoadingGetView<T extends LoadingGetController>
                   decoration: const BoxDecoration(
                     color: Color.fromRGBO(0, 0, 0, 0.6),
                   ),
-                  child: PlainLoadingWidget(
-                    onCancel: onCancel,
-                  ),
-                )
+                  child: PlainLoadingWidget(onCancel: onCancel),
+                ),
             ],
           ),
         ),
@@ -97,9 +95,7 @@ class PlainLoadingWidget extends StatelessWidget {
           //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           // ),
           const WaveLoading(),
-          SizedBox(
-            height: padding,
-          ),
+          SizedBox(height: padding),
           const Text(
             "Loading...",
             style: TextStyle(
@@ -110,23 +106,17 @@ class PlainLoadingWidget extends StatelessWidget {
           ),
 
           if (onCancel != null) ...[
-            SizedBox(
-              height: padding,
-            ),
+            SizedBox(height: padding),
             NeumorphicIconButton(
-              icon: const Icon(
-                Icons.close,
-              ),
+              icon: const Icon(Icons.close),
               color: Colors.white.withValues(alpha: 0.4),
               onPressed: () {
                 onCancel!();
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();
               },
             ),
-            SizedBox(
-              height: padding * 1.5,
-            ),
-          ]
+            SizedBox(height: padding * 1.5),
+          ],
         ],
       ),
     );
@@ -138,26 +128,18 @@ class WaveLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SpinKitWave(
-      color: Color(0xffffffff),
-      size: 30,
-    );
+    return const SpinKitWave(color: Color(0xffffffff), size: 30);
   }
 }
 
 class LoadingCellWidget extends StatelessWidget {
-  const LoadingCellWidget({
-    super.key,
-  });
+  const LoadingCellWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
-      child: Center(
-          child: CupertinoActivityIndicator(
-        radius: 12.0,
-      )),
+      child: Center(child: CupertinoActivityIndicator(radius: 12.0)),
     );
   }
 }

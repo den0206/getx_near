@@ -46,10 +46,7 @@ class CustomTextField extends StatelessWidget {
         () => TextFormField(
           controller: controller,
           decoration: InputDecoration(
-            prefixIcon: Icon(
-              iconData,
-              color: Colors.black45,
-            ),
+            prefixIcon: Icon(iconData, color: Colors.black45),
             suffixIcon: isSecure
                 ? IconButton(
                     icon: Icon(

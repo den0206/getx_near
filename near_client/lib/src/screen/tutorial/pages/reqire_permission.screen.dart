@@ -63,24 +63,18 @@ class PermissionTutorialScreen extends StatelessWidget {
           height: 35.h,
           fit: BoxFit.cover,
         ),
-        SizedBox(
-          height: 5.h,
-        ),
+        SizedBox(height: 5.h),
         Text(
           type.description,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(
-          height: 5.h,
-        ),
+        SizedBox(height: 5.h),
         CustomButton(
           title: "${type.title} を許可する",
           background: type.mainColor,
           onPressed: onPress,
-        )
+        ),
       ],
     );
   }

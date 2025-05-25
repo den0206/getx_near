@@ -26,27 +26,14 @@ class AppRoot {
 }
 
 final List<GetPage> _authPages = [
-  GetPage(
-    name: LoginScreen.routeName,
-    page: () => LoginScreen(),
-  ),
-  GetPage(
-    name: SignUpScreen.routeName,
-    page: () => SignUpScreen(),
-  ),
+  GetPage(name: LoginScreen.routeName, page: () => LoginScreen()),
+  GetPage(name: SignUpScreen.routeName, page: () => SignUpScreen()),
   GetPage(
     name: UserEditScreen.routeName,
     page: () => UserEditScreen(),
-    binding: BindingsBuilder(
-      () => Get.lazyPut(
-        () => UserEditController(),
-      ),
-    ),
+    binding: BindingsBuilder(() => Get.lazyPut(() => UserEditController())),
   ),
-  GetPage(
-    name: UserDeleteScreen.routeName,
-    page: () => UserDeleteScreen(),
-  ),
+  GetPage(name: UserDeleteScreen.routeName, page: () => UserDeleteScreen()),
   GetPage(
     name: ProtectHomeScreen.routeName,
     page: () => const ProtectHomeScreen(),
@@ -60,25 +47,13 @@ final List<GetPage> _authPages = [
     page: () => const BlockListScreen(),
     fullscreenDialog: true,
   ),
-  GetPage(
-    name: ContactScreen.routeName,
-    page: () => ContactScreen(),
-  )
+  GetPage(name: ContactScreen.routeName, page: () => ContactScreen()),
 ];
 
 final List<GetPage> _mainPages = [
-  GetPage(
-    name: RootScreen.routeName,
-    page: () => const RootScreen(),
-  ),
-  GetPage(
-    name: MainTabScreen.routeName,
-    page: () => const MainTabScreen(),
-  ),
-  GetPage(
-    name: MapScreen.routeName,
-    page: () => MapScreen(),
-  )
+  GetPage(name: RootScreen.routeName, page: () => const RootScreen()),
+  GetPage(name: MainTabScreen.routeName, page: () => const MainTabScreen()),
+  GetPage(name: MapScreen.routeName, page: () => MapScreen()),
 ];
 
 final List<GetPage> _postPages = [
@@ -100,8 +75,5 @@ final List<GetPage> _postPages = [
 ];
 
 final List<GetPage> _messagePages = [
-  GetPage(
-    name: MessageScreen.routeName,
-    page: () => MessageScreen(),
-  )
+  GetPage(name: MessageScreen.routeName, page: () => MessageScreen()),
 ];

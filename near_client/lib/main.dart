@@ -46,30 +46,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
-      return GetMaterialApp(
-        title: 'Help!!!',
-        defaultTransition: Transition.fade,
-        debugShowCheckedModeBanner: kDebugMode,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale('English'), Locale('ja')],
-        locale: const Locale('ja', 'JP'),
-        theme: ThemeData(
-          scaffoldBackgroundColor: ConstsColor.mainBackColor,
-          appBarTheme: AppBarTheme(
-            backgroundColor: ConstsColor.mainBackColor,
-            foregroundColor: Colors.black,
-            elevation: 0,
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return GetMaterialApp(
+          title: 'Help!!!',
+          defaultTransition: Transition.fade,
+          debugShowCheckedModeBanner: kDebugMode,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('English'), Locale('ja')],
+          locale: const Locale('ja', 'JP'),
+          theme: ThemeData(
+            scaffoldBackgroundColor: ConstsColor.mainBackColor,
+            appBarTheme: AppBarTheme(
+              backgroundColor: ConstsColor.mainBackColor,
+              foregroundColor: Colors.black,
+              elevation: 0,
+            ),
+            primarySwatch: Colors.blue,
           ),
-          primarySwatch: Colors.blue,
-        ),
-        getPages: AppRoot.pages,
-        initialRoute: RootScreen.routeName,
-      );
-    });
+          getPages: AppRoot.pages,
+          initialRoute: RootScreen.routeName,
+        );
+      },
+    );
   }
 }

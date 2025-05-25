@@ -71,22 +71,14 @@ class UserAvatarButton extends StatelessWidget {
             size: size,
             onTap: onTap,
           ),
-        if (useSex)
-          SexButton(
-            user: user,
-            size: size / 2,
-          )
+        if (useSex) SexButton(user: user, size: size / 2),
       ],
     );
   }
 }
 
 class SexButton extends StatelessWidget {
-  const SexButton({
-    super.key,
-    required this.user,
-    required this.size,
-  });
+  const SexButton({super.key, required this.user, required this.size});
 
   final User user;
   final double size;
@@ -96,12 +88,11 @@ class SexButton extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      decoration:
-          BoxDecoration(color: user.sex.mainColor, shape: BoxShape.circle),
-      child: Icon(
-        user.sex.icon,
-        size: size / 2,
+      decoration: BoxDecoration(
+        color: user.sex.mainColor,
+        shape: BoxShape.circle,
       ),
+      child: Icon(user.sex.icon, size: size / 2),
     );
   }
 }
@@ -123,11 +114,11 @@ class NeumorphicAvatarButton extends StatelessWidget {
     return Neumorphic(
       padding: const EdgeInsets.all(10),
       style: NeumorphicStyle(
-          boxShape: const NeumorphicBoxShape.circle(),
-          color: ConstsColor.mainBackColor,
-          shadowLightColor: Colors.black45
-          // depth: NeumorphicTheme.embossDepth(context),
-          ),
+        boxShape: const NeumorphicBoxShape.circle(),
+        color: ConstsColor.mainBackColor,
+        shadowLightColor: Colors.black45,
+        // depth: NeumorphicTheme.embossDepth(context),
+      ),
       child: CircleImageButton(
         imageProvider: imageProvider,
         size: size,

@@ -33,29 +33,26 @@ class CommentsScreen extends StatelessWidget {
               floating: false,
             ),
             SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final comment = controller.comments[index];
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final comment = controller.comments[index];
 
-                  return Padding(
-                    padding: caluculatePadding(index),
-                    child: CommentAvatar(
-                      comment: comment,
-                      onMessage: () async {
-                        await controller.pushMessageScreen(comment);
-                      },
-                    ),
-                  );
-                },
-                childCount: controller.comments.length,
-              ),
+                return Padding(
+                  padding: caluculatePadding(index),
+                  child: CommentAvatar(
+                    comment: comment,
+                    onMessage: () async {
+                      await controller.pushMessageScreen(comment);
+                    },
+                  ),
+                );
+              }, childCount: controller.comments.length),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 childAspectRatio: 0.9,
               ),
-            )
+            ),
           ],
         );
       },

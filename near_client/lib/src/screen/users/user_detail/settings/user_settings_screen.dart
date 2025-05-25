@@ -9,9 +9,7 @@ import '../../../../service/location_service.dart';
 import '../../../../utils/consts_color.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({
-    super.key,
-  });
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +35,12 @@ class SettingsScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _selectLocationArea(controller),
-                Obx(() => Container(
+                Obx(
+                  () => Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
+                      horizontal: 10,
+                      vertical: 15,
+                    ),
                     child: Column(
                       children: [
                         Row(
@@ -52,12 +53,10 @@ class SettingsScreen extends StatelessWidget {
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.bold,
                               ),
-                            )
+                            ),
                           ],
                         ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
+                        SizedBox(height: 2.h),
                         NeumorphicSlider(
                           min: kMinDistance.toDouble(),
                           max: kMaxDistance.toDouble(),
@@ -76,10 +75,10 @@ class SettingsScreen extends StatelessWidget {
                           },
                         ),
                       ],
-                    ))),
-                const SizedBox(
-                  height: 10,
+                    ),
+                  ),
                 ),
+                const SizedBox(height: 10),
                 SizedBox(
                   height: 40.h,
                   child: ListView(
@@ -96,8 +95,9 @@ class SettingsScreen extends StatelessWidget {
                         ),
                         ListTile(
                           title: const Text("Version"),
-                          trailing:
-                              Text(controller.currentVersion ?? "Unknown"),
+                          trailing: Text(
+                            controller.currentVersion ?? "Unknown",
+                          ),
                         ),
                         ListTile(
                           title: const Text("ブロック一覧"),
@@ -142,7 +142,7 @@ class SettingsScreen extends StatelessWidget {
                       ],
                     ).toList(),
                   ),
-                )
+                ),
               ],
             );
           },
@@ -157,35 +157,34 @@ class SettingsScreen extends StatelessWidget {
       child: Column(
         children: [
           const Text("位置情報の正確さ"),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           NeumorphicToggle(
             selectedIndex: controller.locationIndex,
             displayForegroundOnlyIfSelected: true,
             style: NeumorphicToggleStyle(
-                backgroundColor: ConstsColor.mainBackColor),
+              backgroundColor: ConstsColor.mainBackColor,
+            ),
             children: LocationDetail.values.map((l) {
               return ToggleElement(
                 background: Center(
-                    child: Text(
-                  l.title,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                )),
+                  child: Text(
+                    l.title,
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
                 foreground: Center(
-                    child: Text(
-                  l.title,
-                  style: const TextStyle(fontWeight: FontWeight.w700),
-                )),
+                  child: Text(
+                    l.title,
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                ),
               );
             }).toList(),
             thumb: Neumorphic(
               style: NeumorphicStyle(
                 color: ConstsColor.mainBackColor,
                 boxShape: NeumorphicBoxShape.roundRect(
-                  const BorderRadius.all(
-                    Radius.circular(12),
-                  ),
+                  const BorderRadius.all(Radius.circular(12)),
                 ),
               ),
             ),

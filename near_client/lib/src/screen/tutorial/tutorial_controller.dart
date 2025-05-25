@@ -38,14 +38,10 @@ class TutorialController extends GetxController {
       PermissionTutorialScreen(
         type: PermissionType.location,
         onPress: () async {
-          await _checkPermission(
-            PermissionType.location,
-          );
+          await _checkPermission(PermissionType.location);
         },
       ),
-      const ProtectHomeScreen(
-        isTutorial: true,
-      ),
+      const ProtectHomeScreen(isTutorial: true),
     ];
   }
 

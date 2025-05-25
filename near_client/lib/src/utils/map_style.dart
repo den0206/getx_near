@@ -10,120 +10,120 @@ const _mapStyle = [
     "featureType": "administrative",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#d6e2e6"}
-    ]
+      {"color": "#d6e2e6"},
+    ],
   },
   {
     "featureType": "administrative",
     "elementType": "geometry.stroke",
     "stylers": [
-      {"color": "#cfd4d5"}
-    ]
+      {"color": "#cfd4d5"},
+    ],
   },
   {
     "featureType": "administrative",
     "elementType": "labels.text.fill",
     "stylers": [
-      {"color": "#7492a8"}
-    ]
+      {"color": "#7492a8"},
+    ],
   },
   {
     "featureType": "administrative.neighborhood",
     "elementType": "labels.text.fill",
     "stylers": [
-      {"lightness": 25}
-    ]
+      {"lightness": 25},
+    ],
   },
   {
     "featureType": "landscape.man_made",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#dde2e3"}
-    ]
+      {"color": "#dde2e3"},
+    ],
   },
   {
     "featureType": "landscape.man_made",
     "elementType": "geometry.stroke",
     "stylers": [
-      {"color": "#cfd4d5"}
-    ]
+      {"color": "#cfd4d5"},
+    ],
   },
   {
     "featureType": "landscape.natural",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#dde2e3"}
-    ]
+      {"color": "#dde2e3"},
+    ],
   },
   {
     "featureType": "landscape.natural",
     "elementType": "labels.text.fill",
     "stylers": [
-      {"color": "#7492a8"}
-    ]
+      {"color": "#7492a8"},
+    ],
   },
   {
     "featureType": "landscape.natural.terrain",
     "elementType": "all",
     "stylers": [
-      {"visibility": "off"}
-    ]
+      {"visibility": "off"},
+    ],
   },
   {
     "featureType": "poi",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#dde2e3"}
-    ]
+      {"color": "#dde2e3"},
+    ],
   },
   {
     "featureType": "poi",
     "elementType": "labels.text.fill",
     "stylers": [
-      {"color": "#588ca4"}
-    ]
+      {"color": "#588ca4"},
+    ],
   },
   {
     "featureType": "poi",
     "elementType": "labels.icon",
     "stylers": [
-      {"saturation": -100}
-    ]
+      {"saturation": -100},
+    ],
   },
   {
     "featureType": "poi.park",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#a9de83"}
-    ]
+      {"color": "#a9de83"},
+    ],
   },
   {
     "featureType": "poi.park",
     "elementType": "geometry.stroke",
     "stylers": [
-      {"color": "#bae6a1"}
-    ]
+      {"color": "#bae6a1"},
+    ],
   },
   {
     "featureType": "poi.sports_complex",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#c6e8b3"}
-    ]
+      {"color": "#c6e8b3"},
+    ],
   },
   {
     "featureType": "poi.sports_complex",
     "elementType": "geometry.stroke",
     "stylers": [
-      {"color": "#bae6a1"}
-    ]
+      {"color": "#bae6a1"},
+    ],
   },
   {
     "featureType": "road",
     "elementType": "labels.text.fill",
     "stylers": [
-      {"color": "#41626b"}
-    ]
+      {"color": "#41626b"},
+    ],
   },
   {
     "featureType": "road",
@@ -131,111 +131,108 @@ const _mapStyle = [
     "stylers": [
       {"saturation": -45},
       {"lightness": 10},
-      {"visibility": "on"}
-    ]
+      {"visibility": "on"},
+    ],
   },
   {
     "featureType": "road.highway",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#c1d1d6"}
-    ]
+      {"color": "#c1d1d6"},
+    ],
   },
   {
     "featureType": "road.highway",
     "elementType": "geometry.stroke",
     "stylers": [
-      {"color": "#a6b5bb"}
-    ]
+      {"color": "#a6b5bb"},
+    ],
   },
   {
     "featureType": "road.highway",
     "elementType": "labels.icon",
     "stylers": [
-      {"visibility": "on"}
-    ]
+      {"visibility": "on"},
+    ],
   },
   {
     "featureType": "road.highway.controlled_access",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#9fb6bd"}
-    ]
+      {"color": "#9fb6bd"},
+    ],
   },
   {
     "featureType": "road.arterial",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#ffffff"}
-    ]
+      {"color": "#ffffff"},
+    ],
   },
   {
     "featureType": "road.local",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#ffffff"}
-    ]
+      {"color": "#ffffff"},
+    ],
   },
   {
     "featureType": "transit",
     "elementType": "labels.icon",
     "stylers": [
-      {"saturation": -70}
-    ]
+      {"saturation": -70},
+    ],
   },
   {
     "featureType": "transit.line",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#b4cbd4"}
-    ]
+      {"color": "#b4cbd4"},
+    ],
   },
   {
     "featureType": "transit.line",
     "elementType": "labels.text.fill",
     "stylers": [
-      {"color": "#588ca4"}
-    ]
+      {"color": "#588ca4"},
+    ],
   },
   {
     "featureType": "transit.station",
     "elementType": "all",
     "stylers": [
-      {"visibility": "off"}
-    ]
+      {"visibility": "off"},
+    ],
   },
   {
     "featureType": "transit.station",
     "elementType": "labels.text.fill",
     "stylers": [
       {"color": "#008cb5"},
-      {"visibility": "on"}
-    ]
+      {"visibility": "on"},
+    ],
   },
   {
     "featureType": "transit.station.airport",
     "elementType": "geometry.fill",
     "stylers": [
       {"saturation": -100},
-      {"lightness": -5}
-    ]
+      {"lightness": -5},
+    ],
   },
   {
     "featureType": "water",
     "elementType": "geometry.fill",
     "stylers": [
-      {"color": "#a6cbe3"}
-    ]
-  }
+      {"color": "#a6cbe3"},
+    ],
+  },
 ];
 
 final mapStyle = jsonEncode(_mapStyle);
 
 // 新宿駅
-const initialCameraPosition = CameraPosition(
-  target: shinjukuSta,
-  zoom: 10,
-);
+const initialCameraPosition = CameraPosition(target: shinjukuSta, zoom: 10);
 
 const shinjukuSta = LatLng(35.6875, 139.703056);
 
@@ -253,23 +250,29 @@ Future<BitmapDescriptor> iconFromAsset(
   final double radius = size / 2;
 
   final Path clipPath = Path();
-  clipPath.addRRect(RRect.fromRectAndRadius(
+  clipPath.addRRect(
+    RRect.fromRectAndRadius(
       Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
-      const Radius.circular(100)));
+      const Radius.circular(100),
+    ),
+  );
 
   canvas.clipPath(clipPath);
 
   ByteData data = await rootBundle.load(assetPath);
-  ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-      targetWidth: size);
+  ui.Codec codec = await ui.instantiateImageCodec(
+    data.buffer.asUint8List(),
+    targetWidth: size,
+  );
   ui.FrameInfo fi = await codec.getNextFrame();
 
   paintImage(
-      fit: BoxFit.cover,
-      alignment: Alignment.center,
-      canvas: canvas,
-      rect: Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
-      image: fi.image);
+    fit: BoxFit.cover,
+    alignment: Alignment.center,
+    canvas: canvas,
+    rect: Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
+    image: fi.image,
+  );
 
   if (addBorder) {
     //draw Border
@@ -279,8 +282,10 @@ Future<BitmapDescriptor> iconFromAsset(
     canvas.drawCircle(Offset(radius, radius), radius, paint);
   }
 
-  final _image =
-      await pictureRecorder.endRecording().toImage(size, (size * 1.1).toInt());
+  final _image = await pictureRecorder.endRecording().toImage(
+    size,
+    (size * 1.1).toInt(),
+  );
   final temp = await _image.toByteData(format: ui.ImageByteFormat.png);
   return BitmapDescriptor.bytes(temp!.buffer.asUint8List());
 }

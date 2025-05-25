@@ -16,11 +16,7 @@ class RootScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isJailBroken) {
-      return const Scaffold(
-        body: Center(
-          child: Text("JailBrokenが検出されました"),
-        ),
-      );
+      return const Scaffold(body: Center(child: Text("JailBrokenが検出されました")));
     }
 
     return GetX<AuthService>(
@@ -40,7 +36,7 @@ class RootScreen extends StatelessWidget {
                   color: Color.fromRGBO(0, 0, 0, 0.6),
                 ),
                 child: const PlainLoadingWidget(),
-              )
+              ),
           ],
         );
       },

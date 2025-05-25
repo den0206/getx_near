@@ -46,8 +46,9 @@ LocationDetail getLocationDetail(String? value) {
   if (value == null) return LocationDetail.high;
 
   /// String to enum
-  final LocationDetail l =
-      LocationDetail.values.firstWhere((c) => c.name == value);
+  final LocationDetail l = LocationDetail.values.firstWhere(
+    (c) => c.name == value,
+  );
 
   return l;
 }
@@ -77,8 +78,9 @@ class LocationService {
       if (!locationEnable) throw Exception("現在地を取得できません");
 
       final UserAPI _userAPI = UserAPI();
-      final LocationDetail localLoc =
-          getLocationDetail(await StorageKey.locationSize.loadString());
+      final LocationDetail localLoc = getLocationDetail(
+        await StorageKey.locationSize.loadString(),
+      );
       print("精度は${localLoc.title}");
 
       const LocationSettings locationSettings = LocationSettings(
@@ -87,14 +89,12 @@ class LocationService {
       );
 
       final Position current = await Geolocator.getCurrentPosition(
-          locationSettings: locationSettings);
+        locationSettings: locationSettings,
+      );
 
       if (isRealDevice && current.isMocked) throw Exception("不正な位置情報が検出されました。");
 
-      final cood = {
-        "lng": current.longitude,
-        "lat": current.latitude,
-      };
+      final cood = {"lng": current.longitude, "lat": current.latitude};
 
       await _userAPI.updateLocation(cood);
 
@@ -106,8 +106,10 @@ class LocationService {
   }
 
   Future<Placemark> positionToAddress(Position position) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
     return placemarks[0];
   }
 
@@ -165,6 +167,9 @@ class LocationService {
 
 int getDistansePoints(LatLng from, LatLng to) {
   return Geolocator.distanceBetween(
-          from.latitude, from.longitude, to.latitude, to.longitude)
-      .round();
+    from.latitude,
+    from.longitude,
+    to.latitude,
+    to.longitude,
+  ).round();
 }

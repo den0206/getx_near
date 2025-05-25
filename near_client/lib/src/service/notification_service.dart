@@ -7,11 +7,7 @@ import 'package:get/get.dart';
 import 'package:getx_near/main.dart';
 import 'package:getx_near/src/api/notification_api.dart';
 
-enum NotificationType {
-  message,
-  post,
-  comment,
-}
+enum NotificationType { message, post, comment }
 
 extension NotificationTypeEXT on NotificationType {
   String get title {
@@ -88,7 +84,8 @@ class NotificationService extends GetxService {
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.createNotificationChannel(channel);
 
     await _firebaseMessaging.setForegroundNotificationPresentationOptions(
@@ -106,12 +103,10 @@ class NotificationService extends GetxService {
   }
 
   void listenForeground() {
-    FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) {
-        print("FOREGROUND");
-        extractBadgeFromNotification(message);
-      },
-    );
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("FOREGROUND");
+      extractBadgeFromNotification(message);
+    });
 
     // FirebaseMessaging.onMessageOpenedApp.listen(
     //   (RemoteMessage message) {
@@ -197,31 +192,30 @@ class NotificationService extends GetxService {
   }
 }
 
-
-    // final Map<String, dynamic> data = {
-    //   "registration_ids": tokens,
-    //   "notification": {
-    //     "title": type.title,
-    //     "body": type.content,
-    //     "content_available": true,
-    //     "priority": "high",
-    //     "sound": soundPath,
-    //     "badge": badgeNumber,
-    //     "click_action": "FLUTTER_NOTIFICATION_CLICK",
-    //   },
-    //   "apns": {
-    //     "payload": {
-    //       "aps": {
-    //         "sound": soundPath,
-    //       }
-    //     },
-    //   },
-    //   "data": {
-    //     // Passできる値
-    //     "priority": "high",
-    //     "sound": soundPath,
-    //     "content_available": true,
-    //     "bodyText": type.content,
-    //     "badge": badgeNumber,
-    //   }
-    // };
+// final Map<String, dynamic> data = {
+//   "registration_ids": tokens,
+//   "notification": {
+//     "title": type.title,
+//     "body": type.content,
+//     "content_available": true,
+//     "priority": "high",
+//     "sound": soundPath,
+//     "badge": badgeNumber,
+//     "click_action": "FLUTTER_NOTIFICATION_CLICK",
+//   },
+//   "apns": {
+//     "payload": {
+//       "aps": {
+//         "sound": soundPath,
+//       }
+//     },
+//   },
+//   "data": {
+//     // Passできる値
+//     "priority": "high",
+//     "sound": soundPath,
+//     "content_available": true,
+//     "bodyText": type.content,
+//     "badge": badgeNumber,
+//   }
+// };

@@ -3,8 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class CustomCountdownTimer extends StatefulWidget {
-  const CustomCountdownTimer(
-      {super.key, required this.endTime, this.onEnd, this.fontSize});
+  const CustomCountdownTimer({
+    super.key,
+    required this.endTime,
+    this.onEnd,
+    this.fontSize,
+  });
 
   final DateTime endTime;
   final VoidCallback? onEnd;
@@ -86,25 +90,29 @@ class _CustomCountdownTimerState extends State<CustomCountdownTimer> {
 }
 
 class CountDownLabel extends StatelessWidget {
-  const CountDownLabel(
-      {super.key, required this.label, required this.value, this.fontSize});
+  const CountDownLabel({
+    super.key,
+    required this.label,
+    required this.value,
+    this.fontSize,
+  });
   final String label;
   final String value;
   final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
-    return Text.rich(TextSpan(
+    return Text.rich(
+      TextSpan(
         style: TextStyle(fontSize: fontSize ?? 15, fontWeight: FontWeight.bold),
         children: [
           TextSpan(
-              text: value,
-              style: const TextStyle(
-                decoration: TextDecoration.underline,
-              )),
-          TextSpan(
-            text: label,
+            text: value,
+            style: const TextStyle(decoration: TextDecoration.underline),
           ),
-        ]));
+          TextSpan(text: label),
+        ],
+      ),
+    );
   }
 }

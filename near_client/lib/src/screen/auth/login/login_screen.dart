@@ -43,18 +43,14 @@ class LoginScreen extends StatelessWidget {
                         labelText: "Email",
                         iconData: Icons.email,
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      const SizedBox(height: 15),
                       CustomTextField(
                         controller: controller.passwordController,
                         labelText: "Password",
                         isSecure: true,
                         iconData: Icons.lock,
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      const SizedBox(height: 15),
                       Align(
                         alignment: Alignment.centerRight,
                         child: NeumorphicTextButton(
@@ -64,9 +60,7 @@ class LoginScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Obx(
                         () => CustomButton(
                           title: "Login",
@@ -78,9 +72,7 @@ class LoginScreen extends StatelessWidget {
                               : null,
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       NeumorphicTextButton(
                         title: "Sign Up",
                         onPressed: () {
@@ -129,25 +121,28 @@ Future<void> showTermsDialog(BuildContext context) {
                           future: rootBundle.loadString(
                             "assets/markdown/privacy_jpn.md",
                           ),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
-                            if (!snapshot.hasData) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
+                          builder:
+                              (
+                                BuildContext context,
+                                AsyncSnapshot<String> snapshot,
+                              ) {
+                                if (!snapshot.hasData) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
 
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: Markdown(
-                                data: snapshot.data!,
-                                shrinkWrap: true,
-                              ),
-                            );
-                          },
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(color: Colors.black),
+                                  ),
+                                  child: Markdown(
+                                    data: snapshot.data!,
+                                    shrinkWrap: true,
+                                  ),
+                                );
+                              },
                         ),
                       ),
                       Expanded(
@@ -184,7 +179,7 @@ Future<void> showTermsDialog(BuildContext context) {
                             : () {
                                 current.setTerms(context);
                               },
-                      )
+                      ),
                     ],
                   ),
                 ),

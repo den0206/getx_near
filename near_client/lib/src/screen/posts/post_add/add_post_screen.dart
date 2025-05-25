@@ -41,7 +41,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                   onPressed: () {
                     controller.showTutorial(context);
                   },
-                )
+                ),
               ],
             ),
             actions: [
@@ -51,10 +51,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                   description: "このボタンで投稿します。",
                   color: ConstsColor.mainGreenColor!.withValues(alpha: 0.4),
                   child: NeumorphicIconButton(
-                    icon: const Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    ),
+                    icon: const Icon(Icons.send, color: Colors.white),
                     onPressed: controller.canSend.value
                         ? () {
                             showDialog(
@@ -76,18 +73,14 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 20,
-              )
+              const SizedBox(width: 20),
             ],
           ),
           body: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,8 +88,9 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: CircleImageButton(
-                        imageProvider:
-                            getUserImage(AuthService.to.currentUser.value!),
+                        imageProvider: getUserImage(
+                          AuthService.to.currentUser.value!,
+                        ),
                         size: 40.sp,
                         border: Border.all(color: Colors.white, width: 2),
                       ),
@@ -115,8 +109,8 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
                           focusColor: Colors.black,
                           border: null,
                           focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.transparent)),
+                            borderSide: BorderSide(color: Colors.transparent),
+                          ),
                           contentPadding: EdgeInsets.all(10),
                         ),
                         onChanged: controller.streamText,
@@ -166,7 +160,8 @@ class AbovePostField extends GetView<AddPostController> {
                         Obx(
                           () => NeumorphicRadio(
                             style: commonRatioStyle(
-                                selectedColor: ConstsColor.mainGreenColor),
+                              selectedColor: ConstsColor.mainGreenColor,
+                            ),
                             padding: const EdgeInsets.all(12),
                             value: expire,
                             groupValue: controller.expireTime.value,
@@ -180,7 +175,7 @@ class AbovePostField extends GetView<AddPostController> {
                         Text(
                           "${expire.title} に削除",
                           style: TextStyle(fontSize: 7.sp),
-                        )
+                        ),
                       ],
                     ),
                   );
@@ -195,16 +190,12 @@ class AbovePostField extends GetView<AddPostController> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                CustomSlider(
-                  rxValue: controller.emergencyValue,
-                ),
+                CustomSlider(rxValue: controller.emergencyValue),
                 IgnorePointer(
                   child: Obx(
                     () => Text(
                       "緊急度 ${controller.emergency.value} %",
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -213,9 +204,7 @@ class AbovePostField extends GetView<AddPostController> {
               ],
             ),
           ),
-          const SizedBox(
-            height: 10,
-          )
+          const SizedBox(height: 10),
         ],
       ),
     );

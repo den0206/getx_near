@@ -29,13 +29,11 @@ class NotificationAPI extends APIBase {
   }
 }
 
+// final String? serverKey = dotenv.env["FCM_SERVER_KEY"];
+// NotificationAPI() : super(EndPoint.notification) {
+//   this.host = "fcm.googleapis.com";
+// }
 
-
-  // final String? serverKey = dotenv.env["FCM_SERVER_KEY"];
-  // NotificationAPI() : super(EndPoint.notification) {
-  //   this.host = "fcm.googleapis.com";
-  // }
-
-  // final Uri uri = Uri.https(host, "${endPoint.name}/send");
-  // if (serverKey == null) throw new Exception("No Server Key");
-  // headers["Authorization"] = "key=${serverKey}";
+// final Uri uri = Uri.https(host, "${endPoint.name}/send");
+// if (serverKey == null) throw new Exception("No Server Key");
+// headers["Authorization"] = "key=${serverKey}";

@@ -5,11 +5,7 @@ class GetSizeWidget extends StatefulWidget {
   final Widget child;
   final Function onChange;
 
-  const GetSizeWidget({
-    super.key,
-    required this.onChange,
-    required this.child,
-  });
+  const GetSizeWidget({super.key, required this.onChange, required this.child});
 
   @override
   _GetSizeWidgetState createState() => _GetSizeWidgetState();
@@ -19,10 +15,7 @@ class _GetSizeWidgetState extends State<GetSizeWidget> {
   @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
-    return Container(
-      key: widgetKey,
-      child: widget.child,
-    );
+    return Container(key: widgetKey, child: widget.child);
   }
 
   var widgetKey = GlobalKey();

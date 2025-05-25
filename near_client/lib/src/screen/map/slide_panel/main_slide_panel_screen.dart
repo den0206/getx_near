@@ -51,8 +51,9 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                     width: 30,
                     height: 5,
                     decoration: const BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                      color: Colors.black,
+                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    ),
                   ),
                   OriginCarousel(
                     pageController: controller.pageController,
@@ -84,17 +85,11 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                                 const Spacer(),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
-                                  child: HelpButton(
-                                    post: post,
-                                    size: 23.sp,
-                                  ),
+                                  child: HelpButton(post: post, size: 23.sp),
                                 ),
                               ],
                             ),
-                            UserAvatarButton(
-                              user: post.user,
-                              size: 70.sp,
-                            ),
+                            UserAvatarButton(user: post.user, size: 70.sp),
                             AlertIndicator(
                               intValue: post.emergency,
                               level: post.level,
@@ -104,8 +99,9 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                               Text(
                                 "約 ${distanceToString(post.distance!)} km",
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              )
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                           ],
                         ),
                         onTap: () {
@@ -113,7 +109,7 @@ class MainSlideUpPanel extends GetView<MainSlidePanelController> {
                         },
                       );
                     },
-                  )
+                  ),
                 ],
               ),
             );

@@ -45,29 +45,34 @@ class MyPostTabScreen extends StatelessWidget {
     return DefaultTabController(
       length: MyPostsType.values.length,
       child: Scaffold(
-          appBar: AppBar(
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(20),
-              child: TabBar(
-                  indicatorColor: Colors.grey,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  indicatorWeight: 4,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  tabs: MyPostsType.values
-                      .map((type) => Tab(
-                              child: Text(
-                            type.title,
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: Colors.black87,
-                            ),
-                          )))
-                      .toList()),
+        appBar: AppBar(
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(20),
+            child: TabBar(
+              indicatorColor: Colors.grey,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              indicatorWeight: 4,
+              indicatorSize: TabBarIndicatorSize.label,
+              tabs: MyPostsType.values
+                  .map(
+                    (type) => Tab(
+                      child: Text(
+                        type.title,
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
-          body: TabBarView(
-            children: MyPostsType.values.map((type) => type.screen).toList(),
-          )),
+        ),
+        body: TabBarView(
+          children: MyPostsType.values.map((type) => type.screen).toList(),
+        ),
+      ),
     );
   }
 }
@@ -100,7 +105,10 @@ class LengthArea extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Container(
       padding: const EdgeInsets.only(right: 20),
       decoration: BoxDecoration(color: ConstsColor.mainBackColor),
@@ -108,9 +116,7 @@ class LengthArea extends SliverPersistentHeaderDelegate {
         alignment: Alignment.centerRight,
         child: Text(
           "$postsLength 件",
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
     );

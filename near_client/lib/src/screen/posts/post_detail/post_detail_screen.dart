@@ -54,10 +54,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                     elevation: 0,
                     actions: [
                       NeumorphicIconButton(
-                        icon: Icon(
-                          Icons.description,
-                          size: 13.sp,
-                        ),
+                        icon: Icon(Icons.description, size: 13.sp),
                         onPressed: () {
                           controller.showTutorial(context);
                         },
@@ -99,7 +96,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                                         decoration: TextDecoration.underline,
                                         fontSize: 8.sp,
                                       ),
-                                    )
+                                    ),
                                   ],
                                   style: const TextStyle(
                                     color: Colors.red,
@@ -109,7 +106,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                                 textAlign: TextAlign.end,
                               ),
                             ] else ...[
-                              const Spacer()
+                              const Spacer(),
                             ],
                             commonShowcaseWidget(
                               key: controller.tutorialKey5,
@@ -176,7 +173,9 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                                             title: Text(current.mapName),
                                             onTap: () {
                                               controller.tryMapLauncher(
-                                                  context, current);
+                                                context,
+                                                current,
+                                              );
                                             },
                                           );
                                         } else {
@@ -204,7 +203,8 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                               child: LiquidLinearProgressIndicator(
                                 value: post.emergency / 100,
                                 valueColor: AlwaysStoppedAnimation(
-                                    post.level.mainColor),
+                                  post.level.mainColor,
+                                ),
                                 backgroundColor: const Color(0xffD6D6D6),
                                 borderColor: Colors.grey,
                                 borderWidth: 2.0,
@@ -236,45 +236,44 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                   SliverToBoxAdapter(
                     child: Container(
                       decoration: const BoxDecoration(
-                          border:
-                              Border(bottom: BorderSide(color: Colors.grey))),
+                        border: Border(bottom: BorderSide(color: Colors.grey)),
+                      ),
                       height: 20,
                     ),
                   ),
                   SliverFixedExtentList(
                     itemExtent: 80,
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        if (index == 0) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Comment",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.sp),
+                    delegate: SliverChildBuilderDelegate((
+                      BuildContext context,
+                      int index,
+                    ) {
+                      if (index == 0) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Comment",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.sp,
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text("${controller.commentCount}"),
-                              ],
-                            ),
-                          );
-                        }
+                              ),
+                              const SizedBox(width: 10),
+                              Text("${controller.commentCount}"),
+                            ],
+                          ),
+                        );
+                      }
 
-                        if (index == controller.sorted.length &&
-                            controller.cellLoading) {
-                          return const LoadingCellWidget();
-                        }
+                      if (index == controller.sorted.length &&
+                          controller.cellLoading) {
+                        return const LoadingCellWidget();
+                      }
 
-                        final comment = controller.sorted[index - 1];
-                        return CommentCell(comment: comment);
-                      },
-                      childCount: controller.sorted.length + 1,
-                    ),
+                      final comment = controller.sorted[index - 1];
+                      return CommentCell(comment: comment);
+                    }, childCount: controller.sorted.length + 1),
                   ),
                 ],
               );
@@ -325,21 +324,17 @@ class PoptPopMenu extends GetView<PostDetailController> {
             return;
         }
       },
-      icon: const Icon(
-        Icons.more_vert,
-        color: Colors.black,
-      ),
+      icon: const Icon(Icons.more_vert, color: Colors.black),
       itemBuilder: (context) {
         return <PopupMenuEntry<String>>[
           if (post.isCurrent)
             const PopupMenuItem<String>(
               value: 'delete',
               child: ListTile(
-                  iconColor: Colors.red,
-                  leading: Icon(Icons.delete),
-                  title: Text(
-                    "削除",
-                  )),
+                iconColor: Colors.red,
+                leading: Icon(Icons.delete),
+                title: Text("削除"),
+              ),
             )
           else
             const PopupMenuItem<String>(
@@ -347,18 +342,12 @@ class PoptPopMenu extends GetView<PostDetailController> {
               child: ListTile(
                 iconColor: Colors.red,
                 leading: Icon(Icons.report),
-                title: Text(
-                  "通報",
-                ),
+                title: Text("通報"),
               ),
             ),
           const PopupMenuItem<String>(
             value: 'cancel',
-            child: ListTile(
-                leading: Icon(Icons.close),
-                title: Text(
-                  "キャンセル",
-                )),
+            child: ListTile(leading: Icon(Icons.close), title: Text("キャンセル")),
           ),
         ];
       },
@@ -381,7 +370,10 @@ class ContentArea extends SliverPersistentHeaderDelegate {
   final PostDetailController controller;
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     final post = controller.post;
     return Container(
       height: maxExtent,
@@ -396,23 +388,16 @@ class ContentArea extends SliverPersistentHeaderDelegate {
               child: Text(
                 "Content",
                 textScaler: TextScaler.linear(controller.textScale.value),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.sp,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Obx(
               () => Text(
                 post.content,
                 textAlign: TextAlign.start,
                 softWrap: true,
-                style: TextStyle(
-                  fontSize: 12.sp,
-                ),
+                style: TextStyle(fontSize: 12.sp),
                 // maxLines: 6,
                 textScaler: TextScaler.linear(controller.textScale.value),
                 // overflow: TextOverflow.ellipsis
@@ -440,15 +425,19 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
   final PostDetailController controller;
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return commonShowcaseWidget(
       key: controller.tutorialKey3,
       description: "コメントをして助ける意思を伝えましょう!",
       child: Container(
         constraints: BoxConstraints(maxHeight: maxExtent),
         decoration: BoxDecoration(
-            color: ConstsColor.mainBackColor,
-            border: const Border(top: BorderSide(color: Colors.grey))),
+          color: ConstsColor.mainBackColor,
+          border: const Border(top: BorderSide(color: Colors.grey)),
+        ),
         child: ListTile(
           title: const BlinkingWidet(
             duration: Duration(seconds: 2),
@@ -457,14 +446,9 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
           leading: CircleImageButton(
             imageProvider: getUserImage(AuthService.to.currentUser.value!),
             size: 30.sp,
-            border: Border.all(
-              color: Colors.white,
-              width: 2,
-            ),
+            border: Border.all(color: Colors.white, width: 2),
           ),
-          trailing: const Icon(
-            Icons.expand_less,
-          ),
+          trailing: const Icon(Icons.expand_less),
           onTap: () {
             showModalBottomSheet(
               context: context,
@@ -498,25 +482,19 @@ class AboveCommentField extends GetView<PostDetailController> {
           maxLines: 1,
           maxLength: 50,
           decoration: const InputDecoration(
-              contentPadding: EdgeInsets.all(10.0),
-              hintText: " Add Comment...",
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.transparent,
-                ),
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.transparent,
-                ),
-              ),
-              counterText: ""),
+            contentPadding: EdgeInsets.all(10.0),
+            hintText: " Add Comment...",
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+            ),
+            counterText: "",
+          ),
         ),
         trailing: IconButton(
-          icon: Icon(
-            Icons.send,
-            color: ConstsColor.mainGreenColor,
-          ),
+          icon: Icon(Icons.send, color: ConstsColor.mainGreenColor),
           onPressed: () {
             Navigator.pop(context);
             dismisskeyBord(context);
@@ -529,10 +507,7 @@ class AboveCommentField extends GetView<PostDetailController> {
 }
 
 class CommentCell extends GetView<PostDetailController> {
-  const CommentCell({
-    super.key,
-    required this.comment,
-  });
+  const CommentCell({super.key, required this.comment});
 
   final Comment comment;
 
@@ -548,21 +523,18 @@ class CommentCell extends GetView<PostDetailController> {
               useNeumorphic: false,
               size: 30.sp,
             ),
-            const SizedBox(
-              width: 20,
-            ),
+            const SizedBox(width: 20),
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 60.w),
               child: Neumorphic(
                 style: commonNeumorphic(depth: 0.4),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
                 child: AutoSizeText(
                   comment.text,
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                    height: 1.5,
-                  ),
+                  style: TextStyle(fontSize: 13.sp, height: 1.5),
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
                   minFontSize: 10,
@@ -575,8 +547,8 @@ class CommentCell extends GetView<PostDetailController> {
               Text(
                 " ${distanceToString(comment.distance!)} km",
                 style: const TextStyle(fontWeight: FontWeight.bold),
-              )
-            ]
+              ),
+            ],
           ],
         ),
         onTap: () {

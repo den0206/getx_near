@@ -36,17 +36,12 @@ class ProtectHomeScreen extends StatelessWidget {
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Markdown(
-                data: _markDownData,
-                shrinkWrap: true,
-              ),
+              Markdown(data: _markDownData, shrinkWrap: true),
               Text(
                 controller.currentUser.hasHome && controller.address != null
                     ? "${controller.address} 周辺"
                     : "未登録です",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               NeumorphicIconButton(
                 depth: !controller.currentUser.hasHome ? 1 : -1,
@@ -75,9 +70,12 @@ class ProtectHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              Obx(() => Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              Obx(
+                () => Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 15,
+                  ),
                   child: Column(
                     children: [
                       Row(
@@ -90,12 +88,10 @@ class ProtectHomeScreen extends StatelessWidget {
                               fontSize: 15.sp,
                               fontWeight: FontWeight.bold,
                             ),
-                          )
+                          ),
                         ],
                       ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
+                      SizedBox(height: 2.h),
                       NeumorphicSlider(
                         min: kMinDistance.toDouble(),
                         max: kMaxDistance.toDouble(),
@@ -114,10 +110,10 @@ class ProtectHomeScreen extends StatelessWidget {
                         },
                       ),
                     ],
-                  ))),
-              SizedBox(
-                height: 8.h,
-              )
+                  ),
+                ),
+              ),
+              SizedBox(height: 8.h),
             ],
           );
         },

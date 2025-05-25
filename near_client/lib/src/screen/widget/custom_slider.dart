@@ -41,11 +41,12 @@ AlertLevel getAlert(double current) {
 }
 
 class AlertIndicator extends StatelessWidget {
-  const AlertIndicator(
-      {super.key,
-      required this.intValue,
-      required this.level,
-      this.height = 25});
+  const AlertIndicator({
+    super.key,
+    required this.intValue,
+    required this.level,
+    this.height = 25,
+  });
 
   final int intValue;
   final AlertLevel level;
@@ -76,7 +77,7 @@ class AlertIndicator extends StatelessWidget {
             // color: Colors.black54,
             fontSize: 15.sp,
           ),
-        )
+        ),
       ],
     );
   }
@@ -109,9 +110,10 @@ class HelpButton extends StatelessWidget {
     return NeumorphicButton(
       padding: const EdgeInsets.all(10),
       style: NeumorphicStyle(
-          boxShape: const NeumorphicBoxShape.circle(),
-          color: ConstsColor.mainBackColor,
-          depth: post.isLiked ? -2 : 0.6),
+        boxShape: const NeumorphicBoxShape.circle(),
+        color: ConstsColor.mainBackColor,
+        depth: post.isLiked ? -2 : 0.6,
+      ),
       onPressed: onTap,
       child: BlinkingWidet(
         duration: const Duration(milliseconds: 500),
@@ -130,16 +132,8 @@ class HelpButton extends StatelessWidget {
             //   size: size,
             // ),
             if (uselabel)
-              Text(
-                "Want Help!",
-                style: TextStyle(color: mainColor),
-              ),
-            Text(
-              "${post.likes.length}",
-              style: TextStyle(
-                color: mainColor,
-              ),
-            )
+              Text("Want Help!", style: TextStyle(color: mainColor)),
+            Text("${post.likes.length}", style: TextStyle(color: mainColor)),
           ],
         ),
       ),
@@ -148,11 +142,7 @@ class HelpButton extends StatelessWidget {
 }
 
 class CustomSlider extends StatelessWidget {
-  const CustomSlider({
-    super.key,
-    required this.rxValue,
-    this.trackHeight = 30,
-  });
+  const CustomSlider({super.key, required this.rxValue, this.trackHeight = 30});
 
   final RxDouble rxValue;
   final double trackHeight;
@@ -164,24 +154,28 @@ class CustomSlider extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SliderTheme(
         data: SliderTheme.of(context).copyWith(
-            // activeTrackColor: ConstsColor.mainGreenColor,
-            trackHeight: trackHeight,
-            thumbShape: RoundSliderThumbShape(
-                enabledThumbRadius: trackHeight / 2,
-                disabledThumbRadius: 5,
-                elevation: 0),
-            trackShape: const RoundSliderTrackShape()),
-        child: Obx(() => Slider(
-              value: rxValue.value,
-              min: 0,
-              max: 100.0,
-              activeColor: level.mainColor,
-              inactiveColor: const Color(0xFF8D8E98),
-              onChanged: (double newValue) {
-                level = getAlert(newValue);
-                rxValue.call(newValue);
-              },
-            )),
+          // activeTrackColor: ConstsColor.mainGreenColor,
+          trackHeight: trackHeight,
+          thumbShape: RoundSliderThumbShape(
+            enabledThumbRadius: trackHeight / 2,
+            disabledThumbRadius: 5,
+            elevation: 0,
+          ),
+          trackShape: const RoundSliderTrackShape(),
+        ),
+        child: Obx(
+          () => Slider(
+            value: rxValue.value,
+            min: 0,
+            max: 100.0,
+            activeColor: level.mainColor,
+            inactiveColor: const Color(0xFF8D8E98),
+            onChanged: (double newValue) {
+              level = getAlert(newValue);
+              rxValue.call(newValue);
+            },
+          ),
+        ),
       ),
     );
   }
@@ -193,12 +187,13 @@ class RoundSliderTrackShape extends SliderTrackShape {
   final double disabledThumbGapWidth;
 
   @override
-  Rect getPreferredRect(
-      {required RenderBox parentBox,
-      Offset offset = Offset.zero,
-      required SliderThemeData sliderTheme,
-      bool? isEnabled,
-      bool? isDiscrete}) {
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool? isEnabled,
+    bool? isDiscrete,
+  }) {
     final double overlayWidth = sliderTheme.overlayShape!
         .getPreferredSize(isEnabled ?? true, isDiscrete ?? true)
         .width;
@@ -218,25 +213,30 @@ class RoundSliderTrackShape extends SliderTrackShape {
   }
 
   @override
-  void paint(PaintingContext context, Offset offset,
-      {required RenderBox parentBox,
-      required SliderThemeData sliderTheme,
-      required Animation<double> enableAnimation,
-      required Offset thumbCenter,
-      Offset? secondaryOffset,
-      bool? isEnabled,
-      bool? isDiscrete,
-      required TextDirection textDirection}) {
+  void paint(
+    PaintingContext context,
+    Offset offset, {
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required Animation<double> enableAnimation,
+    required Offset thumbCenter,
+    Offset? secondaryOffset,
+    bool? isEnabled,
+    bool? isDiscrete,
+    required TextDirection textDirection,
+  }) {
     if (sliderTheme.trackHeight == 0) {
       return;
     }
 
     final ColorTween activeTrackColorTween = ColorTween(
-        begin: sliderTheme.disabledActiveTrackColor,
-        end: sliderTheme.activeTrackColor);
+      begin: sliderTheme.disabledActiveTrackColor,
+      end: sliderTheme.activeTrackColor,
+    );
     final ColorTween inactiveTrackColorTween = ColorTween(
-        begin: sliderTheme.disabledInactiveTrackColor,
-        end: sliderTheme.inactiveTrackColor);
+      begin: sliderTheme.disabledInactiveTrackColor,
+      end: sliderTheme.inactiveTrackColor,
+    );
     final Paint activePaint = Paint()
       ..color = activeTrackColorTween.evaluate(enableAnimation)!;
     final Paint inactivePaint = Paint()
@@ -258,7 +258,7 @@ class RoundSliderTrackShape extends SliderTrackShape {
     if (isEnabled != null && !isEnabled) {
       final double disabledThumbRadius =
           sliderTheme.thumbShape!.getPreferredSize(false, isDiscrete!).width /
-              2.0;
+          2.0;
       final double gap = disabledThumbGapWidth * (1.0 - enableAnimation.value);
       horizontalAdjustment = disabledThumbRadius + gap;
     }
@@ -270,41 +270,50 @@ class RoundSliderTrackShape extends SliderTrackShape {
       isEnabled: isEnabled,
       isDiscrete: isDiscrete,
     );
-    final Rect leftTrackSegment = Rect.fromLTRB(trackRect.left, trackRect.top,
-        thumbCenter.dx - horizontalAdjustment, trackRect.bottom);
+    final Rect leftTrackSegment = Rect.fromLTRB(
+      trackRect.left,
+      trackRect.top,
+      thumbCenter.dx - horizontalAdjustment,
+      trackRect.bottom,
+    );
 
     final th = sliderTheme.trackHeight! * 1 / 2;
 
-// Left Arc
+    // Left Arc
 
     context.canvas.drawArc(
-        Rect.fromCircle(
-            center: Offset(trackRect.left, trackRect.top + th), radius: th),
-        -pi * 3 / 2, // -270 degrees
-        pi, // 180 degrees
-        false,
-        trackRect.left - thumbCenter.dx == 0.0
-            ? rightTrackPaint
-            : leftTrackPaint);
+      Rect.fromCircle(
+        center: Offset(trackRect.left, trackRect.top + th),
+        radius: th,
+      ),
+      -pi * 3 / 2, // -270 degrees
+      pi, // 180 degrees
+      false,
+      trackRect.left - thumbCenter.dx == 0.0 ? rightTrackPaint : leftTrackPaint,
+    );
 
-// Right Arc
+    // Right Arc
 
     context.canvas.drawArc(
-        Rect.fromCircle(
-            center: Offset(trackRect.right, trackRect.top + th), radius: th),
-        -pi / 2, // -90 degrees
-        pi, // 180 degrees
-        false,
-        trackRect.right - thumbCenter.dx == 0.0
-            ? leftTrackPaint
-            : rightTrackPaint);
+      Rect.fromCircle(
+        center: Offset(trackRect.right, trackRect.top + th),
+        radius: th,
+      ),
+      -pi / 2, // -90 degrees
+      pi, // 180 degrees
+      false,
+      trackRect.right - thumbCenter.dx == 0.0
+          ? leftTrackPaint
+          : rightTrackPaint,
+    );
 
     context.canvas.drawRect(leftTrackSegment, leftTrackPaint);
     final Rect rightTrackSegment = Rect.fromLTRB(
-        thumbCenter.dx + horizontalAdjustment,
-        trackRect.top,
-        trackRect.right,
-        trackRect.bottom);
+      thumbCenter.dx + horizontalAdjustment,
+      trackRect.top,
+      trackRect.right,
+      trackRect.bottom,
+    );
     context.canvas.drawRect(rightTrackSegment, rightTrackPaint);
   }
 }

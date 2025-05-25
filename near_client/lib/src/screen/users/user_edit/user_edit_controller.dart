@@ -60,7 +60,9 @@ class UserEditController extends LoadingGetController {
 
     try {
       final res = await _userAPI.updateUser(
-          updateData: editUser.toMap(), avatarFile: userImage.value);
+        updateData: editUser.toMap(),
+        avatarFile: userImage.value,
+      );
 
       if (!res.status) return;
       final newUser = User.fromMap(res.data);

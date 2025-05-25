@@ -19,9 +19,7 @@ class BlockListScreen extends StatelessWidget {
       init: BlockListController(),
       builder: (controller) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('ブロック一覧'),
-          ),
+          appBar: AppBar(title: const Text('ブロック一覧')),
           body: ListView.separated(
             separatorBuilder: (context, index) => const Divider(),
             itemCount: controller.blocks.length,
@@ -40,7 +38,7 @@ class BlockListScreen extends StatelessWidget {
                       onPressed: (context) {
                         controller.blockUser(user);
                       },
-                    )
+                    ),
                   ],
                 ),
                 child: UserCell(
@@ -80,15 +78,9 @@ class UserCell extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Row(
           children: [
-            UserAvatarButton(
-              user: user,
-              size: 30.sp,
-              useNeumorphic: false,
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Text(user.name)
+            UserAvatarButton(user: user, size: 30.sp, useNeumorphic: false),
+            const SizedBox(width: 20),
+            Text(user.name),
           ],
         ),
       ),

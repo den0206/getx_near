@@ -38,17 +38,18 @@ class _OriginCarouselState extends State<OriginCarousel> {
   @override
   Widget build(BuildContext context) {
     return Flexible(
-        child: PageView.builder(
-      itemCount: widget.itemCount,
-      controller: widget.pageController,
-      itemBuilder: widget.itemBuilder,
-      onPageChanged: (index) {
-        setState(() {
-          currentPage = index;
-        });
-        widget.onChange(index);
-      },
-    ));
+      child: PageView.builder(
+        itemCount: widget.itemCount,
+        controller: widget.pageController,
+        itemBuilder: widget.itemBuilder,
+        onPageChanged: (index) {
+          setState(() {
+            currentPage = index;
+          });
+          widget.onChange(index);
+        },
+      ),
+    );
   }
 }
 

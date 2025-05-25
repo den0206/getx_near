@@ -17,7 +17,7 @@ class RecentIO extends SocketBase {
   void sendUpdateRecent({required dynamic userId, required String chatRoomId}) {
     final Map<String, dynamic> data = {
       "userId": userId,
-      "chatRoomId": chatRoomId
+      "chatRoomId": chatRoomId,
     };
 
     socket.emit("update", data);

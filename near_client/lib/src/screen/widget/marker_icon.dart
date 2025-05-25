@@ -18,8 +18,9 @@ class MarkerIcon {
   }) async {
     final mediaQuery = MediaQuery.of(context);
     // Read SVG file as String
-    String svgString =
-        await DefaultAssetBundle.of(context).loadString(assetName);
+    String svgString = await DefaultAssetBundle.of(
+      context,
+    ).loadString(assetName);
     // Create DrawableRoot from SVG String
 
     // toPicture() and toImage() don't seem to be pixel ratio aware, so we calculate the actual sizes here
@@ -52,24 +53,27 @@ class MarkerIcon {
     final ui.FrameInfo imageFI = await codec.getNextFrame();
 
     paintImage(
-        canvas: canvas,
-        rect: Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()),
-        image: imageFI.image);
+      canvas: canvas,
+      rect: Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()),
+      image: imageFI.image,
+    );
 
-    final _image = await pictureRecorder
-        .endRecording()
-        .toImage(width.toInt(), (height).toInt());
+    final _image = await pictureRecorder.endRecording().toImage(
+      width.toInt(),
+      (height).toInt(),
+    );
     final data = await _image.toByteData(format: ui.ImageByteFormat.png);
     return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
 
-  static Future<BitmapDescriptor> pictureAssetWithCenterText(
-      {required String assetPath,
-      required String text,
-      required Size size,
-      double fontSize = 15,
-      Color fontColor = Colors.black,
-      FontWeight fontWeight = FontWeight.w500}) async {
+  static Future<BitmapDescriptor> pictureAssetWithCenterText({
+    required String assetPath,
+    required String text,
+    required Size size,
+    double fontSize = 15,
+    Color fontColor = Colors.black,
+    FontWeight fontWeight = FontWeight.w500,
+  }) async {
     ByteData imageFile = await rootBundle.load(assetPath);
     final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
@@ -88,7 +92,10 @@ class MarkerIcon {
     painter.text = TextSpan(
       text: text,
       style: TextStyle(
-          fontSize: fontSize, color: fontColor, fontWeight: fontWeight),
+        fontSize: fontSize,
+        color: fontColor,
+        fontWeight: fontWeight,
+      ),
     );
 
     canvas.clipPath(clipPath);
@@ -97,21 +104,25 @@ class MarkerIcon {
     final ui.FrameInfo imageFI = await codec.getNextFrame();
 
     paintImage(
-        fit: BoxFit.contain,
-        alignment: Alignment.center,
-        canvas: canvas,
-        rect:
-            Rect.fromLTWH(0, 0, size.width.toDouble(), size.height.toDouble()),
-        image: imageFI.image);
+      fit: BoxFit.contain,
+      alignment: Alignment.center,
+      canvas: canvas,
+      rect: Rect.fromLTWH(0, 0, size.width.toDouble(), size.height.toDouble()),
+      image: imageFI.image,
+    );
     painter.layout();
     painter.paint(
-        canvas,
-        Offset((size.width * 0.5) - painter.width * 0.5,
-            (size.height * .5) - painter.height * 0.5));
+      canvas,
+      Offset(
+        (size.width * 0.5) - painter.width * 0.5,
+        (size.height * .5) - painter.height * 0.5,
+      ),
+    );
 
-    final _image = await pictureRecorder
-        .endRecording()
-        .toImage(size.width.toInt(), (size.height).toInt());
+    final _image = await pictureRecorder.endRecording().toImage(
+      size.width.toInt(),
+      (size.height).toInt(),
+    );
     final data = await _image.toByteData(format: ui.ImageByteFormat.png);
     return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
@@ -130,39 +141,48 @@ class MarkerIcon {
     final Radius radius = Radius.circular(size.width / 2);
 
     canvas.drawRRect(
-        RRect.fromRectAndCorners(
-          Rect.fromLTWH(
-              0.0, 0.0, size.width.toDouble(), size.height.toDouble()),
-          topLeft: radius,
-          topRight: radius,
-          bottomLeft: radius,
-          bottomRight: radius,
-        ),
-        paint);
+      RRect.fromRectAndCorners(
+        Rect.fromLTWH(0.0, 0.0, size.width.toDouble(), size.height.toDouble()),
+        topLeft: radius,
+        topRight: radius,
+        bottomLeft: radius,
+        bottomRight: radius,
+      ),
+      paint,
+    );
 
     TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
     painter.text = TextSpan(
       text: text,
       style: TextStyle(
-          fontSize: fontSize, color: fontColor, fontWeight: fontWeight),
+        fontSize: fontSize,
+        color: fontColor,
+        fontWeight: fontWeight,
+      ),
     );
 
     painter.layout();
     painter.paint(
-        canvas,
-        Offset((size.width * 0.5) - painter.width * 0.5,
-            (size.height * .5) - painter.height * 0.5));
+      canvas,
+      Offset(
+        (size.width * 0.5) - painter.width * 0.5,
+        (size.height * .5) - painter.height * 0.5,
+      ),
+    );
 
-    final img = await pictureRecorder
-        .endRecording()
-        .toImage(size.width.toInt(), size.height.toInt());
+    final img = await pictureRecorder.endRecording().toImage(
+      size.width.toInt(),
+      size.height.toInt(),
+    );
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
     return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
 
-  static Future<BitmapDescriptor> downloadResizePicture(
-      {required String url, int imageSize = 50}) async {
+  static Future<BitmapDescriptor> downloadResizePicture({
+    required String url,
+    int imageSize = 50,
+  }) async {
     final File imageFile = await DefaultCacheManager().getSingleFile(url);
     final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
@@ -170,12 +190,14 @@ class MarkerIcon {
     final ui.Codec codec = await ui.instantiateImageCodec(imageUint8List);
     final ui.FrameInfo imageFI = await codec.getNextFrame();
     paintImage(
-        canvas: canvas,
-        rect: Rect.fromLTWH(0, 0, imageSize.toDouble(), imageSize.toDouble()),
-        image: imageFI.image);
-    final _image = await pictureRecorder
-        .endRecording()
-        .toImage(imageSize, (imageSize * 1.1).toInt());
+      canvas: canvas,
+      rect: Rect.fromLTWH(0, 0, imageSize.toDouble(), imageSize.toDouble()),
+      image: imageFI.image,
+    );
+    final _image = await pictureRecorder.endRecording().toImage(
+      imageSize,
+      (imageSize * 1.1).toInt(),
+    );
     final data = await _image.toByteData(format: ui.ImageByteFormat.png);
     return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
@@ -197,9 +219,12 @@ class MarkerIcon {
 
     //make canvas clip path to prevent image drawing over the circle
     final Path clipPath = Path();
-    clipPath.addRRect(RRect.fromRectAndRadius(
+    clipPath.addRRect(
+      RRect.fromRectAndRadius(
         Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
-        const Radius.circular(100)));
+        const Radius.circular(100),
+      ),
+    );
     /* clipPath.addRRect(RRect.fromRectAndRadius(
         Rect.fromLTWH(0, size * 8 / 10, size.toDouble(), size * 3 / 10),
         Radius.circular(100))); */
@@ -210,11 +235,12 @@ class MarkerIcon {
     final ui.Codec codec = await ui.instantiateImageCodec(imageUint8List);
     final ui.FrameInfo imageFI = await codec.getNextFrame();
     paintImage(
-        fit: BoxFit.cover,
-        alignment: Alignment.center,
-        canvas: canvas,
-        rect: Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
-        image: imageFI.image);
+      fit: BoxFit.cover,
+      alignment: Alignment.center,
+      canvas: canvas,
+      rect: Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
+      image: imageFI.image,
+    );
 
     if (addBorder) {
       //draw Border
@@ -225,9 +251,10 @@ class MarkerIcon {
     }
 
     //convert canvas as PNG bytes
-    final _image = await pictureRecorder
-        .endRecording()
-        .toImage(size, (size * 1.1).toInt());
+    final _image = await pictureRecorder.endRecording().toImage(
+      size,
+      (size * 1.1).toInt(),
+    );
     final data = await _image.toByteData(format: ui.ImageByteFormat.png);
 
     //convert PNG bytes as BitmapDescriptor
@@ -243,20 +270,24 @@ class MarkerIcon {
   }
 
   static Future<BitmapDescriptor> markerFromIcon(
-      IconData icon, Color color, double size) async {
+    IconData icon,
+    Color color,
+    double size,
+  ) async {
     final pictureRecorder = ui.PictureRecorder();
     final canvas = Canvas(pictureRecorder);
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
 
     textPainter.text = TextSpan(
-        text: String.fromCharCode(icon.codePoint),
-        style: TextStyle(
-          letterSpacing: 0.0,
-          fontSize: size,
-          fontFamily: icon.fontFamily,
-          package: icon.fontPackage,
-          color: color,
-        ));
+      text: String.fromCharCode(icon.codePoint),
+      style: TextStyle(
+        letterSpacing: 0.0,
+        fontSize: size,
+        fontFamily: icon.fontFamily,
+        package: icon.fontPackage,
+        color: color,
+      ),
+    );
     textPainter.layout();
     textPainter.paint(canvas, Offset.zero);
 

@@ -9,7 +9,7 @@ class CommentAPI extends APIBase {
     const limit = 10;
     final Map<String, dynamic> query = {
       "postId": postId,
-      "limit": limit.toString()
+      "limit": limit.toString(),
     };
 
     if (nextCursor != null) query["cursor"] = nextCursor;
@@ -31,11 +31,11 @@ class CommentAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> getRelationComment(
-      {required int limit, String? cursor}) async {
-    final Map<String, dynamic> query = {
-      "limit": limit.toString(),
-    };
+  Future<ResponseAPI> getRelationComment({
+    required int limit,
+    String? cursor,
+  }) async {
+    final Map<String, dynamic> query = {"limit": limit.toString()};
     if (cursor != null) query["cursor"] = cursor;
     try {
       final Uri uri = setUri("/total", query);
@@ -50,7 +50,7 @@ class CommentAPI extends APIBase {
       "postId": post.id,
       "lat": post.coordinate.latitude.toString(),
       "lng": post.coordinate.longitude.toString(),
-      "radius": radius.toString()
+      "radius": radius.toString(),
     };
 
     try {
