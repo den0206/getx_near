@@ -16,17 +16,17 @@ class VisibleRegion {
     return [farEast, nearEast, nearWest, farWest];
   }
 
-  VisibleRegion(
-      {required this.farEast,
-      required this.nearEast,
-      required this.nearWest,
-      required this.farWest})
-      : _segments = [
-          _Segment(start: farWest, end: farEast),
-          _Segment(start: farEast, end: nearEast),
-          _Segment(start: nearEast, end: nearWest),
-          _Segment(start: nearWest, end: farWest),
-        ];
+  VisibleRegion({
+    required this.farEast,
+    required this.nearEast,
+    required this.nearWest,
+    required this.farWest,
+  }) : _segments = [
+         _Segment(start: farWest, end: farEast),
+         _Segment(start: farEast, end: nearEast),
+         _Segment(start: nearEast, end: nearWest),
+         _Segment(start: nearWest, end: farWest),
+       ];
 
   bool contains(LatLng latLng) {
     Point point = Point(latLng.longitude, latLng.latitude);
@@ -56,16 +56,18 @@ class _Segment {
   final Point end;
 
   _Segment({required LatLng start, required LatLng end})
-      : start = Point(start.longitude, start.latitude),
-        end = Point(end.longitude, end.latitude);
+    : start = Point(start.longitude, start.latitude),
+      end = Point(end.longitude, end.latitude);
 
-  bool onSegment(Point point) => (point.x <= max(start.x, end.x) &&
+  bool onSegment(Point point) =>
+      (point.x <= max(start.x, end.x) &&
       point.x >= min(start.x, end.x) &&
       point.y <= max(start.y, end.y) &&
       point.y >= min(start.y, end.y));
 
   _Orientation orientation(Point point) {
-    num slopeDifference = (end.y - start.y) * (point.x - end.x) -
+    num slopeDifference =
+        (end.y - start.y) * (point.x - end.x) -
         (end.x - start.x) * (point.y - end.y);
     if (slopeDifference == 0) {
       return _Orientation.CO_LINEAR;

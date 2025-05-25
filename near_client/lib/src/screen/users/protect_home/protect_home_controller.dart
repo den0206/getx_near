@@ -27,8 +27,9 @@ class ProtectHomeController extends GetxController {
   }
 
   Future<void> _loadLocalHome() async {
-    final int localDistance =
-        getHomeDistance(await StorageKey.homeDistance.loadInt());
+    final int localDistance = getHomeDistance(
+      await StorageKey.homeDistance.loadInt(),
+    );
 
     currentDistance.call(localDistance.roundToDouble());
 

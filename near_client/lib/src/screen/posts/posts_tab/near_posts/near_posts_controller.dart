@@ -30,7 +30,9 @@ class NearPostsController extends GetxController {
       final Position position = await _locationService.getCurrentPosition();
 
       final tempPosts = await getTempNearPosts(
-          from: LatLng(position.latitude, position.longitude), radius: radius);
+        from: LatLng(position.latitude, position.longitude),
+        radius: radius,
+      );
 
       nearPosts.addAll(tempPosts);
       update();

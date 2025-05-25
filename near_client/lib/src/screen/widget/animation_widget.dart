@@ -19,12 +19,18 @@ class _HelpAnimatedWidetState extends State<HelpAnimatedWidet>
   void initState() {
     super.initState();
 
-    controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    opacityAnimation = Tween<double>(begin: 0.0, end: 0.4).animate(
-        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn));
-    scaleAnimatoin =
-        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 0.4,
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn));
+    scaleAnimatoin = CurvedAnimation(
+      parent: controller,
+      curve: Curves.elasticInOut,
+    );
 
     controller.addListener(() {
       if (scaleAnimatoin.value > 0.15) {
@@ -48,14 +54,16 @@ class _HelpAnimatedWidetState extends State<HelpAnimatedWidet>
     return Material(
       color: Colors.black.withValues(alpha: opacityAnimation.value),
       child: Center(
-          child: ScaleTransition(
-        scale: scaleAnimatoin,
-        child: Visibility(
-          visible: showImage,
-          child: FadeinOutWidget(
-              child: Image.asset("assets/images/icon-remove_background.png")),
+        child: ScaleTransition(
+          scale: scaleAnimatoin,
+          child: Visibility(
+            visible: showImage,
+            child: FadeinOutWidget(
+              child: Image.asset("assets/images/icon-remove_background.png"),
+            ),
+          ),
         ),
-      )),
+      ),
     );
   }
 }
@@ -103,10 +111,7 @@ class _FadeinWidgetState extends State<FadeinWidget>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: animation,
-      child: widget.child,
-    );
+    return FadeTransition(opacity: animation, child: widget.child);
   }
 }
 
@@ -153,9 +158,6 @@ class _FadeinOutWidgetState extends State<FadeinOutWidget>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: animation,
-      child: widget.child,
-    );
+    return FadeTransition(opacity: animation, child: widget.child);
   }
 }

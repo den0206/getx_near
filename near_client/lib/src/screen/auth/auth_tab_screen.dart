@@ -21,28 +21,22 @@ class AuthTabScreen extends StatelessWidget {
               indicatorWeight: 4,
               tabs: [
                 Tab(
-                    child: Text(
-                  "音声",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black87,
+                  child: Text(
+                    "音声",
+                    style: TextStyle(fontSize: 20.0, color: Colors.black87),
                   ),
-                )),
+                ),
                 Tab(
-                    child: Text(
-                  "登録",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black87,
+                  child: Text(
+                    "登録",
+                    style: TextStyle(fontSize: 20.0, color: Colors.black87),
                   ),
-                )),
+                ),
               ],
             ),
           ),
         ),
-        body: TabBarView(
-          children: _tabView,
-        ),
+        body: TabBarView(children: _tabView),
       ),
     );
   }

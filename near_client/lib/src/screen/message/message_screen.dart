@@ -23,8 +23,8 @@ class MessageScreen extends LoadingGetView<MessageController> {
 
   @override
   void Function()? get onCancel => () {
-        print("Dismiss Message");
-      };
+    print("Dismiss Message");
+  };
 
   @override
   Widget get child {
@@ -44,7 +44,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                 );
               },
             ),
-          )
+          ),
         ],
       ),
       body: Column(
@@ -154,10 +154,7 @@ class MessageCell extends GetView<MessageController> {
                 if (controller.checkRead(message) && message.isCurrent)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Icon(
-                      Icons.done_all,
-                      size: 10.sp,
-                    ),
+                    child: Icon(Icons.done_all, size: 10.sp),
                   ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -172,7 +169,7 @@ class MessageCell extends GetView<MessageController> {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -180,10 +177,7 @@ class MessageCell extends GetView<MessageController> {
 }
 
 class TextBubble extends StatelessWidget {
-  const TextBubble({
-    super.key,
-    required this.message,
-  });
+  const TextBubble({super.key, required this.message});
 
   final Message message;
 
@@ -198,32 +192,33 @@ class TextBubble extends StatelessWidget {
         child: Neumorphic(
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.all(10),
-          style: commonNeumorphic(
-            color: message.isCurrent
-                ? ConstsColor.mainGreenColor
-                : Colors.grey[200]!,
-            depth: 0.4,
-          ).copyWith(
-            boxShape: NeumorphicBoxShape.roundRect(
-              BorderRadius.only(
-                topLeft: const Radius.circular(16),
-                topRight: const Radius.circular(16),
-                bottomLeft: Radius.circular(message.isCurrent ? 12 : 0),
-                bottomRight: Radius.circular(message.isCurrent ? 0 : 12),
+          style:
+              commonNeumorphic(
+                color: message.isCurrent
+                    ? ConstsColor.mainGreenColor
+                    : Colors.grey[200]!,
+                depth: 0.4,
+              ).copyWith(
+                boxShape: NeumorphicBoxShape.roundRect(
+                  BorderRadius.only(
+                    topLeft: const Radius.circular(16),
+                    topRight: const Radius.circular(16),
+                    bottomLeft: Radius.circular(message.isCurrent ? 12 : 0),
+                    bottomRight: Radius.circular(message.isCurrent ? 0 : 12),
+                  ),
+                ),
               ),
-            ),
-          ),
           child: FittedBox(
             fit: BoxFit.fitWidth,
             child: RichText(
               text: TextSpan(
                 text: message.text,
                 style: TextStyle(
-                    fontSize: 13.sp,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.w600,
-                    color:
-                        message.isCurrent ? Colors.white : Colors.grey[800]!),
+                  fontSize: 13.sp,
+                  letterSpacing: 1.5,
+                  fontWeight: FontWeight.w600,
+                  color: message.isCurrent ? Colors.white : Colors.grey[800]!,
+                ),
               ),
             ),
           ),
@@ -251,9 +246,7 @@ class MessageInput extends GetView<MessageController> {
               padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
             ),
           ),
-          const SizedBox(
-            width: 16,
-          ),
+          const SizedBox(width: 16),
           NeumorphicIconButton(
             icon: const Icon(Icons.send),
             color: ConstsColor.mainGreenColor,

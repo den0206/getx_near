@@ -50,14 +50,15 @@ LatLng getLatLngFromMongoose(Map<String, dynamic> map) {
 
 Map<String, dynamic> parseToLatlng(LatLng lat) {
   return {
-    "coordinates": [lat.longitude, lat.latitude]
+    "coordinates": [lat.longitude, lat.latitude],
   };
 }
 
-Future<List<Post>> getTempNearPosts(
-    {required LatLng from,
-    required double radius,
-    bool useDummy = false}) async {
+Future<List<Post>> getTempNearPosts({
+  required LatLng from,
+  required double radius,
+  bool useDummy = false,
+}) async {
   try {
     final PostAPI _postAPI = PostAPI();
     ResponseAPI res;
@@ -124,8 +125,10 @@ Future<void> getToMessScreen({required User user}) async {
 
     if (currentUser.id == withUser.id) throw Exception("same with user");
 
-    final chatRoomId =
-        await re.createPrivateChatRoom(withUser.id, [currentUser, withUser]);
+    final chatRoomId = await re.createPrivateChatRoom(withUser.id, [
+      currentUser,
+      withUser,
+    ]);
 
     if (chatRoomId == null) throw Exception("Not Generate ChatRoom Id");
 

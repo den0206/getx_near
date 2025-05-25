@@ -54,12 +54,9 @@ class SOSController extends GetxController {
       isPlaying.call(playing);
       if (playing) {
         // 一秒毎にバイブレーション
-        _timer = Timer.periodic(
-          const Duration(seconds: 1),
-          (timer) {
-            HapticFeedback.vibrate();
-          },
-        );
+        _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+          HapticFeedback.vibrate();
+        });
       } else {
         _timer?.cancel();
       }

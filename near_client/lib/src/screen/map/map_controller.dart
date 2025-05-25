@@ -52,8 +52,12 @@ class MapController extends LoadingGetController {
   Future<void> showTutorial(BuildContext context) async {
     if (!showSearch.value) showSearch.call(true);
     if (panelController.isPanelClosed) await panelController.open();
-    CommonShowCase([tutorialKey1, tutorialKey2, tutorialKey3, tutorialKey4])
-        .showTutorial(context);
+    CommonShowCase([
+      tutorialKey1,
+      tutorialKey2,
+      tutorialKey3,
+      tutorialKey4,
+    ]).showTutorial(context);
   }
 
   Future<void> onMapCreate(GoogleMapController controller) async {
@@ -97,9 +101,10 @@ class MapController extends LoadingGetController {
       final double radius = useMap ? mapService.getRadiusOnVisible() : 1000;
 
       final tempPosts = await getTempNearPosts(
-          from: useMap ? currentCenter : currentPosition,
-          radius: radius,
-          useDummy: useDummy);
+        from: useMap ? currentCenter : currentPosition,
+        radius: radius,
+        useDummy: useDummy,
+      );
 
       posts.addAll(tempPosts);
 
@@ -148,8 +153,9 @@ class MapController extends LoadingGetController {
   void onCmareMove(CameraPosition cameraPosition) {
     if (mapService.visibleRegion == null) return;
     if (isZooming || isSetDefault) return;
-    showSearch.call(canSearch &&
-        !mapService.visibleRegion!.contains(cameraPosition.target));
+    showSearch.call(
+      canSearch && !mapService.visibleRegion!.contains(cameraPosition.target),
+    );
   }
 
   void onCameraIdle() async {

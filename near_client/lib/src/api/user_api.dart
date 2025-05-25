@@ -6,15 +6,20 @@ import 'package:getx_near/src/model/utils/response_api.dart';
 class UserAPI extends APIBase {
   UserAPI() : super(EndPoint.user);
 
-  Future<ResponseAPI> signUp(
-      {required Map<String, dynamic> userData, File? avatarFile}) async {
+  Future<ResponseAPI> signUp({
+    required Map<String, dynamic> userData,
+    File? avatarFile,
+  }) async {
     try {
       final Uri uri = setUri("/signup");
       if (avatarFile == null) {
         return await postRequest(uri: uri, body: userData);
       } else {
         return await updateSingleFile(
-            uri: uri, body: userData, file: avatarFile);
+          uri: uri,
+          body: userData,
+          file: avatarFile,
+        );
       }
     } catch (e) {
       return catchAPIError(e.toString());
@@ -30,8 +35,10 @@ class UserAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> updateUser(
-      {required Map<String, dynamic> updateData, File? avatarFile}) async {
+  Future<ResponseAPI> updateUser({
+    required Map<String, dynamic> updateData,
+    File? avatarFile,
+  }) async {
     try {
       final Uri uri = setUri("/edit");
       if (avatarFile == null) {

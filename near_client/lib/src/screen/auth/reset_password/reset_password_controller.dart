@@ -54,8 +54,9 @@ class ResetPasswordAndEmailController extends LoadingGetController {
           if (isEditPassword) {
             state = VerifyState.sendPassword;
           } else {
-            final res =
-                await _tempTokenAPI.requestNewEmail(emailTextField.text);
+            final res = await _tempTokenAPI.requestNewEmail(
+              emailTextField.text,
+            );
             if (!res.status) break;
             buttonEnable = false;
             state = VerifyState.verify;
@@ -63,8 +64,9 @@ class ResetPasswordAndEmailController extends LoadingGetController {
           break;
         case VerifyState.sendPassword:
           if (isEditPassword) {
-            final res =
-                await _tempTokenAPI.requestPassword(emailTextField.text);
+            final res = await _tempTokenAPI.requestPassword(
+              emailTextField.text,
+            );
 
             if (res.message != null &&
                 res.message!.contains("Not find this Email")) {
@@ -84,7 +86,7 @@ class ResetPasswordAndEmailController extends LoadingGetController {
             final data = {
               "userId": userId,
               "password": passwordTextField.text,
-              "verify": pinTextField.text
+              "verify": pinTextField.text,
             };
 
             res = await _tempTokenAPI.verifyPassword(data);
@@ -92,7 +94,7 @@ class ResetPasswordAndEmailController extends LoadingGetController {
           } else {
             final Map<String, dynamic> data = {
               "email": emailTextField.text,
-              "verify": pinTextField.text
+              "verify": pinTextField.text,
             };
             final checkRes = await _tempTokenAPI.verifyEmail(data);
             if (!checkRes.status) break;

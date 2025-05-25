@@ -33,8 +33,10 @@ class CommentsController extends GetxController {
       );
 
       if (!res.status) return;
-      final Pages<Comment> pages =
-          Pages.fromMap(res.data, Comment.fromJsonModel);
+      final Pages<Comment> pages = Pages.fromMap(
+        res.data,
+        Comment.fromJsonModel,
+      );
 
       reachLast = !pages.pageInfo.hasNextPage;
       nextCursor = pages.pageInfo.nextPageCursor;

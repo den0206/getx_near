@@ -105,7 +105,7 @@ class Post extends JsonModel {
       "expireAt": expireAt?.toUtc().toIso8601String(),
       'createdAt': createdAt.toUtc().toIso8601String(),
       "likes": likes,
-      "comments": comments
+      "comments": comments,
     };
   }
 

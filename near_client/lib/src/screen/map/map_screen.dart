@@ -25,8 +25,8 @@ class MapScreen extends LoadingGetView<MapController> {
 
   @override
   void Function()? get onCancel => () {
-        controller.cancelLoading();
-      };
+    controller.cancelLoading();
+  };
 
   @override
   Widget get child {
@@ -61,7 +61,7 @@ class MapScreen extends LoadingGetView<MapController> {
                       onMapCreated: (mapCtr) async {
                         await controller.onMapCreate(mapCtr);
                       },
-                    )
+                    ),
                   ],
                   _searchButton(),
                   _leftSide(),
@@ -84,18 +84,21 @@ class MapScreen extends LoadingGetView<MapController> {
       child: SafeArea(
         child: Column(
           children: [
-            Builder(builder: (context) {
-              return AppBar(
-                leading: IconButton(
+            Builder(
+              builder: (context) {
+                return AppBar(
+                  leading: IconButton(
                     iconSize: 25.sp,
                     icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                     onPressed: () {
                       controller.backScreen();
-                    }),
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-              );
-            }),
+                    },
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                );
+              },
+            ),
             Obx(
               () => controller.showSearch.value
                   ? Center(
@@ -113,13 +116,13 @@ class MapScreen extends LoadingGetView<MapController> {
                               ),
                               children: [
                                 WidgetSpan(
-                                  child: Icon(Icons.pin_drop_outlined,
-                                      size: 16.sp,
-                                      color: ConstsColor.mainGreenColor),
+                                  child: Icon(
+                                    Icons.pin_drop_outlined,
+                                    size: 16.sp,
+                                    color: ConstsColor.mainGreenColor,
+                                  ),
                                 ),
-                                const TextSpan(
-                                  text: "このエリアを検索",
-                                ),
+                                const TextSpan(text: "このエリアを検索"),
                               ],
                             ),
                           ),
@@ -145,16 +148,11 @@ class MapScreen extends LoadingGetView<MapController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 1.h,
-            ),
+            SizedBox(height: 1.h),
             CupertinoButton(
               color: Colors.black87,
               padding: const EdgeInsets.all(10),
-              child: const Icon(
-                Icons.add,
-                color: Colors.yellow,
-              ),
+              child: const Icon(Icons.add, color: Colors.yellow),
               onPressed: () async {
                 await controller.zoomUp(true);
               },
@@ -163,10 +161,7 @@ class MapScreen extends LoadingGetView<MapController> {
             CupertinoButton(
               color: Colors.black87,
               padding: const EdgeInsets.all(10),
-              child: const Icon(
-                Icons.remove,
-                color: Colors.yellow,
-              ),
+              child: const Icon(Icons.remove, color: Colors.yellow),
               onPressed: () async {
                 await controller.zoomUp(false);
               },
@@ -190,53 +185,43 @@ class MapScreen extends LoadingGetView<MapController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Builder(builder: (context) {
-                    return NeumorphicIconButton(
-                      icon: const Icon(
-                        Icons.description,
-                        color: Colors.white,
-                      ),
-                      color: Colors.black,
-                      onPressed: () {
-                        controller.showTutorial(context);
-                      },
-                    );
-                  }),
+                  Builder(
+                    builder: (context) {
+                      return NeumorphicIconButton(
+                        icon: const Icon(
+                          Icons.description,
+                          color: Colors.white,
+                        ),
+                        color: Colors.black,
+                        onPressed: () {
+                          controller.showTutorial(context);
+                        },
+                      );
+                    },
+                  ),
                   if (kDebugMode || kProfileMode) ...[
-                    SizedBox(
-                      height: 1.h,
-                    ),
+                    SizedBox(height: 1.h),
                     NeumorphicIconButton(
-                      icon: const Icon(
-                        Icons.group,
-                        color: Colors.white,
-                      ),
+                      icon: const Icon(Icons.group, color: Colors.white),
                       color: Colors.purple,
                       onPressed: () {
                         controller.startSearch(useDummy: true);
                       },
                     ),
                   ],
-                  SizedBox(
-                    height: 1.h,
-                  ),
+                  SizedBox(height: 1.h),
                   commonShowcaseWidget(
                     key: controller.tutorialKey2,
                     description: "あなたの投稿を作成します。",
                     child: NeumorphicIconButton(
-                      icon: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
+                      icon: const Icon(Icons.add, color: Colors.white),
                       color: ConstsColor.mainGreenColor,
                       onPressed: () {
                         controller.showAddPost();
                       },
                     ),
                   ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
+                  SizedBox(height: 1.h),
                   commonShowcaseWidget(
                     key: controller.tutorialKey3,
                     description: "現在地に戻ります。",
@@ -245,22 +230,17 @@ class MapScreen extends LoadingGetView<MapController> {
                       backgroundColor: ConstsColor.mainGreenColor,
                       label: const Text(
                         'Default Position',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(color: Colors.white),
                       ),
-                      icon: const Icon(
-                        Icons.location_on,
-                        color: Colors.red,
-                      ),
+                      icon: const Icon(Icons.location_on, color: Colors.red),
                       onPressed: () {
                         controller.setCenterPosition(zoom: 15);
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

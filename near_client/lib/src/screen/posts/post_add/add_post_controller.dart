@@ -40,8 +40,11 @@ class AddPostController extends LoadingGetController {
   final tutorialKey3 = GlobalKey();
 
   void showTutorial(BuildContext context) {
-    CommonShowCase([tutorialKey1, tutorialKey2, tutorialKey3])
-        .showTutorial(context);
+    CommonShowCase([
+      tutorialKey1,
+      tutorialKey2,
+      tutorialKey3,
+    ]).showTutorial(context);
   }
 
   void streamText(String? value) {
@@ -52,7 +55,8 @@ class AddPostController extends LoadingGetController {
     isLoading.call(true);
 
     final maxDistance = getNotificationDistance(
-        await StorageKey.notificationDistance.loadInt());
+      await StorageKey.notificationDistance.loadInt(),
+    );
     print("通知距離: $maxDistance");
 
     try {
@@ -127,8 +131,9 @@ class AddPostController extends LoadingGetController {
     // 未登録の場合,飛ばす
     if (!currentUser.hasHome) return true;
 
-    final int homeDistance =
-        getHomeDistance(await StorageKey.homeDistance.loadInt());
+    final int homeDistance = getHomeDistance(
+      await StorageKey.homeDistance.loadInt(),
+    );
 
     // 2点間の距離の計算(m)
     int distanceBetween = Geolocator.distanceBetween(

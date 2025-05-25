@@ -10,9 +10,7 @@ class WelcomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          LottieBuilder.asset(
-            "assets/lotties/welcome_animation.json",
-          ),
+          LottieBuilder.asset("assets/lotties/welcome_animation.json"),
         ],
       ),
     );

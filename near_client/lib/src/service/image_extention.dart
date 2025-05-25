@@ -10,8 +10,10 @@ class ImageExtention {
       maxAssets: 1,
       requestType: RequestType.image,
     );
-    final List<AssetEntity>? result =
-        await AssetPicker.pickAssets(context, pickerConfig: config);
+    final List<AssetEntity>? result = await AssetPicker.pickAssets(
+      context,
+      pickerConfig: config,
+    );
 
     if (result == null || result.isEmpty) return null;
 

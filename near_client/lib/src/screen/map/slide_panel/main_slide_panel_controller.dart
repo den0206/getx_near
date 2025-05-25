@@ -59,7 +59,9 @@ class MainSlidePanelController extends GetxController {
       mapController.update();
 
       await mapService.fitTwoPointsZoom(
-          from: mapController.currentPosition, to: post.coordinate);
+        from: mapController.currentPosition,
+        to: post.coordinate,
+      );
     }
   }
 

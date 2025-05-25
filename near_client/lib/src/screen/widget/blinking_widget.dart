@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BlinkingWidet extends StatefulWidget {
-  const BlinkingWidet(
-      {super.key,
-      required this.child,
-      required this.duration,
-      this.use = true});
+  const BlinkingWidet({
+    super.key,
+    required this.child,
+    required this.duration,
+    this.use = true,
+  });
   final Widget child;
   final Duration duration;
   final bool use;
@@ -21,7 +22,9 @@ class _BlinkingWidetState extends State<BlinkingWidet>
   @override
   void initState() {
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
 
     _animationController.repeat(reverse: true);
 
@@ -37,10 +40,7 @@ class _BlinkingWidetState extends State<BlinkingWidet>
   @override
   Widget build(BuildContext context) {
     return widget.use
-        ? FadeTransition(
-            opacity: _animationController,
-            child: widget.child,
-          )
+        ? FadeTransition(opacity: _animationController, child: widget.child)
         : widget.child;
   }
 }

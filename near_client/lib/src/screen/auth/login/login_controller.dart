@@ -80,17 +80,16 @@ class LoginController extends GetxController {
       final user = User.fromMap(result.data);
       emailController.text = user.email;
 
-      showSnackBar(
-        title: "ユーザー登録を完了しました",
-        message: "ログインお願い致します。",
-      );
+      showSnackBar(title: "ユーザー登録を完了しました", message: "ログインお願い致します。");
     }
   }
 
   Future<void> showResetPassword() async {
     const bool isEditPassword = true;
-    final _res = await Get.toNamed(ResetPasswordAndEmailScreen.routeName,
-        arguments: isEditPassword);
+    final _res = await Get.toNamed(
+      ResetPasswordAndEmailScreen.routeName,
+      arguments: isEditPassword,
+    );
 
     if (_res is ResponseAPI) {
       final user = User.fromMap(_res.data);

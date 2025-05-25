@@ -30,7 +30,7 @@ class LongNeumorphicButton extends StatefulWidget {
     this.tooltip,
     this.drawSurfaceAboveChild = true,
     this.pressed,
-//true/false if you want to change the state of the button
+    //true/false if you want to change the state of the button
     this.duration = Neumorphic.DEFAULT_DURATION,
     this.curve = Neumorphic.DEFAULT_CURVE,
     //this.accent,
@@ -57,11 +57,13 @@ class _NeumorphicButtonState extends State<LongNeumorphicButton> {
     final appBarPresent = NeumorphicAppBarTheme.of(context) != null;
 
     final theme = NeumorphicTheme.currentTheme(context);
-    initialStyle = widget.style ??
+    initialStyle =
+        widget.style ??
         (appBarPresent
             ? theme.appBarTheme.buttonStyle
             : (theme.buttonStyle ?? const NeumorphicStyle()));
-    depth = widget.style?.depth ??
+    depth =
+        widget.style?.depth ??
         (appBarPresent ? theme.appBarTheme.buttonStyle.depth : theme.depth) ??
         0.0;
 
@@ -132,10 +134,7 @@ class _NeumorphicButtonState extends State<LongNeumorphicButton> {
   Widget build(BuildContext context) {
     final result = _build(context);
     if (widget.tooltip != null) {
-      return Tooltip(
-        message: widget.tooltip!,
-        child: result,
-      );
+      return Tooltip(message: widget.tooltip!, child: result);
     } else {
       return result;
     }
@@ -173,12 +172,11 @@ class _NeumorphicButtonState extends State<LongNeumorphicButton> {
           drawSurfaceAboveChild: widget.drawSurfaceAboveChild,
           duration: widget.duration,
           curve: widget.curve,
-          padding: widget.padding ??
+          padding:
+              widget.padding ??
               (appBarPresent ? appBarTheme.buttonPadding : null) ??
               const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-          style: initialStyle.copyWith(
-            depth: _getDepth(),
-          ),
+          style: initialStyle.copyWith(depth: _getDepth()),
           child: widget.child,
         ),
       ),

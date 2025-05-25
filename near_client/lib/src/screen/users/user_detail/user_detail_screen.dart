@@ -21,31 +21,26 @@ class UserDetailScreen extends StatelessWidget {
       init: UserDetailController(user),
       builder: (controller) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(user.name),
-            actions: const [],
-          ),
+          appBar: AppBar(title: Text(user.name), actions: const []),
           body: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: 3.h,
-                ),
+                SizedBox(height: 3.h),
                 Neumorphic(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   style: commonNeumorphic(depth: 1.6),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 4.h,
-                      ),
+                      SizedBox(height: 4.h),
                       UserAvatarButton(user: user),
-                      SizedBox(
-                        height: 4.h,
-                      ),
+                      SizedBox(height: 4.h),
                       NeumorphicText(
                         user.name,
                         style: NeumorphicStyle(
@@ -59,52 +54,41 @@ class UserDetailScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 4.h,
-                      ),
+                      SizedBox(height: 4.h),
                       if (user.isCurrent) ...[
                         Text(user.email),
-                        SizedBox(
-                          height: 6.h,
-                        ),
+                        SizedBox(height: 6.h),
                       ],
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: user.isCurrent
                             ? [
                                 NeumorphicIconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      size: 35.sp,
-                                    ),
-                                    onPressed: () {
-                                      controller.pushEditPage();
-                                    }),
+                                  icon: Icon(Icons.edit, size: 35.sp),
+                                  onPressed: () {
+                                    controller.pushEditPage();
+                                  },
+                                ),
                                 NeumorphicIconButton(
-                                  icon: Icon(
-                                    Icons.home,
-                                    size: 35.sp,
-                                  ),
+                                  icon: Icon(Icons.home, size: 35.sp),
                                   onPressed: () {
                                     controller.showProtectHomeScreen();
                                   },
                                 ),
                                 NeumorphicIconButton(
-                                    icon: Icon(
-                                      Icons.settings,
-                                      size: 35.sp,
-                                    ),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        backgroundColor:
-                                            ConstsColor.mainBackColor,
-                                        isScrollControlled: true,
-                                        builder: (context) {
-                                          return const SettingsScreen();
-                                        },
-                                      );
-                                    }),
+                                  icon: Icon(Icons.settings, size: 35.sp),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      backgroundColor:
+                                          ConstsColor.mainBackColor,
+                                      isScrollControlled: true,
+                                      builder: (context) {
+                                        return const SettingsScreen();
+                                      },
+                                    );
+                                  },
+                                ),
                               ]
                             : [
                                 NeumorphicIconButton(
@@ -135,43 +119,35 @@ class UserDetailScreen extends StatelessWidget {
                                 ),
                               ],
                       ),
-                      SizedBox(
-                        height: 4.h,
-                      ),
+                      SizedBox(height: 4.h),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 1.h,
-                ),
+                SizedBox(height: 1.h),
                 Neumorphic(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   style: commonNeumorphic(depth: 1.6),
                   child: DataTable(
-                      columnSpacing: 83,
-                      headingRowHeight: 0,
-                      border: const TableBorder(top: BorderSide.none),
-                      // dataRowHeight: double.parse('20'),
-                      columns: [
-                        DataColumn(
-                          label: Container(
-                            width: 35.w,
-                          ),
-                        ),
-                        DataColumn(
-                          label: Container(),
-                        ),
-                      ],
-                      rows: [
-                        DataRow(cells: [
+                    columnSpacing: 83,
+                    headingRowHeight: 0,
+                    border: const TableBorder(top: BorderSide.none),
+                    // dataRowHeight: double.parse('20'),
+                    columns: [
+                      DataColumn(label: Container(width: 35.w)),
+                      DataColumn(label: Container()),
+                    ],
+                    rows: [
+                      DataRow(
+                        cells: [
                           DataCell(
-                            Text(
-                              '1ヶ月間の通報回数',
-                              style: TextStyle(fontSize: 9.sp),
-                            ),
+                            Text('1ヶ月間の通報回数', style: TextStyle(fontSize: 9.sp)),
                           ),
                           DataCell(
                             SizedBox(
@@ -179,13 +155,17 @@ class UserDetailScreen extends StatelessWidget {
                               child: Text('${controller.reportedCount} 回'),
                             ),
                           ),
-                        ]),
-                        DataRow(cells: [
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
                           const DataCell(Text("開始日")),
                           DataCell(Text(controller.createdAtOnFormat)),
-                        ]),
-                      ]),
-                )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

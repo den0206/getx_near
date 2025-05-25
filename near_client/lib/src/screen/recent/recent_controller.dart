@@ -117,10 +117,7 @@ class RecentController extends LoadingGetController {
       NotificationService.to.currentBadge -= current.counter;
       tempRecent.counter = 0;
 
-      final value = {
-        "recentId": tempRecent.id,
-        "counter": 0,
-      };
+      final value = {"recentId": tempRecent.id, "counter": 0};
 
       await _recentAPI.updateRecent(value);
     }

@@ -91,8 +91,9 @@ class MessageExtention {
   }
 
   Future<void> updateDeleteRecent() async {
-    final remainRecents =
-        await re.updateRecentWithLastMessage(chatRoomId: chatRoomId);
+    final remainRecents = await re.updateRecentWithLastMessage(
+      chatRoomId: chatRoomId,
+    );
 
     if (remainRecents.isNotEmpty) {
       for (var recent in remainRecents) {
@@ -126,13 +127,12 @@ class MessageExtention {
     return unreads.map((u) => u.id).toList();
   }
 
-  Future<void> updateRead(
-      {required Message message, bool useSocket = false}) async {
+  Future<void> updateRead({
+    required Message message,
+    bool useSocket = false,
+  }) async {
     final uniqueRead = [currentUser.id, ...message.readBy].toSet().toList();
-    final body = {
-      "messageId": message.id,
-      "readBy": uniqueRead,
-    };
+    final body = {"messageId": message.id, "readBy": uniqueRead};
 
     final res = await _messageApi.updateMessage(body);
 

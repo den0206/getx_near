@@ -145,9 +145,7 @@ class PinCodeArea extends StatelessWidget {
           if (currentState == VerifyState.verify)
             const Text(
               "Please Check Your Email",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           Padding(
             padding: const EdgeInsets.all(20.0),
@@ -173,14 +171,16 @@ class PinCodeArea extends StatelessWidget {
               ],
             ),
           ),
-          Builder(builder: (context) {
-            return CustomButton(
-              title: currentState.title,
-              background: Colors.green,
-              titleColor: Colors.white,
-              onPressed: onPressed,
-            );
-          }),
+          Builder(
+            builder: (context) {
+              return CustomButton(
+                title: currentState.title,
+                background: Colors.green,
+                titleColor: Colors.white,
+                onPressed: onPressed,
+              );
+            },
+          ),
         ],
       ),
     );

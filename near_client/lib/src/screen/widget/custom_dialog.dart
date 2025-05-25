@@ -50,27 +50,17 @@ class CustomDialog extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  descripon,
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 5),
+                Text(descripon, style: TextStyle(fontSize: 13.sp)),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey,
-                          textStyle: const TextStyle(
-                            color: Colors.white,
-                          )),
+                        backgroundColor: Colors.grey,
+                        textStyle: const TextStyle(color: Colors.white),
+                      ),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -81,10 +71,9 @@ class CustomDialog extends StatelessWidget {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: mainColor,
-                          textStyle: const TextStyle(
-                            color: Colors.white,
-                          )),
+                        backgroundColor: mainColor,
+                        textStyle: const TextStyle(color: Colors.white),
+                      ),
                       onPressed: () {
                         Navigator.pop(context);
                         onPress();
@@ -95,7 +84,7 @@ class CustomDialog extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -104,11 +93,7 @@ class CustomDialog extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: mainColor,
               radius: 60,
-              child: Icon(
-                icon,
-                color: Colors.white,
-                size: 50,
-              ),
+              child: Icon(icon, color: Colors.white, size: 50),
             ),
           ),
         ],
@@ -118,11 +103,7 @@ class CustomDialog extends StatelessWidget {
 }
 
 class CommentDialog extends StatelessWidget {
-  const CommentDialog({
-    super.key,
-    required this.comment,
-    this.onMessage,
-  });
+  const CommentDialog({super.key, required this.comment, this.onMessage});
 
   final Comment comment;
   final double pad = 30;
@@ -140,16 +121,17 @@ class CommentDialog extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: avatarPad),
             decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: ConstsColor.mainBackColor,
-                borderRadius: BorderRadius.circular(pad),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black,
-                    offset: Offset(0, 10),
-                    blurRadius: 10,
-                  )
-                ]),
+              shape: BoxShape.rectangle,
+              color: ConstsColor.mainBackColor,
+              borderRadius: BorderRadius.circular(pad),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black,
+                  offset: Offset(0, 10),
+                  blurRadius: 10,
+                ),
+              ],
+            ),
             padding: EdgeInsets.only(
               left: pad,
               top: pad + avatarPad,
@@ -166,9 +148,7 @@ class CommentDialog extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     if (comment.isCurrent) ...[
@@ -182,7 +162,7 @@ class CommentDialog extends StatelessWidget {
                                 decoration: TextDecoration.underline,
                                 fontSize: 8.sp,
                               ),
-                            )
+                            ),
                           ],
                           style: const TextStyle(
                             color: Colors.red,
@@ -200,13 +180,11 @@ class CommentDialog extends StatelessWidget {
                           print("Expire Comment");
                         },
                         fontSize: 12,
-                      )
+                      ),
                     ],
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
                   child: Text(
@@ -215,31 +193,27 @@ class CommentDialog extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 if (comment.distance != null) ...[
                   SizedBox(
                     width: double.infinity,
                     child: Text(
                       "${comment.distance} m",
                       style: TextStyle(
-                          fontSize: 12.sp, fontWeight: FontWeight.bold),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                       textAlign: TextAlign.right,
                     ),
                   ),
-                  const SizedBox(
-                    height: 22,
-                  ),
+                  const SizedBox(height: 22),
                 ],
                 Row(
                   children: [
                     const Spacer(),
                     if (!comment.isCurrent) ...[
                       NeumorphicIconButton(
-                        icon: const Icon(
-                          Icons.message,
-                        ),
+                        icon: const Icon(Icons.message),
                         onPressed: () {
                           Navigator.of(context).pop();
                           if (onMessage != null) onMessage!();
@@ -249,9 +223,7 @@ class CommentDialog extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: NeumorphicIconButton(
-                        icon: const Icon(
-                          Icons.person,
-                        ),
+                        icon: const Icon(Icons.person),
                         onPressed: () {
                           Navigator.of(context).pop();
                           Get.to(() => UserDetailScreen(user: comment.user));
@@ -266,7 +238,7 @@ class CommentDialog extends StatelessWidget {
                     ),
                     const Spacer(),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -275,10 +247,7 @@ class CommentDialog extends StatelessWidget {
             right: pad,
             child: Container(
               alignment: Alignment.center,
-              child: UserAvatarButton(
-                user: comment.user,
-                size: 80.sp,
-              ),
+              child: UserAvatarButton(user: comment.user, size: 80.sp),
             ),
           ),
         ],
@@ -321,8 +290,9 @@ void showCommonDialog({
       builder: (BuildContext ctx) {
         return CupertinoAlertDialog(
           title: title != null ? Text(title) : null,
-          content:
-              content != null ? Text(content, textAlign: contentAlign) : null,
+          content: content != null
+              ? Text(content, textAlign: contentAlign)
+              : null,
           actions: [
             CupertinoDialogAction(
               onPressed: () {
@@ -344,7 +314,7 @@ void showCommonDialog({
                 isDefaultAction: true,
                 isDestructiveAction: true,
                 child: const Text('OK'),
-              )
+              ),
           ],
         );
       },
@@ -357,10 +327,7 @@ void showCommonDialog({
         return AlertDialog(
           title: title != null ? Center(child: Text(title)) : null,
           content: content != null
-              ? Text(
-                  content,
-                  textAlign: contentAlign,
-                )
+              ? Text(content, textAlign: contentAlign)
               : null,
           actions: [
             TextButton(

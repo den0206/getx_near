@@ -19,7 +19,7 @@ abstract class APIBase {
   final JsonCodec json = const JsonCodec();
   final Map<String, String> headers = {
     "Content-type": "application/json",
-    "x-api-key": dotenv.env["API_KEY"] ?? "NO API"
+    "x-api-key": dotenv.env["API_KEY"] ?? "NO API",
   };
 
   final Duration timeoutDuration = const Duration(seconds: 10);
@@ -66,8 +66,10 @@ abstract class APIBase {
         //       status: true, statusCode: response.statusCode, data: resJson);
         //   break;
         default:
-          responseAPI =
-              ResponseAPI.fromMapWithCode(resJson, response.statusCode);
+          responseAPI = ResponseAPI.fromMapWithCode(
+            resJson,
+            response.statusCode,
+          );
       }
 
       return _checkStatusCode(responseAPI);
@@ -80,8 +82,10 @@ abstract class APIBase {
     try {
       final resStr = await response.stream.bytesToString();
       final resJson = json.decode(resStr);
-      final responseAPI =
-          ResponseAPI.fromMapWithCode(resJson, response.statusCode);
+      final responseAPI = ResponseAPI.fromMapWithCode(
+        resJson,
+        response.statusCode,
+      );
 
       return _checkStatusCode(responseAPI);
     } catch (e) {
@@ -124,7 +128,7 @@ abstract class APIBase {
 
     final hasInternet =
         connectivityResult.contains(ConnectivityResult.mobile) ||
-            connectivityResult.contains(ConnectivityResult.wifi);
+        connectivityResult.contains(ConnectivityResult.wifi);
 
     if (!hasInternet) {
       throw const SocketException("No Internet");
@@ -137,8 +141,9 @@ extension APIBaseExtention on APIBase {
     try {
       _setToken(useToken);
       await _checkNetwork();
-      final res =
-          await http.get(uri, headers: headers).timeout(timeoutDuration);
+      final res = await http
+          .get(uri, headers: headers)
+          .timeout(timeoutDuration);
       return _filterResponse(res);
     } on UnauthorisedException {
       await AuthService.to.logout();
@@ -150,10 +155,11 @@ extension APIBaseExtention on APIBase {
     }
   }
 
-  Future<ResponseAPI> postRequest(
-      {required Uri uri,
-      required Map<String, dynamic> body,
-      useToken = false}) async {
+  Future<ResponseAPI> postRequest({
+    required Uri uri,
+    required Map<String, dynamic> body,
+    useToken = false,
+  }) async {
     try {
       _setToken(useToken);
       final String bodyparams = json.encode(body);
@@ -174,10 +180,11 @@ extension APIBaseExtention on APIBase {
     }
   }
 
-  Future<ResponseAPI> putRequest(
-      {required Uri uri,
-      required Map<String, dynamic> body,
-      useToken = false}) async {
+  Future<ResponseAPI> putRequest({
+    required Uri uri,
+    required Map<String, dynamic> body,
+    useToken = false,
+  }) async {
     try {
       _setToken(useToken);
 
@@ -198,10 +205,11 @@ extension APIBaseExtention on APIBase {
     }
   }
 
-  Future<ResponseAPI> deleteRequest(
-      {required Uri uri,
-      required Map<String, dynamic> body,
-      useToken = false}) async {
+  Future<ResponseAPI> deleteRequest({
+    required Uri uri,
+    required Map<String, dynamic> body,
+    useToken = false,
+  }) async {
     try {
       _setToken(useToken);
       final String bodyParams = json.encode(body);
@@ -235,14 +243,18 @@ extension APIBaseExtention on APIBase {
       if (contentType == null) throw Exception("NO Content Type");
       final List<http.MultipartFile> multipartFiles = [];
 
-      final mulipart = await http.MultipartFile.fromPath("image", file.path,
-          contentType: MediaType.parse(contentType));
+      final mulipart = await http.MultipartFile.fromPath(
+        "image",
+        file.path,
+        contentType: MediaType.parse(contentType),
+      );
 
       multipartFiles.add(mulipart);
 
       // Map<String,dynamic> to <Str,Str>
-      final Map<String, String> stringParameters =
-          body.map((key, value) => MapEntry(key, value.toString()));
+      final Map<String, String> stringParameters = body.map(
+        (key, value) => MapEntry(key, value.toString()),
+      );
 
       final request = http.MultipartRequest(type, uri);
       request.headers.addAll(headers);
@@ -270,8 +282,9 @@ class Enviroment {
     final domainHost = dotenv.env['DOMAIN_HOST'];
     if (useMain) return domainHost!;
 
-    final dubugHost =
-        io.Platform.isAndroid ? "10.0.2.2:3000" : "LOCALHOST:3000";
+    final dubugHost = io.Platform.isAndroid
+        ? "10.0.2.2:3000"
+        : "LOCALHOST:3000";
 
     //simulator 確認
     final checkDevice = isRealDevice ? domainHost : dubugHost;

@@ -6,19 +6,25 @@ class Pages<T> {
 
   Pages(this.pageFeeds, this.pageInfo);
 
-  factory Pages.fromMap(Map<String, dynamic> map, Function fromJsonModel,
-      [dynamic relationData]) {
+  factory Pages.fromMap(
+    Map<String, dynamic> map,
+    Function fromJsonModel, [
+    dynamic relationData,
+  ]) {
     final items = map["pageFeeds"].cast<Map<String, dynamic>>();
 
     if (relationData != null) {
       return Pages(
-          List<T>.from(
-              items.map((itemJson) => fromJsonModel(itemJson, relationData))),
-          PageInfo.fromMap(map["pageInfo"]));
+        List<T>.from(
+          items.map((itemJson) => fromJsonModel(itemJson, relationData)),
+        ),
+        PageInfo.fromMap(map["pageInfo"]),
+      );
     } else {
       return Pages(
-          List<T>.from(items.map((itemJson) => fromJsonModel(itemJson))),
-          PageInfo.fromMap(map["pageInfo"]));
+        List<T>.from(items.map((itemJson) => fromJsonModel(itemJson))),
+        PageInfo.fromMap(map["pageInfo"]),
+      );
     }
   }
 }
@@ -26,16 +32,10 @@ class Pages<T> {
 class PageInfo {
   final String? nextPageCursor;
   final bool hasNextPage;
-  PageInfo({
-    required this.nextPageCursor,
-    required this.hasNextPage,
-  });
+  PageInfo({required this.nextPageCursor, required this.hasNextPage});
 
   Map<String, dynamic> toMap() {
-    return {
-      'nextPageCursor': nextPageCursor,
-      'hasNextPage': hasNextPage,
-    };
+    return {'nextPageCursor': nextPageCursor, 'hasNextPage': hasNextPage};
   }
 
   factory PageInfo.fromMap(Map<String, dynamic> map) {

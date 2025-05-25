@@ -32,9 +32,7 @@ class MainTabController extends GetxController {
     const MyPostTabScreen(),
     MapScreen(),
     RecentScreen(),
-    UserDetailScreen(
-      user: AuthService.to.currentUser.value!,
-    ),
+    UserDetailScreen(user: AuthService.to.currentUser.value!),
   ];
 
   List<Widget> stackPages = [];
@@ -92,8 +90,10 @@ class MainTabController extends GetxController {
   void refreshAnotherPages(int index) {
     final indexes = fixPages.asMap().keys.toList();
 
-    indexes.removeWhere((element) =>
-        element == index || element == mapIndex || element == recentIndex);
+    indexes.removeWhere(
+      (element) =>
+          element == index || element == mapIndex || element == recentIndex,
+    );
 
     for (var i in indexes) {
       stackPages.removeAt(i);

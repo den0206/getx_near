@@ -82,8 +82,10 @@ class SignUpController extends LoadingGetController {
           if (!checkRes.status) break;
 
           // New Userの確認
-          final res =
-              await _userAPI.signUp(userData: userData, avatarFile: userImage);
+          final res = await _userAPI.signUp(
+            userData: userData,
+            avatarFile: userImage,
+          );
           if (!res.status) return;
 
           Get.back(result: res);

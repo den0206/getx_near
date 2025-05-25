@@ -63,11 +63,13 @@ class PostAPI extends APIBase {
   }
 
   Future<ResponseAPI> generateDummyAll(
-      LatLng centerPoint, double radius) async {
+    LatLng centerPoint,
+    double radius,
+  ) async {
     final Map<String, dynamic> query = {
       "lat": centerPoint.latitude.toString(),
       "lng": centerPoint.longitude.toString(),
-      "radius": radius.toString()
+      "radius": radius.toString(),
     };
 
     try {
@@ -82,7 +84,7 @@ class PostAPI extends APIBase {
     final Map<String, dynamic> query = {
       "lat": centerPoint.latitude.toString(),
       "lng": centerPoint.longitude.toString(),
-      "radius": radius.toString()
+      "radius": radius.toString(),
     };
 
     try {

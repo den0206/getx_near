@@ -63,12 +63,15 @@ class MapService {
 
   Future<void> setVisibleRegion() async {
     final List<LatLng> coordinates = await Future.wait([
-      googleController
-          .getLatLng(ScreenCoordinate(x: _mapSize.width.toInt(), y: 0)),
-      googleController.getLatLng(ScreenCoordinate(
-          x: _mapSize.width.toInt(), y: _mapSize.height.toInt())),
-      googleController
-          .getLatLng(ScreenCoordinate(x: 0, y: _mapSize.height.toInt())),
+      googleController.getLatLng(
+        ScreenCoordinate(x: _mapSize.width.toInt(), y: 0),
+      ),
+      googleController.getLatLng(
+        ScreenCoordinate(x: _mapSize.width.toInt(), y: _mapSize.height.toInt()),
+      ),
+      googleController.getLatLng(
+        ScreenCoordinate(x: 0, y: _mapSize.height.toInt()),
+      ),
       googleController.getLatLng(const ScreenCoordinate(x: 0, y: 0)),
     ]);
 
@@ -84,16 +87,21 @@ class MapService {
     var zoom = setZoom ?? await googleController.getZoomLevel();
 
     final cameraUpdate = CameraUpdate.newLatLngZoom(
-        LatLng(latLng.latitude, latLng.longitude), zoom);
+      LatLng(latLng.latitude, latLng.longitude),
+      zoom,
+    );
     await googleController.animateCamera(cameraUpdate);
   }
 
-  Future<void> fitTwoPointsZoom(
-      {required LatLng from, required LatLng to}) async {
+  Future<void> fitTwoPointsZoom({
+    required LatLng from,
+    required LatLng to,
+  }) async {
     final bounds = locationService.getCameraZoom(from, to);
 
-    await googleController
-        .animateCamera((CameraUpdate.newLatLngBounds(bounds, 90)));
+    await googleController.animateCamera(
+      (CameraUpdate.newLatLngBounds(bounds, 90)),
+    );
   }
 
   Future<double> setZoom(bool zoomIn) async {
@@ -165,10 +173,7 @@ class MapService {
       position: obj.coordinate,
       draggable: true,
       icon: icon,
-      infoWindow: InfoWindow(
-        title: "Sample",
-        snippet: obj.content,
-      ),
+      infoWindow: InfoWindow(title: "Sample", snippet: obj.content),
       onTap: ontap,
     );
     _markers[markerId] = marker;
@@ -200,11 +205,12 @@ class MapService {
     _circles[circleId] = circle;
   }
 
-  void addCenterToPostPolyLine(
-      {required LatLng center,
-      required Post post,
-      Color? color,
-      Function()? onTap}) async {
+  void addCenterToPostPolyLine({
+    required LatLng center,
+    required Post post,
+    Color? color,
+    Function()? onTap,
+  }) async {
     /// clear polyline
     _polyLines.clear();
 

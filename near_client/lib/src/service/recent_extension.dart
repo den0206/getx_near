@@ -16,7 +16,9 @@ class RecentExtension {
   }
 
   Future<String?> createPrivateChatRoom(
-      String withUserID, List<User> users) async {
+    String withUserID,
+    List<User> users,
+  ) async {
     String chatRoomId;
     final currentUID = currentUser.id;
 
@@ -50,26 +52,35 @@ class RecentExtension {
   }
 
   Future<void> saveRecent(
-      String id, List<User> users, String chatRoomId) async {
+    String id,
+    List<User> users,
+    String chatRoomId,
+  ) async {
     final withUser = id == currentUser.id ? users.last : users.first;
     final Map<String, dynamic> body = {
       "userId": id,
       "chatRoomId": chatRoomId,
-      "withUserId": withUser.id
+      "withUserId": withUser.id,
     };
 
     await _recentAPI.creatRecent(body);
   }
 
-  void updateRecentSocket(
-      {required String userId, required String chatRoomId}) {
+  void updateRecentSocket({
+    required String userId,
+    required String chatRoomId,
+  }) {
     if (!Get.isRegistered<RecentController>()) return;
-    RecentController.to.recentIO
-        .sendUpdateRecent(userId: userId, chatRoomId: chatRoomId);
+    RecentController.to.recentIO.sendUpdateRecent(
+      userId: userId,
+      chatRoomId: chatRoomId,
+    );
   }
 
-  Future<List<Recent>> updateRecentWithLastMessage(
-      {required String chatRoomId, String? lastMessage}) async {
+  Future<List<Recent>> updateRecentWithLastMessage({
+    required String chatRoomId,
+    String? lastMessage,
+  }) async {
     final res = await _recentAPI.finadByRoomId(chatRoomId);
     if (!res.status) throw Exception("Not find Recent");
     final item = List<Map<String, dynamic>>.from(res.data);
@@ -92,7 +103,10 @@ class RecentExtension {
   }
 
   Future<void> updateRecentItem(
-      Recent recent, String lastMessage, bool isDelete) async {
+    Recent recent,
+    String lastMessage,
+    bool isDelete,
+  ) async {
     final uid = recent.user.id;
     var counter = recent.counter;
 
