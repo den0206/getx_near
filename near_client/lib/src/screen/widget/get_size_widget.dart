@@ -19,7 +19,7 @@ class _GetSizeWidgetState extends State<GetSizeWidget> {
   }
 
   var widgetKey = GlobalKey();
-  var oldSize;
+  Size? oldSize;
 
   void postFrameCallback(_) {
     var context = widgetKey.currentContext;

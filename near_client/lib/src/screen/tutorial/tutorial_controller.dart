@@ -62,7 +62,7 @@ class TutorialController extends GetxController {
     super.onInit();
   }
 
-  _onScroll() {
+  void _onScroll() {
     notifier.value = pageController.page ?? 0;
 
     // PermissionTutorialScreen の場合 false
