@@ -157,7 +157,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                                       shrinkWrap: true,
                                       itemCount: availableMaps.length + 1,
                                       reverse: true,
-                                      separatorBuilder: (_, __) {
+                                      separatorBuilder: (_, _) {
                                         return const Divider();
                                       },
                                       itemBuilder: (context, index) {
