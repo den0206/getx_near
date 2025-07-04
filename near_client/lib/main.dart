@@ -28,7 +28,7 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  isJailBroken = await SafeDevice.isJailBroken;
+  // isJailBroken = await SafeDevice.isJailBroken;
   isRealDevice = await SafeDevice.isRealDevice;
 
   // runApp(DevicePreview(enabled: false, builder: (context) => const MyApp()));
