@@ -1,2 +1,7 @@
 [tools]
 node = "23.10.0"
+
+[tasks.outdated]
+description = "Update outdated global packages"
+run = "npm outdated -g --parseable | cut -d: -f4 | xargs npm install -g"
+alias = "o"
