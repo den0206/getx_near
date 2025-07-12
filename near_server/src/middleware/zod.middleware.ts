@@ -1,9 +1,9 @@
 import {NextFunction, Request, Response} from 'express';
-import {AnyZodObject, ZodError} from 'zod';
+import {ZodError, ZodObject} from 'zod';
 import RequestValidationError from '../error/errors/request_validation';
 import ResponseAPI from '../utils/interface/response.api';
 
-function zodValidate(schema: AnyZodObject) {
+function zodValidate(schema: ZodObject<any>) {
   return async (
     req: Request,
     res: Response,
