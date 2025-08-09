@@ -18,7 +18,7 @@ dependencies:
   get: ^4.7.2
   flutter_config: ^2.0.2
   google_maps_flutter: ^2.12.3
-  http: ^1.4.0
+  http: ^1.5.0
   flutter_dotenv: ^5.2.1
   sliding_up_panel: ^2.0.0
   sizer: ^2.0.15
@@ -45,7 +45,7 @@ dependencies:
   flutter_cache_manager: ^3.4.1
   just_audio: ^0.10.4
   safe_device: ^1.3.5
-  wechat_assets_picker: ^9.5.1
+  wechat_assets_picker: ^9.6.0
   mime: ^2.0.0
   map_launcher: ^4.0.0
   flutter_svg: ^2.2.0
