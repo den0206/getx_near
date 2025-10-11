@@ -23,7 +23,6 @@ import 'package:getx_near/src/utils/global_functions.dart';
 import 'package:getx_near/src/utils/neumorphic_style.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:map_launcher/map_launcher.dart';
-import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../report/report_screen.dart';
@@ -36,7 +35,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
   @override
   Widget get child {
     final post = controller.post;
-    return ShowCaseWidget(
+    return AppShowcaseWidget(
       builder: (context) {
         return Scaffold(
           backgroundColor: ConstsColor.mainBackColor,

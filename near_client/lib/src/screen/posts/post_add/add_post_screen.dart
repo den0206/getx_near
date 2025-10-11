@@ -11,7 +11,6 @@ import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/service/auth_service.dart';
 import 'package:getx_near/src/utils/consts_color.dart';
-import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../utils/neumorphic_style.dart';
@@ -27,7 +26,7 @@ class AddPostScreen extends LoadingGetView<AddPostController> {
 
   @override
   Widget get child {
-    return ShowCaseWidget(
+    return AppShowcaseWidget(
       builder: (context) {
         return Scaffold(
           backgroundColor: ConstsColor.mainBackColor,

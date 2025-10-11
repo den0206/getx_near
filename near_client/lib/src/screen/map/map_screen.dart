@@ -12,7 +12,6 @@ import 'package:getx_near/src/screen/widget/loading_widget.dart';
 import 'package:getx_near/src/screen/widget/neumorphic/nicon_button.dart';
 import 'package:getx_near/src/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../main.dart';
@@ -32,7 +31,7 @@ class MapScreen extends LoadingGetView<MapController> {
   Widget get child {
     return GetBuilder<MapController>(
       builder: (_) {
-        return ShowCaseWidget(
+        return AppShowcaseWidget(
           builder: (context) {
             return Scaffold(
               body: Stack(
