@@ -25,10 +25,6 @@ void showSnackBar({
   Color background = Colors.green,
   SnackPosition position = SnackPosition.BOTTOM,
 }) {
-  return;
-  // https://github.com/jonataslaw/getx/issues/3420
-  // TODO: remove ignore after getx is fixed
-  // ignore: dead_code
   Get.snackbar(
     title,
     message,
