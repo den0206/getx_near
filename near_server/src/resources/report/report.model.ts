@@ -2,13 +2,11 @@ import {index, pre, prop, Ref} from '@typegoose/typegoose';
 import {Message} from '../messages/message.model';
 import {Post} from '../posts/post.model';
 import {User} from '../users/user.model';
-@pre<Report>('save', async function (next) {
+@pre<Report>('save', async function () {
   // 一ヶ月後に削除
   const expire = new Date();
   expire.setMonth(expire.getMonth() + 1);
   this.expireAt = expire;
-
-  next();
 })
 @index({expireAt: 1}, {expireAfterSeconds: 0})
 export class Report {

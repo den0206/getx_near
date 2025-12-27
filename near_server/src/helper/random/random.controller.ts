@@ -105,7 +105,7 @@ async function makeDummyMyPosts(req: Request, res: Response) {
 
       const likeLength =
         dummyUsers.length - randomGenerator.intR(dummyUsers.length);
-      const likes = dummyUsers.map((user) => user.id).slice(0, likeLength - 1);
+      const likes = dummyUsers.map((user) => user._id).slice(0, likeLength - 1);
 
       /// dummy Comment
       const commentLength = randomGenerator.intR(20);
@@ -118,7 +118,7 @@ async function makeDummyMyPosts(req: Request, res: Response) {
         const newComment = new CommentModel({
           text: randomGenerator.idR(100),
           userId: randomGenerator.randomObjFromArray(dummyUsers),
-          postId: newPost.id,
+          postId: newPost._id,
           expireAt: expireAt,
           location: {
             type: 'Point',
@@ -129,8 +129,8 @@ async function makeDummyMyPosts(req: Request, res: Response) {
         return newComment;
       });
 
-      newPost.comments = comments.map((comment) => comment.id);
-      newPost.likes = likes;
+      newPost.comments = comments.map((comment) => comment._id);
+      newPost.likes = likes as any;
 
       return newPost;
     });

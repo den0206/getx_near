@@ -47,7 +47,7 @@ async function getReportedCount(req: Request, res: Response) {
   const userId = req.params.userId;
 
   try {
-    const count = await ReportModel.countDocuments({reported: userId});
+    const count = await ReportModel.countDocuments({reported: userId} as any);
 
     new ResponseAPI(res, {data: count.toString()}).excute(200);
   } catch (e) {
