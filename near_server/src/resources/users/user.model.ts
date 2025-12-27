@@ -10,50 +10,49 @@ import {
 import {Location} from '../../utils/interface/location';
 import {CommentModel, ReportModel} from './../../utils/database/models';
 
-@pre<User>('save', async function (next) {
+@pre<User>('save', async function () {
   if (this.isModified('password') || this.isNew) {
     const hashed = await argon2.hash(this.password);
 
     this.password = hashed;
   }
-  return next();
 })
 @pre<User>(
   'deleteOne',
-  async function (next) {
+  async function () {
     console.log('=== Start USER DELETE');
     console.log('DELETE RELATION', (await this)._id);
 
+    const userId = (await this)._id;
+
     // Messageの削除
-    await MessageModel.deleteMany({userId: (await this)._id});
+    await MessageModel.deleteMany({userId: userId} as any);
 
     // Postの削除
-    await PostModel.deleteMany({userId: (await this)._id});
+    await PostModel.deleteMany({userId: userId} as any);
 
     // Recentの削除
-    await RecentModel.deleteMany({userId: (await this)._id});
-    await RecentModel.deleteMany({withUserId: (await this)._id});
+    await RecentModel.deleteMany({userId: userId} as any);
+    await RecentModel.deleteMany({withUserId: userId} as any);
 
     // Commentの削除
-    await CommentModel.deleteMany({userId: (await this)._id});
+    await CommentModel.deleteMany({userId: userId} as any);
 
     // Reportの削除
-    await ReportModel.deleteMany({reported: (await this)._id});
+    await ReportModel.deleteMany({reported: userId} as any);
 
     /// アバターの削除
     if ((await this).avatarUrl) {
       const awsClient = new AWSClient();
-      console.log('DELETE AVATAR RELATION', (await this)._id);
+      console.log('DELETE AVATAR RELATION', userId);
       await awsClient.deleteImage((await this).avatarUrl);
     }
 
     // blocksの削除
     await UserModel.updateMany(
-      {blocked: {$in: [(await this)._id]}},
-      {$pull: {blocked: (await this)._id}}
+      {blocked: {$in: [userId]}},
+      {$pull: {blocked: userId}}
     );
-
-    next();
   },
   {document: true, query: true}
 )

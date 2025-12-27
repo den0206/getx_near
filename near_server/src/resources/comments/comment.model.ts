@@ -4,7 +4,7 @@ import {Location} from '../../utils/interface/location';
 import {Post} from '../posts/post.model';
 import {User} from '../users/user.model';
 
-@pre<Comment>('save', async function (next) {
+@pre<Comment>('save', async function () {
   console.log('===== Relation Save');
   const findPostArray = await PostModel.findById(
     this.postId,
@@ -15,7 +15,7 @@ import {User} from '../users/user.model';
     const expire = new Date();
     expire.setHours(expire.getHours() + 3);
     this.expireAt = expire;
-    return next();
+    return;
   }
 
   const {comments, expireAt} = findPostArray;
@@ -34,7 +34,6 @@ import {User} from '../users/user.model';
   );
 
   console.log(comments);
-  next();
 })
 @index({location: '2dsphere'})
 @index({expireAt: 1}, {expireAfterSeconds: 0})

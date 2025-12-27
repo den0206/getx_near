@@ -49,7 +49,7 @@ async function getComment(
     });
 
     // コメント数の取得
-    const count = await CommentModel.countDocuments({postId});
+    const count = await CommentModel.countDocuments({postId} as any);
 
     const result = {count: count, pages: data};
 

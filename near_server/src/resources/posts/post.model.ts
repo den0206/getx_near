@@ -6,11 +6,10 @@ import {User} from '../users/user.model';
 
 @pre<Post>(
   'deleteOne',
-  async function (next) {
-    await CommentModel.deleteMany({postId: (await this)._id});
+  async function () {
+    await CommentModel.deleteMany({postId: (await this)._id} as any);
 
     console.log('=== POST DELETE RELATION');
-    next();
   },
   {document: true, query: true}
 )
