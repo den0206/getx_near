@@ -125,26 +125,27 @@ class NotificationService extends GetxService {
       print("badge is $badge");
       // android/app/src/main/res/raw
       flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            channelDescription: channel.description,
-            icon: 'launch_background',
-            playSound: true,
-            sound: RawResourceAndroidNotificationSound(soundPath),
-          ),
-          iOS: DarwinNotificationDetails(
-            presentSound: true,
-            presentBadge: true,
-            presentAlert: true,
-            sound: soundPath,
-            badgeNumber: badge,
-          ),
-        ),
+        id: notification.hashCode,
+        title: notification.title,
+        body: notification.body,
+        payload: message.data["payload"],
+        // NotificationDetails(
+        //   android: AndroidNotificationDetails(
+        //     channel.id,
+        //     channel.name,
+        //     channelDescription: channel.description,
+        //     icon: 'launch_background',
+        //     playSound: true,
+        //     sound: RawResourceAndroidNotificationSound(soundPath),
+        //   ),
+        //   iOS: DarwinNotificationDetails(
+        //     presentSound: true,
+        //     presentBadge: true,
+        //     presentAlert: true,
+        //     sound: soundPath,
+        //     badgeNumber: badge,
+        //   ),
+        // ),
       );
     }
   }
