@@ -3,5 +3,5 @@ node = "23.10.0"
 
 [tasks.outdated]
 description = "Update outdated global packages"
-run = "npm outdated -g --parseable | cut -d: -f4 | xargs npm install -g"
+run = "brew upgrade claude-code && brew upgrade codex && brew upgrade gemini-cli && brew upgrade mise && mo update"
 alias = "o"
