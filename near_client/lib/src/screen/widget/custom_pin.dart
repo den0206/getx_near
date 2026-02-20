@@ -69,7 +69,7 @@ enum VerifyState {
   }
 }
 
-class CustomPinCodeField extends StatelessWidget {
+class CustomPinCodeField extends StatefulWidget {
   const CustomPinCodeField({
     super.key,
     required this.controller,
@@ -84,37 +84,54 @@ class CustomPinCodeField extends StatelessWidget {
   final Function(String text)? onChange;
 
   @override
+  State<CustomPinCodeField> createState() => _CustomPinCodeFieldState();
+}
+
+class _CustomPinCodeFieldState extends State<CustomPinCodeField> {
+  late final PinInputController _pinController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pinController = PinInputController();
+    if (widget.controller.text.isNotEmpty) {
+      _pinController.setText(widget.controller.text);
+    }
+  }
+
+  @override
+  void dispose() {
+    _pinController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return PinCodeTextField(
-      appContext: context,
-      controller: controller,
+    return MaterialPinField(
+      pinController: _pinController,
       length: 6,
       autoFocus: true,
-      obscureText: false,
-      autoDisposeControllers: true,
+      obscureText: widget.isSecure,
       blinkWhenObscuring: true,
-      animationType: AnimationType.fade,
-      validator: validPinCode,
-      pinTheme: PinTheme(
-        shape: PinCodeFieldShape.box,
+      keyboardType: widget.inputType,
+      theme: MaterialPinTheme(
+        shape: MaterialPinShape.outlined,
         borderRadius: BorderRadius.circular(5),
-        fieldHeight: 50,
-        fieldWidth: 40,
-        activeColor: Colors.grey,
-        inactiveColor: Colors.grey,
-        selectedColor: Colors.grey,
-        activeFillColor: Colors.white,
-        inactiveFillColor: Colors.white,
-        selectedFillColor: Colors.white,
+        cellSize: const Size(40, 50),
+        borderColor: Colors.grey,
+        focusedBorderColor: Colors.grey,
+        filledBorderColor: Colors.grey,
+        cursorColor: Colors.black,
+        animationDuration: const Duration(milliseconds: 300),
+        entryAnimation: MaterialPinAnimation.fade,
       ),
-      cursorColor: Colors.black,
-      animationDuration: const Duration(milliseconds: 300),
-      enableActiveFill: false,
-      keyboardType: inputType,
-      onChanged: onChange ?? (value) {},
-      beforeTextPaste: (text) {
-        print("Allowing to paste $text");
-
+      onChanged: (value) {
+        widget.controller.text = value;
+        widget.onChange?.call(value);
+      },
+      enablePaste: true,
+      clipboardValidator: (text, length) {
+        debugPrint("Allowing to paste $text");
         return true;
       },
     );
