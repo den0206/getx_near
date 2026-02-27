@@ -54,7 +54,7 @@ dependencies:
   visibility_detector: ^0.4.0+2
   flutter_localizations:
     sdk: flutter
-  pin_code_fields: ^9.0.0
+  pin_code_fields: ^9.1.0
   flutter_markdown: ^0.7.7
   flutter_sliding_tutorial: ^2.1.0
   lottie: ^3.3.2
