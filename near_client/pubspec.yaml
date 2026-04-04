@@ -17,7 +17,7 @@ dependencies:
   geocoding: ^4.0.0
   get: ^4.7.3
   flutter_config: ^2.0.2
-  google_maps_flutter: ^2.16.0
+  google_maps_flutter: ^2.17.0
   http: ^1.6.0
   flutter_dotenv: ^6.0.0
   sliding_up_panel: ^2.0.0
@@ -54,12 +54,12 @@ dependencies:
   visibility_detector: ^0.4.0+2
   flutter_localizations:
     sdk: flutter
-  pin_code_fields: ^9.1.0
+  pin_code_fields: ^9.3.0
   flutter_markdown: ^0.7.7
   flutter_sliding_tutorial: ^2.1.0
   lottie: ^3.3.2
   flutter_app_badger: ^1.5.0
-  connectivity_plus: ^7.0.0
+  connectivity_plus: ^7.1.0
   webview_flutter: ^4.13.1
   flutter_lints: ^6.0.0
   photo_manager: ^3.9.0
