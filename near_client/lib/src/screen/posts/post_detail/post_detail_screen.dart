@@ -329,24 +329,34 @@ class PoptPopMenu extends GetView<PostDetailController> {
           if (post.isCurrent)
             const PopupMenuItem<String>(
               value: 'delete',
-              child: ListTile(
-                iconColor: Colors.red,
-                leading: Icon(Icons.delete),
-                title: Text("削除"),
+              child: Row(
+                children: [
+                  Icon(Icons.delete, color: Colors.red),
+                  SizedBox(width: 12),
+                  Text("削除", style: TextStyle(color: Colors.red)),
+                ],
               ),
             )
           else
             const PopupMenuItem<String>(
               value: 'report',
-              child: ListTile(
-                iconColor: Colors.red,
-                leading: Icon(Icons.report),
-                title: Text("通報"),
+              child: Row(
+                children: [
+                  Icon(Icons.report, color: Colors.red),
+                  SizedBox(width: 12),
+                  Text("通報", style: TextStyle(color: Colors.red)),
+                ],
               ),
             ),
           const PopupMenuItem<String>(
             value: 'cancel',
-            child: ListTile(leading: Icon(Icons.close), title: Text("キャンセル")),
+            child: Row(
+              children: [
+                Icon(Icons.close),
+                SizedBox(width: 12),
+                Text("キャンセル"),
+              ],
+            ),
           ),
         ];
       },
@@ -431,31 +441,33 @@ class NewCommentArea extends SliverPersistentHeaderDelegate {
     return commonShowcaseWidget(
       key: controller.tutorialKey3,
       description: "コメントをして助ける意思を伝えましょう!",
-      child: Container(
-        constraints: BoxConstraints(maxHeight: maxExtent),
-        decoration: BoxDecoration(
-          color: ConstsColor.mainBackColor,
-          border: const Border(top: BorderSide(color: Colors.grey)),
-        ),
-        child: ListTile(
-          title: const BlinkingWidet(
-            duration: Duration(seconds: 2),
-            child: Text("Add Comment"),
+      child: Material(
+        color: ConstsColor.mainBackColor,
+        child: Container(
+          constraints: BoxConstraints(maxHeight: maxExtent),
+          decoration: const BoxDecoration(
+            border: Border(top: BorderSide(color: Colors.grey)),
           ),
-          leading: CircleImageButton(
-            imageProvider: getUserImage(AuthService.to.currentUser.value!),
-            size: 30.sp,
-            border: Border.all(color: Colors.white, width: 2),
+          child: ListTile(
+            title: const BlinkingWidet(
+              duration: Duration(seconds: 2),
+              child: Text("Add Comment"),
+            ),
+            leading: CircleImageButton(
+              imageProvider: getUserImage(AuthService.to.currentUser.value!),
+              size: 30.sp,
+              border: Border.all(color: Colors.white, width: 2),
+            ),
+            trailing: const Icon(Icons.expand_less),
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return const AboveCommentField();
+                },
+              );
+            },
           ),
-          trailing: const Icon(Icons.expand_less),
-          onTap: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return const AboveCommentField();
-              },
-            );
-          },
         ),
       ),
     );
@@ -467,38 +479,40 @@ class AboveCommentField extends GetView<PostDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: ConstsColor.mainBackColor),
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      child: ListTile(
-        title: TextFormField(
-          controller: controller.commentContoller,
-          textAlignVertical: TextAlignVertical.center,
-          cursorColor: Colors.black,
-          autofocus: true,
-          maxLines: 1,
-          maxLength: 50,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.all(10.0),
-            hintText: " Add Comment...",
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent),
-            ),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent),
-            ),
-            counterText: "",
-          ),
+    return Material(
+      color: ConstsColor.mainBackColor,
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        trailing: IconButton(
-          icon: Icon(Icons.send, color: ConstsColor.mainGreenColor),
-          onPressed: () {
-            Navigator.pop(context);
-            dismisskeyBord(context);
-            controller.addContents();
-          },
+        child: ListTile(
+          title: TextFormField(
+            controller: controller.commentContoller,
+            textAlignVertical: TextAlignVertical.center,
+            cursorColor: Colors.black,
+            autofocus: true,
+            maxLines: 1,
+            maxLength: 50,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.all(10.0),
+              hintText: " Add Comment...",
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+              ),
+              counterText: "",
+            ),
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.send, color: ConstsColor.mainGreenColor),
+            onPressed: () {
+              Navigator.pop(context);
+              dismisskeyBord(context);
+              controller.addContents();
+            },
+          ),
         ),
       ),
     );
