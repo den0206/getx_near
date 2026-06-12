@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import * as admin from 'firebase-admin';
+import {getMessaging, Message} from 'firebase-admin/messaging';
 import mongoose from 'mongoose';
 import {commonErrorHandler} from '../../error/custom_error';
 import FailSendNotificationError from '../../error/errors/fail_send_notification';
@@ -9,7 +9,7 @@ import ResponseAPI from '../../utils/interface/response.api';
 async function sendNotification(req: Request, res: Response) {
   const {title, body, badge, sound, fcmToken} = req.body;
   try {
-    const message: admin.messaging.Message = {
+    const message: Message = {
       data: {
         sound: sound,
       },
@@ -37,7 +37,7 @@ async function sendNotification(req: Request, res: Response) {
 
     if (badge !== null && message.data) message.data.badge = badge.toString();
 
-    const sendRequest = await admin.messaging().send(message);
+    const sendRequest = await getMessaging().send(message);
 
     if (sendRequest) throw new FailSendNotificationError();
     new ResponseAPI(res, {data: sendRequest}).excute(200);

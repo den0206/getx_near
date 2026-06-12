@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express, {Application} from 'express';
-import * as admin from 'firebase-admin';
+import {cert, initializeApp, ServiceAccount} from 'firebase-admin/app';
 import helmet from 'helmet';
 import http from 'http';
 import nodeSchedule from 'node-schedule';
@@ -65,13 +65,13 @@ class App {
   }
 
   private initFirebaseAdmin(): void {
-    const adminConfig: admin.ServiceAccount = {
+    const adminConfig: ServiceAccount = {
       projectId: serviceAccount.project_id,
       privateKey: serviceAccount.private_key,
       clientEmail: serviceAccount.client_email,
     };
-    admin.initializeApp({
-      credential: admin.credential.cert(adminConfig),
+    initializeApp({
+      credential: cert(adminConfig),
     });
 
     // if (process.env.NODE_ENV == 'production') console.log(adminConfig);
