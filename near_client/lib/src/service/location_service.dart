@@ -106,7 +106,7 @@ class LocationService {
   }
 
   Future<Placemark> positionToAddress(Position position) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(
+    List<Placemark> placemarks = await Geocoding().placemarkFromCoordinates(
       position.latitude,
       position.longitude,
     );
