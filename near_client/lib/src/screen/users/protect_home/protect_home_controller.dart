@@ -102,7 +102,7 @@ class ProtectHomeController extends GetxController {
   Future<String?> _getAddressFromCoords({required LatLng latLng}) async {
     //位置情報からアドレスの検索
 
-    final placemarks = await placemarkFromCoordinates(
+    final placemarks = await Geocoding().placemarkFromCoordinates(
       latLng.latitude,
       latLng.longitude,
     );
