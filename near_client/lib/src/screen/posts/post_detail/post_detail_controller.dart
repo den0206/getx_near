@@ -305,7 +305,7 @@ class PostDetailController extends LoadingGetController {
 
   Future<void> tryMapLauncher(
     BuildContext context,
-    AvailableMap current,
+    SupportedMap current,
   ) async {
     showCommonDialog(
       context: context,
@@ -313,12 +313,18 @@ class PostDetailController extends LoadingGetController {
       okAction: () async {
         final locationService = LocationService();
         final currentPosition = await locationService.getCurrentPosition();
-        current.showDirections(
-          origin: Coords(currentPosition.latitude, currentPosition.longitude),
-          originTitle: "貴方の現在地",
-          destination: post.coordForLauncher,
-          destinationTitle: "${post.user.name} さんの位置",
-        );
+        await MapLauncher.directions(
+          LocationCoords(
+            post.coordinate.latitude,
+            post.coordinate.longitude,
+            title: "${post.user.name} さんの位置",
+          ),
+          from: LocationCoords(
+            currentPosition.latitude,
+            currentPosition.longitude,
+            title: "貴方の現在地",
+          ),
+        ).show(map: current.mapType);
       },
     );
   }
