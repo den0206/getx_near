@@ -63,8 +63,8 @@ class Post extends JsonModel {
   List<String> comments;
 
   // Maplauncher の為の変換
-  Coords get coordForLauncher {
-    return Coords(coordinate.latitude, coordinate.longitude);
+  LocationCoords get coordForLauncher {
+    return LocationCoords(coordinate.latitude, coordinate.longitude);
   }
 
   Post({

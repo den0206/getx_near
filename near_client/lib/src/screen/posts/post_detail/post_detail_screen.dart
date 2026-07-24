@@ -143,7 +143,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                               color: Colors.yellow.withValues(alpha: 0.3),
                               onPressed: () async {
                                 final availableMaps =
-                                    await MapLauncher.installedMaps;
+                                    await MapLauncher.getAvailableMaps();
 
                                 await showModalBottomSheet(
                                   backgroundColor: ConstsColor.mainBackColor,
@@ -165,11 +165,11 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                                               availableMaps[index - 1];
                                           return ListTile(
                                             leading: SvgPicture.asset(
-                                              current.icon,
+                                              current.mapType.icon,
                                               width: 30,
                                               height: 30,
                                             ),
-                                            title: Text(current.mapName),
+                                            title: Text(current.mapType.displayName),
                                             onTap: () {
                                               controller.tryMapLauncher(
                                                 context,
