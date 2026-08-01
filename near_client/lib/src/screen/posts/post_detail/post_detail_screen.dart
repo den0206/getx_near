@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:getx_near/src/model/comment.dart';
@@ -143,7 +142,7 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                               color: Colors.yellow.withValues(alpha: 0.3),
                               onPressed: () async {
                                 final availableMaps =
-                                    await MapLauncher.getAvailableMaps();
+                                    await MapLauncher.getAvailableMaps(MapApp.all);
 
                                 await showModalBottomSheet(
                                   backgroundColor: ConstsColor.mainBackColor,
@@ -164,12 +163,12 @@ class PostDetailScreen extends LoadingGetView<PostDetailController> {
                                           final current =
                                               availableMaps[index - 1];
                                           return ListTile(
-                                            leading: SvgPicture.asset(
-                                              current.mapType.icon,
+                                            leading: Image.memory(
+                                              current.iconBytes,
                                               width: 30,
                                               height: 30,
                                             ),
-                                            title: Text(current.mapType.displayName),
+                                            title: Text(current.name),
                                             onTap: () {
                                               controller.tryMapLauncher(
                                                 context,
