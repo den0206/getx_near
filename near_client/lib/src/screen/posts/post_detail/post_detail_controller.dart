@@ -324,7 +324,7 @@ class PostDetailController extends LoadingGetController {
             currentPosition.longitude,
             title: "貴方の現在地",
           ),
-        ).show(map: current.mapType);
+        ).show(map: current.map);
       },
     );
   }
