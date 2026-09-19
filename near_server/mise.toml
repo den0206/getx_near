@@ -1,7 +1,4 @@
 [tools]
-node = "23.10.0"
+node = "24.21.0"
 
-[tasks.outdated]
-description = "Update outdated global packages"
-run = "brew upgrade claude-code && brew upgrade codex && brew upgrade gemini-cli && brew upgrade mise && brew upgrade mole"
-alias = "o"
+
